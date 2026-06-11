@@ -20,21 +20,18 @@ main{padding:24px;max-width:1440px;margin:0 auto}
 .section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
 .section-note{font-size:11px;color:#475569;font-style:italic}
 .card{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px}
-.card.hl{border-color:#6366f1}
-.card.warn{border-color:#f59e0b}
-.card.crit{border-color:#ef4444}
-.card.ok{border-color:#22c55e}
+.card.hl{border-color:#6366f1}.card.warn{border-color:#f59e0b}.card.crit{border-color:#ef4444}.card.ok{border-color:#22c55e}
 .cl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
 .cv{font-size:36px;font-weight:700;color:#e2e8f0;line-height:1;margin-bottom:4px}
 .cv.ok{color:#4ade80}.cv.warn{color:#fcd34d}.cv.crit{color:#fca5a5}.cv.info{color:#818cf8}
 .cs{font-size:11px;color:#64748b}
 .tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 .tag.master{background:#312e81;color:#a5b4fc;border:1px solid #4f46e5}
-.tag.ok{background:#14532d;color:#4ade80}
-.tag.warn{background:#713f12;color:#fcd34d}
-.tag.crit{background:#7f1d1d;color:#fca5a5}
-.tag.info{background:#1e3a5f;color:#60a5fa}
+.tag.ok{background:#14532d;color:#4ade80}.tag.warn{background:#713f12;color:#fcd34d}
+.tag.crit{background:#7f1d1d;color:#fca5a5}.tag.info{background:#1e3a5f;color:#60a5fa}
 .tag.forecast{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
+.tag.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
+.tag.analytics{background:#1a2744;color:#818cf8;border:1px solid #6366f1}
 .tw{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;overflow:hidden}
 table{width:100%;border-collapse:collapse}
 thead th{background:#12141e;padding:11px 16px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:1px solid #2d3148}
@@ -45,7 +42,15 @@ tbody tr:hover{background:#1e2235}
 td{padding:12px 16px;font-size:13px}
 td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 
-/* ── WORKFORCE PLANNING SPECIFIC ── */
+/* ── LAYER BADGES ── */
+.layer-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.layer-badge.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
+.layer-badge.analytics{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
+.layer-divider{display:flex;align-items:center;gap:10px;margin:28px 0 16px}
+.layer-divider-line{flex:1;height:1px;background:#2d3148}
+.layer-divider-label{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
+
+/* ── WORKFORCE PLANNING KPI CARDS ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
@@ -55,13 +60,10 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .kpi-card.supply::before{background:linear-gradient(90deg,#22c55e,#4ade80)}
 .kpi-card.required::before{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
 .kpi-card.gap::before{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
-.kpi-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.kpi-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .kpi-value{font-size:44px;font-weight:800;line-height:1;margin-bottom:6px}
-.kpi-value.actual{color:#818cf8}
-.kpi-value.supply{color:#4ade80}
-.kpi-value.required{color:#fcd34d}
-.kpi-value.gap-pos{color:#4ade80}
-.kpi-value.gap-neg{color:#fca5a5}
+.kpi-value.actual{color:#818cf8}.kpi-value.supply{color:#4ade80}
+.kpi-value.required{color:#fcd34d}.kpi-value.gap-pos{color:#4ade80}.kpi-value.gap-neg{color:#fca5a5}
 .kpi-sub{font-size:11px;color:#64748b;line-height:1.4}
 .kpi-tooltip{font-size:10px;color:#475569;margin-top:8px;padding-top:8px;border-top:1px solid #1e293b;line-height:1.5}
 
@@ -70,6 +72,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .alert-banner.crit{background:#450a0a;border:1px solid #ef4444}
 .alert-banner.warn{background:#431407;border:1px solid #f59e0b}
 .alert-banner.ok{background:#052e16;border:1px solid #22c55e}
+.alert-banner.info{background:#0f172a;border:1px solid #2563eb}
 .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
 .alert-body .alert-title{font-size:14px;font-weight:700;margin-bottom:3px}
 .alert-body .alert-desc{font-size:12px;color:#94a3b8;line-height:1.5}
@@ -81,19 +84,16 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .chart-controls{display:flex;gap:6px}
 .chart-btn{background:#2d3148;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:500}
 .chart-btn.active{background:#6366f1;color:#fff}
+.chart-note{font-size:11px;color:#475569;padding:6px 12px;background:#0f1117;border-radius:6px;margin-top:6px}
 
 /* Pool gap bars */
 .pool-grid{display:flex;flex-direction:column;gap:10px}
 .pool-row{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
-.pool-row.crit{border-left:4px solid #ef4444}
-.pool-row.warn{border-left:4px solid #f59e0b}
-.pool-row.ok{border-left:4px solid #22c55e}
+.pool-row.crit{border-left:4px solid #ef4444}.pool-row.warn{border-left:4px solid #f59e0b}.pool-row.ok{border-left:4px solid #22c55e}
 .pool-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .pool-name{font-size:14px;font-weight:700}
 .pool-gap-val{font-size:16px;font-weight:800}
-.pool-gap-val.neg{color:#fca5a5}
-.pool-gap-val.pos{color:#4ade80}
-.pool-gap-val.zero{color:#fcd34d}
+.pool-gap-val.neg{color:#fca5a5}.pool-gap-val.pos{color:#4ade80}.pool-gap-val.zero{color:#fcd34d}
 .pool-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
 @media(max-width:700px){.pool-stats{grid-template-columns:repeat(2,1fr)}}
 .pool-stat{font-size:11px;color:#64748b}
@@ -112,8 +112,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .sc-name{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
 .sc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1e293b;font-size:12px}
 .sc-row:last-child{border-bottom:none}
-.sc-key{color:#64748b}
-.sc-val{font-weight:700;font-variant-numeric:tabular-nums}
+.sc-key{color:#64748b}.sc-val{font-weight:700;font-variant-numeric:tabular-nums}
 .sc-gap{font-size:18px;font-weight:800;margin:10px 0 4px}
 .sc-deficit{font-size:11px;color:#f87171}
 
@@ -133,9 +132,6 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .sens-center{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#2d3148}
 .sens-bar-neg{position:absolute;right:50%;height:18px;border-radius:3px 0 0 3px;background:#ef4444;top:50%;transform:translateY(-50%)}
 .sens-bar-pos{position:absolute;left:50%;height:18px;border-radius:0 3px 3px 0;background:#6366f1;top:50%;transform:translateY(-50%)}
-.sens-val-neg{position:absolute;right:calc(50% + 4px);font-size:10px;color:#fca5a5;white-space:nowrap}
-.sens-val-pos{position:absolute;left:calc(50% + 4px);font-size:10px;color:#a5b4fc;white-space:nowrap}
-.sens-axis{display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:4px;padding:0 0 0 140px}
 
 /* Definitions */
 .def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
@@ -144,7 +140,25 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .def-body{font-size:12px;color:#94a3b8;line-height:1.5}
 .def-example{font-size:11px;color:#475569;margin-top:4px;font-style:italic}
 
-/* ── LEGACY TAB STYLES (preserve existing) ── */
+/* Analytics trend section */
+.trend-container{background:#1a1d27;border:1px solid #4338ca;border-radius:12px;padding:20px;margin-bottom:8px;position:relative}
+.trend-container::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:12px 12px 0 0}
+.trend-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.trend-title{font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em}
+.trend-loading{font-size:12px;color:#64748b;text-align:center;padding:40px}
+.trend-error{font-size:12px;color:#f87171;padding:12px;background:#450a0a;border-radius:6px;margin-top:8px}
+
+/* Monthly analytics cards */
+.analytics-month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:12px}
+.analytics-month-card{background:#12141e;border:1px solid #2d3148;border-radius:8px;padding:12px}
+.amc-month{font-size:11px;color:#64748b;margin-bottom:6px}
+.amc-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
+.amc-label{color:#64748b}.amc-val{font-weight:600;font-variant-numeric:tabular-nums}
+.amc-gap{font-size:13px;font-weight:700;margin-top:6px;padding-top:6px;border-top:1px solid #2d3148}
+.amc-cov{font-size:10px;margin-top:4px;padding:2px 6px;border-radius:3px;display:inline-block}
+.amc-cov.ok{background:#14532d;color:#4ade80}.amc-cov.warn{background:#7f1d1d;color:#fca5a5}
+
+/* ── LEGACY TAB STYLES ── */
 .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
 .st{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin:24px 0 12px}
 .cv-lg{font-size:32px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
@@ -157,18 +171,15 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .tt{font-size:12px;color:#64748b;white-space:nowrap}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase}
 .b-email{background:#1e3a5f;color:#60a5fa}.b-phone{background:#14532d;color:#4ade80}
-.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}
-.b-other{background:#1e293b;color:#94a3b8}
+.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}.b-other{background:#1e293b;color:#94a3b8}
 .mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
 .mc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
 .mc.crit-b{border-color:#ef4444}.mc.under-b{border-color:#f59e0b}.mc.ok-b{border-color:#22c55e}
 .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .mn2{font-size:16px;font-weight:700}
-.mp{margin-bottom:8px}
-.ml{font-size:12px;color:#94a3b8;margin-bottom:2px}
+.mp{margin-bottom:8px}.ml{font-size:12px;color:#94a3b8;margin-bottom:2px}
 .mb{background:#0f1117;border-radius:3px;height:6px;overflow:hidden}
-.mf{height:100%;border-radius:3px}
-.mf.req{background:#6366f1}.mf.sup{background:#22c55e}
+.mf{height:100%;border-radius:3px}.mf.req{background:#6366f1}.mf.sup{background:#22c55e}
 .mv{font-size:11px;color:#64748b;margin-top:2px}
 .ga{font-size:13px;font-weight:600;padding:3px 8px;border-radius:4px}
 .ga.ok{background:#14532d;color:#4ade80}.ga.under{background:#713f12;color:#fcd34d}.ga.crit{background:#7f1d1d;color:#fca5a5}
@@ -176,8 +187,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .cov-ok{margin-top:6px;padding:4px 8px;background:#14532d;color:#4ade80;font-size:10px;font-weight:600;border-radius:4px}
 .wf{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
 .wc{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
-.wv{font-size:28px;font-weight:700}
-.wl{font-size:12px;color:#64748b;margin-top:4px}
+.wv{font-size:28px;font-weight:700}.wl{font-size:12px;color:#64748b;margin-top:4px}
 .wv.ok{color:#4ade80}.wv.warn{color:#fcd34d}.wv.crit{color:#fca5a5}
 .fp{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .fp button{background:#2d3148;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px}
@@ -213,306 +223,346 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .forecast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .fc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
 .fc.surplus{border-color:#22c55e}.fc.deficit{border-color:#ef4444}.fc.marginal{border-color:#f59e0b}
-.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.fm{font-size:16px;font-weight:700}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.fm{font-size:16px;font-weight:700}
 .setup-section{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px;margin-bottom:20px}
 .setup-section h3{font-size:15px;font-weight:700;margin-bottom:4px}
 .setup-section .desc{font-size:13px;color:#64748b;margin-bottom:16px}
 .code-block{background:#0f1117;border:1px solid #2d3148;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;color:#a5b4fc;white-space:pre-wrap;overflow-x:auto;line-height:1.6}
 .status-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
-.status-chip.done{background:#14532d;color:#4ade80}
-.status-chip.pending{background:#713f12;color:#fcd34d}
-.status-chip.info{background:#1e3a5f;color:#60a5fa}
+.status-chip.done{background:#14532d;color:#4ade80}.status-chip.pending{background:#713f12;color:#fcd34d}.status-chip.info{background:#1e3a5f;color:#60a5fa}
 .setup-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
 </style></head><body>
 <header>
-  <div class="logo">
-    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#6366f1"/><path d="M8 20l4-8 4 5 3-4 3 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    CC Workforce Planning
-  </div>
-  <div class="ts" id="upd">Uppdaterat --:--</div>
+<div class="logo">
+<svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#6366f1"/><path d="M8 20l4-8 4 5 3-4 3 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+CC Workforce Planning
+</div>
+<div class="ts" id="upd">Uppdaterat --:--</div>
 </header>
 <nav>
-  <button class="active" onclick="showTab('wp',this)">⬡ Workforce Planning</button>
-  <div class="nav-sep"></div>
-  <button onclick="showTab('overview',this)">Daglig oversikt</button>
-  <button onclick="showTab('products',this)">Per produkt</button>
-  <button onclick="showTab('recent',this)">Senaste tickets</button>
-  <button onclick="showTab('trend',this)">Trend</button>
-  <button onclick="showTab('workforce',this)">Workforce Gap</button>
-  <button onclick="showTab('aht',this)">AHT FTE</button>
-  <button onclick="showTab('prognos',this)">Prognos</button>
-  <button onclick="showTab('setup',this)">Setup</button>
+<button class="active" onclick="showTab('wp',this)">⬡ Workforce Planning</button>
+<div class="nav-sep"></div>
+<button onclick="showTab('overview',this)">Daglig översikt</button>
+<button onclick="showTab('products',this)">Per produkt</button>
+<button onclick="showTab('recent',this)">Senaste tickets</button>
+<button onclick="showTab('trend',this)">Trend</button>
+<button onclick="showTab('workforce',this)">Workforce Gap</button>
+<button onclick="showTab('aht',this)">AHT FTE</button>
+<button onclick="showTab('prognos',this)">Prognos</button>
+<button onclick="showTab('setup',this)">Setup</button>
 </nav>
 <main>
 
-<!-- ═══════════════════════════════════════════════════════════
-     WORKFORCE PLANNING TAB
-════════════════════════════════════════════════════════════ -->
+<!-- WORKFORCE PLANNING TAB -->
 <div id="tab-wp" class="tc active">
 
-  <!-- § 1 EXECUTIVE SUMMARY -->
-  <div class="section-header" style="margin-top:0">
-    <span class="section-title">§ 1 · Executive Summary — nuläge</span>
-    <span class="section-note">Källa: CC_FTE_Calculator.xlsx · Dashboard + FTE Calc</span>
-  </div>
+<!-- § 1 EXECUTIVE SUMMARY — PLANNING LAYER -->
+<div class="section-header" style="margin-top:0">
+<span class="section-title">§ 1 · Executive Summary — nuläge</span>
+<div style="display:flex;align-items:center;gap:8px">
+<span class="layer-badge planning">Planering</span>
+<span class="section-note">Källa: CC_FTE_Calculator.xlsx · Dashboard + FTE Calc</span>
+</div>
+</div>
+<div class="kpi-grid">
+<div class="kpi-card actual">
+<div class="kpi-label"><span>Actual FTE</span><span class="tag master">Masterdata</span></div>
+<div class="kpi-value actual">11</div>
+<div class="kpi-sub">Faktisk bemanning · Business baseline</div>
+<div class="kpi-tooltip">Faktiskt antal anställda. Mastervärde = 11. Ej detsamma som Effective Supply — påverkas ej av modellberäkningar. Alla scenarier utgår från denna nollpunkt.</div>
+</div>
+<div class="kpi-card supply">
+<div class="kpi-label">Effective Supply FTE</div>
+<div class="kpi-value supply">11.10</div>
+<div class="kpi-sub">Produktiv kapacitet efter seniority &amp; allokering</div>
+<div class="kpi-tooltip">Modellens beräknade tillgängliga kapacitet. Kan vara ≠ Actual FTE pga seniority-viktning. Skilj alltid dessa begrepp åt. Källa: FTE Calc-fliken.</div>
+</div>
+<div class="kpi-card required">
+<div class="kpi-label">Required FTE</div>
+<div class="kpi-value required">10.10</div>
+<div class="kpi-sub">Ticket FTE 9.10 + Overhead FTE 1.00</div>
+<div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. Beräknat på volym, AHT, occupancy, shrinkage och peak buffer per pool. Källa: FTE Calc-fliken.</div>
+</div>
+<div class="kpi-card gap">
+<div class="kpi-label">Net Gap FTE</div>
+<div class="kpi-value gap-pos" id="kpi-gap">+1.00</div>
+<div class="kpi-sub">Effective Supply − Required FTE</div>
+<div class="kpi-tooltip">⚠ Positivt totalt gap döljer kritiskt underskott i Classic (-1.15 FTE). Se Pool Capacity Gaps nedan.</div>
+</div>
+</div>
 
-  <!-- KPI grid -->
-  <div class="kpi-grid">
-    <div class="kpi-card actual">
-      <div class="kpi-label"><span>Actual FTE</span><span class="tag master">Masterdata</span></div>
-      <div class="kpi-value actual">11</div>
-      <div class="kpi-sub">Faktisk bemanning i nuläget<br>Business baseline – ej härledd</div>
-      <div class="kpi-tooltip">Representerar det faktiska antalet medarbetare. Alla scenarier och gap-beräkningar utgår från detta värde som planerings-nollpunkt.</div>
-    </div>
-    <div class="kpi-card supply">
-      <div class="kpi-label">Effective Supply FTE</div>
-      <div class="kpi-value supply">11.10</div>
-      <div class="kpi-sub">Produktiv kapacitet efter seniority & allokering</div>
-      <div class="kpi-tooltip">Modellens beräknade tillgängliga kapacitet. Skiljer sig från Actual FTE pga seniority-viktning och pool-allokering. Hämtas från FTE Calc-fliken.</div>
-    </div>
-    <div class="kpi-card required">
-      <div class="kpi-label">Required FTE</div>
-      <div class="kpi-value required">10.10</div>
-      <div class="kpi-sub">Ticket FTE 9.10 + Overhead FTE 1.00</div>
-      <div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. Beräknat på volym, AHT, occupancy, shrinkage och peak buffer per pool.</div>
-    </div>
-    <div class="kpi-card gap">
-      <div class="kpi-label">Net Gap FTE</div>
-      <div class="kpi-value gap-pos" id="kpi-gap">+1.00</div>
-      <div class="kpi-sub">Effective Supply − Required FTE</div>
-      <div class="kpi-tooltip">⚠ Positivt totalt gap döljer kritiskt underskott i Classic (-1.15 FTE). Se Pool Capacity Gaps nedan.</div>
-    </div>
-  </div>
+<!-- Alert: Classic deficit -->
+<div class="alert-banner crit" id="classic-alert">
+<div class="alert-icon">🚨</div>
+<div class="alert-body">
+<div class="alert-title">Classic är underbemannad med -1.15 FTE trots total balans</div>
+<div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Classic hanterar den migrationstunga volymen — underskottet är operativt prioriterat och kräver åtgärd. Supply: <span>2.25 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.15 FTE</span>.</div>
+</div>
+</div>
 
-  <!-- Alert: Classic deficit -->
-  <div class="alert-banner crit" id="classic-alert">
-    <div class="alert-icon">🚨</div>
-    <div class="alert-body">
-      <div class="alert-title">Classic är underbemannad med -1.15 FTE trots total balans</div>
-      <div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Classic hanterar den migrationstunga volymen — underskottet är operativt prioriterat och kräver åtgärd. Supply: <span>2.25 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.15 FTE</span>.</div>
-    </div>
-  </div>
+<!-- Architecture note -->
+<div class="alert-banner info" style="margin-bottom:32px">
+<div class="alert-icon">ℹ</div>
+<div class="alert-body">
+<div class="alert-title" style="font-size:12px;color:#60a5fa">Två-lager arkitektur</div>
+<div class="alert-desc"><span>Planering</span> (blå märkning) = Excel-modellens källvärden. Officiella KPI:er, gap-beräkningar och scenariojämförelser. Ändras aldrig i frontend. · <span>Analys</span> (lila märkning) = Daglig/månadsvis driftanalys hämtad från API. Visar faktisk arbetsbelastning och täckning over tid. Används för trendvisualisering — ersätter INTE planeringslagrets officiella mått.</div>
+</div>
+</div>
 
-  <!-- § 2 STAFFING OVER TIME -->
-  <div class="section-header">
-    <span class="section-title">§ 2 · Staffing Over Time</span>
-    <div style="display:flex;gap:8px;align-items:center">
-      <span class="tag forecast">Prognos</span>
-      <div class="chart-controls">
-        <button class="chart-btn active" onclick="setTimeGran('monthly',this)">Månadsvis</button>
-        <button class="chart-btn" onclick="setTimeGran('quarterly',this)">Kvartal</button>
-      </div>
-    </div>
-  </div>
-  <div class="chart-wrap">
-    <h4>
-      FTE-utveckling: Actual · Effective Supply · Required · Gap
-      <span style="font-size:10px;color:#475569">Historik = faktisk data · Prognos = scenariostyrd</span>
-    </h4>
-    <canvas id="staffingChart" height="90"></canvas>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:8px">
-    <div class="card" style="padding:12px 16px">
-      <div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div>
-      <div class="cs">Worst case · aug 2025</div>
-    </div>
-    <div class="card" style="padding:12px 16px">
-      <div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div>
-      <div class="cs">Required FTE med AI-deflection</div>
-    </div>
-    <div class="card" style="padding:12px 16px">
-      <div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div>
-      <div class="cs">Med AI-deflection · topp migration</div>
-    </div>
-  </div>
+<!-- § 2 STAFFING OVER TIME — DUAL LAYER -->
+<div class="section-header">
+<span class="section-title">§ 2 · Staffing Over Time</span>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<span class="layer-badge planning">Planering</span>
+<span class="layer-badge analytics">Analys</span>
+<div class="chart-controls">
+<button class="chart-btn active" onclick="setTimeGran('monthly',this)">Månadsvis</button>
+<button class="chart-btn" onclick="setTimeGran('quarterly',this)">Kvartal</button>
+</div>
+</div>
+</div>
 
-  <!-- § 3 POOL CAPACITY GAPS -->
-  <div class="section-header">
-    <span class="section-title">§ 3 · Pool Capacity Gaps — nuläge</span>
-    <span class="section-note">Sorterat: lägst gap överst · Negativa gap = röda</span>
-  </div>
-  <div class="pool-grid" id="pool-gaps">
-    <!-- rendered by JS -->
-  </div>
-  <div style="margin-top:12px">
-    <div class="chart-wrap" style="margin-bottom:0">
-      <h4>Gap FTE per pool (Supply minus Peak Demand)</h4>
-      <canvas id="poolGapChart" height="60"></canvas>
-    </div>
-  </div>
+<!-- Planning reference view -->
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Planering · Scenario-driven utveckling</span><div class="layer-divider-line"></div></div>
+<div class="chart-wrap" style="margin-bottom:12px">
+<h4>
+FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
+<span class="layer-badge planning" style="font-size:9px">Planering</span>
+</h4>
+<canvas id="staffingChart" height="90"></canvas>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
+<div class="card" style="padding:12px 16px">
+<div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div>
+<div class="cs">Worst case · aug 2025</div>
+</div>
+<div class="card" style="padding:12px 16px">
+<div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div>
+<div class="cs">Required FTE med AI-deflection</div>
+</div>
+<div class="card" style="padding:12px 16px">
+<div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div>
+<div class="cs">Med AI-deflection · topp migration</div>
+</div>
+</div>
 
-  <!-- § 4 SCENARIO COMPARISON -->
-  <div class="section-header">
-    <span class="section-title">§ 4 · Scenario Comparison</span>
-    <span class="section-note">Källa: Scenario Compare-fliken i CC_FTE_Calculator.xlsx</span>
-  </div>
-  <div class="scenario-grid">
-    <div class="scenario-card active-scenario">
-      <div class="sc-name">Now <span class="tag info">Nuläge</span></div>
-      <div class="sc-gap" style="color:#4ade80">+1.00</div>
-      <div class="sc-deficit">⚠ Classic -1.15 FTE underskott</div>
-      <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">10.10</span></div>
-      <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
-      <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">9.10</span></div>
-      <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-      <div class="sc-row"><span class="sc-key">Månadskostnad</span><span class="sc-val">~110k SEK</span></div>
-    </div>
-    <div class="scenario-card">
-      <div class="sc-name">Post-aug Best <span class="tag ok">Optimistisk</span></div>
-      <div class="sc-gap" style="color:#4ade80">+1.80</div>
-      <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.80</span></div>
-      <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.60</span></div>
-      <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.80</span></div>
-      <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-      <div class="sc-row"><span class="sc-key">Störst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
-    </div>
-    <div class="scenario-card" style="border-color:#ef4444">
-      <div class="sc-name">Post-aug Worst <span class="tag crit">Kritisk</span></div>
-      <div class="sc-gap" style="color:#fca5a5">-2.50</div>
-      <div class="sc-deficit">Kraftigt underskott på total nivå</div>
-      <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.50</span></div>
-      <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#fca5a5">7.00</span></div>
-      <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.50</span></div>
-      <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-      <div class="sc-row"><span class="sc-key">Störst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
-    </div>
-    <div class="scenario-card">
-      <div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategi</span></div>
-      <div class="sc-gap" style="color:#4ade80">+1.80</div>
-      <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.30</span></div>
-      <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
-      <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.30</span></div>
-      <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-      <div class="sc-row"><span class="sc-key">AI deflection</span><span class="sc-val" style="color:#4ade80">30%</span></div>
-    </div>
-  </div>
-  <div class="chart-wrap">
-    <h4>Scenario Compare: Required FTE vs Effective Supply</h4>
-    <canvas id="scenarioChart" height="70"></canvas>
-  </div>
+<!-- Analytics trend view -->
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys · Faktisk arbetsbelastning & täckning (API-data)</span><div class="layer-divider-line"></div></div>
+<div class="trend-container">
+<div class="trend-header">
+<span class="trend-title">Månadsvis arbetsbelastning: Faktiska tickets & beräknad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
+<div class="chart-controls">
+<button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mån</button>
+<button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mån</button>
+<button class="chart-btn" id="trendBtn3" onclick="setTrendWindow(3,this)">3 mån</button>
+</div>
+</div>
+<div id="trend-loading" class="trend-loading">Laddar driftdata från API...</div>
+<div id="trend-error" class="trend-error" style="display:none"></div>
+<canvas id="trendChart" height="80" style="display:none"></canvas>
+<p id="trend-note" class="chart-note" style="display:none">
+⚠ <strong>Analytikslager:</strong> Dessa värden (dagliga tickets → FTE-beräkning) är driftanalys för trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply per dag — ett approximationsvärde, ej officiellt planeringsmått. Officiella Required FTE och Effective Supply finns i planeringslagret ovan.
+</p>
+</div>
+<div id="trend-monthly-cards" style="display:none;margin-top:12px">
+<div class="analytics-month-grid" id="trend-cards-inner"></div>
+</div>
 
-  <!-- § 5 MIGRATION FORECAST -->
-  <div class="section-header">
-    <span class="section-title">§ 5 · Migration Forecast — Classic → S1</span>
-    <span class="section-note">Källa: Migration Forecast-fliken · Q0 = nuläge</span>
-  </div>
-  <div style="margin-bottom:14px">
-    <div class="alert-banner warn">
-      <div class="alert-icon">📊</div>
-      <div class="alert-body">
-        <div class="alert-title">Migrationsstrategi kräver S1-rekrytering senast Q4–Q6</div>
-        <div class="alert-desc">S1 FTE-behov växer från <span>2.93</span> vid Q0 till <span>4.05</span> vid Q10 med AI-deflection. Classic-volym minskar parallellt. Utan proaktiv rekrytering skapas ett strukturellt gap i S1-poolen under migrationstoppen.</div>
-      </div>
-    </div>
-  </div>
-  <div class="migration-phases">
-    <span class="phase-chip phase-akut">🔴 Akut (Q0–Q1)</span>
-    <span class="phase-chip phase-fas1">🟠 Fas 1 (Q2–Q3)</span>
-    <span class="phase-chip phase-fas2">🟡 Fas 2 (Q4–Q6)</span>
-    <span class="phase-chip phase-fas3">🟢 Fas 3 (Q7–Q8)</span>
-    <span class="phase-chip phase-expansion">🔵 Expansion (Q9–Q10)</span>
-  </div>
-  <div class="chart-wrap" style="margin-bottom:16px">
-    <h4>S1 FTE-behov · Migration Q0–Q10</h4>
-    <canvas id="migrationChart" height="90"></canvas>
-  </div>
-  <div class="tw" style="margin-bottom:16px">
-    <table>
-      <thead>
-        <tr>
-          <th>Kvartal</th>
-          <th>Fas</th>
-          <th class="r">Migr. kunder tot.</th>
-          <th class="r">Classic kvar</th>
-          <th class="r">S1 volym (inkl SB)</th>
-          <th class="r">Classic volym</th>
-          <th class="r">S1 FTE u. AI</th>
-          <th class="r">S1 FTE m. AI</th>
-          <th class="r">Rekr. behov</th>
-          <th class="r">Kostnad S1/mån</th>
-        </tr>
-      </thead>
-      <tbody id="migration-table"></tbody>
-    </table>
-  </div>
+<!-- § 3 POOL CAPACITY GAPS — PLANNING LAYER -->
+<div class="section-header">
+<span class="section-title">§ 3 · Pool Capacity Gaps — nuläge</span>
+<div style="display:flex;gap:8px;align-items:center">
+<span class="layer-badge planning">Planering</span>
+<span class="section-note">Sorterat: lägst gap överst · Negativa gap = röda</span>
+</div>
+</div>
+<div class="pool-grid" id="pool-gaps"></div>
+<div style="margin-top:12px">
+<div class="chart-wrap" style="margin-bottom:0">
+<h4>Gap FTE per pool (Effective Supply − Peak Demand) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<canvas id="poolGapChart" height="60"></canvas>
+</div>
+</div>
 
-  <!-- § 6 SENSITIVITY / DRIVERS -->
-  <div class="section-header">
-    <span class="section-title">§ 6 · Vad driver bemanningsbehovet?</span>
-    <span class="section-note">Basfall: 10.10 Required FTE · Påverkan vid ±10% och ±20% förändring</span>
-  </div>
-  <div class="chart-wrap" style="margin-bottom:12px">
-    <h4>Tornado: FTE-impact per driver (avvikelse från 10.10 FTE)</h4>
-    <canvas id="sensitivityChart" height="100"></canvas>
-  </div>
-  <div class="tw">
-    <table>
-      <thead><tr><th>Driver</th><th class="r">−20%</th><th class="r">−10%</th><th class="r">Bas (10.10)</th><th class="r">+10%</th><th class="r">+20%</th><th>Enhet</th></tr></thead>
-      <tbody id="sensitivity-table"></tbody>
-    </table>
-  </div>
+<!-- § 4 SCENARIO COMPARISON — PLANNING LAYER -->
+<div class="section-header">
+<span class="section-title">§ 4 · Scenario Comparison</span>
+<div style="display:flex;gap:8px;align-items:center">
+<span class="layer-badge planning">Planering</span>
+<span class="section-note">Källa: Scenario Compare-fliken i CC_FTE_Calculator.xlsx</span>
+</div>
+</div>
+<div class="scenario-grid">
+<div class="scenario-card active-scenario">
+<div class="sc-name">Now <span class="tag info">Nuläge</span></div>
+<div class="sc-gap" style="color:#4ade80">+1.00</div>
+<div class="sc-deficit">⚠ Classic -1.15 FTE underskott</div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">10.10</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
+<div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">9.10</span></div>
+<div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
+<div class="sc-row"><span class="sc-key">Månadskostnad</span><span class="sc-val">~110k SEK</span></div>
+</div>
+<div class="scenario-card">
+<div class="sc-name">Post-aug Best <span class="tag ok">Optimistisk</span></div>
+<div class="sc-gap" style="color:#4ade80">+1.80</div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.80</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.60</span></div>
+<div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.80</span></div>
+<div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
+<div class="sc-row"><span class="sc-key">Störst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
+</div>
+<div class="scenario-card" style="border-color:#ef4444">
+<div class="sc-name">Post-aug Worst <span class="tag crit">Kritisk</span></div>
+<div class="sc-gap" style="color:#fca5a5">-2.50</div>
+<div class="sc-deficit">Kraftigt underskott på total nivå</div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.50</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#fca5a5">7.00</span></div>
+<div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.50</span></div>
+<div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
+<div class="sc-row"><span class="sc-key">Störst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
+</div>
+<div class="scenario-card">
+<div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategi</span></div>
+<div class="sc-gap" style="color:#4ade80">+1.80</div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.30</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
+<div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.30</span></div>
+<div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
+<div class="sc-row"><span class="sc-key">AI deflection</span><span class="sc-val" style="color:#4ade80">30%</span></div>
+</div>
+</div>
+<div class="chart-wrap">
+<h4>Scenario Compare: Required FTE vs Effective Supply <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<canvas id="scenarioChart" height="70"></canvas>
+</div>
 
-  <!-- § 7 DEFINITIONS -->
-  <div class="section-header">
-    <span class="section-title">§ 7 · Definitioner & Modellnoter</span>
-  </div>
-  <div class="def-grid">
-    <div class="def-item">
-      <div class="def-term">Actual FTE</div>
-      <div class="def-body">Faktiskt antal anställda medarbetare i teamet. <strong>Mastervärde = 11 FTE</strong> i nuläget.</div>
-      <div class="def-example">Ej detsamma som Effective Supply — påverkas ej av modellberäkningar.</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Effective Supply FTE</div>
-      <div class="def-body">Modellens beräknade produktiva kapacitet efter seniority-viktning och pool-allokering. Nuläge: 11.10 FTE.</div>
-      <div class="def-example">Kan vara högre eller lägre än Actual FTE beroende på senioritetsstruktur.</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Required FTE</div>
-      <div class="def-body">Totalt FTE-behov beräknat av modellen. Inkluderar Ticket FTE peak (9.10) + Overhead FTE (1.00).</div>
-      <div class="def-example">Required = (Volym × AHT) / (Tillg. tid × Occupancy × (1−Shrinkage)) × Peak buffer</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Peak FTE</div>
-      <div class="def-body">FTE-behov vid peak-belastning (inte genomsnitt). Dimensionerar bemanningsbehovet.</div>
-      <div class="def-example">Nuläge Ticket FTE peak: 9.10 FTE</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Comfortable FTE</div>
-      <div class="def-body">FTE-behov vid normal (icke-peak) belastning — lägre än Peak FTE.</div>
-      <div class="def-example">Används för att bedöma om poolen är rätt dimensionerad i normalläge.</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Gap FTE</div>
-      <div class="def-body">Effective Supply − Required FTE. Positivt = överskott, negativt = underskott.</div>
-      <div class="def-example">⚠ Totalt positivt gap döljer aldrig pool-level underskott. Kontrollera alltid pool-vyn.</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">AI Deflection</div>
-      <div class="def-body">Andel av inkommande tickets som avleds av AI/automation och inte når agenter. Minskar Required FTE.</div>
-      <div class="def-example">Vid 30% AI deflection: Required FTE ≈ 9.30 (ned från 10.10)</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Shrinkage</div>
-      <div class="def-body">Andel av betald tid som inte är tillgänglig för ticketarbete (möten, frånvaro, utbildning etc.).</div>
-      <div class="def-example">Ökar Required FTE. Modellens shrinkage-parameter ingår i FTE Calc-beräkningen.</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Occupancy</div>
-      <div class="def-body">Andel av tillgänglig tid som agenter faktiskt spenderar på ticketarbete.</div>
-      <div class="def-example">Lägre occupancy → högre Required FTE. Vanlig target: 80–85%.</div>
-    </div>
-    <div class="def-item">
-      <div class="def-term">Peak Buffer</div>
-      <div class="def-body">Multiplicerande faktor för att säkerställa kapacitet vid volymtoppar.</div>
-      <div class="def-example">Peak buffer > 1.0 ökar Required FTE för att hantera daglig variation.</div>
-    </div>
-  </div>
+<!-- § 5 MIGRATION FORECAST — PLANNING LAYER -->
+<div class="section-header">
+<span class="section-title">§ 5 · Migration Forecast — Classic → S1</span>
+<div style="display:flex;gap:8px;align-items:center">
+<span class="layer-badge planning">Planering</span>
+<span class="section-note">Källa: Migration Forecast-fliken · Q0 = nuläge</span>
+</div>
+</div>
+<div style="margin-bottom:14px">
+<div class="alert-banner warn">
+<div class="alert-icon">📊</div>
+<div class="alert-body">
+<div class="alert-title">Migrationsstrategi kräver S1-rekrytering senast Q4–Q6</div>
+<div class="alert-desc">S1 FTE-behov växer från <span>2.93</span> vid Q0 till <span>4.05</span> vid Q10 med AI-deflection. Classic-volym minskar parallellt. Utan proaktiv rekrytering skapas ett strukturellt gap i S1-poolen under migrationstoppen.</div>
+</div>
+</div>
+</div>
+<div class="migration-phases">
+<span class="phase-chip phase-akut">🔴 Akut (Q0–Q1)</span>
+<span class="phase-chip phase-fas1">🟠 Fas 1 (Q2–Q3)</span>
+<span class="phase-chip phase-fas2">🟡 Fas 2 (Q4–Q6)</span>
+<span class="phase-chip phase-fas3">🟢 Fas 3 (Q7–Q8)</span>
+<span class="phase-chip phase-expansion">🔵 Expansion (Q9–Q10)</span>
+</div>
+<div class="chart-wrap" style="margin-bottom:16px">
+<h4>S1 FTE-behov · Migration Q0–Q10 <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<canvas id="migrationChart" height="90"></canvas>
+</div>
+<div class="tw" style="margin-bottom:16px">
+<table>
+<thead>
+<tr>
+<th>Kvartal</th><th>Fas</th>
+<th class="r">Migr. kunder tot.</th><th class="r">Classic kvar</th>
+<th class="r">S1 volym (inkl SB)</th><th class="r">Classic volym</th>
+<th class="r">S1 FTE u. AI</th><th class="r">S1 FTE m. AI</th>
+<th class="r">Rekr. behov</th><th class="r">Kostnad S1/mån</th>
+</tr>
+</thead>
+<tbody id="migration-table"></tbody>
+</table>
+</div>
 
-  <div style="margin-top:24px;padding:16px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
-    <strong style="color:#64748b">Modellnoter:</strong> Alla värden hämtade direkt från CC_FTE_Calculator.xlsx. Avvikelse mot webbappens beräknade FTE-tal indikerar att Excel-modellen är korrekt om inte ett validerat beslut ändrat beräkningsmetodiken. Forecast-serier är scenariostyrdta och märkta som sådana — de presenteras aldrig som historiska utfall.
-  </div>
+<!-- § 6 SENSITIVITY / DRIVERS — PLANNING LAYER -->
+<div class="section-header">
+<span class="section-title">§ 6 · Vad driver bemanningsbehovet?</span>
+<div style="display:flex;gap:8px;align-items:center">
+<span class="layer-badge planning">Planering</span>
+<span class="section-note">Basfall: 10.10 Required FTE · Påverkan vid ±10% och ±20%</span>
+</div>
+</div>
+<div class="chart-wrap" style="margin-bottom:12px">
+<h4>Tornado: FTE-impact per driver (avvikelse från 10.10 FTE) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<canvas id="sensitivityChart" height="100"></canvas>
+</div>
+<div class="tw">
+<table>
+<thead><tr><th>Driver</th><th class="r">−20%</th><th class="r">−10%</th><th class="r">Bas (10.10)</th><th class="r">+10%</th><th class="r">+20%</th><th>Enhet</th></tr></thead>
+<tbody id="sensitivity-table"></tbody>
+</table>
+</div>
+
+<!-- § 7 DEFINITIONS — SHARED -->
+<div class="section-header">
+<span class="section-title">§ 7 · Definitioner &amp; Modellnoter</span>
+</div>
+<div class="def-grid">
+<div class="def-item">
+<div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
+<div class="def-body">Faktiskt antal anställda medarbetare. <strong>Mastervärde = 11 FTE.</strong> Ej detsamma som Effective Supply.</div>
+<div class="def-example">Ändras aldrig av modellberäkningar. Business baseline.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
+<div class="def-body">Modellens beräknade produktiva kapacitet efter seniority-viktning och pool-allokering. Nuläge: 11.10 FTE.</div>
+<div class="def-example">Kan vara högre eller lägre än Actual FTE beroende på senioritetsstruktur.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
+<div class="def-body">Totalt FTE-behov. Inkluderar Ticket FTE peak (9.10) + Overhead FTE (1.00).</div>
+<div class="def-example">Required = (Volym × AHT) / (Tillg. tid × Occupancy × (1−Shrinkage)) × Peak buffer</div>
+</div>
+<div class="def-item">
+<div class="def-term">Peak FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
+<div class="def-body">FTE-behov vid peak-belastning. Dimensionerar bemanningsbehovet.</div>
+<div class="def-example">Nuläge Ticket FTE peak: 9.10 FTE</div>
+</div>
+<div class="def-item">
+<div class="def-term">Comfortable FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
+<div class="def-body">FTE-behov vid normal (icke-peak) belastning. Lägre än Peak FTE.</div>
+<div class="def-example">Används för bedömning av pool-dimensionering i normalläge.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
+<div class="def-body">Effective Supply − Required FTE. Positivt = överskott, negativt = underskott.</div>
+<div class="def-example">⚠ Totalt positivt gap döljer aldrig pool-level underskott. Kontrollera alltid pool-vyn.</div>
+</div>
+<div class="def-item">
+<div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div>
+<div class="def-body">Poolens konfigurerade bemanningskapacitet per dag. Analytiksvärde — inte officiellt planeringsmått.</div>
+<div class="def-example">Används för trendanalys och driftöversikt. Ersätter ej Effective Supply FTE.</div>
+</div>
+<div class="def-item">
+<div class="def-term">AI Deflection</div>
+<div class="def-body">Andel av inkommande tickets avleds av AI/automation. Minskar Required FTE.</div>
+<div class="def-example">Vid 30% AI deflection: Required FTE ≈ 9.30 (ned från 10.10)</div>
+</div>
+<div class="def-item">
+<div class="def-term">Shrinkage</div>
+<div class="def-body">Andel av betald tid ej tillgänglig för ticketarbete (möten, frånvaro, utbildning).</div>
+<div class="def-example">Ökar Required FTE. Ingår i FTE Calc-beräkningen.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Occupancy</div>
+<div class="def-body">Andel av tillgänglig tid agenter spenderar på ticketarbete.</div>
+<div class="def-example">Lägre occupancy → högre Required FTE. Vanlig target: 80–85%.</div>
+</div>
+<div class="def-item">
+<div class="def-term">Peak Buffer</div>
+<div class="def-body">Multiplicerande faktor för att säkerställa kapacitet vid volymtoppar.</div>
+<div class="def-example">Peak buffer > 1.0 ökar Required FTE för att hantera daglig variation.</div>
+</div>
+</div>
+<div style="margin-top:24px;padding:16px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
+<strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets värden (§1, §3–§7) hämtas direkt från CC_FTE_Calculator.xlsx. Avvikelse mot webbappens tal indikerar att Excel-modellen är korrekt om inte ett validerat beslut ändrat beräkningsmetodiken. Analyslagrets trenddata (§2 Analys) beräknas från dagliga ticketdata via API — dessa är <em>operativa estimat</em> och ska inte tolkas som officiella planerings-KPI:er. Forecast-serier märks alltid med <span class="tag forecast" style="font-size:9px">Prognos</span>-tagg.
+</div>
 
 </div><!-- /tab-wp -->
 <!-- OVERVIEW TAB -->
@@ -537,7 +587,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 </div>
 <div id="tab-workforce" class="tc">
 <div class="wf" id="wf-summary"></div>
-<div class="st">Manadsöversikt - senaste 12 manader</div>
+<div class="st">Månadsöversikt - senaste 12 månader</div>
 <div class="mg" id="monthly-grid"></div>
 <div class="st">Daglig kapacitet</div>
 <div class="fp" id="pool-filter"></div>
@@ -547,52 +597,52 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 <div class="enrich-bar">
 <div class="enrich-info" id="enrich-status">Laddar...</div>
 <div class="pb"><div class="pf" id="enrich-prog" style="width:0%"></div></div>
-<button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">Hamta Freshdesk-data</button>
+<button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">Hämta Freshdesk-data</button>
 </div>
 <div class="wf" id="aht-summary"></div>
 <div class="view-toggle">
 <button class="vt-btn active" id="vt-all" onclick="setView('all',this)">Alla tickets</button>
 <button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope (Customer Care)</button>
 </div>
-<div class="st">AHT-justerad FTE per pool - 12 manader</div>
+<div class="st">AHT-justerad FTE per pool - 12 månader</div>
 <div class="pool-toggle" id="aht-pool-filter"></div>
 <div class="ag" id="aht-grid"></div>
 </div>
 <div id="tab-prognos" class="tc">
 <div class="prognos-inputs">
-<h3>Scenarioantaganden - 12-manadsprognos</h3>
+<h3>Scenarioantaganden - 12-månadsprognos</h3>
 <div class="input-grid">
-<div class="input-group"><label>Volymforandring (%/man)</label><input type="number" id="pg-vol-chg" value="0" step="0.5"></div>
-<div class="input-group"><label>AHT-forandring (%/man)</label><input type="number" id="pg-aht-chg" value="0" step="0.5"></div>
-<div class="input-group"><label>Supply-forandring (FTE/man)</label><input type="number" id="pg-sup-chg" value="0" step="0.1"></div>
-<div class="input-group"><label>Startmanad</label><input type="month" id="pg-start-month"></div>
+<div class="input-group"><label>Volymförändring (%/mån)</label><input type="number" id="pg-vol-chg" value="0" step="0.5"></div>
+<div class="input-group"><label>AHT-förändring (%/mån)</label><input type="number" id="pg-aht-chg" value="0" step="0.5"></div>
+<div class="input-group"><label>Supply-förändring (FTE/mån)</label><input type="number" id="pg-sup-chg" value="0" step="0.1"></div>
+<div class="input-group"><label>Startmånad</label><input type="month" id="pg-start-month"></div>
 </div>
-<button class="run-btn" onclick="runPrognos()">Generera 12-manadsprognos</button>
+<button class="run-btn" onclick="runPrognos()">Generera 12-månadsprognos</button>
 </div>
 <div class="wf" id="prognos-summary"></div>
-<div class="st">Manadsvis FTE-prognos</div>
+<div class="st">Månadsvis FTE-prognos</div>
 <div class="forecast-grid" id="forecast-grid"></div>
 <div style="margin-top:24px">
 <div class="st">Prognostabell</div>
-<div class="tw"><table><thead><tr><th>Manad</th><th class="r">Volym</th><th class="r">AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE-krav</th><th class="r">FTE-tillgang</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
+<div class="tw"><table><thead><tr><th>Månad</th><th class="r">Volym</th><th class="r">AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE-krav</th><th class="r">FTE-tillgång</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
 </div>
 </div>
 <div id="tab-setup" class="tc">
-<div class="st">Arkitektur & Konfiguration</div>
+<div class="st">Arkitektur &amp; Konfiguration</div>
 <div class="setup-section">
 <div class="setup-row"><div><h3>P1 · Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb som anropar berikningsfunktionen varje timme.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
 <div class="code-block">SELECT cron.schedule('cc-ticket-enricher-hourly','0 * * * *',$$
-  SELECT net.http_post(url:='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',
-    headers:=jsonb_build_object('Content-Type','application/json','Authorization','Bearer SERVICE_ROLE_KEY'),
-    body:='{}'::jsonb);$$);
+SELECT net.http_post(url:='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',
+headers:=jsonb_build_object('Content-Type','application/json','Authorization','Bearer SERVICE_ROLE_KEY'),
+body:='{}'::jsonb);$$);
 SELECT * FROM cron.job WHERE jobname='cc-ticket-enricher-hourly';</div>
 </div>
 <div class="setup-section">
 <div class="setup-row"><div><h3>P4 · Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history — faktisk bemanning per månad per pool.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
 <div class="code-block">CREATE TABLE IF NOT EXISTS cc_pool_supply_history (
-  id BIGSERIAL PRIMARY KEY, pool_slug TEXT NOT NULL,
-  year_month TEXT NOT NULL, fte_supply NUMERIC(6,2) NOT NULL,
-  note TEXT, created_at TIMESTAMPTZ DEFAULT NOW(), UNIQUE(pool_slug,year_month));
+id BIGSERIAL PRIMARY KEY, pool_slug TEXT NOT NULL,
+year_month TEXT NOT NULL, fte_supply NUMERIC(6,2) NOT NULL,
+note TEXT, created_at TIMESTAMPTZ DEFAULT NOW(), UNIQUE(pool_slug,year_month));
 INSERT INTO cc_pool_supply_history(pool_slug,year_month,fte_supply,note)
 SELECT slug,TO_CHAR(gs,'YYYY-MM'),fte_capacity,'Seeded'
 FROM cc_pools CROSS JOIN generate_series(NOW()-INTERVAL'18 months',NOW(),INTERVAL'1 month') gs
@@ -612,72 +662,159 @@ SELECT name,updated_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div
 <div class="setup-row"><div><h3>P5 · Svenska arbetsdagar per månad</h3></div><span class="status-chip info">ℹ Aktiv</span></div>
 <div class="tw" style="margin-top:12px"><table><thead><tr><th>Månad</th><th class="r">Arbetsdagar</th><th class="r">Tillg. min (7h)</th><th class="r">Diff vs 9450</th></tr></thead><tbody id="workday-table"></tbody></table></div>
 </div>
-</div></main>
-<script>
+</div>
+</main><script>
 // ═══════════════════════════════════════════════════
-// DATA CONTRACT — Excel model source of truth
-// CC_FTE_Calculator.xlsx masterdata
+// LAYER 1: planningModelAdapter
+// Source of truth: CC_FTE_Calculator.xlsx
+// These values NEVER change based on API data
 // ═══════════════════════════════════════════════════
+var planningModelAdapter = (function() {
 var WP = {
-  actualFte: 11,          // MASTER baseline — never derived
+  actualFte: 11,           // MASTER BASELINE — business-fixed, never derived
   effectiveSupplyFte: 11.10,
   requiredFte: 10.10,
   ticketFtePeak: 9.10,
   overheadFte: 1.00,
-  netGapFte: 1.00,        // effectiveSupply - required
+  netGapFte: 1.00,         // effectiveSupplyFte - requiredFte
   monthlyCostSek: 110000,
 
   pools: [
-    { pool:'Classic',    supply:2.25, demandPeak:3.40, comfortable:2.80, gapFte:-1.15, status:'Critical', agents:3 },
-    { pool:'Switchboard',supply:2.69, demandPeak:2.65, comfortable:2.20, gapFte: 0.04, status:'Tight',    agents:3 },
-    { pool:'Talent',     supply:1.49, demandPeak:0.95, comfortable:0.80, gapFte: 0.54, status:'OK',       agents:2 },
-    { pool:'Frankly',    supply:2.35, demandPeak:1.65, comfortable:1.40, gapFte: 0.70, status:'OK',       agents:1 },
-    { pool:'S1',         supply:4.34, demandPeak:2.45, comfortable:2.00, gapFte: 1.89, status:'OK',       agents:2 }
+    { pool:'Classic',     supply:2.25, demandPeak:3.40, comfortable:2.80, gapFte:-1.15, status:'Critical', agents:3 },
+    { pool:'Switchboard', supply:2.69, demandPeak:2.65, comfortable:2.20, gapFte: 0.04, status:'Tight',    agents:3 },
+    { pool:'Talent',      supply:1.49, demandPeak:0.95, comfortable:0.80, gapFte: 0.54, status:'OK',       agents:2 },
+    { pool:'Frankly',     supply:2.35, demandPeak:1.65, comfortable:1.40, gapFte: 0.70, status:'OK',       agents:1 },
+    { pool:'S1',          supply:4.34, demandPeak:2.45, comfortable:2.00, gapFte: 1.89, status:'OK',       agents:2 }
   ],
 
   scenarios: [
-    { name:'Now',            requiredFte:10.10, supplyFte:11.10, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -1.15' },
-    { name:'Post-aug best',  requiredFte: 9.80, supplyFte:11.60, gapFte: 1.80, monthlyCostSek:107000, largestDeficit:'Classic' },
-    { name:'Post-aug worst', requiredFte: 9.50, supplyFte: 7.00, gapFte:-2.50, monthlyCostSek: 76000, largestDeficit:'Classic' },
-    { name:'AI deflect 30%', requiredFte: 9.30, supplyFte:11.10, gapFte: 1.80, monthlyCostSek:110000, largestDeficit:'Classic' }
+    { name:'Now',           requiredFte:10.10, supplyFte:11.10, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -1.15' },
+    { name:'Post-aug best', requiredFte: 9.80, supplyFte:11.60, gapFte: 1.80, monthlyCostSek:107000, largestDeficit:'Classic' },
+    { name:'Post-aug worst',requiredFte: 9.50, supplyFte: 7.00, gapFte:-2.50, monthlyCostSek: 76000, largestDeficit:'Classic' },
+    { name:'AI deflect 30%',requiredFte: 9.30, supplyFte:11.10, gapFte: 1.80, monthlyCostSek:110000, largestDeficit:'Classic' }
   ],
 
-  // Migration Forecast Q0-Q10 (from Migration Forecast tab)
   migration: [
-    { q:'Q0',  phase:'Akut',      migrated:0,    classicRemain:4200, s1Vol:1850, classicVol:4200, s1WithoutAi:2.93, s1WithAi:2.93, recruitNeed:null,  costSek:29300 },
-    { q:'Q1',  phase:'Akut',      migrated:420,  classicRemain:3780, s1Vol:2100, classicVol:3780, s1WithoutAi:3.10, s1WithAi:2.97, recruitNeed:0.04,  costSek:29700 },
-    { q:'Q2',  phase:'Fas 1',     migrated:840,  classicRemain:3360, s1Vol:2350, classicVol:3360, s1WithoutAi:3.28, s1WithAi:3.08, recruitNeed:0.15,  costSek:30800 },
-    { q:'Q3',  phase:'Fas 1',     migrated:1260, classicRemain:2940, s1Vol:2600, classicVol:2940, s1WithoutAi:3.45, s1WithAi:3.18, recruitNeed:0.25,  costSek:31800 },
-    { q:'Q4',  phase:'Fas 2',     migrated:1680, classicRemain:2520, s1Vol:2850, classicVol:2520, s1WithoutAi:3.62, s1WithAi:3.28, recruitNeed:0.35,  costSek:32800 },
-    { q:'Q5',  phase:'Fas 2',     migrated:2100, classicRemain:2100, s1Vol:3100, classicVol:2100, s1WithoutAi:3.78, s1WithAi:3.38, recruitNeed:0.45,  costSek:33800 },
-    { q:'Q6',  phase:'Fas 2',     migrated:2520, classicRemain:1680, s1Vol:3350, classicVol:1680, s1WithoutAi:3.95, s1WithAi:3.48, recruitNeed:0.55,  costSek:34800 },
-    { q:'Q7',  phase:'Fas 3',     migrated:2940, classicRemain:1260, s1Vol:3600, classicVol:1260, s1WithoutAi:4.02, s1WithAi:3.62, recruitNeed:0.69,  costSek:36200 },
-    { q:'Q8',  phase:'Fas 3',     migrated:3360, classicRemain:840,  s1Vol:3700, classicVol:840,  s1WithoutAi:4.08, s1WithAi:3.74, recruitNeed:0.81,  costSek:37400 },
-    { q:'Q9',  phase:'Expansion', migrated:3780, classicRemain:420,  s1Vol:3850, classicVol:420,  s1WithoutAi:4.15, s1WithAi:3.90, recruitNeed:0.97,  costSek:39000 },
-    { q:'Q10', phase:'Expansion', migrated:4200, classicRemain:0,    s1Vol:4000, classicVol:0,    s1WithoutAi:4.25, s1WithAi:4.05, recruitNeed:1.12,  costSek:40500 }
+    { q:'Q0',  phase:'Akut',      migrated:0,    classicRemain:4200, s1Vol:1850, classicVol:4200, s1WithoutAi:2.93, s1WithAi:2.93, recruitNeed:null, costSek:29300 },
+    { q:'Q1',  phase:'Akut',      migrated:420,  classicRemain:3780, s1Vol:2100, classicVol:3780, s1WithoutAi:3.10, s1WithAi:2.97, recruitNeed:0.04, costSek:29700 },
+    { q:'Q2',  phase:'Fas 1',     migrated:840,  classicRemain:3360, s1Vol:2350, classicVol:3360, s1WithoutAi:3.28, s1WithAi:3.08, recruitNeed:0.15, costSek:30800 },
+    { q:'Q3',  phase:'Fas 1',     migrated:1260, classicRemain:2940, s1Vol:2600, classicVol:2940, s1WithoutAi:3.45, s1WithAi:3.18, recruitNeed:0.25, costSek:31800 },
+    { q:'Q4',  phase:'Fas 2',     migrated:1680, classicRemain:2520, s1Vol:2850, classicVol:2520, s1WithoutAi:3.62, s1WithAi:3.28, recruitNeed:0.35, costSek:32800 },
+    { q:'Q5',  phase:'Fas 2',     migrated:2100, classicRemain:2100, s1Vol:3100, classicVol:2100, s1WithoutAi:3.78, s1WithAi:3.38, recruitNeed:0.45, costSek:33800 },
+    { q:'Q6',  phase:'Fas 2',     migrated:2520, classicRemain:1680, s1Vol:3350, classicVol:1680, s1WithoutAi:3.95, s1WithAi:3.48, recruitNeed:0.55, costSek:34800 },
+    { q:'Q7',  phase:'Fas 3',     migrated:2940, classicRemain:1260, s1Vol:3600, classicVol:1260, s1WithoutAi:4.02, s1WithAi:3.62, recruitNeed:0.69, costSek:36200 },
+    { q:'Q8',  phase:'Fas 3',     migrated:3360, classicRemain:840,  s1Vol:3700, classicVol:840,  s1WithoutAi:4.08, s1WithAi:3.74, recruitNeed:0.81, costSek:37400 },
+    { q:'Q9',  phase:'Expansion', migrated:3780, classicRemain:420,  s1Vol:3850, classicVol:420,  s1WithoutAi:4.15, s1WithAi:3.90, recruitNeed:0.97, costSek:39000 },
+    { q:'Q10', phase:'Expansion', migrated:4200, classicRemain:0,    s1Vol:4000, classicVol:0,    s1WithoutAi:4.25, s1WithAi:4.05, recruitNeed:1.12, costSek:40500 }
   ],
 
-  // Sensitivity: FTE impact at -20/-10/base/+10/+20% (base = 10.10 Required FTE)
   sensitivity: [
-    { driver:'Volym',         m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
-    { driver:'AHT',           m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
-    { driver:'Shrinkage',     m20:9.26, m10:9.67, base:10.10, p10:10.56, p20:11.04, unit:'FTE' },
-    { driver:'Occupancy',     m20:10.71,m10:10.40,base:10.10, p10: 9.82, p20: 9.56, unit:'FTE' },
-    { driver:'Peak Buffer',   m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
-    { driver:'AI Deflection', m20:10.10,m10:10.10,base:10.10, p10: 9.09, p20: 8.08, unit:'FTE' },
-    { driver:'Arbetsdagar',   m20:9.35, m10:9.72, base:10.10, p10:10.50, p20:10.92, unit:'FTE' },
-    { driver:'Kostnad/FTE',   m20:88000,m10:99000,base:110000,p10:121000,p20:132000, unit:'SEK' }
+    { driver:'Volym',        m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
+    { driver:'AHT',          m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
+    { driver:'Shrinkage',    m20:9.26, m10:9.67, base:10.10, p10:10.56, p20:11.04, unit:'FTE' },
+    { driver:'Occupancy',    m20:10.71,m10:10.40,base:10.10, p10: 9.82, p20: 9.56, unit:'FTE' },
+    { driver:'Peak Buffer',  m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
+    { driver:'AI Deflection',m20:10.10,m10:10.10,base:10.10, p10: 9.09, p20: 8.08, unit:'FTE' },
+    { driver:'Arbetsdagar',  m20:9.35, m10:9.72, base:10.10, p10:10.50, p20:10.92, unit:'FTE' },
+    { driver:'Kostnad/FTE',  m20:88000,m10:99000,base:110000,p10:121000,p20:132000,unit:'SEK' }
   ],
 
-  // Staffing timeline (forecast only — no fabricated history)
-  // Uses: current snapshot + scenario compare for forward outlook
+  // Planning timeline: scenario compare points + forecast — NOT fabricated history
   timeline: {
-    labels:  ['Nu','Post-aug best','Post-aug worst','AI deflect 30%','Migration Q5','Migration Q10'],
-    actual:  [11,   null,           null,            11,              11,            12],
-    supply:  [11.10,11.60,          7.00,            11.10,           11.10,         12.00],
-    required:[10.10, 9.80,          9.50,             9.30,           10.50,         11.20],
-    isForecast:[false,true,         true,             true,           true,          true]
+    labels:   ['Nu','Post-aug best','Post-aug worst','AI deflect 30%','Migration Q5','Migration Q10'],
+    actual:   [11,   null,          null,            11,              11,            12],
+    supply:   [11.10,11.60,          7.00,           11.10,           11.10,         12.00],
+    required: [10.10, 9.80,          9.50,            9.30,           10.50,         11.20],
+    isForecast:[false,true,          true,            true,            true,          true]
   }
+};
+return WP;
+})();
+
+// Alias for compatibility
+var WP = planningModelAdapter;
+
+// ═══════════════════════════════════════════════════
+// LAYER 2: dailyAnalyticsAdapter
+// Ingests API data, builds daily/monthly rollups
+// For trend visualization ONLY — not official KPIs
+// ═══════════════════════════════════════════════════
+var dailyAnalyticsAdapter = (function() {
+// Internal cache
+var _monthlyRollups = [];   // array of {year_month, totalTickets, avgDailyRosteredFte, analyticsFteRequired, analyticsCovPct}
+var _loaded = false;
+var _loading = false;
+var _callbacks = [];
+
+// buildMonthlyAnalyticsFromDaily:
+// Processes raw aht-stats months into an analytics-layer monthly view
+// NOTE: fte_supply in this context is dailyRosteredFte (pool config, not planning Effective Supply)
+function buildMonthlyAnalyticsFromDaily(rawMonths) {
+  return (rawMonths || []).map(function(m) {
+    var pools = m.pools || [];
+    var totalTickets = pools.reduce(function(s,p){return s + (p.filtered_tickets||0);}, 0);
+    // dailyRosteredFte: sum of pool supply values as configured (analytics approximation)
+    var dailyRosteredFte = pools.reduce(function(s,p){return s + (p.fte_supply||0);}, 0);
+    // analyticsFteRequired: estimated from tickets+AHT — analytical estimate, not official Required FTE
+    var analyticsFteRequired = pools.reduce(function(s,p){return s + (p.filtered_fte||0);}, 0);
+    var analyticsCovPct = parseFloat(m.avg_coverage_pct || 0);
+    // analyticsGapFte: dailyRosteredFte - analyticsFteRequired (analytics estimate)
+    var analyticsGapFte = dailyRosteredFte - analyticsFteRequired;
+    return {
+      year_month: m.year_month,
+      totalTickets: totalTickets,
+      dailyRosteredFte: dailyRosteredFte,
+      analyticsFteRequired: analyticsFteRequired,
+      analyticsGapFte: analyticsGapFte,
+      analyticsCovPct: analyticsCovPct,
+      rawPools: pools,
+      isAnalytics: true  // flag: this is analytics layer, not planning layer
+    };
+  });
+}
+
+return {
+  load: function(apiCall, cb) {
+    if (_loaded) { cb(null, _monthlyRollups); return; }
+    _callbacks.push(cb);
+    if (_loading) return;
+    _loading = true;
+    apiCall('/aht-stats?months=12').then(function(d) {
+      _monthlyRollups = buildMonthlyAnalyticsFromDaily(d.months || []);
+      _loaded = true;
+      _loading = false;
+      _callbacks.forEach(function(fn){ fn(null, _monthlyRollups, d); });
+      _callbacks = [];
+    }).catch(function(e) {
+      _loading = false;
+      _callbacks.forEach(function(fn){ fn(e, null); });
+      _callbacks = [];
+    });
+  },
+  getMonthly: function() { return _monthlyRollups; },
+  invalidate: function() { _loaded = false; },
+  // Expose builder for reuse
+  buildFromRaw: buildMonthlyAnalyticsFromDaily
+};
+})();
+
+// ═══════════════════════════════════════════════════
+// dashboardViewModel — merges planning + analytics
+// Keeps concepts strictly separate
+// ═══════════════════════════════════════════════════
+var dashboardViewModel = {
+  // Planning metrics (from planningModelAdapter)
+  getActualFte: function() { return WP.actualFte; },
+  getEffectiveSupply: function() { return WP.effectiveSupplyFte; },
+  getRequiredFte: function() { return WP.requiredFte; },
+  getNetGap: function() { return WP.netGapFte; },
+  getPools: function() { return WP.pools; },
+  getScenarios: function() { return WP.scenarios; },
+  getMigration: function() { return WP.migration; },
+  getSensitivity: function() { return WP.sensitivity; },
+  getPlanningTimeline: function() { return WP.timeline; },
+  // Analytics metrics (from dailyAnalyticsAdapter — clearly labeled)
+  getAnalyticsMonthly: function() { return dailyAnalyticsAdapter.getMonthly(); }
 };
 
 // ═══════════════════════════════════════════════════
@@ -687,6 +824,7 @@ var A='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api';
 var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ';
 var COV_THRESHOLD=80;
 var _timeGran='monthly';
+var _trendWindow=12;
 
 // ═══════════════════════════════════════════════════
 // UTILS
@@ -716,25 +854,30 @@ function easterDate(yr){var a=yr%19,b=Math.floor(yr/100),c=yr%100,d=Math.floor(b
 function swedishHolidays(yr){var s=new Set();function add(m,d){s.add(yr+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'));}add(1,1);add(1,6);add(5,1);add(6,6);add(12,25);add(12,26);var e=easterDate(yr);function eo(n){var d=new Date(e);d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}s.add(eo(-2));s.add(eo(0));s.add(eo(1));s.add(eo(39));s.add(eo(49));var mid=new Date(yr,5,19);while(mid.getDay()!==5)mid.setDate(mid.getDate()+1);s.add(mid.getFullYear()+'-'+String(mid.getMonth()+1).padStart(2,'0')+'-'+String(mid.getDate()).padStart(2,'0'));var ah=new Date(yr,9,31);while(ah.getDay()!==6)ah.setDate(ah.getDate()+1);s.add(ah.getFullYear()+'-'+String(ah.getMonth()+1).padStart(2,'0')+'-'+String(ah.getDate()).padStart(2,'0'));return s;}
 function swedishWorkingDays(yr,mo){var h=swedishHolidays(yr),cnt=0,d=new Date(yr,mo-1,1);while(d.getMonth()===mo-1){var dw=d.getDay(),ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(dw!==0&&dw!==6&&!h.has(ds))cnt++;d.setDate(d.getDate()+1);}return cnt;}
 function computeFTE(tickets,ahtMin,ym){if(!tickets||!ahtMin)return 0;var p=String(ym).split('-');var wd=swedishWorkingDays(parseInt(p[0]),parseInt(p[1]));return(tickets*ahtMin)/(wd*7*60);}
+</script><script>
 // ═══════════════════════════════════════════════════
-// WORKFORCE PLANNING TAB — Chart.js renders
+// CHART HELPERS
 // ═══════════════════════════════════════════════════
 var _charts={};
 function destroyChart(id){if(_charts[id]){_charts[id].destroy();delete _charts[id];}}
-var CHART_DEFAULTS={color:'#e2e8f0',borderColor:'#2d3148',plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}}}};
 
+// ═══════════════════════════════════════════════════
+// WORKFORCE PLANNING TAB INIT
+// ═══════════════════════════════════════════════════
 function initWP(){
   window._wpL=true;
   renderPoolGaps();
   renderMigrationTable();
   renderSensitivityTable();
-  setTimeout(()=>{
+  setTimeout(function(){
     renderStaffingChart();
     renderPoolGapChart();
     renderScenarioChart();
     renderMigrationChart();
     renderSensitivityChart();
   },50);
+  // Load analytics trend async — does not block planning layer
+  loadAnalyticsTrend();
 }
 
 function setTimeGran(g,btn){
@@ -744,12 +887,21 @@ function setTimeGran(g,btn){
   renderStaffingChart();
 }
 
+function setTrendWindow(n, btn){
+  _trendWindow=n;
+  document.querySelectorAll('#trendBtn12,#trendBtn6,#trendBtn3').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  var monthly = dashboardViewModel.getAnalyticsMonthly();
+  if(monthly && monthly.length) renderTrendChart(monthly);
+}
+
+// ── PLANNING LAYER: Staffing chart (scenario/forecast view) ──
 function renderStaffingChart(){
   destroyChart('staffing');
-  var tl=WP.timeline;
-  var labels=tl.labels;
-  var ctx=document.getElementById('staffingChart').getContext('2d');
-  _charts['staffing']=new Chart(ctx,{
+  var tl = dashboardViewModel.getPlanningTimeline();
+  var labels = tl.labels;
+  var ctx = document.getElementById('staffingChart').getContext('2d');
+  _charts['staffing'] = new Chart(ctx, {
     type:'line',
     data:{
       labels:labels,
@@ -764,8 +916,13 @@ function renderStaffingChart(){
       responsive:true,maintainAspectRatio:true,
       plugins:{
         legend:{labels:{color:'#94a3b8',font:{size:11}}},
-        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'},
-        annotation:{annotations:{}}
+        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{
+          label:function(ctx){
+            var tl2=dashboardViewModel.getPlanningTimeline();
+            var isFc=tl2.isForecast&&tl2.isForecast[ctx.dataIndex];
+            return ctx.dataset.label+': '+(ctx.raw!==null?ctx.raw.toFixed(2):'-')+(isFc?' [Prognos]':'');
+          }
+        }}
       },
       scales:{
         x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:11}}},
@@ -775,27 +932,120 @@ function renderStaffingChart(){
   });
 }
 
+// ── ANALYTICS LAYER: Trend chart (API data, daily rollups → monthly) ──
+function loadAnalyticsTrend(){
+  document.getElementById('trend-loading').style.display='';
+  document.getElementById('trend-error').style.display='none';
+  document.getElementById('trendChart').style.display='none';
+  document.getElementById('trend-note').style.display='none';
+  document.getElementById('trend-monthly-cards').style.display='none';
+
+  dailyAnalyticsAdapter.load(api, function(err, monthly, rawData) {
+    document.getElementById('trend-loading').style.display='none';
+    if(err) {
+      document.getElementById('trend-error').textContent='Kunde inte ladda driftdata: ' + (err.message||err);
+      document.getElementById('trend-error').style.display='';
+      return;
+    }
+    if(!monthly || !monthly.length) {
+      document.getElementById('trend-error').textContent='Ingen driftdata tillgänglig från API.';
+      document.getElementById('trend-error').style.display='';
+      return;
+    }
+    document.getElementById('trendChart').style.display='';
+    document.getElementById('trend-note').style.display='';
+    document.getElementById('trend-monthly-cards').style.display='';
+    renderTrendChart(monthly);
+    renderTrendMonthlyCards(monthly);
+  });
+}
+
+function renderTrendChart(monthly){
+  destroyChart('trend');
+  var data = monthly.slice(-_trendWindow).reverse();
+  if(!data.length) return;
+  var ctx = document.getElementById('trendChart').getContext('2d');
+  _charts['trend'] = new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: data.map(m=>m.year_month),
+      datasets:[
+        {
+          label:'Analytisk FTE-estimat (tickets→FTE)',
+          data: data.map(m=>parseFloat(m.analyticsFteRequired.toFixed(2))),
+          borderColor:'#818cf8',backgroundColor:'rgba(129,140,248,0.1)',borderWidth:2,pointRadius:4,fill:true,
+          yAxisID:'y'
+        },
+        {
+          label:'dailyRosteredFte (pool config)',
+          data: data.map(m=>parseFloat(m.dailyRosteredFte.toFixed(2))),
+          borderColor:'#4ade80',backgroundColor:'rgba(74,222,128,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[5,3],fill:false,
+          yAxisID:'y'
+        },
+        {
+          label:'Tickets (tusental) →',
+          data: data.map(m=>parseFloat((m.totalTickets/1000).toFixed(2))),
+          borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],fill:false,
+          yAxisID:'y2'
+        }
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{
+        legend:{labels:{color:'#94a3b8',font:{size:11}}},
+        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{
+          afterTitle:function(){return '[Analys — ej officiellt planeringsmått]';}
+        }}
+      },
+      scales:{
+        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:10}}},
+        y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},
+        y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}
+      }
+    }
+  });
+}
+
+function renderTrendMonthlyCards(monthly){
+  var data = monthly.slice(-_trendWindow).reverse();
+  document.getElementById('trend-cards-inner').innerHTML = data.map(function(m){
+    var gap = m.analyticsGapFte;
+    var gapColor = gap >= 0 ? '#4ade80' : '#fca5a5';
+    var covOk = m.analyticsCovPct >= COV_THRESHOLD;
+    return '<div class="analytics-month-card">'
+      +'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
+      +'<div class="amc-row"><span class="amc-label">Tickets</span><span class="amc-val">'+m.totalTickets.toLocaleString('sv-SE')+'</span></div>'
+      +'<div class="amc-row"><span class="amc-label">FTE-estimat</span><span class="amc-val">'+m.analyticsFteRequired.toFixed(2)+'</span></div>'
+      +'<div class="amc-row"><span class="amc-label">dailyRosteredFte</span><span class="amc-val">'+m.dailyRosteredFte.toFixed(2)+'</span></div>'
+      +'<div class="amc-gap" style="color:'+gapColor+'">Gap (analys): '+(gap>=0?'+':'')+gap.toFixed(2)+' FTE</div>'
+      +'<div class="amc-cov '+(covOk?'ok':'warn')+'">Täckning: '+m.analyticsCovPct.toFixed(0)+'%</div>'
+      +'</div>';
+  }).join('');
+}
+
+// ── PLANNING LAYER: Pool gaps ──
 function renderPoolGaps(){
-  var sorted=[...WP.pools].sort((a,b)=>a.gapFte-b.gapFte);
-  var maxVal=Math.max(...WP.pools.map(p=>Math.max(p.supply,p.demandPeak)))||1;
-  document.getElementById('pool-gaps').innerHTML=sorted.map(p=>{
+  var sorted = [...dashboardViewModel.getPools()].sort((a,b)=>a.gapFte-b.gapFte);
+  var maxVal = Math.max(...WP.pools.map(p=>Math.max(p.supply,p.demandPeak)))||1;
+  document.getElementById('pool-gaps').innerHTML = sorted.map(p=>{
     var cls=p.status==='Critical'?'crit':p.status==='Tight'?'warn':'ok';
     var gapCls2=p.gapFte<0?'neg':Math.abs(p.gapFte)<0.1?'zero':'pos';
     var supPct=Math.round(p.supply/maxVal*100),demPct=Math.round(p.demandPeak/maxVal*100);
     return '<div class="pool-row '+cls+'">'
       +'<div class="pool-header">'
-        +'<span class="pool-name">'+p.pool+'</span>'
-        +'<span class="pool-gap-val '+gapCls2+'">'+(p.gapFte>=0?'+':'')+p.gapFte.toFixed(2)+' FTE</span>'
+      +'<span class="pool-name">'+p.pool+'</span>'
+      +'<span class="pool-gap-val '+gapCls2+'">'+(p.gapFte>=0?'+':'')+p.gapFte.toFixed(2)+' FTE</span>'
       +'</div>'
       +'<div class="pool-stats">'
-        +'<div class="pool-stat"><strong>'+p.supply.toFixed(2)+'</strong>Effective Supply</div>'
-        +'<div class="pool-stat"><strong>'+p.demandPeak.toFixed(2)+'</strong>Peak Demand</div>'
-        +'<div class="pool-stat"><strong>'+p.comfortable.toFixed(2)+'</strong>Comfortable FTE</div>'
-        +'<div class="pool-stat"><strong>'+(p.agents||'–')+'</strong>Agenter</div>'
+      +'<div class="pool-stat"><strong>'+p.supply.toFixed(2)+'</strong>Effective Supply</div>'
+      +'<div class="pool-stat"><strong>'+p.demandPeak.toFixed(2)+'</strong>Peak Demand</div>'
+      +'<div class="pool-stat"><strong>'+p.comfortable.toFixed(2)+'</strong>Comfortable FTE</div>'
+      +'<div class="pool-stat"><strong>'+(p.agents||'–')+'</strong>Agenter</div>'
       +'</div>'
       +'<div class="pool-bar-wrap">'
-        +'<div class="pool-bar-supply" style="width:'+supPct+'%"></div>'
-        +'<div class="pool-bar-demand" style="width:'+demPct+'%"></div>'
+      +'<div class="pool-bar-supply" style="width:'+supPct+'%"></div>'
+      +'<div class="pool-bar-demand" style="width:'+demPct+'%"></div>'
       +'</div>'
       +'<div class="pool-bar-label"><span>Supply (grön) vs Peak Demand (blå)</span><span class="tag '+cls+'">'+(p.status==='Critical'?'Kritiskt underskott':p.status==='Tight'?'Tight':'OK')+'</span></div>'
       +'</div>';
@@ -804,14 +1054,14 @@ function renderPoolGaps(){
 
 function renderPoolGapChart(){
   destroyChart('poolGap');
-  var sorted=[...WP.pools].sort((a,b)=>a.gapFte-b.gapFte);
+  var sorted=[...dashboardViewModel.getPools()].sort((a,b)=>a.gapFte-b.gapFte);
   var ctx=document.getElementById('poolGapChart').getContext('2d');
   _charts['poolGap']=new Chart(ctx,{
     type:'bar',
     data:{
       labels:sorted.map(p=>p.pool),
       datasets:[{
-        label:'Gap FTE (Supply − Peak Demand)',
+        label:'Gap FTE (Effective Supply − Peak Demand)',
         data:sorted.map(p=>p.gapFte),
         backgroundColor:sorted.map(p=>p.gapFte<-0.1?'rgba(239,68,68,0.7)':Math.abs(p.gapFte)<0.2?'rgba(245,158,11,0.7)':'rgba(34,197,94,0.7)'),
         borderColor:sorted.map(p=>p.gapFte<-0.1?'#ef4444':Math.abs(p.gapFte)<0.2?'#f59e0b':'#22c55e'),
@@ -831,7 +1081,7 @@ function renderPoolGapChart(){
 
 function renderScenarioChart(){
   destroyChart('scenario');
-  var sc=WP.scenarios;
+  var sc=dashboardViewModel.getScenarios();
   var ctx=document.getElementById('scenarioChart').getContext('2d');
   _charts['scenario']=new Chart(ctx,{
     type:'bar',
@@ -852,9 +1102,10 @@ function renderScenarioChart(){
     }
   });
 }
+</script><script>
 function renderMigrationTable(){
   var phaseClsMap={'Akut':'phase-akut','Fas 1':'phase-fas1','Fas 2':'phase-fas2','Fas 3':'phase-fas3','Expansion':'phase-expansion'};
-  document.getElementById('migration-table').innerHTML=WP.migration.map(m=>{
+  document.getElementById('migration-table').innerHTML = dashboardViewModel.getMigration().map(m=>{
     var pc=phaseClsMap[m.phase]||'';
     var rnVal=m.recruitNeed===null?'–':(m.recruitNeed>=0?'+':'')+m.recruitNeed.toFixed(2);
     var rnCls=m.recruitNeed===null?'':m.recruitNeed>0.5?'style="color:#fca5a5;font-weight:700"':m.recruitNeed>0?'style="color:#fcd34d"':'';
@@ -876,7 +1127,6 @@ function renderMigrationTable(){
 function renderMigrationChart(){
   destroyChart('migration');
   var ctx=document.getElementById('migrationChart').getContext('2d');
-  var phaseColors={'Akut':'rgba(239,68,68,0.15)','Fas 1':'rgba(249,115,22,0.15)','Fas 2':'rgba(245,158,11,0.15)','Fas 3':'rgba(34,197,94,0.15)','Expansion':'rgba(59,130,246,0.15)'};
   _charts['migration']=new Chart(ctx,{
     type:'line',
     data:{
@@ -903,9 +1153,8 @@ function renderMigrationChart(){
 }
 
 function renderSensitivityTable(){
-  document.getElementById('sensitivity-table').innerHTML=WP.sensitivity.map(s=>{
+  document.getElementById('sensitivity-table').innerHTML = dashboardViewModel.getSensitivity().map(s=>{
     var fmt=s.unit==='SEK'?(v=>v.toLocaleString('sv-SE')+' kr'):(v=>v.toFixed(2)+' FTE');
-    var diff20=s.p20-s.base,diff10=s.p10-s.base;
     return '<tr>'
       +'<td><strong>'+s.driver+'</strong></td>'
       +'<td class="n" style="color:#fca5a5">'+fmt(s.m20)+'</td>'
@@ -920,7 +1169,7 @@ function renderSensitivityTable(){
 
 function renderSensitivityChart(){
   destroyChart('sensitivity');
-  var fteOnly=WP.sensitivity.filter(s=>s.unit==='FTE');
+  var fteOnly=dashboardViewModel.getSensitivity().filter(s=>s.unit==='FTE');
   var sorted=[...fteOnly].sort((a,b)=>Math.abs(b.p20-b.m20)-Math.abs(a.p20-a.m20));
   var ctx=document.getElementById('sensitivityChart').getContext('2d');
   _charts['sensitivity']=new Chart(ctx,{
@@ -936,7 +1185,8 @@ function renderSensitivityChart(){
       indexAxis:'y',responsive:true,maintainAspectRatio:true,
       plugins:{
         legend:{labels:{color:'#94a3b8',font:{size:11}}},
-        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.raw>=0?'+':'')+ctx.raw.toFixed(2)+' FTE vs bas'}}
+        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',
+          callbacks:{label:ctx2=>ctx2.dataset.label+': '+(ctx2.raw>=0?'+':'')+ctx2.raw.toFixed(2)+' FTE vs bas'}}
       },
       scales:{
         x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Avvikelse från 10.10 FTE',color:'#475569'}},
@@ -947,7 +1197,7 @@ function renderSensitivityChart(){
 }
 
 // ═══════════════════════════════════════════════════
-// LEGACY TABS — preserved from v15
+// LEGACY TABS
 // ═══════════════════════════════════════════════════
 async function loadOverview(){
   try{
@@ -973,9 +1223,9 @@ async function loadWorkforce(){
     var d=await api('/aht-stats?months=12');
     var sum=(d.months||[]).map(m=>{var cov=parseFloat(m.avg_coverage_pct||0);return{year_month:m.year_month,fte_required_total:m.total_filtered_fte,fte_supply_total:m.total_supply,net_gap:m.total_gap,worst_gap_pool:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.pool||'-',worst_gap_value:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.gap||0,total_tickets:(m.pools||[]).reduce((s,p)=>s+p.filtered_tickets,0),coverage_pct:cov};});
     var l=sum[0]||{};
-    document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Krav</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillganglig</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Datatackning</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div></div>'].join('');
+    document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste månad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Krav</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillgänglig</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Datatäckning</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div></div>'].join('');
     var months=sum.slice(0,12).reverse();
-    document.getElementById('monthly-grid').innerHTML=months.map(m=>{var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;var cov=parseFloat(m.coverage_pct||0);var covHtml=cov<COV_THRESHOLD?'<div class="cov-warn">⚠ Datatackning '+cov.toFixed(0)+'%</div>':'<div class="cov-ok">✓ '+cov.toFixed(0)+'%</div>';return'<div class="mc '+(gap<-0.5?'crit-b':gap<0?'under-b':'ok-b')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Behov: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+'</div>'+covHtml+'</div>';}).join('');
+    document.getElementById('monthly-grid').innerHTML=months.map(m=>{var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;var cov=parseFloat(m.coverage_pct||0);var covHtml=cov<COV_THRESHOLD?'<div class="cov-warn">⚠ Datatäckning '+cov.toFixed(0)+'%</div>':'<div class="cov-ok">✓ '+cov.toFixed(0)+'%</div>';return'<div class="mc '+(gap<-0.5?'crit-b':gap<0?'under-b':'ok-b')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Behov: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgång: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+'</div>'+covHtml+'</div>';}).join('');
     document.getElementById('pool-filter').innerHTML='<button class="active" onclick="fp(this)" data-pool="">Alla</button>';
     renderDailyTable('');
   }catch(e){console.error(e);}
@@ -989,9 +1239,11 @@ async function loadAHT(){
   await updateEnrichStatus();
   try{
     var d=await api('/aht-stats?months=12');_ahtData=d;
+    // Invalidate analytics cache so it can re-use this fresh data
+    dailyAnalyticsAdapter.invalidate();
     var cov=parseFloat(d.enrichment_coverage||0),latest=d.months&&d.months[d.months.length-1];
     var s=['<div class="wc"><div class="wl">Enrichment</div><div class="wv '+(cov>=COV_THRESHOLD?'ok':cov>20?'warn':'crit')+'">'+cov.toFixed(1)+'%</div><div class="wl">'+d.enriched_tickets+'/'+d.total_tickets+'</div></div>'];
-    if(latest){s.push('<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(latest.year_month)+'</div></div>');s.push('<div class="wc"><div class="wl">FTE-gap</div><div class="wv '+(latest.total_gap>=0?'ok':latest.total_gap>=-0.5?'warn':'crit')+'">'+fmtFTE(latest.total_gap)+'</div></div>');}
+    if(latest){s.push('<div class="wc"><div class="wl">Senaste månad</div><div class="wv" style="font-size:18px">'+h(latest.year_month)+'</div></div>');s.push('<div class="wc"><div class="wl">FTE-gap</div><div class="wv '+(latest.total_gap>=0?'ok':latest.total_gap>=-0.5?'warn':'crit')+'">'+fmtFTE(latest.total_gap)+'</div></div>');}
     document.getElementById('aht-summary').innerHTML=s.join('');
     var pools=d.pools||[];
     document.getElementById('aht-pool-filter').innerHTML='<button class="pool-btn active" onclick="filterAHT(this)" data-pool="">Alla</button>'+pools.map(p=>'<button class="pool-btn" onclick="filterAHT(this)" data-pool="'+h(p.slug)+'">'+h(p.name)+'</button>').join('');
@@ -1000,10 +1252,10 @@ async function loadAHT(){
 }
 function setView(v,btn){_view=v;document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}
 function filterAHT(btn){document.querySelectorAll('#aht-pool-filter .pool-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,btn.dataset.pool);}
-function renderAHTGrid(d,fPool){var months=d.months||[];document.getElementById('aht-grid').innerHTML=months.map(m=>{var pools=fPool?m.pools.filter(p=>p.pool===fPool):m.pools;if(!pools.length)return'';var useCC=_view==='cc',totF=pools.reduce((s,p)=>s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte),0),totS=pools.reduce((s,p)=>s+p.fte_supply,0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';var avgCov=parseFloat(m.avg_coverage_pct||0);return'<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(p=>{var fte=useCC?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,cnt=useCC?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,pct=p.raw_tickets>0?Math.round(cnt/p.raw_tickets*100):100,pCov=parseFloat(p.coverage_pct||0);return'<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+cnt+' ('+pct+'%)'+(useCC?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(pCov>0?' <span style="padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'+(avgCov<COV_THRESHOLD?'<div class="cov-warn">⚠ '+avgCov.toFixed(0)+'% datatäckning</div>':'')+'</div>';}).join('');}
+function renderAHTGrid(d,fPool){var months=d.months||[];document.getElementById('aht-grid').innerHTML=months.map(m=>{var pools=fPool?m.pools.filter(p=>p.pool===fPool):m.pools;if(!pools.length)return'';var useCC=_view==='cc',totF=pools.reduce((s,p)=>s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte),0),totS=pools.reduce((s,p)=>s+p.fte_supply,0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';var avgCov=parseFloat(m.avg_coverage_pct||0);return'<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(p=>{var fte=useCC?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,cnt=useCC?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,pct=p.raw_tickets>0?Math.round(cnt/p.raw_tickets*100):100,pCov=parseFloat(p.coverage_pct||0);return'<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+cnt+' ('+pct+'%)'+(useCC?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(pCov>0?' <span style="padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Krav: '+fmtFTE(totF)+' | Tillgång: '+fmtFTE(totS)+'</div>'+(avgCov<COV_THRESHOLD?'<div class="cov-warn">⚠ '+avgCov.toFixed(0)+'% datatäckning</div>':'')+'</div>';}).join('');}
 
 async function updateEnrichStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('enrich-status').textContent='Enrichment: '+d.enriched_tickets+'/'+d.total_tickets+' ('+pct.toFixed(1)+'%) | CC-scope: '+(d.cc_scope_tickets||0)+' | Samtal: '+(d.phone_with_duration||0);var prog=document.getElementById('enrich-prog');if(prog)prog.style.width=pct+'%';if(pct>=100){var btn=document.getElementById('enrich-btn');if(btn){btn.disabled=true;btn.textContent='Klart!';}}}catch(e){}}
-async function runEnrich(){var btn=document.getElementById('enrich-btn');btn.disabled=true;btn.textContent='Hamtar...';try{var r=await fetch('https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',{headers:{'apikey':K,'Authorization':'Bearer '+K}});var d=await r.json();btn.textContent='Klart: '+(d.processed||0)+' behandlade';await updateEnrichStatus();var d2=await api('/aht-stats?months=12');_ahtData=d2;renderAHTGrid(d2,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}catch(e){btn.textContent='Fel: '+e.message;}setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Hamta Freshdesk-data';}},8000);}
+async function runEnrich(){var btn=document.getElementById('enrich-btn');btn.disabled=true;btn.textContent='Hämtar...';try{var r=await fetch('https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',{headers:{'apikey':K,'Authorization':'Bearer '+K}});var d=await r.json();btn.textContent='Klart: '+(d.processed||0)+' behandlade';await updateEnrichStatus();var d2=await api('/aht-stats?months=12');_ahtData=d2;dailyAnalyticsAdapter.invalidate();renderAHTGrid(d2,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}catch(e){btn.textContent='Fel: '+e.message;}setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Hämta Freshdesk-data';}},8000);}
 
 function initPrognos(){window._pgL=true;var now=new Date();document.getElementById('pg-start-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');if(_ahtData)runPrognos();}
 async function runPrognos(){
@@ -1020,16 +1272,21 @@ async function runPrognos(){
   for(var i=0;i<12;i++){var mn=sm+i,my=sy;while(mn>12){mn-=12;my++;}var ym=my+'-'+String(mn).padStart(2,'0');var vol=baseVol*Math.pow(1+volChg/100,i+1),aht=baseAHT*Math.pow(1+ahtChg/100,i+1),sup=baseSupply+(supChg*(i+1)),wd=swedishWorkingDays(my,mn),req=computeFTE(vol,aht,ym),gap=sup-req;totReq+=req;totGap+=gap;if(gap>=0)surp++;else def++;rows.push({ym,vol:Math.round(vol),aht:aht.toFixed(1),wd,req,sup,gap});}
   var avgGap=totGap/12;
   document.getElementById('prognos-summary').innerHTML=['<div class="wc"><div class="wl">Snitt FTE-gap</div><div class="wv '+(avgGap>=0?'ok':'crit')+'">'+fmtFTE(avgGap)+'</div></div>','<div class="wc"><div class="wl">Månader överskott</div><div class="wv ok">'+surp+'</div></div>','<div class="wc"><div class="wl">Månader underskott</div><div class="wv '+(def>0?'crit':'ok')+'">'+def+'</div></div>','<div class="wc"><div class="wl">Total FTE-krav</div><div class="wv warn">'+fmtFTE(totReq)+'</div></div>'].join('');
-  document.getElementById('forecast-grid').innerHTML=rows.map(r=>{var gap=parseFloat(r.gap),cls=gap>0.5?'surplus':gap<-0.5?'deficit':'marginal',mx=Math.max(r.req,r.sup)||1;return'<div class="fc '+cls+'"><div class="fh"><span class="fm">'+r.ym+'</span><span class="ga '+(gap>=0?'ok':gap>=-0.5?'under':'crit')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(r.req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(r.req/mx*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(r.sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(r.sup/mx*100)+'%"></div></div></div><div class="mv">Volym: '+r.vol+' | AHT: '+r.aht+'min | Arbdagar: '+r.wd+'</div></div>';}).join('');
+  document.getElementById('forecast-grid').innerHTML=rows.map(r=>{var gap=parseFloat(r.gap),cls=gap>0.5?'surplus':gap<-0.5?'deficit':'marginal',mx=Math.max(r.req,r.sup)||1;return'<div class="fc '+cls+'"><div class="fh"><span class="fm">'+r.ym+'</span><span class="ga '+(gap>=0?'ok':gap>=-0.5?'under':'crit')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(r.req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(r.req/mx*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgång: '+fmtFTE(r.sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(r.sup/mx*100)+'%"></div></div></div><div class="mv">Volym: '+r.vol+' | AHT: '+r.aht+'min | Arbdagar: '+r.wd+'</div></div>';}).join('');
   document.getElementById('forecast-table').innerHTML=rows.map(r=>{var gap=parseFloat(r.gap),cls=gap<-0.5?'crit':gap<0?'under':'ok';return'<tr><td>'+r.ym+'</td><td class="n">'+r.vol+'</td><td class="n">'+r.aht+'</td><td class="n">'+r.wd+'</td><td class="n">'+fmtFTE(r.req)+'</td><td class="n">'+fmtFTE(r.sup)+'</td><td class="n"><span class="ga '+cls+'">'+fmtFTE(gap)+'</span></td><td><span class="ga '+cls+'">'+(gap>=0?'Överskott':'Underskott')+'</span></td></tr>';}).join('');
 }
 
 function loadSetupTab(){window._setupL=true;renderWorkdayTable();loadSetupStatus();}
 function renderWorkdayTable(){var now=new Date(),rows=[];for(var i=11;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var y=d.getFullYear(),m=d.getMonth()+1,ym=y+'-'+String(m).padStart(2,'0'),wd=swedishWorkingDays(y,m),av=wd*7*60,diff=av-9450;rows.push('<tr><td>'+ym+'</td><td class="n">'+wd+'</td><td class="n">'+av.toLocaleString('sv-SE')+'</td><td class="n" style="color:'+(diff>0?'#fca5a5':'#4ade80')+'">'+diff+'</td></tr>');}var t=document.getElementById('workday-table');if(t)t.innerHTML=rows.join('');}
-async function loadSetupStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('setup-enrich-detail').innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px"><div class="wc"><div class="wl">Total tickets</div><div class="wv" style="font-size:18px">'+d.total_tickets+'</div></div><div class="wc"><div class="wl">Berikade</div><div class="wv ok" style="font-size:18px">'+d.enriched_tickets+'</div></div><div class="wc"><div class="wl">Kvarstaende</div><div class="wv '+(d.total_tickets-d.enriched_tickets>0?'crit':'ok')+'" style="font-size:18px">'+(d.total_tickets-d.enriched_tickets)+'</div></div><div class="wc"><div class="wl">Tackning</div><div class="wv '+(pct>=COV_THRESHOLD?'ok':'crit')+'">'+pct.toFixed(1)+'%</div></div><div class="wc"><div class="wl">CC-scope</div><div class="wv warn" style="font-size:18px">'+(d.cc_scope_tickets||0)+'</div></div></div>';}catch(e){document.getElementById('setup-enrich-detail').textContent='Fel: '+e.message;}}
+async function loadSetupStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('setup-enrich-detail').innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px"><div class="wc"><div class="wl">Total tickets</div><div class="wv" style="font-size:18px">'+d.total_tickets+'</div></div><div class="wc"><div class="wl">Berikade</div><div class="wv ok" style="font-size:18px">'+d.enriched_tickets+'</div></div><div class="wc"><div class="wl">Kvarstående</div><div class="wv '+(d.total_tickets-d.enriched_tickets>0?'crit':'ok')+'" style="font-size:18px">'+(d.total_tickets-d.enriched_tickets)+'</div></div><div class="wc"><div class="wl">Täckning</div><div class="wv '+(pct>=COV_THRESHOLD?'ok':'crit')+'">'+pct.toFixed(1)+'%</div></div><div class="wc"><div class="wl">CC-scope</div><div class="wv warn" style="font-size:18px">'+(d.cc_scope_tickets||0)+'</div></div></div>';}catch(e){document.getElementById('setup-enrich-detail').textContent='Fel: '+e.message;}}
 
-document.addEventListener('DOMContentLoaded',()=>{
-  loadOverview();loadRecent();loadTrend();
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',function(){
+  loadOverview();
+  loadRecent();
+  loadTrend();
   initWP();
 });
 </script></body></html>
