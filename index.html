@@ -514,7 +514,7 @@ CC Workforce Planning
 <div class="alert-body">
 <div class="alert-title">Klassificeringsproblem identifierat</div>
 <div class="alert-desc">
-<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) räknas separat från poolerna Classic/S1/Frankly/Talent. Supply-värdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) är <span>statiskt</span> och hämtas från cc_pools-tabellen — det varierar inte per månad eftersom P4 (cc_pool_supply_history) ej exekverats. Dessutom är <span>93.3% av tickets ej berikade</span> (600/8933), vilket gör analytisk FTE-beräkning opålitlig för perioder före mars 2026.
+<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) räknas separat från poolerna Classic/S1/Frankly/Talent. Supply-värdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) hämtas nu från cc_pool_supply_history (P4 exekverat, 95 rader seedade). Edge Function behöver uppdateras för att använda historik-tabellen per månad istället för cc_pools.fte_supply. Dessutom är <span>93.3% av tickets ej berikade</span> (600/8933), vilket gör analytisk FTE-beräkning opålitlig för perioder före mars 2026.
 </div>
 </div>
 </div>
@@ -553,7 +553,7 @@ CC Workforce Planning
 </div>
 </div>
 <div style="margin-top:10px;font-size:11px;color:#94a3b8">
-<strong>Åtgärd:</strong> Kör P4 SQL (Setup-fliken) för att populera cc_pool_supply_history med korrekta historiska supply-värden. Det kommer ta bort det statiska supply-problemet i analytik-lagret.
+<strong>✅ P4 exekverat:</strong> cc_pool_supply_history innehåller 95 rader (5 pooler × 19 månader). <strong>Nästa steg:</strong> Uppdatera Edge Function (/aht-stats) för att JOIN:a med cc_pool_supply_history per year_month istället för att läsa cc_pools.fte_supply direkt.
 </div>
 </div>
 
@@ -686,22 +686,23 @@ CC Workforce Planning
 <div id="tab-setup" class="tc">
 <div class="st">Arkitektur &amp; Konfiguration</div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P1 · Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb varje timme.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
+<div class="setup-row"><div><h3>P1 · Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb varje timme.</div></div><span class="status-chip done">✅ Exekverat (pg_cron aktiv)</span></div>
 <div class="code-block">SELECT cron.schedule('cc-ticket-enricher-hourly','0 * * * *',$$
 SELECT net.http_post(url:='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',
-headers:=jsonb_build_object('Content-Type','application/json','Authorization','Bearer SERVICE_ROLE_KEY'),
+headers:=jsonb_build_object('Content-Type','application/json','Authorization','Bearer '||(SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name='cc_rollup_service_key')),
 body:='{}'::jsonb);$$);
 SELECT * FROM cron.job WHERE jobname='cc-ticket-enricher-hourly';</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P4 · Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history — löser det statiska supply-problemet i analytiklagret.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
+<div class="setup-row"><div><h3>P4 · Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history — löser det statiska supply-problemet i analytiklagret.</div></div><span class="status-chip done">✅ Exekverat (95 rader)</span></div>
 <div class="code-block">CREATE TABLE IF NOT EXISTS cc_pool_supply_history (
 id BIGSERIAL PRIMARY KEY, pool_slug TEXT NOT NULL,
 year_month TEXT NOT NULL, fte_supply NUMERIC(6,2) NOT NULL,
 note TEXT, created_at TIMESTAMPTZ DEFAULT NOW(), UNIQUE(pool_slug,year_month));
 INSERT INTO cc_pool_supply_history(pool_slug,year_month,fte_supply,note)
-SELECT slug,TO_CHAR(gs,'YYYY-MM'),fte_capacity,'Seeded'
+SELECT slug,TO_CHAR(gs,'YYYY-MM'),fte_supply,'Seeded'
 FROM cc_pools CROSS JOIN generate_series(NOW()-INTERVAL'18 months',NOW(),INTERVAL'1 month') gs
+WHERE fte_supply IS NOT NULL
 ON CONFLICT DO NOTHING;</div>
 </div>
 <div class="setup-section">
@@ -1253,7 +1254,7 @@ async function refreshClassificationData(){
       '<div class="wc"><div class="wl">Berikade tickets</div><div class="wv '+(enrichPct>=80?'ok':enrichPct>20?'warn':'crit')+'" style="font-size:22px">'+enriched.toLocaleString('sv-SE')+'</div><div class="wl">'+enrichPct.toFixed(1)+'% tackning</div></div>',
       '<div class="wc"><div class="wl">Ej berikade</div><div class="wv crit" style="font-size:22px">'+(totalTickets-enriched).toLocaleString('sv-SE')+'</div><div class="wl">Utan produktklassif.</div></div>',
       '<div class="wc"><div class="wl">Manader med ticketdata</div><div class="wv ok" style="font-size:22px">'+ticketMonths.length+'</div><div class="wl">av 12 senaste</div></div>',
-      '<div class="wc"><div class="wl">Supply-status</div><div class="wv warn" style="font-size:16px">Statisk</div><div class="wl">P4 ej exekverats</div></div>'
+      '<div class="wc"><div class="wl">Supply-status</div><div class="wv ok" style="font-size:16px">P4 ✅</div><div class="wl">95 rader seedade</div></div>'
     ].join('');
     document.getElementById('classif-summary-grid').style.display='';
     var pools=['classic','s1','frankly','talent','switchboard','unknown'];
