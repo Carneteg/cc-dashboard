@@ -19,7 +19,7 @@ async function loadOverview(){
     var rows=ps.slice(0,10).map(p=>'<tr><td>'+h(p.product)+'</td><td class="n tn">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>').join('');
     document.getElementById('ptb').innerHTML=rows;
     document.getElementById('ptb2').innerHTML=ps.map(p=>'<tr><td>'+h(p.product)+'</td><td class="n tn">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>').join('');
-    document.getElementById('upd').textContent='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    document.getElementById('upd').textContent='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});h
   }catch(e){console.error(e);}
 }
 async function loadRecent(){
@@ -32,7 +32,7 @@ var _allDaily=[];
 async function loadWorkforce(){
   window._wfL=true;
   try{
-    var d=await api('/workforce');var sum=d.summary||[];var daily=d.daily||[];_allDaily=daily;
+    var d=await api('/aht-stats?months=12');var sum=(d.months||[]).map(m=>({year_month:m.year_month,fte_required_total:m.total_filtered_fte,fte_supply_total:m.total_supply,net_gap:m.total_gap,worst_gap_pool:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.pool||'-',worst_gap_value:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.gap||0,total_tickets:(m.pools||[]).reduce((s,p)=>s+p.filtered_tickets,0)}));var daily=[];_allDaily=daily;
     var l=sum[0]||{};
     document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Kraver</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillganglig</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Samsta pool</div><div class="wv crit" style="font-size:18px">'+h(l.worst_gap_pool||'-')+'</div><div class="wl">Gap: '+fmtFTE(l.worst_gap_value||0)+'</div></div>'].join('');
     var months=sum.slice(0,12).reverse();
@@ -69,7 +69,7 @@ function renderAHTGrid(d,fPool){
     var pools=fPool?m.pools.filter(p=>p.pool===fPool):m.pools;
     if(!pools.length)return '';
     var useCC=_view==='cc',totF=pools.reduce((s,p)=>s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte),0),totR=pools.reduce((s,p)=>s+p.raw_fte,0),totS=pools.reduce((s,p)=>s+p.fte_supply,0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';
-    return '<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(p=>{var useCC2=_view==='cc',ticketCount=useCC2?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,fte=useCC2?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,diff=ticketCount-p.raw_tickets,pct=p.raw_tickets>0?Math.round(ticketCount/p.raw_tickets*100):100;return '<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+ticketCount+' tickets ('+pct+'% av '+p.raw_tickets+')'+(useCC2?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(diff<0?' <span style="color:#4ade80">'+diff+' borttagna</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Brutto FTE: '+fmtFTE(totR)+' -> Filtrerat: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div></div>';
+    return '<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">+pools.map(p=>{var useCC2=_view==='cc',ticketCount=useCC2?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,fte=useCC2?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,diff=ticketCount-p.raw_tickets,pct=p.raw_tickets>0?Math.round(ticketCount/p.raw_tickets*100):100;return '<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+ticketCount+' tickets ('+pct+'% av '+p.raw_tickets+')'+(useCC2?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(diff<0?' <span style="color:#4ade80">'+diff+' borttagna</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Brutto FTE: '+fmtFTE(totR)+' | Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'+(m.avg_coverage_pct<80?'<div style="margin-top:4px;padding:3px 6px;background:#7f1d1d;color:#fca5a5;font-size:10px;border-radius:3px">⚠ Datatackning '+m.avg_coverage_pct+'% - begransad tillforlitlighet</div>':'')+'</div>';
   }).join('');
 }
 async function updateEnrichStatus(){
