@@ -283,7 +283,28 @@ CC Workforce Planning
 </nav>
 <main>
 
-<!-- WORKFORCE PLANNING TAB (unchanged from v17) -->
+<div id="tab-wp" class="tc active">
+<!-- CFO DECISION LAYER -->
+<div style="background:#12141e;border:2px solid #4338ca;border-radius:14px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden">
+<div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366f1,#818cf8,#60a5fa)"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+<div><div style="font-size:13px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">Källa: CC_FTE_Calculator.xlsx · Officiell planeringsmodell · Ändras aldrig av API-data</div></div>
+<span class="layer-badge planning">Officiell beslutskälla</span>
+</div>
+<div class="tw" style="margin-bottom:12px">
+<table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>Beslutsåtgärd</th></tr></thead>
+<tbody>
+<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.25</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">−1.15</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgående. Accelerera S1-migration.</td></tr>
+<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimalt buffer. Bevaka volymökning.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Kapacitet för migrationstillväxt.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil. Bevaka volym.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil.</td></tr>
+<tr style="background:#12141e;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.10</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt — men Classic‑underskott −1.15 FTE är kritiskt.</td></tr>
+</tbody></table>
+</div>
+<div style="font-size:11px;color:#475569;padding:8px 12px;background:#0f1117;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er från Excel-modellen. Analytics-estimat (lila, nedan) kan avvika — de är driftanalys, ej beslutskälla. Se <em>Klassificering</em>-fliken för supply-avvikelser och routing-diagnostik.</div>
+</div>
+<!-- /CFO DECISION LAYER -->ged from v17) -->
 <div id="tab-wp" class="tc active">
 <div class="section-header" style="margin-top:0">
 <span class="section-title">§ 1 · Executive Summary — nuläge</span>
@@ -325,12 +346,30 @@ CC Workforce Planning
 <div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Supply: <span>2.25 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.15 FTE</span>.</div>
 </div>
 </div>
-<div class="alert-banner info" style="margin-bottom:32px">
-<div class="alert-icon">ℹ</div>
-<div class="alert-body">
-<div class="alert-title" style="font-size:12px;color:#60a5fa">Två-lager arkitektur</div>
-<div class="alert-desc"><span>Planering</span> (blå) = Excel-modellens källvärden — officiella KPI:er. Ändras aldrig i frontend. · <span>Analys</span> (lila) = Daglig/månadsvis driftanalys från API. Används för trendvisualisering — ersätter INTE planeringslagrets officiella mått. · <span>Se Klassificering-fliken</span> för fullständig produktklassificeringsmodell och valideringstabeller.</div>
+<div style="background:#0f172a;border:1px solid #2563eb;border-radius:10px;padding:16px 20px;margin-bottom:32px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+<span style="font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em">Analytics Confidence</span>
+<span class="layer-badge planning" style="font-size:9px">Planering = officiell källa</span>
 </div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
+<div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
+<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Enrichment</div>
+<div id="conf-enrichment" style="font-size:18px;font-weight:800;color:#4ade80">—</div>
+<div style="font-size:10px;color:#475569;margin-top:2px">cc_ticket_meta / tickets</div>
+</div>
+<div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
+<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Classification</div>
+<div id="conf-classification" style="font-size:18px;font-weight:800;color:#4ade80">—</div>
+<div style="font-size:10px;color:#475569;margin-top:2px">Tickets m. pool_slug / total</div>
+</div>
+<div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
+<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Workforce calculability</div>
+<div id="conf-calculability" style="font-size:18px;font-weight:800;color:#fcd34d">—</div>
+<div style="font-size:10px;color:#475569;margin-top:2px">Månader med demand-data / 12</div>
+</div>
+</div>
+<div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planering</span> (blå) = Excel, officiell. &nbsp;·&nbsp; <span style="color:#818cf8;font-weight:600">Analys</span> (lila) = API-trend, ej beslutskälla. &nbsp;·&nbsp; Månader utan demand-data visas grayed-out med "Ingen demand-data" — innehåller INTE verkliga gap-beräkningar.</div>
+</div></div>
 </div>
 <div class="section-header">
 <span class="section-title">§ 2 · Staffing Over Time</span>
@@ -502,6 +541,11 @@ CC Workforce Planning
 </div>
 </div><!-- /tab-wp -->
 <!-- CLASSIFICATION MODEL TAB -->
+<div id="tab-classify" class="tc">
+<div style="background:#1a1d27;border:1px solid #4338ca;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+<span style="font-size:16px">🔍</span>
+<div style="font-size:12px;color:#94a3b8"><strong style="color:#818cf8">Diagnostikvy — ej styrningssida.</strong> Klassificeringsmodell, routing-logik, supply-källor och datakvalitet. För officiella workforce-beslut, se Workforce Planning → CFO Beslutslager.</div>
+</div>
 <div id="tab-classify" class="tc">
 
 <div class="section-header" style="margin-top:0">
@@ -1062,6 +1106,33 @@ function initWP(){
     renderSensitivityChart();
   },50);
   loadAnalyticsTrend();
+loadCFOConfidence();
+}
+
+async function loadCFOConfidence(){
+try{
+var d=await api('/enrich-status');
+var aht=await api('/aht-stats?months=12');
+var enrichPct=parseFloat(d.coverage_pct||0);
+var totalT=d.total_tickets||0;
+var hasPoolSlug=d.enriched_tickets||0;
+var classifPct=totalT>0?Math.round(hasPoolSlug/totalT*100):0;
+var months=(aht.months||[]);
+var monthsWithData=months.filter(m=>m.pools&&m.pools.some(p=>p.raw_tickets>0)).length;
+var calcPct=Math.round(monthsWithData/12*100);
+var ec=document.getElementById('conf-enrichment');
+var cc=document.getElementById('conf-classification');
+var wc=document.getElementById('conf-calculability');
+if(ec)ec.textContent=enrichPct.toFixed(0)+'%';
+if(cc)cc.textContent=classifPct+'%';
+if(wc){wc.textContent=monthsWithData+'/12';wc.style.color=monthsWithData>=6?'#4ade80':monthsWithData>=3?'#fcd34d':'#fca5a5';}
+if(ec)ec.style.color=enrichPct>=80?'#4ade80':enrichPct>=40?'#fcd34d':'#fca5a5';
+if(cc)cc.style.color=classifPct>=80?'#4ade80':classifPct>=40?'#fcd34d':'#fca5a5';
+// CFO per-pool chips
+var poolConfMap={'classic':'cfo-conf-classic','switchboard':'cfo-conf-switchboard','s1':'cfo-conf-s1','frankly':'cfo-conf-frankly','talent':'cfo-conf-talent'};
+var recentM=months[months.length-1];
+if(recentM){recentM.pools.forEach(function(p){var el=document.getElementById(poolConfMap[p.pool]);if(el){var ok=p.coverage_pct>=80&&p.raw_tickets>0;el.innerHTML='<span style="padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;background:'+(ok?'#14532d':'#7f1d1d')+';color:'+(ok?'#4ade80':'#fca5a5')+'">'+(ok?'✅':'⚠')+' '+(p.coverage_pct||0)+'% cov · '+p.raw_tickets+' t</span>';}});}
+}catch(e){console.warn('CFO conf err',e);}
 }
 
 function setTimeGran(g,btn){
@@ -1134,21 +1205,40 @@ function renderTrendChart(monthly){
 }
 
 function renderTrendMonthlyCards(monthly){
-  var data=monthly.slice(-_trendWindow).reverse();
-  document.getElementById('trend-cards-inner').innerHTML=data.map(function(m){
-    var gap=m.analyticsGapFte;
-    var gapColor=gap>=0?'#4ade80':'#fca5a5';
-    var covOk=m.analyticsCovPct>=COV_THRESHOLD;
-    var sw=m.supplyIsStatic?'<div style="font-size:10px;color:#fcd34d;margin-top:4px">Supply statisk</div>':'';
-    return '<div class="analytics-month-card">'
-      +'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
-      +'<div class="amc-row"><span class="amc-label">Tickets</span><span class="amc-val">'+m.totalTickets.toLocaleString('sv-SE')+'</span></div>'
-      +'<div class="amc-row"><span class="amc-label">FTE-estimat</span><span class="amc-val">'+m.analyticsFteRequired.toFixed(2)+'</span></div>'
-      +'<div class="amc-row"><span class="amc-label">dailyRosteredFte</span><span class="amc-val">'+m.dailyRosteredFte.toFixed(2)+'</span></div>'
-      +'<div class="amc-gap" style="color:'+gapColor+'">Gap: '+(gap>=0?'+':'')+gap.toFixed(2)+'</div>'
-      +'<div class="amc-cov '+(covOk?'ok':'warn')+'">'+m.analyticsCovPct.toFixed(0)+'%</div>'
-      +sw+'</div>';
-  }).join('');
+var data=monthly.slice(-_trendWindow).reverse();
+document.getElementById('trend-cards-inner').innerHTML=data.map(function(m,i){
+var gap=m.analyticsGapFte;
+var gapColor=gap>=0?'#4ade80':'#fca5a5';
+var covOk=m.analyticsCovPct>=COV_THRESHOLD;
+var noData=m.totalTickets===0;
+var sw=m.supplyIsStatic?'<div style="font-size:10px;color:#fcd34d;margin-top:4px">⚠ Supply statisk</div>':'';
+var prev=data[i-1];
+var driverHtml='';
+if(!noData&&prev&&prev.totalTickets>0){
+var dVol=m.totalTickets-prev.totalTickets;
+var dFte=m.analyticsFteRequired-prev.analyticsFteRequired;
+driverHtml='<div style="margin-top:6px;padding-top:6px;border-top:1px solid #2d3148;font-size:10px;color:#475569">'
++'MoM: <span style="color:'+(dVol>=0?'#fca5a5':'#4ade80')+'">'+(dVol>=0?'▲':'▼')+' volym '+(dVol>=0?'+':'')+dVol+'</span> · '
++'<span style="color:'+(dFte<0?'#4ade80':'#fca5a5')+'">'+(dFte>=0?'▲':'▼')+' FTE '+(dFte>=0?'+':'')+dFte.toFixed(2)+'</span>'
++'</div>';
+}
+if(noData){
+return '<div class="analytics-month-card" style="opacity:0.45;border-color:#2d3148">'
++'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
++'<div style="font-size:11px;color:#475569;margin-top:8px;font-style:italic">Ingen demand-data</div>'
++'<div class="amc-row" style="margin-top:6px"><span class="amc-label">Supply</span><span class="amc-val" style="color:#f59e0b">'+m.dailyRosteredFte.toFixed(2)+' FTE</span></div>'
++'<div style="font-size:10px;color:#475569;margin-top:4px">⊘ Gap ej beräkningsbart</div>'
++'</div>';
+}
+return '<div class="analytics-month-card">'
++'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
++'<div class="amc-row"><span class="amc-label">Tickets</span><span class="amc-val">'+m.totalTickets.toLocaleString('sv-SE')+'</span></div>'
++'<div class="amc-row"><span class="amc-label">FTE-estimat</span><span class="amc-val">'+m.analyticsFteRequired.toFixed(2)+'</span></div>'
++'<div class="amc-row"><span class="amc-label">Supply</span><span class="amc-val">'+m.dailyRosteredFte.toFixed(2)+'</span></div>'
++'<div class="amc-gap" style="color:'+gapColor+'">Gap: '+(gap>=0?'+':'')+gap.toFixed(2)+'</div>'
++'<div class="amc-cov '+(covOk?'ok':'warn')+'">'+m.analyticsCovPct.toFixed(0)+'% coverage</div>'
++driverHtml+sw+'</div>';
+}).join('');
 }
 
 function renderPoolGaps(){
@@ -1303,16 +1393,18 @@ async function refreshClassificationData(){
       (m.pools||[]).forEach(function(p){
         if(p.raw_tickets===0&&p.fte_supply===0)return;
         var gapColor=p.gap<0?'#fca5a5':p.gap<=0.5?'#fcd34d':'#4ade80';
-        var staticFlag=p.raw_tickets===0&&p.fte_supply>0?' [supply only]':'';
-        tableRows+='<tr><td style="font-variant-numeric:tabular-nums">'+m.year_month+'</td>'
-          +'<td style="color:'+(colors[p.pool]||'#94a3b8')+';font-weight:600">'+p.pool_name+'</td>'
-          +'<td class="n">'+(p.raw_tickets>0?p.raw_tickets:'-')+'</td>'
-          +'<td class="n">'+(p.filtered_tickets>0?p.filtered_tickets:'-')+'</td>'
-          +'<td class="n">'+(p.raw_tickets>0?p.effective_aht:'-')+'</td>'
-          +'<td class="n">'+(p.filtered_fte>0?p.filtered_fte.toFixed(2):'-')+'</td>'
-          +'<td class="n" style="color:'+(p.raw_tickets===0?'#f59e0b':'#94a3b8')+'">'+p.fte_supply.toFixed(2)+staticFlag+'</td>'
-          +'<td class="n" style="color:'+gapColor+'">'+p.gap.toFixed(2)+'</td>'
-          +'<td class="n" style="color:'+(p.coverage_pct<COV_THRESHOLD&&p.raw_tickets>0?'#fca5a5':'#64748b')+'">'+p.coverage_pct+'%</td></tr>';
+        var noData=p.raw_tickets===0&&p.fte_supply>0;
+var gapDisplay=noData?'<span style="color:#f59e0b;font-size:10px;font-weight:700">Ingen demand-data</span>':('<span style="color:'+gapColor+'">'+p.gap.toFixed(2)+'</span>');
+var covDisplay=noData?'<span style="color:#475569;font-size:10px">Ej beräkningsbar</span>':(p.coverage_pct+'%');
+tableRows+='<tr style="'+(noData?'opacity:0.55':'')+'"><td style="font-variant-numeric:tabular-nums">'+m.year_month+'</td>'
++'<td style="color:'+(colors[p.pool]||'#94a3b8')+';font-weight:600">'+p.pool_name+'</td>'
++'<td class="n">'+(p.raw_tickets>0?p.raw_tickets:'—')+'</td>'
++'<td class="n">'+(p.filtered_tickets>0?p.filtered_tickets:'—')+'</td>'
++'<td class="n">'+(p.raw_tickets>0?p.effective_aht:'—')+'</td>'
++'<td class="n">'+(p.filtered_fte>0?p.filtered_fte.toFixed(2):'—')+'</td>'
++'<td class="n" style="color:'+(noData?'#f59e0b':'#94a3b8')+'">'+p.fte_supply.toFixed(2)+(noData?' ⚠':'')+'</td>'
++'<td class="n">'+gapDisplay+'</td>'
++'<td class="n">'+covDisplay+'</td></tr>';
       });
     });
     document.getElementById('monthly-pool-table').innerHTML=tableRows||'<tr><td colspan="9" style="color:#475569;text-align:center;padding:24px">Ingen data</td></tr>';
