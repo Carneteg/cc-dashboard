@@ -1,17 +1,469 @@
-<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CC Tracker</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',system-ui,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}header{background:#1a1d27;border-bottom:1px solid #2d3148;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}.logo{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700}.logo svg{width:28px;height:28px}.ts{font-size:12px;color:#64748b}nav{background:#1a1d27;border-bottom:1px solid #2d3148;padding:0 24px;display:flex;gap:4px}nav button{background:none;border:none;color:#64748b;padding:14px 16px;cursor:pointer;font-size:14px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s}nav button:hover{color:#e2e8f0}nav button.active{color:#6366f1;border-bottom-color:#6366f1}main{padding:24px;max-width:1400px;margin:0 auto}.tc{display:none}.tc.active{display:block}.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}.card{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px}.card.hl{border-color:#6366f1}.cl{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}.cv{font-size:32px;font-weight:700;color:#e2e8f0;margin-bottom:4px}.cs{font-size:12px;color:#64748b}.st{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin:24px 0 12px}.tw{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;overflow:hidden}table{width:100%;border-collapse:collapse}thead th{background:#12141e;padding:12px 20px;text-align:left;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:1px solid #2d3148}thead th.r{text-align:right}tbody tr{border-bottom:1px solid #1e2133;transition:background .1s}tbody tr:last-child{border-bottom:none}tbody tr:hover{background:#1e2235}td{padding:14px 20px;font-size:14px}td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}td.tn{color:#6366f1;font-size:18px}td.mn{color:#94a3b8}.bc{padding:14px 20px;min-width:160px}.bb{background:#2d3148;border-radius:4px;height:8px;overflow:hidden}.bf{height:100%;border-radius:4px;transition:width .6s ease}.tl{display:flex;flex-direction:column;gap:8px}.tr2{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:16px}.ti{font-size:13px;color:#64748b;font-family:monospace}.tt{font-size:12px;color:#64748b;white-space:nowrap}.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase}.b-email{background:#1e3a5f;color:#60a5fa}.b-phone{background:#14532d;color:#4ade80}.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}.b-other{background:#1e293b;color:#94a3b8}.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}.mc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}.mc.crit{border-color:#ef4444}.mc.under{border-color:#f59e0b}.mc.ok{border-color:#22c55e}.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.mn2{font-size:16px;font-weight:700}.md{font-size:12px;color:#64748b}.mp{margin-bottom:8px}.ml{font-size:12px;color:#94a3b8;margin-bottom:2px}.mb{background:#0f1117;border-radius:3px;height:6px;overflow:hidden}.mf{height:100%;border-radius:3px}.mf.req{background:#6366f1}.mf.sup{background:#22c55e}.mv{font-size:11px;color:#64748b;margin-top:2px}.ga{font-size:13px;font-weight:600;padding:3px 8px;border-radius:4px}.ga.ok{background:#14532d;color:#4ade80}.ga.under{background:#713f12;color:#fcd34d}.ga.crit{background:#7f1d1d;color:#fca5a5}.wf{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}.wc{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}.wv{font-size:28px;font-weight:700}.wl{font-size:12px;color:#64748b;margin-top:4px}.wv.ok{color:#4ade80}.wv.warn{color:#fcd34d}.wv.crit{color:#fca5a5}.fp{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.fp button{background:#2d3148;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .15s}.fp button.active,.fp button:hover{background:#6366f1;color:#fff}.enrich-bar{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:16px}.enrich-info{flex:1;font-size:13px;color:#94a3b8}.enrich-btn{background:#6366f1;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}.enrich-btn:hover{background:#4f46e5}.enrich-btn:disabled{background:#2d3148;color:#64748b;cursor:default}.pb{background:#0f1117;border-radius:4px;height:8px;overflow:hidden;flex:1;max-width:200px}.pf{height:100%;background:#6366f1;border-radius:4px;transition:width .5s}.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}.ac{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}.ac.crit{border-color:#ef4444}.ac.under{border-color:#f59e0b}.ac.ok{border-color:#22c55e}.ah{font-size:15px;font-weight:700;margin-bottom:12px}.ar{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8}.av{font-weight:600;color:#e2e8f0}.pool-toggle{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.view-toggle{display:flex;gap:5px;margin-bottom:12px}.vt-btn{background:#2d3148;border:none;color:#94a3b8;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:12px}.vt-btn.active{background:#6366f1;color:#fff}.scope-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#1e3a5f;color:#60a5fa;margin-left:6px}.pool-btn{background:#2d3148;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}.pool-btn.active,.pool-btn:hover{background:#6366f1;color:#fff}</style></head><body><header><div class="logo"><svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#6366f1"/><path d="M8 20l4-8 4 5 3-4 3 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>CC Tracker - Customer Care</div><div class="ts" id="upd">Uppdaterat --:--</div></header><nav><button class="active" onclick="showTab('overview',this)">Daglig oversikt</button><button onclick="showTab('products',this)">Per produkt</button><button onclick="showTab('recent',this)">Senaste tickets</button><button onclick="showTab('trend',this)">Trend</button><button onclick="showTab('workforce',this)">Workforce Gap</button><button onclick="showTab('aht',this)">AHT-justerad FTE</button></nav><main><div id="tab-overview" class="tc active"><div class="sr"><div class="card hl"><div class="cl">Tickets idag</div><div class="cv" id="t0">-</div><div class="cs">CC totalt</div></div><div class="card"><div class="cl">Senaste 30 dagar</div><div class="cv" id="t30">-</div><div class="cs">Alla produkter</div></div><div class="card"><div class="cl">Mest aktiv idag</div><div class="cv" id="tp" style="font-size:18px">-</div><div class="cs" id="tpc"></div></div><div class="card"><div class="cl">Produkter aktiva</div><div class="cv" id="ap">-</div><div class="cs">med tickets idag</div></div></div><div class="st">Per produkt - idag</div><div class="tw"><table><thead><tr><th>Produkt</th><th class="r">Idag</th><th class="r">30 dagar</th><th>Andel</th></tr></thead><tbody id="ptb"></tbody></table></div></div><div id="tab-products" class="tc"><div class="st">Alla produkter - 30 dagar</div><div class="tw"><table><thead><tr><th>Produkt</th><th class="r">Idag</th><th class="r">30 dagar</th><th>Andel</th></tr></thead><tbody id="ptb2"></tbody></table></div></div><div id="tab-recent" class="tc"><div class="tl" id="tlist"></div></div><div id="tab-trend" class="tc"><div class="st">Daglig volym - senaste 30 dagar</div><div class="tw"><table><thead><tr><th>Datum</th><th class="r">Tickets</th></tr></thead><tbody id="trendt"></tbody></table></div></div><div id="tab-workforce" class="tc"><div class="wf" id="wf-summary"></div><div class="st">ManadsÃ¶versikt - senaste 12 mÃ¥nader</div><div class="mg" id="monthly-grid"></div><div class="st">Daglig kapacitet</div><div class="fp" id="pool-filter"></div><div class="tw"><table><thead><tr><th>Datum</th><th>Pool</th><th class="r">Tickets</th><th class="r">Peak FTE</th><th class="r">Gap FTE</th><th>Status</th></tr></thead><tbody id="daily-table"></tbody></table></div></div><div id="tab-aht" class="tc"><div class="enrich-bar"><div class="enrich-info" id="enrich-status">Laddar...</div><div class="pb"><div class="pf" id="enrich-prog" style="width:0%"></div></div><button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">Hamta Freshdesk-data</button></div><div class="wf" id="aht-summary"></div><div class="view-toggle"><button class="vt-btn active" id="vt-all" onclick="setView('all',this)">Alla tickets</button><button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope (Customer Care)</button></div><div class="st">AHT-justerad FTE per pool - 12 manader</div><div class="pool-toggle" id="aht-pool-filter"></div><div class="ag" id="aht-grid"></div></div></main>
-<script>
-var A='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api',K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ';
+<!DOCTYPE html><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CC Tracker</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+header{background:#1a1d27;border-bottom:1px solid #2d3148;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700}
+.logo svg{width:28px;height:28px}
+.ts{font-size:12px;color:#64748b}
+nav{background:#1a1d27;border-bottom:1px solid #2d3148;padding:0 24px;display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:none;border:none;color:#64748b;padding:14px 16px;cursor:pointer;font-size:14px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s}
+nav button:hover{color:#e2e8f0}
+nav button.active{color:#6366f1;border-bottom-color:#6366f1}
+main{padding:24px;max-width:1400px;margin:0 auto}
+.tc{display:none}.tc.active{display:block}
+.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.card{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px}
+.card.hl{border-color:#6366f1}
+.cl{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.cv{font-size:32px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
+.cs{font-size:12px;color:#64748b}
+.st{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin:24px 0 12px}
+.tw{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead th{background:#12141e;padding:12px 20px;text-align:left;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:1px solid #2d3148}
+thead th.r{text-align:right}
+tbody tr{border-bottom:1px solid #1e2133;transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#1e2235}
+td{padding:14px 20px;font-size:14px}
+td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+td.tn{color:#6366f1;font-size:18px}
+td.mn{color:#94a3b8}
+.bc{padding:14px 20px;min-width:160px}
+.bb{background:#2d3148;border-radius:4px;height:8px;overflow:hidden}
+.bf{height:100%;border-radius:4px;transition:width .6s ease}
+.tl{display:flex;flex-direction:column;gap:8px}
+.tr2{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:16px}
+.ti{font-size:13px;color:#64748b;font-family:monospace}
+.tt{font-size:12px;color:#64748b;white-space:nowrap}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase}
+.b-email{background:#1e3a5f;color:#60a5fa}.b-phone{background:#14532d;color:#4ade80}
+.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}
+.b-other{background:#1e293b;color:#94a3b8}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.mc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.mc.crit{border-color:#ef4444}.mc.under{border-color:#f59e0b}.mc.ok{border-color:#22c55e}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.mn2{font-size:16px;font-weight:700}
+.md{font-size:12px;color:#64748b}
+.mp{margin-bottom:8px}
+.ml{font-size:12px;color:#94a3b8;margin-bottom:2px}
+.mb{background:#0f1117;border-radius:3px;height:6px;overflow:hidden}
+.mf{height:100%;border-radius:3px}
+.mf.req{background:#6366f1}.mf.sup{background:#22c55e}
+.mv{font-size:11px;color:#64748b;margin-top:2px}
+.ga{font-size:13px;font-weight:600;padding:3px 8px;border-radius:4px}
+.ga.ok{background:#14532d;color:#4ade80}.ga.under{background:#713f12;color:#fcd34d}.ga.crit{background:#7f1d1d;color:#fca5a5}
+.cov-warn{margin-top:6px;padding:4px 8px;background:#7f1d1d;color:#fca5a5;font-size:10px;font-weight:600;border-radius:4px;display:flex;align-items:center;gap:4px}
+.cov-ok{margin-top:6px;padding:4px 8px;background:#14532d;color:#4ade80;font-size:10px;font-weight:600;border-radius:4px}
+.wf{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.wc{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
+.wv{font-size:28px;font-weight:700}
+.wl{font-size:12px;color:#64748b;margin-top:4px}
+.wv.ok{color:#4ade80}.wv.warn{color:#fcd34d}.wv.crit{color:#fca5a5}
+.fp{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.fp button{background:#2d3148;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .15s}
+.fp button.active,.fp button:hover{background:#6366f1;color:#fff}
+.enrich-bar{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.enrich-info{flex:1;font-size:13px;color:#94a3b8;min-width:200px}
+.enrich-btn{background:#6366f1;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
+.enrich-btn:hover{background:#4f46e5}.enrich-btn:disabled{background:#2d3148;color:#64748b;cursor:default}
+.pb{background:#0f1117;border-radius:4px;height:8px;overflow:hidden;flex:1;max-width:200px}
+.pf{height:100%;background:#6366f1;border-radius:4px;transition:width .5s}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.ac{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.ac.crit{border-color:#ef4444}.ac.under{border-color:#f59e0b}.ac.ok{border-color:#22c55e}
+.ah{font-size:15px;font-weight:700;margin-bottom:12px}
+.ar{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8}
+.av{font-weight:600;color:#e2e8f0}
+.pool-toggle{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.view-toggle{display:flex;gap:5px;margin-bottom:12px}
+.vt-btn{background:#2d3148;border:none;color:#94a3b8;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:12px}
+.vt-btn.active{background:#6366f1;color:#fff}
+.scope-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#1e3a5f;color:#60a5fa;margin-left:6px}
+.pool-btn{background:#2d3148;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
+.pool-btn.active,.pool-btn:hover{background:#6366f1;color:#fff}
+/* Prognos tab */
+.prognos-inputs{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px;margin-bottom:24px}
+.prognos-inputs h3{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
+.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.input-group{display:flex;flex-direction:column;gap:6px}
+.input-group label{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.05em}
+.input-group input,.input-group select{background:#0f1117;border:1px solid #2d3148;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:14px;width:100%}
+.input-group input:focus,.input-group select:focus{outline:none;border-color:#6366f1}
+.run-btn{background:#6366f1;border:none;color:#fff;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;margin-top:16px}
+.run-btn:hover{background:#4f46e5}
+.forecast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.fc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.fc.surplus{border-color:#22c55e}.fc.deficit{border-color:#ef4444}.fc.marginal{border-color:#f59e0b}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.fm{font-size:16px;font-weight:700}
+/* Setup tab */
+.setup-section{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px;margin-bottom:20px}
+.setup-section h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.setup-section .desc{font-size:13px;color:#64748b;margin-bottom:16px}
+.code-block{background:#0f1117;border:1px solid #2d3148;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;color:#a5b4fc;white-space:pre-wrap;overflow-x:auto;line-height:1.6}
+.status-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.status-chip.done{background:#14532d;color:#4ade80}
+.status-chip.pending{background:#713f12;color:#fcd34d}
+.status-chip.info{background:#1e3a5f;color:#60a5fa}
+.setup-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+</style></head><body>
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#6366f1"/><path d="M8 20l4-8 4 5 3-4 3 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    CC Tracker - Customer Care
+  </div>
+  <div class="ts" id="upd">Uppdaterat --:--</div>
+</header>
+<nav>
+  <button class="active" onclick="showTab('overview',this)">Daglig oversikt</button>
+  <button onclick="showTab('products',this)">Per produkt</button>
+  <button onclick="showTab('recent',this)">Senaste tickets</button>
+  <button onclick="showTab('trend',this)">Trend</button>
+  <button onclick="showTab('workforce',this)">Workforce Gap</button>
+  <button onclick="showTab('aht',this)">AHT-justerad FTE</button>
+  <button onclick="showTab('prognos',this)">Prognos</button>
+  <button onclick="showTab('setup',this)">Setup</button>
+</nav>
+<main>
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview" class="tc active">
+    <div class="sr">
+      <div class="card hl"><div class="cl">Tickets idag</div><div class="cv" id="t0">-</div><div class="cs">CC totalt</div></div>
+      <div class="card"><div class="cl">Senaste 30 dagar</div><div class="cv" id="t30">-</div><div class="cs">Alla produkter</div></div>
+      <div class="card"><div class="cl">Mest aktiv idag</div><div class="cv" id="tp" style="font-size:18px">-</div><div class="cs" id="tpc"></div></div>
+      <div class="card"><div class="cl">Produkter aktiva</div><div class="cv" id="ap">-</div><div class="cs">med tickets idag</div></div>
+    </div>
+    <div class="st">Per produkt - idag</div>
+    <div class="tw"><table><thead><tr><th>Produkt</th><th class="r">Idag</th><th class="r">30 dagar</th><th>Andel</th></tr></thead><tbody id="ptb"></tbody></table></div>
+  </div>
+
+  <!-- PRODUCTS TAB -->
+  <div id="tab-products" class="tc">
+    <div class="st">Alla produkter - 30 dagar</div>
+    <div class="tw"><table><thead><tr><th>Produkt</th><th class="r">Idag</th><th class="r">30 dagar</th><th>Andel</th></tr></thead><tbody id="ptb2"></tbody></table></div>
+  </div>
+
+  <!-- RECENT TAB -->
+  <div id="tab-recent" class="tc"><div class="tl" id="tlist"></div></div>
+
+  <!-- TREND TAB -->
+  <div id="tab-trend" class="tc">
+    <div class="st">Daglig volym - senaste 30 dagar</div>
+    <div class="tw"><table><thead><tr><th>Datum</th><th class="r">Tickets</th></tr></thead><tbody id="trendt"></tbody></table></div>
+  </div>
+
+  <!-- WORKFORCE GAP TAB -->
+  <div id="tab-workforce" class="tc">
+    <div class="wf" id="wf-summary"></div>
+    <div class="st">Manadsöversikt - senaste 12 manader <span style="font-size:11px;color:#64748b;font-weight:400">(FTE-krav via enhetlig AHT-motor | Datackningsvarning vid &lt;80%)</span></div>
+    <div class="mg" id="monthly-grid"></div>
+    <div class="st">Daglig kapacitet</div>
+    <div class="fp" id="pool-filter"></div>
+    <div class="tw"><table><thead><tr><th>Datum</th><th>Pool</th><th class="r">Tickets</th><th class="r">Peak FTE</th><th class="r">Gap FTE</th><th>Status</th></tr></thead><tbody id="daily-table"></tbody></table></div>
+  </div>
+
+  <!-- AHT-JUSTERAD FTE TAB -->
+  <div id="tab-aht" class="tc">
+    <div class="enrich-bar">
+      <div class="enrich-info" id="enrich-status">Laddar...</div>
+      <div class="pb"><div class="pf" id="enrich-prog" style="width:0%"></div></div>
+      <button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">Hamta Freshdesk-data</button>
+    </div>
+    <div class="wf" id="aht-summary"></div>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="vt-all" onclick="setView('all',this)">Alla tickets</button>
+      <button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope (Customer Care)</button>
+    </div>
+    <div class="st">AHT-justerad FTE per pool - 12 manader <span style="font-size:11px;color:#64748b;font-weight:400">(varning vid datatackning &lt;80%)</span></div>
+    <div class="pool-toggle" id="aht-pool-filter"></div>
+    <div class="ag" id="aht-grid"></div>
+  </div>
+
+  <!-- PROGNOS TAB -->
+  <div id="tab-prognos" class="tc">
+    <div class="prognos-inputs">
+      <h3>Scenarioantaganden - 12-manadsprognos</h3>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Volymforandring (%/man)</label>
+          <input type="number" id="pg-vol-chg" value="0" step="0.5" min="-50" max="100">
+        </div>
+        <div class="input-group">
+          <label>AHT-forandring (%/man)</label>
+          <input type="number" id="pg-aht-chg" value="0" step="0.5" min="-50" max="100">
+        </div>
+        <div class="input-group">
+          <label>Supply-forandring (FTE/man)</label>
+          <input type="number" id="pg-sup-chg" value="0" step="0.1" min="-20" max="20">
+        </div>
+        <div class="input-group">
+          <label>Startmanad (bas)</label>
+          <input type="month" id="pg-start-month">
+        </div>
+      </div>
+      <button class="run-btn" onclick="runPrognos()">Generera 12-manadsprognos</button>
+    </div>
+    <div class="wf" id="prognos-summary"></div>
+    <div class="st">Manadsvis FTE-prognos</div>
+    <div class="forecast-grid" id="forecast-grid"></div>
+    <div style="margin-top:24px">
+      <div class="st">Prognostabell</div>
+      <div class="tw"><table><thead><tr><th>Manad</th><th class="r">Progn. volym</th><th class="r">Progn. AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE-krav</th><th class="r">FTE-tillgang</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- SETUP TAB -->
+  <div id="tab-setup" class="tc">
+    <div class="st">Arkitektur & Konfiguration</div>
+
+    <div class="setup-section">
+      <div class="setup-row">
+        <div>
+          <h3>P1 · Automatisk ticket-berikning (pg_cron)</h3>
+          <div class="desc">Supabase pg_cron-jobb som anropar berikningsfunktionen varje timme. Kör SQL nedan i Supabase SQL-editor en gang.</div>
+        </div>
+        <span class="status-chip pending">⏳ Kräver SQL-körning</span>
+      </div>
+      <div class="code-block">-- Aktivera pg_cron (kör en gang i Supabase SQL-editor)
+SELECT cron.schedule(
+  'cc-ticket-enricher-hourly',
+  '0 * * * *',
+  $$
+    SELECT net.http_post(
+      url := 'https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',
+      headers := jsonb_build_object(
+        'Content-Type', 'application/json',
+        'Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0ODg1MjkwNCwiZXhwIjoyMDY0NDI4OTA0fQ.REPLACE_WITH_SERVICE_ROLE_KEY'
+      ),
+      body := '{}'::jsonb
+    );
+  $$
+);
+
+-- Verifiera att jobbet är schemalagt
+SELECT * FROM cron.job WHERE jobname = 'cc-ticket-enricher-hourly';</div>
+      <div id="cron-status" style="margin-top:12px;font-size:13px;color:#64748b">Hämtar cron-status...</div>
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-row">
+        <div>
+          <h3>P4 · Historisk FTE-supply per pool (cc_pool_supply_history)</h3>
+          <div class="desc">Skapar tabell för att spara faktisk FTE-bemannig per manad. Seed:ar med aktuella värden och möjliggör historisk gap-analys.</div>
+        </div>
+        <span class="status-chip pending">⏳ Kräver SQL-körning</span>
+      </div>
+      <div class="code-block">-- Skapa historiktabell
+CREATE TABLE IF NOT EXISTS cc_pool_supply_history (
+  id            BIGSERIAL PRIMARY KEY,
+  pool_slug     TEXT NOT NULL,
+  year_month    TEXT NOT NULL,  -- Format: 'YYYY-MM'
+  fte_supply    NUMERIC(6,2) NOT NULL,
+  note          TEXT,
+  created_at    TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(pool_slug, year_month)
+);
+
+-- Seeda med aktuella varden fran cc_pools (kör en gång)
+-- Obs: Ändra datumintervallet efter era historiska data
+INSERT INTO cc_pool_supply_history (pool_slug, year_month, fte_supply, note)
+SELECT
+  slug AS pool_slug,
+  TO_CHAR(gs, 'YYYY-MM') AS year_month,
+  fte_capacity AS fte_supply,
+  'Seeded from current cc_pools value' AS note
+FROM cc_pools
+CROSS JOIN generate_series(
+  DATE_TRUNC('month', NOW() - INTERVAL '18 months'),
+  DATE_TRUNC('month', NOW()),
+  INTERVAL '1 month'
+) gs
+ON CONFLICT (pool_slug, year_month) DO NOTHING;
+
+-- Verifiera
+SELECT pool_slug, COUNT(*) AS months, MIN(year_month), MAX(year_month)
+FROM cc_pool_supply_history
+GROUP BY pool_slug
+ORDER BY pool_slug;</div>
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-row">
+        <div>
+          <h3>P5 · Svenska arbetsdagar (ersätter hardkodad 9450)</h3>
+          <div class="desc">FTE-beräkning baseras nu pa faktiska svenska arbetsdagar exklusive helger och röda dagar. Denominatorn 9450 (22,5 dagar × 7 h × 60 min) ersätts med kalenderbaserad beräkning. Implementeras i Edge Function computeFTE().</div>
+        </div>
+        <span class="status-chip info">ℹ Logik i frontend + Edge Function</span>
+      </div>
+      <div class="code-block">-- Svenska allmänna helgdagar beräknas dynamiskt i JS/Edge Function.
+-- Formel: FTE = (tickets × AHT_min) / (arbetsdagar_i_manaden × 7 × 60)
+--
+-- Arbetsdagar = alla vardagar i manaden MINUS svenska helgdagar
+-- Svenska fasta helgdagar (exkl. rörliga):
+--   Nyarsdagen:     1 jan
+--   Trettondedag:   6 jan
+--   Forsta maj:     1 maj
+--   Nationaldagen:  6 jun
+--   Julafton*:      24 dec  (*halvdag / vanligen ledig)
+--   Juldagen:       25 dec
+--   Annandag jul:   26 dec
+--   Nyarsafton*:    31 dec
+--
+-- Rörliga helgdagar (baseras pa pasken):
+--   Langfredagen, Paskdagen, Annandag pask,
+--   Kristi himmelsfard, Pingst, Midsommarafton/dagen
+--
+-- I frontend: se funktion swedishWorkingDays(year, month) nedan
+-- I Edge Function: implementera motsvarande logik i computeFTE()</div>
+      <div style="margin-top:16px">
+        <div class="st" style="margin:0 0 8px">Kontroll - Svenska arbetsdagar per manad</div>
+        <div class="tw"><table><thead><tr><th>Manad</th><th class="r">Arbetsdagar</th><th class="r">Tillg. min (7h/dag)</th><th class="r">Diff vs 9450</th></tr></thead><tbody id="workday-table"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-row">
+        <div>
+          <h3>P7 · Freshcaller API-nyckel</h3>
+          <div class="desc">Berikarens v5-implementation stöder Freshcaller men kräver korrekt fristående Freshcaller API-nyckel (inte Freshdesk-nyckeln). Uppdatera Supabase Vault-hemligheten.</div>
+        </div>
+        <span class="status-chip pending">⏳ Kräver API-nyckel från plattformsägare</span>
+      </div>
+      <div class="code-block">-- Uppdatera Freshcaller-hemlighet i Supabase Vault
+-- 1. Gå till Supabase Dashboard → Settings → Vault
+-- 2. Hitta hemligheten: FRESHCALLER_API_KEY
+-- 3. Ersätt med den fristående Freshcaller API-nyckeln
+--    (Hämtas under: Freshcaller → Admin → API)
+-- 4. Ingen kodandring krävs - enricher v5 hämtar automatiskt nyckeln
+
+-- Alternativt via SQL:
+SELECT vault.update_secret('FRESHCALLER_API_KEY', 'din-freshcaller-nyckel-här');
+
+-- Verifiera att hemligheten finns:
+SELECT name, created_at, updated_at FROM vault.secrets WHERE name = 'FRESHCALLER_API_KEY';</div>
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-row">
+        <div>
+          <h3>Enrichment-status (realtid)</h3>
+          <div class="desc">Aktuell berikning och datatäckningsgrad per pool.</div>
+        </div>
+        <button class="enrich-btn" onclick="loadSetupStatus()" style="white-space:nowrap">Uppdatera status</button>
+      </div>
+      <div id="setup-enrich-detail" style="margin-top:12px;font-size:13px;color:#64748b">Klicka "Uppdatera status"...</div>
+    </div>
+  </div>
+
+</main><script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+var A='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api';
+var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ';
+var COV_THRESHOLD = 80; // P2: Coverage warning threshold (%)
+
+// ============================================================
+// UTILITIES
+// ============================================================
 function h(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 function api(p){return fetch(A+p,{headers:{'apikey':K,'Authorization':'Bearer '+K}}).then(r=>r.json());}
-function showTab(id,btn){document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');if(id==='workforce'&&!window._wfL)loadWorkforce();if(id==='aht'&&!window._ahtL)loadAHT();}
 function fmtFTE(n){return (Math.round(parseFloat(n||0)*100)/100).toFixed(2);}
 function gapCls(g){return g<-0.5?'crit':g<0?'under':'ok';}
 function bdg(c){var m={'email':'b-email','phone':'b-phone','portal':'b-portal','chat':'b-chat'};return '<span class="badge '+(m[c]||'b-other')+'">'+h(c)+'</span>';}
+
+function showTab(id,btn){
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='workforce'&&!window._wfL)loadWorkforce();
+  if(id==='aht'&&!window._ahtL)loadAHT();
+  if(id==='prognos'&&!window._pgL)initPrognos();
+  if(id==='setup'&&!window._setupL)loadSetupTab();
+}
+
+// ============================================================
+// P5: SWEDISH WORKING DAY CALCULATOR
+// Replaces hardcoded 9450 denominator
+// ============================================================
+function easterDate(year){
+  // Anonymous Gregorian algorithm
+  var a=year%19,b=Math.floor(year/100),c=year%100;
+  var d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25);
+  var g=Math.floor((b-f+1)/3),h2=Math.floor(19*a+b-d-g+15)%30;
+  var i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h2-k)%7;
+  var m=Math.floor((a+11*h2+22*l)/451);
+  var month=Math.floor((h2+l-7*m+114)/31);
+  var day=((h2+l-7*m+114)%31)+1;
+  return new Date(year,month-1,day);
+}
+
+function swedishHolidays(year){
+  var holidays=new Set();
+  function add(m,d){holidays.add(year+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'));}
+  // Fixed holidays
+  add(1,1);add(1,6);add(5,1);add(6,6);add(12,25);add(12,26);
+  // Easter-based
+  var easter=easterDate(year);
+  function easterOffset(days){
+    var d=new Date(easter);d.setDate(d.getDate()+days);
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  holidays.add(easterOffset(-2)); // Good Friday
+  holidays.add(easterOffset(0));  // Easter Sunday
+  holidays.add(easterOffset(1));  // Easter Monday
+  holidays.add(easterOffset(39)); // Ascension Day
+  holidays.add(easterOffset(49)); // Whit Sunday
+  // Midsommar (Friday between Jun 19-25)
+  var mid=new Date(year,5,19);
+  while(mid.getDay()!==5)mid.setDate(mid.getDate()+1);
+  var midStr=mid.getFullYear()+'-'+String(mid.getMonth()+1).padStart(2,'0')+'-'+String(mid.getDate()).padStart(2,'0');
+  holidays.add(midStr);
+  // Alla helgons dag (Saturday between Oct 31 - Nov 6)
+  var allHelg=new Date(year,9,31);
+  while(allHelg.getDay()!==6)allHelg.setDate(allHelg.getDate()+1);
+  var ahStr=allHelg.getFullYear()+'-'+String(allHelg.getMonth()+1).padStart(2,'0')+'-'+String(allHelg.getDate()).padStart(2,'0');
+  holidays.add(ahStr);
+  return holidays;
+}
+
+function swedishWorkingDays(year, month){
+  // month is 1-indexed
+  var holidays=swedishHolidays(year);
+  var days=0;
+  var date=new Date(year,month-1,1);
+  while(date.getMonth()===month-1){
+    var dow=date.getDay();
+    var ds=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+    if(dow!==0&&dow!==6&&!holidays.has(ds))days++;
+    date.setDate(date.getDate()+1);
+  }
+  return days;
+}
+
+// computeFTE: authoritative FTE engine (P3 + P5)
+// Uses actual Swedish working days instead of hardcoded 9450
+function computeFTE(tickets, ahtMinutes, yearMonth){
+  if(!tickets||!ahtMinutes)return 0;
+  var parts=String(yearMonth).split('-');
+  var year=parseInt(parts[0]),month=parseInt(parts[1]);
+  var workDays=swedishWorkingDays(year,month);
+  var availableMinutes=workDays*7*60; // 7 hours per day
+  return (tickets*ahtMinutes)/availableMinutes;
+}
+
+// ============================================================
+// OVERVIEW + PRODUCTS + RECENT + TREND (unchanged)
+// ============================================================
 async function loadOverview(){
   try{
     var d=await api('/products');var ps=d.products||[];
     var tot30=ps.reduce((s,p)=>s+parseInt(p.last_30_days),0),tot0=ps.reduce((s,p)=>s+parseInt(p.today),0);
-    document.getElementById('t0').textContent=tot0;document.getElementById('t30').textContent=tot30;
+    document.getElementById('t0').textContent=tot0;
+    document.getElementById('t30').textContent=tot30;
     document.getElementById('ap').textContent=ps.filter(p=>parseInt(p.today)>0).length;
     var top=ps.filter(p=>parseInt(p.today)>0).sort((a,b)=>b.today-a.today)[0];
     if(top){document.getElementById('tp').textContent=top.today;document.getElementById('tpc').textContent=top.product;}
@@ -19,24 +471,70 @@ async function loadOverview(){
     var rows=ps.slice(0,10).map(p=>'<tr><td>'+h(p.product)+'</td><td class="n tn">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>').join('');
     document.getElementById('ptb').innerHTML=rows;
     document.getElementById('ptb2').innerHTML=ps.map(p=>'<tr><td>'+h(p.product)+'</td><td class="n tn">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>').join('');
-    document.getElementById('upd').textContent='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});h
+    document.getElementById('upd').textContent='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
   }catch(e){console.error(e);}
 }
+
 async function loadRecent(){
   try{var d=await api('/recent');var ts=d.tickets||[];document.getElementById('tlist').innerHTML=ts.map(t=>'<div class="tr2"><span class="ti">#'+t.ticket_id+'</span><div><div style="font-size:14px;margin-bottom:3px">'+h(t.subject||t.product||'')+'</div><div style="font-size:12px;color:#64748b">'+h(t.product||'')+'</div></div>'+bdg(t.channel)+'<span class="tt">'+new Date(t.created_at).toLocaleDateString('sv-SE')+'</span></div>').join('');}catch(e){console.error(e);}
 }
+
 async function loadTrend(){
   try{var d=await api('/trend');var tr=d.trend||[];document.getElementById('trendt').innerHTML=tr.reverse().map(r=>'<tr><td>'+r.day+'</td><td class="n">'+r.tickets+'</td></tr>').join('');}catch(e){console.error(e);}
 }
+// ============================================================
+// P3: SINGLE SOURCE OF TRUTH - WORKFORCE GAP TAB
+// Uses /aht-stats exclusively (no /workforce endpoint)
+// ============================================================
 var _allDaily=[];
 async function loadWorkforce(){
   window._wfL=true;
   try{
-    var d=await api('/aht-stats?months=12');var sum=(d.months||[]).map(m=>({year_month:m.year_month,fte_required_total:m.total_filtered_fte,fte_supply_total:m.total_supply,net_gap:m.total_gap,worst_gap_pool:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.pool||'-',worst_gap_value:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.gap||0,total_tickets:(m.pools||[]).reduce((s,p)=>s+p.filtered_tickets,0)}));var daily=[];_allDaily=daily;
+    var d=await api('/aht-stats?months=12');
+    // Build monthly summary from /aht-stats (P3: single FTE engine)
+    var sum=(d.months||[]).map(m=>{
+      var cov=parseFloat(m.avg_coverage_pct||0);
+      return {
+        year_month:m.year_month,
+        fte_required_total:m.total_filtered_fte,
+        fte_supply_total:m.total_supply,
+        net_gap:m.total_gap,
+        worst_gap_pool:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.pool||'-',
+        worst_gap_value:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.gap||0,
+        total_tickets:(m.pools||[]).reduce((s,p)=>s+p.filtered_tickets,0),
+        // P2: coverage data
+        coverage_pct:cov,
+        enriched_tickets:m.enriched_tickets||0,
+        total_raw_tickets:m.total_raw_tickets||0
+      };
+    });
+    var daily=[];_allDaily=daily;
     var l=sum[0]||{};
-    document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Kraver</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillganglig</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Samsta pool</div><div class="wv crit" style="font-size:18px">'+h(l.worst_gap_pool||'-')+'</div><div class="wl">Gap: '+fmtFTE(l.worst_gap_value||0)+'</div></div>'].join('');
+    document.getElementById('wf-summary').innerHTML=[
+      '<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>',
+      '<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>',
+      '<div class="wc"><div class="wl">FTE Krav</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>',
+      '<div class="wc"><div class="wl">FTE Tillganglig</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>',
+      '<div class="wc"><div class="wl">Samsta pool</div><div class="wv crit" style="font-size:18px">'+h(l.worst_gap_pool||'-')+'</div><div class="wl">Gap: '+fmtFTE(l.worst_gap_value||0)+'</div></div>',
+      // P2: coverage summary card
+      '<div class="wc"><div class="wl">Datatackning (senaste man)</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div><div class="wl">Troskel: '+COV_THRESHOLD+'%</div></div>'
+    ].join('');
     var months=sum.slice(0,12).reverse();
-    document.getElementById('monthly-grid').innerHTML=months.map(m=>{var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;return '<div class="mc '+(gap<-0.5?'crit':gap<0?'under':'ok')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Behov: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+' | Samsta: '+(m.worst_gap_pool||'-')+'</div></div>';}).join('');
+    // P2: Coverage warning badges on monthly cards
+    document.getElementById('monthly-grid').innerHTML=months.map(m=>{
+      var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;
+      var cov=parseFloat(m.coverage_pct||0);
+      var covHtml=cov<COV_THRESHOLD
+        ? '<div class="cov-warn">⚠ Datatackning '+cov.toFixed(0)+'% - varning under '+COV_THRESHOLD+'%-troskel</div>'
+        : '<div class="cov-ok">✓ Datatackning '+cov.toFixed(0)+'%</div>';
+      return '<div class="mc '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">'
+        +'<div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div>'
+        +'<div class="mp"><div class="ml">FTE Behov: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div>'
+        +'<div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div>'
+        +'<div class="mv">Tickets: '+m.total_tickets+' | Samsta: '+(m.worst_gap_pool||'-')+'</div>'
+        +covHtml
+        +'</div>';
+    }).join('');
     var pools=[...new Set(daily.map(r=>r.pool_slug))].sort();
     document.getElementById('pool-filter').innerHTML='<button class="active" onclick="fp(this)" data-pool="">Alla</button>'+pools.map(p=>'<button onclick="fp(this)" data-pool="'+h(p)+'">'+h(p)+'</button>').join('');
     renderDailyTable('');
@@ -44,6 +542,10 @@ async function loadWorkforce(){
 }
 function fp(btn){document.querySelectorAll('#pool-filter button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderDailyTable(btn.dataset.pool);}
 function renderDailyTable(pool){var rows=pool?_allDaily.filter(r=>r.pool_slug===pool):_allDaily;document.getElementById('daily-table').innerHTML=rows.slice(0,200).map(r=>'<tr><td>'+r.stat_date+'</td><td>'+h(r.pool_slug)+'</td><td class="n">'+r.ticket_count+'</td><td class="n">'+fmtFTE(r.peak_fte_calculated)+'</td><td class="n">'+fmtFTE(r.gap_fte)+'</td><td><span class="ga '+(r.capacity_status==='critical'?'crit':r.capacity_status==='under'?'under':'ok')+'">'+r.capacity_status+'</span></td></tr>').join('');}
+
+// ============================================================
+// P2+P3: AHT TAB - coverage indicators on all monthly cards
+// ============================================================
 var _ahtData=null,_view='all';
 async function loadAHT(){
   window._ahtL=true;
@@ -56,25 +558,72 @@ async function loadAHT(){
     renderAHTGrid(d,'');
   }catch(e){console.error('AHT err',e);}
 }
-function setView(v,btn){_view=v;document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'')}function filterAHT(btn){document.querySelectorAll('#aht-pool-filter .pool-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,btn.dataset.pool);}
+function setView(v,btn){_view=v;document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}
+function filterAHT(btn){document.querySelectorAll('#aht-pool-filter .pool-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,btn.dataset.pool);}
+
 function renderAHTSummary(d){
+  // P2: expose coverage_percentage, enriched_ticket_count, total_ticket_count
   var cov=parseFloat(d.enrichment_coverage||0),latest=d.months&&d.months[d.months.length-1];
-  var s=['<div class="wc"><div class="wl">Enrichment tackning</div><div class="wv '+(cov>50?'ok':cov>20?'warn':'crit')+'">'+cov.toFixed(1)+'%</div><div class="wl">'+d.enriched_tickets+'/'+d.total_tickets+' tickets</div></div>'];
-  if(latest){s.push('<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(latest.year_month)+'</div></div>');s.push('<div class="wc"><div class="wl">Filtrerat FTE-gap</div><div class="wv '+(latest.total_gap>=0?'ok':latest.total_gap>=-0.5?'warn':'crit')+'">'+fmtFTE(latest.total_gap)+'</div></div>');var totFilt=latest.pools.reduce((s2,p)=>s2+p.filtered_tickets,0),totRaw=latest.pools.reduce((s2,p)=>s2+p.raw_tickets,0);s.push('<div class="wc"><div class="wl">Filtrerade tickets</div><div class="wv warn">'+totFilt+'</div><div class="wl">av '+totRaw+' totalt</div></div>');}
+  var s=['<div class="wc"><div class="wl">Enrichment tackning</div><div class="wv '+(cov>=COV_THRESHOLD?'ok':cov>20?'warn':'crit')+'">'+cov.toFixed(1)+'%</div><div class="wl">'+d.enriched_tickets+'/'+d.total_tickets+' tickets</div></div>'];
+  if(latest){
+    s.push('<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(latest.year_month)+'</div></div>');
+    s.push('<div class="wc"><div class="wl">Filtrerat FTE-gap</div><div class="wv '+(latest.total_gap>=0?'ok':latest.total_gap>=-0.5?'warn':'crit')+'">'+fmtFTE(latest.total_gap)+'</div></div>');
+    var totFilt=latest.pools.reduce((s2,p)=>s2+p.filtered_tickets,0),totRaw=latest.pools.reduce((s2,p)=>s2+p.raw_tickets,0);
+    s.push('<div class="wc"><div class="wl">Filtrerade tickets</div><div class="wv warn">'+totFilt+'</div><div class="wl">av '+totRaw+' totalt</div></div>');
+    // P2: per-pool coverage for latest month
+    if(latest.pools&&latest.pools.length){
+      var poolCovHtml=latest.pools.map(p=>{
+        var pc=parseFloat(p.coverage_pct||0);
+        return '<span style="font-size:11px;padding:2px 6px;border-radius:3px;margin:2px;display:inline-block;background:'+(pc>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pc>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+h(p.pool_name||p.pool)+': '+pc.toFixed(0)+'%</span>';
+      }).join('');
+      s.push('<div class="wc" style="grid-column:1/-1"><div class="wl">Datatackning per pool ('+latest.year_month+')</div><div style="margin-top:6px">'+poolCovHtml+'</div></div>');
+    }
+  }
   document.getElementById('aht-summary').innerHTML=s.join('');
 }
+
 function renderAHTGrid(d,fPool){
   var months=d.months||[];
   document.getElementById('aht-grid').innerHTML=months.map(m=>{
     var pools=fPool?m.pools.filter(p=>p.pool===fPool):m.pools;
     if(!pools.length)return '';
-    var useCC=_view==='cc',totF=pools.reduce((s,p)=>s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte),0),totR=pools.reduce((s,p)=>s+p.raw_fte,0),totS=pools.reduce((s,p)=>s+p.fte_supply,0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';
-    return '<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">+pools.map(p=>{var useCC2=_view==='cc',ticketCount=useCC2?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,fte=useCC2?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,diff=ticketCount-p.raw_tickets,pct=p.raw_tickets>0?Math.round(ticketCount/p.raw_tickets*100):100;return '<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+ticketCount+' tickets ('+pct+'% av '+p.raw_tickets+')'+(useCC2?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(diff<0?' <span style="color:#4ade80">'+diff+' borttagna</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Brutto FTE: '+fmtFTE(totR)+' | Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'+(m.avg_coverage_pct<80?'<div style="margin-top:4px;padding:3px 6px;background:#7f1d1d;color:#fca5a5;font-size:10px;border-radius:3px">⚠ Datatackning '+m.avg_coverage_pct+'% - begransad tillforlitlighet</div>':'')+'</div>';
+    var useCC=_view==='cc';
+    var totF=pools.reduce((s,p)=>s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte),0);
+    var totR=pools.reduce((s,p)=>s+p.raw_fte,0);
+    var totS=pools.reduce((s,p)=>s+p.fte_supply,0);
+    var gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';
+    // P2: coverage warning per month
+    var avgCov=parseFloat(m.avg_coverage_pct||0);
+    var covWarn=avgCov<COV_THRESHOLD
+      ? '<div class="cov-warn">⚠ Datatackning '+avgCov.toFixed(0)+'% ('+m.enriched_tickets+'/'+m.total_raw_tickets+') - under '+COV_THRESHOLD+'%-troskel</div>'
+      : '';
+    return '<div class="ac '+cls+'">'
+      +'<div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'
+      +pools.map(p=>{
+        var useCC2=_view==='cc',ticketCount=useCC2?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,fte=useCC2?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,diff=ticketCount-p.raw_tickets,pct=p.raw_tickets>0?Math.round(ticketCount/p.raw_tickets*100):100;
+        // P2: per-pool coverage indicator
+        var pCov=parseFloat(p.coverage_pct||0);
+        var pCovHtml=pCov>0?'<span style="margin-left:4px;padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'';
+        return '<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div>'
+          +'<div style="font-size:11px;color:#64748b;margin-bottom:6px">'+ticketCount+' tickets ('+pct+'% av '+p.raw_tickets+')'+(useCC2?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+pCovHtml+(diff<0?' <span style="color:#4ade80">'+diff+' borttagna</span>':'')+'</div>';
+      }).join('')
+      +'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Brutto FTE: '+fmtFTE(totR)+' | Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'
+      +covWarn
+      +'</div>';
   }).join('');
 }
+
 async function updateEnrichStatus(){
-  try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('enrich-status').textContent='Enrichment: '+d.enriched_tickets+'/'+d.total_tickets+' ('+pct.toFixed(1)+'%) | Besv: '+d.answered_tickets+' | CC-scope: '+(d.cc_scope_tickets||0)+' | Samtal: '+(d.phone_with_duration||0);var prog=document.getElementById('enrich-prog');if(prog)prog.style.width=pct+'%';if(pct>=100){var btn=document.getElementById('enrich-btn');if(btn){btn.disabled=true;btn.textContent='Klart!';}};}catch(e){}
+  try{
+    var d=await api('/enrich-status');
+    var pct=parseFloat(d.coverage_pct||0);
+    document.getElementById('enrich-status').textContent='Enrichment: '+d.enriched_tickets+'/'+d.total_tickets+' ('+pct.toFixed(1)+'%) | Besv: '+d.answered_tickets+' | CC-scope: '+(d.cc_scope_tickets||0)+' | Samtal: '+(d.phone_with_duration||0);
+    var prog=document.getElementById('enrich-prog');
+    if(prog)prog.style.width=pct+'%';
+    if(pct>=100){var btn=document.getElementById('enrich-btn');if(btn){btn.disabled=true;btn.textContent='Klart!';}}
+  }catch(e){}
 }
+
 async function runEnrich(){
   var btn=document.getElementById('enrich-btn');btn.disabled=true;btn.textContent='Hamtar...';
   try{
@@ -88,5 +637,152 @@ async function runEnrich(){
   }catch(e){btn.textContent='Fel: '+e.message;}
   setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Hamta Freshdesk-data';}},8000);
 }
-document.addEventListener('DOMContentLoaded',()=>{loadOverview();loadRecent();loadTrend();});
+// ============================================================
+// P6: PROGNOS (FORECASTING) TAB
+// 12-month workforce forecast using scenario assumptions
+// ============================================================
+function initPrognos(){
+  window._pgL=true;
+  // Set default start month to current
+  var now=new Date();
+  document.getElementById('pg-start-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  // Auto-run with default values if AHT data available
+  if(_ahtData)runPrognos();
+}
+
+async function runPrognos(){
+  var volChg=parseFloat(document.getElementById('pg-vol-chg').value)||0;
+  var ahtChg=parseFloat(document.getElementById('pg-aht-chg').value)||0;
+  var supChg=parseFloat(document.getElementById('pg-sup-chg').value)||0;
+  var startMonth=document.getElementById('pg-start-month').value;
+
+  // Get baseline from AHT data or fetch it
+  if(!_ahtData){
+    try{_ahtData=await api('/aht-stats?months=3');}catch(e){console.error(e);return;}
+  }
+  var months=_ahtData.months||[];
+  if(!months.length){
+    document.getElementById('forecast-grid').innerHTML='<div style="color:#64748b;padding:20px">Ingen basdata tillganglig - kontrollera AHT-data</div>';
+    return;
+  }
+
+  // Use most recent month as baseline
+  var base=months[months.length-1]||months[0];
+  var baseVol=base.pools?base.pools.reduce((s,p)=>s+p.filtered_tickets,0):0;
+  var baseAHT=base.pools&&base.pools.length?base.pools.reduce((s,p)=>s+p.effective_aht,0)/base.pools.length:15;
+  var baseSupply=base.pools?base.pools.reduce((s,p)=>s+p.fte_supply,0):10;
+
+  // Parse start month
+  var startParts=startMonth.split('-');
+  var startYear=parseInt(startParts[0]),startMonthNum=parseInt(startParts[1]);
+
+  // Generate 12 months
+  var rows=[];
+  var totReq=0,totGap=0,surplusMonths=0,deficitMonths=0;
+  for(var i=0;i<12;i++){
+    var mNum=startMonthNum+i,mYear=startYear;
+    while(mNum>12){mNum-=12;mYear++;}
+    var ym=mYear+'-'+String(mNum).padStart(2,'0');
+    var vol=baseVol*Math.pow(1+volChg/100,i+1);
+    var aht=baseAHT*Math.pow(1+ahtChg/100,i+1);
+    var supply=baseSupply+(supChg*(i+1));
+    var wd=swedishWorkingDays(mYear,mNum);
+    var fteReq=computeFTE(vol,aht,ym);
+    var gap=supply-fteReq;
+    totReq+=fteReq;
+    totGap+=gap;
+    if(gap>=0)surplusMonths++;else deficitMonths++;
+    rows.push({ym,vol:Math.round(vol),aht:aht.toFixed(1),wd,fteReq,supply,gap});
+  }
+
+  // Summary cards
+  var avgGap=totGap/12;
+  document.getElementById('prognos-summary').innerHTML=[
+    '<div class="wc"><div class="wl">Genomsnittlig FTE-gap (12 man)</div><div class="wv '+(avgGap>=0?'ok':'crit')+'">'+fmtFTE(avgGap)+'</div></div>',
+    '<div class="wc"><div class="wl">Manader med overskott</div><div class="wv ok">'+surplusMonths+'</div></div>',
+    '<div class="wc"><div class="wl">Manader med underskott</div><div class="wv '+(deficitMonths>0?'crit':'ok')+'">'+deficitMonths+'</div></div>',
+    '<div class="wc"><div class="wl">Total FTE-krav (12 man)</div><div class="wv warn">'+fmtFTE(totReq)+'</div></div>',
+    '<div class="wc"><div class="wl">Bas: volym/man</div><div class="wv" style="font-size:18px">'+Math.round(baseVol)+'</div></div>',
+    '<div class="wc"><div class="wl">Bas: AHT (min)</div><div class="wv" style="font-size:18px">'+baseAHT.toFixed(1)+'</div></div>'
+  ].join('');
+
+  // Forecast cards
+  document.getElementById('forecast-grid').innerHTML=rows.map(r=>{
+    var gap=parseFloat(r.gap),cls=gap>0.5?'surplus':gap<-0.5?'deficit':'marginal';
+    var mx=Math.max(r.fteReq,r.supply)||1;
+    return '<div class="fc '+cls+'">'
+      +'<div class="fh"><span class="fm">'+r.ym+'</span><span class="ga '+(gap>=0?'ok':gap>=-0.5?'under':'crit')+'">Gap: '+fmtFTE(gap)+'</span></div>'
+      +'<div class="mp"><div class="ml">FTE Krav: '+fmtFTE(r.fteReq)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(r.fteReq/mx*100)+'%"></div></div></div>'
+      +'<div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(r.supply)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(r.supply/mx*100)+'%"></div></div></div>'
+      +'<div class="mv">Volym: '+r.vol+' | AHT: '+r.aht+'min | Arbdagar: '+r.wd+'</div>'
+      +'</div>';
+  }).join('');
+
+  // Forecast table
+  document.getElementById('forecast-table').innerHTML=rows.map(r=>{
+    var gap=parseFloat(r.gap),cls=gap<-0.5?'crit':gap<0?'under':'ok';
+    var diff=(9450-(r.wd*7*60));
+    return '<tr>'
+      +'<td>'+r.ym+'</td>'
+      +'<td class="n">'+r.vol+'</td>'
+      +'<td class="n">'+r.aht+'</td>'
+      +'<td class="n">'+r.wd+'</td>'
+      +'<td class="n">'+fmtFTE(r.fteReq)+'</td>'
+      +'<td class="n">'+fmtFTE(r.supply)+'</td>'
+      +'<td class="n"><span class="ga '+cls+'">'+fmtFTE(gap)+'</span></td>'
+      +'<td><span class="ga '+cls+'">'+(gap>=0?'Overskott':'Underskott')+'</span></td>'
+      +'</tr>';
+  }).join('');
+}
+
+// ============================================================
+// SETUP TAB
+// ============================================================
+function loadSetupTab(){
+  window._setupL=true;
+  // Render working days table (P5)
+  renderWorkdayTable();
+  loadSetupStatus();
+}
+
+function renderWorkdayTable(){
+  var now=new Date();
+  var rows=[];
+  for(var i=11;i>=0;i--){
+    var d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    var y=d.getFullYear(),m=d.getMonth()+1;
+    var ym=y+'-'+String(m).padStart(2,'0');
+    var wd=swedishWorkingDays(y,m);
+    var availMin=wd*7*60;
+    var diff=availMin-9450;
+    rows.push('<tr><td>'+ym+'</td><td class="n">'+wd+'</td><td class="n">'+availMin.toLocaleString('sv-SE')+'</td><td class="n" style="color:'+(diff>0?'#fca5a5':'#4ade80')+'">'+diff+'</td></tr>');
+  }
+  var tbl=document.getElementById('workday-table');
+  if(tbl)tbl.innerHTML=rows.join('');
+}
+
+async function loadSetupStatus(){
+  try{
+    var d=await api('/enrich-status');
+    var pct=parseFloat(d.coverage_pct||0);
+    document.getElementById('setup-enrich-detail').innerHTML=
+      '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:8px">'
+      +'<div class="wc"><div class="wl">Total tickets</div><div class="wv" style="font-size:20px">'+d.total_tickets+'</div></div>'
+      +'<div class="wc"><div class="wl">Berikade tickets</div><div class="wv ok" style="font-size:20px">'+d.enriched_tickets+'</div></div>'
+      +'<div class="wc"><div class="wl">Kvarstaende</div><div class="wv '+(d.total_tickets-d.enriched_tickets>0?'crit':'ok')+'" style="font-size:20px">'+(d.total_tickets-d.enriched_tickets)+'</div></div>'
+      +'<div class="wc"><div class="wl">Tackning</div><div class="wv '+(pct>=COV_THRESHOLD?'ok':'crit')+'">'+pct.toFixed(1)+'%</div><div class="wl">Troskel: '+COV_THRESHOLD+'%</div></div>'
+      +'<div class="wc"><div class="wl">CC-scope</div><div class="wv warn" style="font-size:20px">'+(d.cc_scope_tickets||0)+'</div></div>'
+      +'<div class="wc"><div class="wl">Samtal m. tid</div><div class="wv" style="font-size:20px">'+(d.phone_with_duration||0)+'</div></div>'
+      +'</div>';
+  }catch(e){document.getElementById('setup-enrich-detail').textContent='Fel vid hamtning: '+e.message;}
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  loadOverview();
+  loadRecent();
+  loadTrend();
+});
 </script></body></html>
