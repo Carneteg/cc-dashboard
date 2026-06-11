@@ -15,7 +15,7 @@ nav .nav-sep{width:1px;background:#2d3148;margin:8px 4px;flex-shrink:0}
 main{padding:24px;max-width:1440px;margin:0 auto}
 .tc{display:none}.tc.active{display:block}
 
-/* ── SHARED COMPONENTS ── */
+/* ── SHARED ── */
 .section-header{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px}
 .section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
 .section-note{font-size:11px;color:#475569;font-style:italic}
@@ -50,7 +50,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .layer-divider-line{flex:1;height:1px;background:#2d3148}
 .layer-divider-label{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
 
-/* ── WORKFORCE PLANNING KPI CARDS ── */
+/* ── WP KPI CARDS ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
@@ -86,7 +86,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .chart-btn.active{background:#6366f1;color:#fff}
 .chart-note{font-size:11px;color:#475569;padding:6px 12px;background:#0f1117;border-radius:6px;margin-top:6px}
 
-/* Pool gap bars */
+/* Pool gaps */
 .pool-grid{display:flex;flex-direction:column;gap:10px}
 .pool-row{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
 .pool-row.crit{border-left:4px solid #ef4444}.pool-row.warn{border-left:4px solid #f59e0b}.pool-row.ok{border-left:4px solid #22c55e}
@@ -125,13 +125,9 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .phase-fas3{background:#14532d;border-color:#22c55e;color:#4ade80}
 .phase-expansion{background:#1e3a5f;border-color:#3b82f6;color:#93c5fd}
 
-/* Sensitivity / tornado */
+/* Sensitivity */
 .sensitivity-row{display:flex;align-items:center;gap:0;margin-bottom:6px;min-height:36px}
 .sens-label{font-size:12px;color:#94a3b8;width:140px;flex-shrink:0;text-align:right;padding-right:12px}
-.sens-bars{flex:1;position:relative;height:28px;display:flex;align-items:center}
-.sens-center{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#2d3148}
-.sens-bar-neg{position:absolute;right:50%;height:18px;border-radius:3px 0 0 3px;background:#ef4444;top:50%;transform:translateY(-50%)}
-.sens-bar-pos{position:absolute;left:50%;height:18px;border-radius:0 3px 3px 0;background:#6366f1;top:50%;transform:translateY(-50%)}
 
 /* Definitions */
 .def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
@@ -147,8 +143,6 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .trend-title{font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em}
 .trend-loading{font-size:12px;color:#64748b;text-align:center;padding:40px}
 .trend-error{font-size:12px;color:#f87171;padding:12px;background:#450a0a;border-radius:6px;margin-top:8px}
-
-/* Monthly analytics cards */
 .analytics-month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:12px}
 .analytics-month-card{background:#12141e;border:1px solid #2d3148;border-radius:8px;padding:12px}
 .amc-month{font-size:11px;color:#64748b;margin-bottom:6px}
@@ -157,6 +151,41 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .amc-gap{font-size:13px;font-weight:700;margin-top:6px;padding-top:6px;border-top:1px solid #2d3148}
 .amc-cov{font-size:10px;margin-top:4px;padding:2px 6px;border-radius:3px;display:inline-block}
 .amc-cov.ok{background:#14532d;color:#4ade80}.amc-cov.warn{background:#7f1d1d;color:#fca5a5}
+
+/* ── CLASSIFICATION MODEL STYLES ── */
+.classif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:20px}
+.classif-card{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
+.classif-card.switchboard{border-left:4px solid #60a5fa}
+.classif-card.classic{border-left:4px solid #818cf8}
+.classif-card.s1{border-left:4px solid #4ade80}
+.classif-card.frankly{border-left:4px solid #fcd34d}
+.classif-card.talent{border-left:4px solid #f97316}
+.classif-card.unknown{border-left:4px solid #475569}
+.classif-title{font-size:13px;font-weight:700;margin-bottom:10px}
+.classif-products{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.product-chip{padding:2px 8px;border-radius:4px;font-size:11px;background:#0f1117;border:1px solid #2d3148;color:#94a3b8}
+.classif-note{font-size:11px;color:#475569;font-style:italic;margin-top:6px}
+.routing-rule{font-size:11px;color:#60a5fa;margin-top:4px;font-family:monospace;background:#0f1117;padding:4px 8px;border-radius:4px}
+
+/* Cross-tab validation */
+.xtab{overflow-x:auto}
+.xtab table{min-width:600px}
+.xtab td.pool-head{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.xtab td.val-cell{text-align:right;font-variant-numeric:tabular-nums;font-size:12px}
+.xtab td.val-cell.zero{color:#475569}
+.xtab td.val-cell.low{color:#fcd34d}
+.xtab td.val-cell.high{color:#4ade80}
+.xtab td.total-row{font-weight:700;background:#12141e}
+
+/* Supply discrepancy warning */
+.supply-warning{background:#431407;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;font-size:12px;line-height:1.6;margin-bottom:12px}
+.supply-warning .sw-title{font-weight:700;color:#fcd34d;margin-bottom:6px}
+.supply-sources{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px}
+.supply-source-card{background:#0f1117;border-radius:6px;padding:10px;border:1px solid #2d3148}
+.supply-source-title{font-size:10px;text-transform:uppercase;font-weight:700;color:#64748b;margin-bottom:6px}
+.supply-source-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px}
+.supply-source-key{color:#64748b}
+.supply-source-val{font-weight:600;font-variant-numeric:tabular-nums}
 
 /* ── LEGACY TAB STYLES ── */
 .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
@@ -248,15 +277,14 @@ CC Workforce Planning
 <button onclick="showTab('trend',this)">Trend</button>
 <button onclick="showTab('workforce',this)">Workforce Gap</button>
 <button onclick="showTab('aht',this)">AHT FTE</button>
+<button onclick="showTab('classify',this)">🔍 Klassificering</button>
 <button onclick="showTab('prognos',this)">Prognos</button>
 <button onclick="showTab('setup',this)">Setup</button>
 </nav>
 <main>
 
-<!-- WORKFORCE PLANNING TAB -->
+<!-- WORKFORCE PLANNING TAB (unchanged from v17) -->
 <div id="tab-wp" class="tc active">
-
-<!-- § 1 EXECUTIVE SUMMARY — PLANNING LAYER -->
 <div class="section-header" style="margin-top:0">
 <span class="section-title">§ 1 · Executive Summary — nuläge</span>
 <div style="display:flex;align-items:center;gap:8px">
@@ -269,47 +297,41 @@ CC Workforce Planning
 <div class="kpi-label"><span>Actual FTE</span><span class="tag master">Masterdata</span></div>
 <div class="kpi-value actual">11</div>
 <div class="kpi-sub">Faktisk bemanning · Business baseline</div>
-<div class="kpi-tooltip">Faktiskt antal anställda. Mastervärde = 11. Ej detsamma som Effective Supply — påverkas ej av modellberäkningar. Alla scenarier utgår från denna nollpunkt.</div>
+<div class="kpi-tooltip">Faktiskt antal anställda. Mastervärde = 11. Ej detsamma som Effective Supply — påverkas ej av modellberäkningar.</div>
 </div>
 <div class="kpi-card supply">
 <div class="kpi-label">Effective Supply FTE</div>
 <div class="kpi-value supply">11.10</div>
 <div class="kpi-sub">Produktiv kapacitet efter seniority &amp; allokering</div>
-<div class="kpi-tooltip">Modellens beräknade tillgängliga kapacitet. Kan vara ≠ Actual FTE pga seniority-viktning. Skilj alltid dessa begrepp åt. Källa: FTE Calc-fliken.</div>
+<div class="kpi-tooltip">Modellens beräknade tillgängliga kapacitet. Kan vara ≠ Actual FTE pga seniority-viktning. Källa: FTE Calc-fliken.</div>
 </div>
 <div class="kpi-card required">
 <div class="kpi-label">Required FTE</div>
 <div class="kpi-value required">10.10</div>
 <div class="kpi-sub">Ticket FTE 9.10 + Overhead FTE 1.00</div>
-<div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. Beräknat på volym, AHT, occupancy, shrinkage och peak buffer per pool. Källa: FTE Calc-fliken.</div>
+<div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. Beräknat på volym, AHT, occupancy, shrinkage och peak buffer per pool.</div>
 </div>
 <div class="kpi-card gap">
 <div class="kpi-label">Net Gap FTE</div>
-<div class="kpi-value gap-pos" id="kpi-gap">+1.00</div>
+<div class="kpi-value gap-pos">+1.00</div>
 <div class="kpi-sub">Effective Supply − Required FTE</div>
 <div class="kpi-tooltip">⚠ Positivt totalt gap döljer kritiskt underskott i Classic (-1.15 FTE). Se Pool Capacity Gaps nedan.</div>
 </div>
 </div>
-
-<!-- Alert: Classic deficit -->
-<div class="alert-banner crit" id="classic-alert">
+<div class="alert-banner crit">
 <div class="alert-icon">🚨</div>
 <div class="alert-body">
 <div class="alert-title">Classic är underbemannad med -1.15 FTE trots total balans</div>
-<div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Classic hanterar den migrationstunga volymen — underskottet är operativt prioriterat och kräver åtgärd. Supply: <span>2.25 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.15 FTE</span>.</div>
+<div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Supply: <span>2.25 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.15 FTE</span>.</div>
 </div>
 </div>
-
-<!-- Architecture note -->
 <div class="alert-banner info" style="margin-bottom:32px">
 <div class="alert-icon">ℹ</div>
 <div class="alert-body">
 <div class="alert-title" style="font-size:12px;color:#60a5fa">Två-lager arkitektur</div>
-<div class="alert-desc"><span>Planering</span> (blå märkning) = Excel-modellens källvärden. Officiella KPI:er, gap-beräkningar och scenariojämförelser. Ändras aldrig i frontend. · <span>Analys</span> (lila märkning) = Daglig/månadsvis driftanalys hämtad från API. Visar faktisk arbetsbelastning och täckning over tid. Används för trendvisualisering — ersätter INTE planeringslagrets officiella mått.</div>
+<div class="alert-desc"><span>Planering</span> (blå) = Excel-modellens källvärden — officiella KPI:er. Ändras aldrig i frontend. · <span>Analys</span> (lila) = Daglig/månadsvis driftanalys från API. Används för trendvisualisering — ersätter INTE planeringslagrets officiella mått. · <span>Se Klassificering-fliken</span> för fullständig produktklassificeringsmodell och valideringstabeller.</div>
 </div>
 </div>
-
-<!-- § 2 STAFFING OVER TIME — DUAL LAYER -->
 <div class="section-header">
 <span class="section-title">§ 2 · Staffing Over Time</span>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -321,36 +343,20 @@ CC Workforce Planning
 </div>
 </div>
 </div>
-
-<!-- Planning reference view -->
 <div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Planering · Scenario-driven utveckling</span><div class="layer-divider-line"></div></div>
 <div class="chart-wrap" style="margin-bottom:12px">
-<h4>
-FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
-<span class="layer-badge planning" style="font-size:9px">Planering</span>
-</h4>
+<h4>FTE-planering: Actual · Effective Supply · Required · Scenariopunkter <span class="layer-badge planning" style="font-size:9px">Planering</span></h4>
 <canvas id="staffingChart" height="90"></canvas>
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
-<div class="card" style="padding:12px 16px">
-<div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div>
-<div class="cs">Worst case · aug 2025</div>
+<div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div><div class="cs">Worst case · aug 2025</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE med AI-deflection</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">Med AI-deflection · topp migration</div></div>
 </div>
-<div class="card" style="padding:12px 16px">
-<div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div>
-<div class="cs">Required FTE med AI-deflection</div>
-</div>
-<div class="card" style="padding:12px 16px">
-<div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div>
-<div class="cs">Med AI-deflection · topp migration</div>
-</div>
-</div>
-
-<!-- Analytics trend view -->
-<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys · Faktisk arbetsbelastning & täckning (API-data)</span><div class="layer-divider-line"></div></div>
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys · Faktisk arbetsbelastning &amp; täckning (API-data)</span><div class="layer-divider-line"></div></div>
 <div class="trend-container">
 <div class="trend-header">
-<span class="trend-title">Månadsvis arbetsbelastning: Faktiska tickets & beräknad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
+<span class="trend-title">Månadsvis arbetsbelastning: Faktiska tickets &amp; beräknad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
 <div class="chart-controls">
 <button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mån</button>
 <button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mån</button>
@@ -361,19 +367,17 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <div id="trend-error" class="trend-error" style="display:none"></div>
 <canvas id="trendChart" height="80" style="display:none"></canvas>
 <p id="trend-note" class="chart-note" style="display:none">
-⚠ <strong>Analytikslager:</strong> Dessa värden (dagliga tickets → FTE-beräkning) är driftanalys för trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply per dag — ett approximationsvärde, ej officiellt planeringsmått. Officiella Required FTE och Effective Supply finns i planeringslagret ovan.
+⚠ <strong>Analytikslager:</strong> Dessa värden är driftanalys för trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply — approximationsvärde, ej officiellt planeringsmått. Se <em>Klassificering</em>-fliken för förklaring av supplyavvikelse och produktklassificering.
 </p>
 </div>
 <div id="trend-monthly-cards" style="display:none;margin-top:12px">
 <div class="analytics-month-grid" id="trend-cards-inner"></div>
 </div>
-
-<!-- § 3 POOL CAPACITY GAPS — PLANNING LAYER -->
 <div class="section-header">
 <span class="section-title">§ 3 · Pool Capacity Gaps — nuläge</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Sorterat: lägst gap överst · Negativa gap = röda</span>
+<span class="section-note">Sorterat: lägst gap överst</span>
 </div>
 </div>
 <div class="pool-grid" id="pool-gaps"></div>
@@ -383,13 +387,11 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <canvas id="poolGapChart" height="60"></canvas>
 </div>
 </div>
-
-<!-- § 4 SCENARIO COMPARISON — PLANNING LAYER -->
 <div class="section-header">
 <span class="section-title">§ 4 · Scenario Comparison</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Källa: Scenario Compare-fliken i CC_FTE_Calculator.xlsx</span>
+<span class="section-note">Källa: CC_FTE_Calculator.xlsx</span>
 </div>
 </div>
 <div class="scenario-grid">
@@ -436,13 +438,11 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <h4>Scenario Compare: Required FTE vs Effective Supply <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
 <canvas id="scenarioChart" height="70"></canvas>
 </div>
-
-<!-- § 5 MIGRATION FORECAST — PLANNING LAYER -->
 <div class="section-header">
 <span class="section-title">§ 5 · Migration Forecast — Classic → S1</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Källa: Migration Forecast-fliken · Q0 = nuläge</span>
+<span class="section-note">Q0 = nuläge</span>
 </div>
 </div>
 <div style="margin-bottom:14px">
@@ -450,7 +450,7 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <div class="alert-icon">📊</div>
 <div class="alert-body">
 <div class="alert-title">Migrationsstrategi kräver S1-rekrytering senast Q4–Q6</div>
-<div class="alert-desc">S1 FTE-behov växer från <span>2.93</span> vid Q0 till <span>4.05</span> vid Q10 med AI-deflection. Classic-volym minskar parallellt. Utan proaktiv rekrytering skapas ett strukturellt gap i S1-poolen under migrationstoppen.</div>
+<div class="alert-desc">S1 FTE-behov växer från <span>2.93</span> vid Q0 till <span>4.05</span> vid Q10 med AI-deflection. Classic-volym minskar parallellt.</div>
 </div>
 </div>
 </div>
@@ -466,105 +466,161 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <canvas id="migrationChart" height="90"></canvas>
 </div>
 <div class="tw" style="margin-bottom:16px">
-<table>
-<thead>
-<tr>
-<th>Kvartal</th><th>Fas</th>
-<th class="r">Migr. kunder tot.</th><th class="r">Classic kvar</th>
-<th class="r">S1 volym (inkl SB)</th><th class="r">Classic volym</th>
-<th class="r">S1 FTE u. AI</th><th class="r">S1 FTE m. AI</th>
-<th class="r">Rekr. behov</th><th class="r">Kostnad S1/mån</th>
-</tr>
-</thead>
-<tbody id="migration-table"></tbody>
-</table>
+<table><thead><tr><th>Kvartal</th><th>Fas</th><th class="r">Migr. kunder tot.</th><th class="r">Classic kvar</th><th class="r">S1 volym (inkl SB)</th><th class="r">Classic volym</th><th class="r">S1 FTE u. AI</th><th class="r">S1 FTE m. AI</th><th class="r">Rekr. behov</th><th class="r">Kostnad S1/mån</th></tr></thead>
+<tbody id="migration-table"></tbody></table>
 </div>
-
-<!-- § 6 SENSITIVITY / DRIVERS — PLANNING LAYER -->
 <div class="section-header">
 <span class="section-title">§ 6 · Vad driver bemanningsbehovet?</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Basfall: 10.10 Required FTE · Påverkan vid ±10% och ±20%</span>
+<span class="section-note">Basfall: 10.10 Required FTE</span>
 </div>
 </div>
 <div class="chart-wrap" style="margin-bottom:12px">
-<h4>Tornado: FTE-impact per driver (avvikelse från 10.10 FTE) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>Tornado: FTE-impact per driver <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
 <canvas id="sensitivityChart" height="100"></canvas>
 </div>
 <div class="tw">
+<table><thead><tr><th>Driver</th><th class="r">−20%</th><th class="r">−10%</th><th class="r">Bas (10.10)</th><th class="r">+10%</th><th class="r">+20%</th><th>Enhet</th></tr></thead>
+<tbody id="sensitivity-table"></tbody></table>
+</div>
+<div class="section-header"><span class="section-title">§ 7 · Definitioner &amp; Modellnoter</span></div>
+<div class="def-grid">
+<div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Faktiskt antal anställda. <strong>Mastervärde = 11 FTE.</strong></div><div class="def-example">Ej detsamma som Effective Supply.</div></div>
+<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. Nuläge: 11.10 FTE.</div></div>
+<div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Totalt FTE-behov: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
+<div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Effective Supply − Required FTE. ⚠ Totalt positivt gap döljer pool-level underskott.</div></div>
+<div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Poolens konfigurerade supply per dag. Analytiksvärde — inte officiellt planeringsmått.</div><div class="def-example">Ej detsamma som Effective Supply FTE.</div></div>
+<div class="def-item"><div class="def-term">queueGroup <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Routing-destinationen för ett ticket: Switchboard, Classic, S1, Frankly, Talent. Separat dimension från produkt.</div></div>
+<div class="def-item"><div class="def-term">product</div><div class="def-body">Freshdesk-produkten (cf_category_1): Simployer Classic, Expert NO, Simployer One, etc. Separat från queueGroup.</div></div>
+<div class="def-item"><div class="def-term">AI Deflection</div><div class="def-body">Andel tickets avleds av AI. 30% deflection → Required FTE ≈ 9.30.</div></div>
+<div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Andel betald tid ej tillgänglig för ticketarbete. Ökar Required FTE.</div></div>
+<div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Andel tillgänglig tid agenter spenderar på tickets. Lägre → högre Required FTE.</div></div>
+</div>
+<div style="margin-top:24px;padding:16px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
+<strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets värden hämtas från CC_FTE_Calculator.xlsx. Avvikelse indikerar att Excel-modellen är korrekt. Analyslagrets trenddata beräknas från dagliga ticketdata via API — operativa estimat, inte officiella planerings-KPI:er.
+</div>
+</div><!-- /tab-wp -->
+<!-- CLASSIFICATION MODEL TAB -->
+<div id="tab-classify" class="tc">
+
+<div class="section-header" style="margin-top:0">
+<span class="section-title">Ticketklassificering — Produktmodell &amp; Routinglogik</span>
+<span class="section-note">Tre separata dimensioner: product · type · queueGroup</span>
+</div>
+
+<div class="alert-banner warn" style="margin-bottom:20px">
+<div class="alert-icon">⚠</div>
+<div class="alert-body">
+<div class="alert-title">Klassificeringsproblem identifierat</div>
+<div class="alert-desc">
+<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) räknas separat från poolerna Classic/S1/Frankly/Talent. Supply-värdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) är <span>statiskt</span> och hämtas från cc_pools-tabellen — det varierar inte per månad eftersom P4 (cc_pool_supply_history) ej exekverats. Dessutom är <span>93.3% av tickets ej berikade</span> (600/8933), vilket gör analytisk FTE-beräkning opålitlig för perioder före mars 2026.
+</div>
+</div>
+</div>
+
+<!-- Supply discrepancy section -->
+<div class="supply-warning">
+<div class="sw-title">⚠ Tre olika supply-källvärden — potentiell inkonsistens</div>
+<div>Följande tre källor rapporterar <em>olika</em> FTE-supply per pool. Ingen av dem är per definition "rätt" — de mäter olika saker:</div>
+<div class="supply-sources">
+<div class="supply-source-card">
+<div class="supply-source-title">1. Planeringsmodell (Excel)</div>
+<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val">2.25 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val">2.69 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val">4.34 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val">2.35 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val">1.49 FTE</span></div>
+<div style="font-size:10px;color:#475569;margin-top:6px">Källa: CC_FTE_Calculator.xlsx · Effective Supply per pool</div>
+</div>
+<div class="supply-source-card">
+<div class="supply-source-title">2. API per-månad (cc_capacity_daily)</div>
+<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:#fcd34d">3.40 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:#fcd34d">2.65 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:#fcd34d">2.45 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:#fcd34d">1.65 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:#fcd34d">0.95 FTE</span></div>
+<div style="font-size:10px;color:#475569;margin-top:6px">Statisk — <strong>P4 (cc_pool_supply_history) ej exekverats</strong>. Alla 12 månader visar samma värde.</div>
+</div>
+<div class="supply-source-card">
+<div class="supply-source-title">3. cc_pools config (API top-level)</div>
+<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:#fca5a5">3.55 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:#fca5a5">3.55 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:#fca5a5">0.30 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:#fca5a5">0.50 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:#fca5a5">0.20 FTE</span></div>
+<div style="font-size:10px;color:#475569;margin-top:6px">Från cc_pools.fte_supply — bör uppdateras för att matcha planeringsmodellen.</div>
+</div>
+</div>
+<div style="margin-top:10px;font-size:11px;color:#94a3b8">
+<strong>Åtgärd:</strong> Kör P4 SQL (Setup-fliken) för att populera cc_pool_supply_history med korrekta historiska supply-värden. Det kommer ta bort det statiska supply-problemet i analytik-lagret.
+</div>
+</div>
+
+<!-- Explicit Routing Rules -->
+<div class="section-header" style="margin-top:24px">
+<span class="section-title">Explicit Routing-modell — resolveQueueGroup()</span>
+<span class="section-note">Produkt och typ är separata dimensioner — typ förstör ej produktidentitet</span>
+</div>
+<div class="classif-grid" id="routing-rules-grid"></div>
+
+<!-- Product taxonomy table -->
+<div class="section-header">
+<span class="section-title">Freshdesk produkttaxonomi → Pool-mapping</span>
+<span class="section-note">cf_category_1 → queueGroup (baserat på klassificeringsmodell)</span>
+</div>
+<div class="tw">
 <table>
-<thead><tr><th>Driver</th><th class="r">−20%</th><th class="r">−10%</th><th class="r">Bas (10.10)</th><th class="r">+10%</th><th class="r">+20%</th><th>Enhet</th></tr></thead>
-<tbody id="sensitivity-table"></tbody>
+<thead><tr><th>Freshdesk Produkt (cf_category_1)</th><th>→ queueGroup</th><th>Kategori</th><th class="r">Senaste 30 dagar</th><th>Notering</th></tr></thead>
+<tbody id="product-mapping-table"></tbody>
 </table>
 </div>
 
-<!-- § 7 DEFINITIONS — SHARED -->
-<div class="section-header">
-<span class="section-title">§ 7 · Definitioner &amp; Modellnoter</span>
-</div>
-<div class="def-grid">
-<div class="def-item">
-<div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
-<div class="def-body">Faktiskt antal anställda medarbetare. <strong>Mastervärde = 11 FTE.</strong> Ej detsamma som Effective Supply.</div>
-<div class="def-example">Ändras aldrig av modellberäkningar. Business baseline.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
-<div class="def-body">Modellens beräknade produktiva kapacitet efter seniority-viktning och pool-allokering. Nuläge: 11.10 FTE.</div>
-<div class="def-example">Kan vara högre eller lägre än Actual FTE beroende på senioritetsstruktur.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
-<div class="def-body">Totalt FTE-behov. Inkluderar Ticket FTE peak (9.10) + Overhead FTE (1.00).</div>
-<div class="def-example">Required = (Volym × AHT) / (Tillg. tid × Occupancy × (1−Shrinkage)) × Peak buffer</div>
-</div>
-<div class="def-item">
-<div class="def-term">Peak FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
-<div class="def-body">FTE-behov vid peak-belastning. Dimensionerar bemanningsbehovet.</div>
-<div class="def-example">Nuläge Ticket FTE peak: 9.10 FTE</div>
-</div>
-<div class="def-item">
-<div class="def-term">Comfortable FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
-<div class="def-body">FTE-behov vid normal (icke-peak) belastning. Lägre än Peak FTE.</div>
-<div class="def-example">Används för bedömning av pool-dimensionering i normalläge.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div>
-<div class="def-body">Effective Supply − Required FTE. Positivt = överskott, negativt = underskott.</div>
-<div class="def-example">⚠ Totalt positivt gap döljer aldrig pool-level underskott. Kontrollera alltid pool-vyn.</div>
-</div>
-<div class="def-item">
-<div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div>
-<div class="def-body">Poolens konfigurerade bemanningskapacitet per dag. Analytiksvärde — inte officiellt planeringsmått.</div>
-<div class="def-example">Används för trendanalys och driftöversikt. Ersätter ej Effective Supply FTE.</div>
-</div>
-<div class="def-item">
-<div class="def-term">AI Deflection</div>
-<div class="def-body">Andel av inkommande tickets avleds av AI/automation. Minskar Required FTE.</div>
-<div class="def-example">Vid 30% AI deflection: Required FTE ≈ 9.30 (ned från 10.10)</div>
-</div>
-<div class="def-item">
-<div class="def-term">Shrinkage</div>
-<div class="def-body">Andel av betald tid ej tillgänglig för ticketarbete (möten, frånvaro, utbildning).</div>
-<div class="def-example">Ökar Required FTE. Ingår i FTE Calc-beräkningen.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Occupancy</div>
-<div class="def-body">Andel av tillgänglig tid agenter spenderar på ticketarbete.</div>
-<div class="def-example">Lägre occupancy → högre Required FTE. Vanlig target: 80–85%.</div>
-</div>
-<div class="def-item">
-<div class="def-term">Peak Buffer</div>
-<div class="def-body">Multiplicerande faktor för att säkerställa kapacitet vid volymtoppar.</div>
-<div class="def-example">Peak buffer > 1.0 ökar Required FTE för att hantera daglig variation.</div>
+<!-- Validation cross-tab -->
+<div class="section-header" style="margin-top:24px">
+<span class="section-title">Valideringstabell — Tickets per produkt &times; queueGroup</span>
+<div style="display:flex;gap:8px;align-items:center">
+<span class="layer-badge analytics">Analys</span>
+<button class="chart-btn" onclick="refreshClassificationData()" style="margin-left:8px">↻ Uppdatera</button>
 </div>
 </div>
-<div style="margin-top:24px;padding:16px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
-<strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets värden (§1, §3–§7) hämtas direkt från CC_FTE_Calculator.xlsx. Avvikelse mot webbappens tal indikerar att Excel-modellen är korrekt om inte ett validerat beslut ändrat beräkningsmetodiken. Analyslagrets trenddata (§2 Analys) beräknas från dagliga ticketdata via API — dessa är <em>operativa estimat</em> och ska inte tolkas som officiella planerings-KPI:er. Forecast-serier märks alltid med <span class="tag forecast" style="font-size:9px">Prognos</span>-tagg.
+<div id="classification-loading" style="font-size:12px;color:#64748b;padding:20px">Laddar klassificeringsdata...</div>
+<div id="classification-error" style="display:none" class="trend-error"></div>
+
+<!-- Summary stats -->
+<div id="classif-summary-grid" style="display:none;margin-bottom:20px">
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px" id="classif-summary-cards"></div>
 </div>
 
-</div><!-- /tab-wp -->
+<!-- Cross-tab: product × queueGroup -->
+<div id="classif-xtab-wrap" style="display:none">
+<div class="tw xtab" style="margin-bottom:16px">
+<table id="classif-xtab"></table>
+</div>
+</div>
+
+<!-- Per-product breakdown chart -->
+<div id="classif-chart-wrap" style="display:none">
+<div class="chart-wrap">
+<h4>Tickets per produkt-grupp <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys · senaste 3 månader</span></h4>
+<canvas id="classifChart" height="80"></canvas>
+</div>
+</div>
+
+<!-- Monthly breakdown by queueGroup -->
+<div class="section-header" style="margin-top:24px">
+<span class="section-title">Månadsvis per pool — ticket-volym &amp; FTE-estimat</span>
+<span class="section-note">API-data · 12 månader · visar variation (ej statisk)</span>
+</div>
+<div id="monthly-pool-breakdown" class="tw">
+<table>
+<thead><tr><th>Månad</th><th>Pool</th><th class="r">Råa tickets</th><th class="r">Filtrerade</th><th class="r">AHT (min)</th><th class="r">FTE-estimat</th><th class="r">Supply (API)</th><th class="r">Gap (analys)</th><th class="r">Täckning</th></tr></thead>
+<tbody id="monthly-pool-table"></tbody>
+</table>
+</div>
+
+</div><!-- /tab-classify -->
+
 <!-- OVERVIEW TAB -->
 <div id="tab-overview" class="tc">
 <div class="sr">
@@ -602,7 +658,7 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <div class="wf" id="aht-summary"></div>
 <div class="view-toggle">
 <button class="vt-btn active" id="vt-all" onclick="setView('all',this)">Alla tickets</button>
-<button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope (Customer Care)</button>
+<button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope</button>
 </div>
 <div class="st">AHT-justerad FTE per pool - 12 månader</div>
 <div class="pool-toggle" id="aht-pool-filter"></div>
@@ -630,7 +686,7 @@ FTE-planering: Actual · Effective Supply · Required · Scenariopunkter
 <div id="tab-setup" class="tc">
 <div class="st">Arkitektur &amp; Konfiguration</div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P1 · Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb som anropar berikningsfunktionen varje timme.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
+<div class="setup-row"><div><h3>P1 · Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb varje timme.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
 <div class="code-block">SELECT cron.schedule('cc-ticket-enricher-hourly','0 * * * *',$$
 SELECT net.http_post(url:='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',
 headers:=jsonb_build_object('Content-Type','application/json','Authorization','Bearer SERVICE_ROLE_KEY'),
@@ -638,7 +694,7 @@ body:='{}'::jsonb);$$);
 SELECT * FROM cron.job WHERE jobname='cc-ticket-enricher-hourly';</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P4 · Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history — faktisk bemanning per månad per pool.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
+<div class="setup-row"><div><h3>P4 · Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history — löser det statiska supply-problemet i analytiklagret.</div></div><span class="status-chip pending">⏳ Kräver SQL-körning</span></div>
 <div class="code-block">CREATE TABLE IF NOT EXISTS cc_pool_supply_history (
 id BIGSERIAL PRIMARY KEY, pool_slug TEXT NOT NULL,
 year_month TEXT NOT NULL, fte_supply NUMERIC(6,2) NOT NULL,
@@ -649,9 +705,8 @@ FROM cc_pools CROSS JOIN generate_series(NOW()-INTERVAL'18 months',NOW(),INTERVA
 ON CONFLICT DO NOTHING;</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P7 · Freshcaller API-nyckel</h3><div class="desc">Uppdatera Vault-hemligheten med fristående Freshcaller-nyckel.</div></div><span class="status-chip pending">⏳ Kräver API-nyckel</span></div>
-<div class="code-block">-- Supabase Dashboard → Settings → Vault → FRESHCALLER_API_KEY
-SELECT vault.update_secret('FRESHCALLER_API_KEY','din-nyckel-här');
+<div class="setup-row"><div><h3>P7 · Freshcaller API-nyckel</h3><div class="desc">Uppdatera Vault-hemligheten.</div></div><span class="status-chip pending">⏳ Kräver API-nyckel</span></div>
+<div class="code-block">SELECT vault.update_secret('FRESHCALLER_API_KEY','din-nyckel-här');
 SELECT name,updated_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div>
 </div>
 <div class="setup-section">
@@ -665,20 +720,157 @@ SELECT name,updated_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div
 </div>
 </main><script>
 // ═══════════════════════════════════════════════════
-// LAYER 1: planningModelAdapter
-// Source of truth: CC_FTE_Calculator.xlsx
-// These values NEVER change based on API data
+// TICKET CLASSIFICATION MODEL
+// Three separate dimensions: product | type | queueGroup
+// resolveQueueGroup does NOT destroy product identity
+// ═══════════════════════════════════════════════════
+var ticketClassificationModel = (function() {
+
+// Step 1: Freshdesk product name → logical product (pool family)
+// This maps cf_category_1 values to canonical pool identifiers
+var PRODUCT_TO_POOL = {
+  // Classic family
+  'Simployer Classic':           'classic',
+  'Simployer Classic - Handbook':'classic',
+  'All Products':                'classic',  // usually Classic context
+
+  // S1 / Simployer One family
+  'Simployer One':               's1',
+  'Capitech':                    's1',        // Capitech → migrated to S1 platform
+
+  // Expert → Classic pool (Expert agents are Classic team)
+  'Expert':                      'classic',
+  'Expert NO':                   'classic',
+  'Expert SE':                   'classic',
+
+  // Frankly family
+  'Employee Survey (&frankly)':  'frankly',
+
+  // Talent family
+  'Talent':                      'talent',
+  'Simployer Talent':            'talent',
+  'Equal Pay':                   'talent',    // Equal Pay is Talent product
+
+  // Switchboard-type tickets (billing/invoice tickets routed to SB regardless of product)
+  'Invoices & Agreements':       'switchboard',
+  'Invoice & billing':           'switchboard',
+
+  // Learn (ambiguous - could be S1 or Classic)
+  'Learn':                       's1',         // Default: Simployer One learning module
+};
+
+// Step 2: resolveQueueGroup — EXPLICIT routing logic
+// Takes product AND inferred type from product name
+// Does NOT overwrite product dimension — both are preserved
+function resolveQueueGroup(fresheskProduct) {
+  if (!fresheskProduct) return 'unknown';
+
+  // Direct billing/invoice types → Switchboard routing regardless of product
+  var switchboardProducts = ['Invoices & Agreements', 'Invoice & billing'];
+  if (switchboardProducts.indexOf(fresheskProduct) !== -1) return 'switchboard';
+
+  // Look up in product map
+  var mapped = PRODUCT_TO_POOL[fresheskProduct];
+  if (mapped) return mapped;
+
+  // Fallback: try partial match
+  var lower = fresheskProduct.toLowerCase();
+  if (lower.indexOf('classic') !== -1 || lower.indexOf('expert') !== -1) return 'classic';
+  if (lower.indexOf('simployer one') !== -1 || lower.indexOf('s1') !== -1 || lower.indexOf('capitech') !== -1) return 's1';
+  if (lower.indexOf('frankly') !== -1 || lower.indexOf('survey') !== -1) return 'frankly';
+  if (lower.indexOf('talent') !== -1 || lower.indexOf('equal pay') !== -1) return 'talent';
+
+  return 'unknown';
+}
+
+// Step 3: Infer ticket type from product name
+// This preserves the ticket's nature without destroying pool identity
+function inferTicketType(fresheskProduct) {
+  if (!fresheskProduct) return 'Other';
+  var lower = fresheskProduct.toLowerCase();
+  if (lower.indexOf('invoice') !== -1 || lower.indexOf('billing') !== -1 || lower.indexOf('agreement') !== -1) return 'Invoice & billing';
+  if (lower.indexOf('expert') !== -1) return 'Expert';
+  if (lower.indexOf('learn') !== -1) return 'Learn';
+  if (lower.indexOf('survey') !== -1 || lower.indexOf('frankly') !== -1) return 'Employee survey';
+  if (lower.indexOf('talent') !== -1 || lower.indexOf('equal pay') !== -1) return 'Talent management';
+  return 'General support';
+}
+
+// Pool color mapping (for UI)
+var POOL_COLORS = {
+  'switchboard': '#60a5fa',
+  'classic':     '#818cf8',
+  's1':          '#4ade80',
+  'frankly':     '#fcd34d',
+  'talent':      '#f97316',
+  'unknown':     '#475569'
+};
+
+// Pool display config (for routing cards)
+var POOL_CONFIG = [
+  {
+    pool: 'switchboard',
+    label: 'Switchboard',
+    description: 'Faktura- och avtalsärenden oavsett produkttillhörighet',
+    products: ['Invoices & Agreements', 'Invoice & billing'],
+    routingRule: 'type IN [Invoice & billing, Termination] → Switchboard',
+    note: 'Switchboard-ärenden BEHÅLLER produktidentitet (Classic/S1/etc). Routing förändrar ej produkt-dimensionen.'
+  },
+  {
+    pool: 'classic',
+    label: 'Classic',
+    description: 'Simployer Classic-plattformen inkl. Expert-specialister',
+    products: ['Simployer Classic', 'Simployer Classic - Handbook', 'Expert', 'Expert NO', 'Expert SE', 'All Products'],
+    routingRule: 'product IN [Simployer Classic, Expert*] → Classic',
+    note: 'Expert NO/SE är specialister inom Classic-teamet, ej ett separat pool.'
+  },
+  {
+    pool: 's1',
+    label: 'S1',
+    description: 'Simployer One (ny plattform) + Capitech-migrerade kunder',
+    products: ['Simployer One', 'Capitech', 'Learn'],
+    routingRule: 'product IN [Simployer One, Capitech] → S1',
+    note: 'Capitech-kunder migreras löpande till S1-plattformen.'
+  },
+  {
+    pool: 'frankly',
+    label: 'Frankly',
+    description: 'Employee Survey (&frankly) – medarbetarundersökningar',
+    products: ['Employee Survey (&frankly)'],
+    routingRule: 'product == "Employee Survey (&frankly)" → Frankly',
+    note: 'Separat produktlinje med egen bemanningspool.'
+  },
+  {
+    pool: 'talent',
+    label: 'Talent',
+    description: 'Talent Management + Equal Pay',
+    products: ['Talent', 'Simployer Talent', 'Equal Pay'],
+    routingRule: 'product IN [Talent, Equal Pay] → Talent',
+    note: 'Inkluderar Equal Pay som hör till Talent-produktfamiljen.'
+  }
+];
+
+return {
+  resolveQueueGroup: resolveQueueGroup,
+  inferTicketType: inferTicketType,
+  PRODUCT_TO_POOL: PRODUCT_TO_POOL,
+  POOL_COLORS: POOL_COLORS,
+  POOL_CONFIG: POOL_CONFIG
+};
+})();
+
+// ═══════════════════════════════════════════════════
+// LAYER 1: planningModelAdapter (Excel source of truth)
 // ═══════════════════════════════════════════════════
 var planningModelAdapter = (function() {
 var WP = {
-  actualFte: 11,           // MASTER BASELINE — business-fixed, never derived
+  actualFte: 11,
   effectiveSupplyFte: 11.10,
   requiredFte: 10.10,
   ticketFtePeak: 9.10,
   overheadFte: 1.00,
-  netGapFte: 1.00,         // effectiveSupplyFte - requiredFte
+  netGapFte: 1.00,
   monthlyCostSek: 110000,
-
   pools: [
     { pool:'Classic',     supply:2.25, demandPeak:3.40, comfortable:2.80, gapFte:-1.15, status:'Critical', agents:3 },
     { pool:'Switchboard', supply:2.69, demandPeak:2.65, comfortable:2.20, gapFte: 0.04, status:'Tight',    agents:3 },
@@ -686,139 +878,121 @@ var WP = {
     { pool:'Frankly',     supply:2.35, demandPeak:1.65, comfortable:1.40, gapFte: 0.70, status:'OK',       agents:1 },
     { pool:'S1',          supply:4.34, demandPeak:2.45, comfortable:2.00, gapFte: 1.89, status:'OK',       agents:2 }
   ],
-
   scenarios: [
     { name:'Now',           requiredFte:10.10, supplyFte:11.10, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -1.15' },
     { name:'Post-aug best', requiredFte: 9.80, supplyFte:11.60, gapFte: 1.80, monthlyCostSek:107000, largestDeficit:'Classic' },
     { name:'Post-aug worst',requiredFte: 9.50, supplyFte: 7.00, gapFte:-2.50, monthlyCostSek: 76000, largestDeficit:'Classic' },
     { name:'AI deflect 30%',requiredFte: 9.30, supplyFte:11.10, gapFte: 1.80, monthlyCostSek:110000, largestDeficit:'Classic' }
   ],
-
   migration: [
-    { q:'Q0',  phase:'Akut',      migrated:0,    classicRemain:4200, s1Vol:1850, classicVol:4200, s1WithoutAi:2.93, s1WithAi:2.93, recruitNeed:null, costSek:29300 },
-    { q:'Q1',  phase:'Akut',      migrated:420,  classicRemain:3780, s1Vol:2100, classicVol:3780, s1WithoutAi:3.10, s1WithAi:2.97, recruitNeed:0.04, costSek:29700 },
-    { q:'Q2',  phase:'Fas 1',     migrated:840,  classicRemain:3360, s1Vol:2350, classicVol:3360, s1WithoutAi:3.28, s1WithAi:3.08, recruitNeed:0.15, costSek:30800 },
-    { q:'Q3',  phase:'Fas 1',     migrated:1260, classicRemain:2940, s1Vol:2600, classicVol:2940, s1WithoutAi:3.45, s1WithAi:3.18, recruitNeed:0.25, costSek:31800 },
-    { q:'Q4',  phase:'Fas 2',     migrated:1680, classicRemain:2520, s1Vol:2850, classicVol:2520, s1WithoutAi:3.62, s1WithAi:3.28, recruitNeed:0.35, costSek:32800 },
-    { q:'Q5',  phase:'Fas 2',     migrated:2100, classicRemain:2100, s1Vol:3100, classicVol:2100, s1WithoutAi:3.78, s1WithAi:3.38, recruitNeed:0.45, costSek:33800 },
-    { q:'Q6',  phase:'Fas 2',     migrated:2520, classicRemain:1680, s1Vol:3350, classicVol:1680, s1WithoutAi:3.95, s1WithAi:3.48, recruitNeed:0.55, costSek:34800 },
-    { q:'Q7',  phase:'Fas 3',     migrated:2940, classicRemain:1260, s1Vol:3600, classicVol:1260, s1WithoutAi:4.02, s1WithAi:3.62, recruitNeed:0.69, costSek:36200 },
-    { q:'Q8',  phase:'Fas 3',     migrated:3360, classicRemain:840,  s1Vol:3700, classicVol:840,  s1WithoutAi:4.08, s1WithAi:3.74, recruitNeed:0.81, costSek:37400 },
-    { q:'Q9',  phase:'Expansion', migrated:3780, classicRemain:420,  s1Vol:3850, classicVol:420,  s1WithoutAi:4.15, s1WithAi:3.90, recruitNeed:0.97, costSek:39000 },
-    { q:'Q10', phase:'Expansion', migrated:4200, classicRemain:0,    s1Vol:4000, classicVol:0,    s1WithoutAi:4.25, s1WithAi:4.05, recruitNeed:1.12, costSek:40500 }
+    {q:'Q0', phase:'Akut',      migrated:0,    classicRemain:4200,s1Vol:1850,classicVol:4200,s1WithoutAi:2.93,s1WithAi:2.93,recruitNeed:null,costSek:29300},
+    {q:'Q1', phase:'Akut',      migrated:420,  classicRemain:3780,s1Vol:2100,classicVol:3780,s1WithoutAi:3.10,s1WithAi:2.97,recruitNeed:0.04,costSek:29700},
+    {q:'Q2', phase:'Fas 1',     migrated:840,  classicRemain:3360,s1Vol:2350,classicVol:3360,s1WithoutAi:3.28,s1WithAi:3.08,recruitNeed:0.15,costSek:30800},
+    {q:'Q3', phase:'Fas 1',     migrated:1260, classicRemain:2940,s1Vol:2600,classicVol:2940,s1WithoutAi:3.45,s1WithAi:3.18,recruitNeed:0.25,costSek:31800},
+    {q:'Q4', phase:'Fas 2',     migrated:1680, classicRemain:2520,s1Vol:2850,classicVol:2520,s1WithoutAi:3.62,s1WithAi:3.28,recruitNeed:0.35,costSek:32800},
+    {q:'Q5', phase:'Fas 2',     migrated:2100, classicRemain:2100,s1Vol:3100,classicVol:2100,s1WithoutAi:3.78,s1WithAi:3.38,recruitNeed:0.45,costSek:33800},
+    {q:'Q6', phase:'Fas 2',     migrated:2520, classicRemain:1680,s1Vol:3350,classicVol:1680,s1WithoutAi:3.95,s1WithAi:3.48,recruitNeed:0.55,costSek:34800},
+    {q:'Q7', phase:'Fas 3',     migrated:2940, classicRemain:1260,s1Vol:3600,classicVol:1260,s1WithoutAi:4.02,s1WithAi:3.62,recruitNeed:0.69,costSek:36200},
+    {q:'Q8', phase:'Fas 3',     migrated:3360, classicRemain:840, s1Vol:3700,classicVol:840, s1WithoutAi:4.08,s1WithAi:3.74,recruitNeed:0.81,costSek:37400},
+    {q:'Q9', phase:'Expansion', migrated:3780, classicRemain:420, s1Vol:3850,classicVol:420, s1WithoutAi:4.15,s1WithAi:3.90,recruitNeed:0.97,costSek:39000},
+    {q:'Q10',phase:'Expansion', migrated:4200, classicRemain:0,   s1Vol:4000,classicVol:0,   s1WithoutAi:4.25,s1WithAi:4.05,recruitNeed:1.12,costSek:40500}
   ],
-
   sensitivity: [
-    { driver:'Volym',        m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
-    { driver:'AHT',          m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
-    { driver:'Shrinkage',    m20:9.26, m10:9.67, base:10.10, p10:10.56, p20:11.04, unit:'FTE' },
-    { driver:'Occupancy',    m20:10.71,m10:10.40,base:10.10, p10: 9.82, p20: 9.56, unit:'FTE' },
-    { driver:'Peak Buffer',  m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE' },
-    { driver:'AI Deflection',m20:10.10,m10:10.10,base:10.10, p10: 9.09, p20: 8.08, unit:'FTE' },
-    { driver:'Arbetsdagar',  m20:9.35, m10:9.72, base:10.10, p10:10.50, p20:10.92, unit:'FTE' },
-    { driver:'Kostnad/FTE',  m20:88000,m10:99000,base:110000,p10:121000,p20:132000,unit:'SEK' }
+    {driver:'Volym',        m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE'},
+    {driver:'AHT',          m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE'},
+    {driver:'Shrinkage',    m20:9.26, m10:9.67, base:10.10, p10:10.56, p20:11.04, unit:'FTE'},
+    {driver:'Occupancy',    m20:10.71,m10:10.40,base:10.10, p10: 9.82, p20: 9.56, unit:'FTE'},
+    {driver:'Peak Buffer',  m20:8.08, m10:9.09, base:10.10, p10:11.11, p20:12.12, unit:'FTE'},
+    {driver:'AI Deflection',m20:10.10,m10:10.10,base:10.10, p10: 9.09, p20: 8.08, unit:'FTE'},
+    {driver:'Arbetsdagar',  m20:9.35, m10:9.72, base:10.10, p10:10.50, p20:10.92, unit:'FTE'},
+    {driver:'Kostnad/FTE',  m20:88000,m10:99000,base:110000,p10:121000,p20:132000,unit:'SEK'}
   ],
-
-  // Planning timeline: scenario compare points + forecast — NOT fabricated history
   timeline: {
     labels:   ['Nu','Post-aug best','Post-aug worst','AI deflect 30%','Migration Q5','Migration Q10'],
-    actual:   [11,   null,          null,            11,              11,            12],
-    supply:   [11.10,11.60,          7.00,           11.10,           11.10,         12.00],
-    required: [10.10, 9.80,          9.50,            9.30,           10.50,         11.20],
-    isForecast:[false,true,          true,            true,            true,          true]
+    actual:   [11,   null,           null,            11,              11,            12],
+    supply:   [11.10,11.60,           7.00,           11.10,           11.10,         12.00],
+    required: [10.10, 9.80,           9.50,            9.30,           10.50,         11.20],
+    isForecast:[false,true,           true,            true,            true,          true]
   }
 };
 return WP;
 })();
-
-// Alias for compatibility
 var WP = planningModelAdapter;
 
 // ═══════════════════════════════════════════════════
 // LAYER 2: dailyAnalyticsAdapter
-// Ingests API data, builds daily/monthly rollups
-// For trend visualization ONLY — not official KPIs
 // ═══════════════════════════════════════════════════
 var dailyAnalyticsAdapter = (function() {
-// Internal cache
-var _monthlyRollups = [];   // array of {year_month, totalTickets, avgDailyRosteredFte, analyticsFteRequired, analyticsCovPct}
+var _monthlyRollups = [];
 var _loaded = false;
 var _loading = false;
 var _callbacks = [];
 
-// buildMonthlyAnalyticsFromDaily:
-// Processes raw aht-stats months into an analytics-layer monthly view
-// NOTE: fte_supply in this context is dailyRosteredFte (pool config, not planning Effective Supply)
 function buildMonthlyAnalyticsFromDaily(rawMonths) {
   return (rawMonths || []).map(function(m) {
     var pools = m.pools || [];
-    var totalTickets = pools.reduce(function(s,p){return s + (p.filtered_tickets||0);}, 0);
-    // dailyRosteredFte: sum of pool supply values as configured (analytics approximation)
-    var dailyRosteredFte = pools.reduce(function(s,p){return s + (p.fte_supply||0);}, 0);
-    // analyticsFteRequired: estimated from tickets+AHT — analytical estimate, not official Required FTE
-    var analyticsFteRequired = pools.reduce(function(s,p){return s + (p.filtered_fte||0);}, 0);
-    var analyticsCovPct = parseFloat(m.avg_coverage_pct || 0);
-    // analyticsGapFte: dailyRosteredFte - analyticsFteRequired (analytics estimate)
-    var analyticsGapFte = dailyRosteredFte - analyticsFteRequired;
+    var totalTickets = pools.reduce(function(s,p){return s+(p.filtered_tickets||0);},0);
+    var dailyRosteredFte = pools.reduce(function(s,p){return s+(p.fte_supply||0);},0);
+    var analyticsFteRequired = pools.reduce(function(s,p){return s+(p.filtered_fte||0);},0);
+    var analyticsCovPct = parseFloat(m.avg_coverage_pct||0);
     return {
       year_month: m.year_month,
       totalTickets: totalTickets,
       dailyRosteredFte: dailyRosteredFte,
       analyticsFteRequired: analyticsFteRequired,
-      analyticsGapFte: analyticsGapFte,
+      analyticsGapFte: dailyRosteredFte - analyticsFteRequired,
       analyticsCovPct: analyticsCovPct,
       rawPools: pools,
-      isAnalytics: true  // flag: this is analytics layer, not planning layer
+      isAnalytics: true,
+      // Flag if supply looks suspicious (all months same = static)
+      supplyIsStatic: true
     };
   });
 }
 
 return {
   load: function(apiCall, cb) {
-    if (_loaded) { cb(null, _monthlyRollups); return; }
+    if (_loaded){cb(null,_monthlyRollups);return;}
     _callbacks.push(cb);
-    if (_loading) return;
-    _loading = true;
-    apiCall('/aht-stats?months=12').then(function(d) {
-      _monthlyRollups = buildMonthlyAnalyticsFromDaily(d.months || []);
-      _loaded = true;
-      _loading = false;
-      _callbacks.forEach(function(fn){ fn(null, _monthlyRollups, d); });
-      _callbacks = [];
-    }).catch(function(e) {
-      _loading = false;
-      _callbacks.forEach(function(fn){ fn(e, null); });
-      _callbacks = [];
+    if(_loading)return;
+    _loading=true;
+    apiCall('/aht-stats?months=12').then(function(d){
+      _monthlyRollups=buildMonthlyAnalyticsFromDaily(d.months||[]);
+      // Detect if supply is static across all months
+      var supplies = _monthlyRollups.map(m=>m.dailyRosteredFte.toFixed(2));
+      var isStatic = supplies.every(s=>s===supplies[0]);
+      _monthlyRollups.forEach(m=>{m.supplyIsStatic=isStatic;});
+      _loaded=true;_loading=false;
+      _callbacks.forEach(function(fn){fn(null,_monthlyRollups,d);});
+      _callbacks=[];
+    }).catch(function(e){
+      _loading=false;
+      _callbacks.forEach(function(fn){fn(e,null);});
+      _callbacks=[];
     });
   },
-  getMonthly: function() { return _monthlyRollups; },
-  invalidate: function() { _loaded = false; },
-  // Expose builder for reuse
+  getMonthly: function(){return _monthlyRollups;},
+  invalidate: function(){_loaded=false;},
   buildFromRaw: buildMonthlyAnalyticsFromDaily
 };
 })();
 
-// ═══════════════════════════════════════════════════
-// dashboardViewModel — merges planning + analytics
-// Keeps concepts strictly separate
-// ═══════════════════════════════════════════════════
 var dashboardViewModel = {
-  // Planning metrics (from planningModelAdapter)
-  getActualFte: function() { return WP.actualFte; },
-  getEffectiveSupply: function() { return WP.effectiveSupplyFte; },
-  getRequiredFte: function() { return WP.requiredFte; },
-  getNetGap: function() { return WP.netGapFte; },
-  getPools: function() { return WP.pools; },
-  getScenarios: function() { return WP.scenarios; },
-  getMigration: function() { return WP.migration; },
-  getSensitivity: function() { return WP.sensitivity; },
-  getPlanningTimeline: function() { return WP.timeline; },
-  // Analytics metrics (from dailyAnalyticsAdapter — clearly labeled)
-  getAnalyticsMonthly: function() { return dailyAnalyticsAdapter.getMonthly(); }
+  getActualFte:function(){return WP.actualFte;},
+  getEffectiveSupply:function(){return WP.effectiveSupplyFte;},
+  getRequiredFte:function(){return WP.requiredFte;},
+  getNetGap:function(){return WP.netGapFte;},
+  getPools:function(){return WP.pools;},
+  getScenarios:function(){return WP.scenarios;},
+  getMigration:function(){return WP.migration;},
+  getSensitivity:function(){return WP.sensitivity;},
+  getPlanningTimeline:function(){return WP.timeline;},
+  getAnalyticsMonthly:function(){return dailyAnalyticsAdapter.getMonthly;},
+  getClassificationModel:function(){return ticketClassificationModel;}
 };
 
 // ═══════════════════════════════════════════════════
-// CONFIG
+// CONFIG + UTILITIES
 // ═══════════════════════════════════════════════════
 var A='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api';
 var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ';
@@ -826,9 +1000,6 @@ var COV_THRESHOLD=80;
 var _timeGran='monthly';
 var _trendWindow=12;
 
-// ═══════════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════════
 function h(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
 function api(p){return fetch(A+p,{headers:{'apikey':K,'Authorization':'Bearer '+K}}).then(r=>r.json());}
 function fmtFTE(n){return(Math.round(parseFloat(n||0)*100)/100).toFixed(2);}
@@ -843,27 +1014,22 @@ function showTab(id,btn){
   if(id==='wp'&&!window._wpL)initWP();
   if(id==='workforce'&&!window._wfL)loadWorkforce();
   if(id==='aht'&&!window._ahtL)loadAHT();
+  if(id==='classify'&&!window._clL)initClassifyTab();
   if(id==='prognos'&&!window._pgL)initPrognos();
   if(id==='setup'&&!window._setupL)loadSetupTab();
 }
 
 // ═══════════════════════════════════════════════════
-// SWEDISH WORKING DAYS (P5)
+// SWEDISH WORKING DAYS
 // ═══════════════════════════════════════════════════
 function easterDate(yr){var a=yr%19,b=Math.floor(yr/100),c=yr%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),hh=Math.floor(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-hh-k)%7,m=Math.floor((a+11*hh+22*l)/451),mo=Math.floor((hh+l-7*m+114)/31),dy=((hh+l-7*m+114)%31)+1;return new Date(yr,mo-1,dy);}
 function swedishHolidays(yr){var s=new Set();function add(m,d){s.add(yr+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'));}add(1,1);add(1,6);add(5,1);add(6,6);add(12,25);add(12,26);var e=easterDate(yr);function eo(n){var d=new Date(e);d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}s.add(eo(-2));s.add(eo(0));s.add(eo(1));s.add(eo(39));s.add(eo(49));var mid=new Date(yr,5,19);while(mid.getDay()!==5)mid.setDate(mid.getDate()+1);s.add(mid.getFullYear()+'-'+String(mid.getMonth()+1).padStart(2,'0')+'-'+String(mid.getDate()).padStart(2,'0'));var ah=new Date(yr,9,31);while(ah.getDay()!==6)ah.setDate(ah.getDate()+1);s.add(ah.getFullYear()+'-'+String(ah.getMonth()+1).padStart(2,'0')+'-'+String(ah.getDate()).padStart(2,'0'));return s;}
 function swedishWorkingDays(yr,mo){var h=swedishHolidays(yr),cnt=0,d=new Date(yr,mo-1,1);while(d.getMonth()===mo-1){var dw=d.getDay(),ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(dw!==0&&dw!==6&&!h.has(ds))cnt++;d.setDate(d.getDate()+1);}return cnt;}
 function computeFTE(tickets,ahtMin,ym){if(!tickets||!ahtMin)return 0;var p=String(ym).split('-');var wd=swedishWorkingDays(parseInt(p[0]),parseInt(p[1]));return(tickets*ahtMin)/(wd*7*60);}
 </script><script>
-// ═══════════════════════════════════════════════════
-// CHART HELPERS
-// ═══════════════════════════════════════════════════
 var _charts={};
 function destroyChart(id){if(_charts[id]){_charts[id].destroy();delete _charts[id];}}
 
-// ═══════════════════════════════════════════════════
-// WORKFORCE PLANNING TAB INIT
-// ═══════════════════════════════════════════════════
 function initWP(){
   window._wpL=true;
   renderPoolGaps();
@@ -876,7 +1042,6 @@ function initWP(){
     renderMigrationChart();
     renderSensitivityChart();
   },50);
-  // Load analytics trend async — does not block planning layer
   loadAnalyticsTrend();
 }
 
@@ -886,74 +1051,45 @@ function setTimeGran(g,btn){
   btn.classList.add('active');
   renderStaffingChart();
 }
-
-function setTrendWindow(n, btn){
+function setTrendWindow(n,btn){
   _trendWindow=n;
   document.querySelectorAll('#trendBtn12,#trendBtn6,#trendBtn3').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  var monthly = dashboardViewModel.getAnalyticsMonthly();
-  if(monthly && monthly.length) renderTrendChart(monthly);
+  var monthly=dailyAnalyticsAdapter.getMonthly();
+  if(monthly&&monthly.length)renderTrendChart(monthly);
 }
 
-// ── PLANNING LAYER: Staffing chart (scenario/forecast view) ──
 function renderStaffingChart(){
   destroyChart('staffing');
-  var tl = dashboardViewModel.getPlanningTimeline();
-  var labels = tl.labels;
-  var ctx = document.getElementById('staffingChart').getContext('2d');
-  _charts['staffing'] = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels:labels,
-      datasets:[
-        {label:'Actual FTE (Masterdata)',data:tl.actual,borderColor:'#818cf8',backgroundColor:'rgba(129,140,248,0.1)',borderWidth:2,pointRadius:5,pointBackgroundColor:'#818cf8',spanGaps:true,borderDash:[6,3]},
-        {label:'Effective Supply FTE',data:tl.supply,borderColor:'#4ade80',backgroundColor:'rgba(74,222,128,0.08)',borderWidth:2.5,pointRadius:4,fill:false},
-        {label:'Required FTE',data:tl.required,borderColor:'#fcd34d',backgroundColor:'rgba(252,211,77,0.08)',borderWidth:2.5,pointRadius:4,fill:false},
-        {label:'11 FTE Baseline',data:labels.map(()=>11),borderColor:'#475569',borderWidth:1,borderDash:[3,6],pointRadius:0,fill:false}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:true,
-      plugins:{
-        legend:{labels:{color:'#94a3b8',font:{size:11}}},
-        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{
-          label:function(ctx){
-            var tl2=dashboardViewModel.getPlanningTimeline();
-            var isFc=tl2.isForecast&&tl2.isForecast[ctx.dataIndex];
-            return ctx.dataset.label+': '+(ctx.raw!==null?ctx.raw.toFixed(2):'-')+(isFc?' [Prognos]':'');
-          }
-        }}
-      },
-      scales:{
-        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:11}}},
-        y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},suggestedMin:5,suggestedMax:14,title:{display:true,text:'FTE',color:'#475569'}}
-      }
-    }
+  var tl=planningModelAdapter.timeline;
+  var ctx=document.getElementById('staffingChart').getContext('2d');
+  _charts['staffing']=new Chart(ctx,{type:'line',
+    data:{labels:tl.labels,datasets:[
+      {label:'Actual FTE (Masterdata)',data:tl.actual,borderColor:'#818cf8',backgroundColor:'rgba(129,140,248,0.1)',borderWidth:2,pointRadius:5,spanGaps:true,borderDash:[6,3]},
+      {label:'Effective Supply FTE',data:tl.supply,borderColor:'#4ade80',backgroundColor:'rgba(74,222,128,0.08)',borderWidth:2.5,pointRadius:4,fill:false},
+      {label:'Required FTE',data:tl.required,borderColor:'#fcd34d',backgroundColor:'rgba(252,211,77,0.08)',borderWidth:2.5,pointRadius:4,fill:false},
+      {label:'11 FTE Baseline',data:tl.labels.map(()=>11),borderColor:'#475569',borderWidth:1,borderDash:[3,6],pointRadius:0,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:11}}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},suggestedMin:5,suggestedMax:14,title:{display:true,text:'FTE',color:'#475569'}}}}
   });
 }
 
-// ── ANALYTICS LAYER: Trend chart (API data, daily rollups → monthly) ──
 function loadAnalyticsTrend(){
   document.getElementById('trend-loading').style.display='';
   document.getElementById('trend-error').style.display='none';
   document.getElementById('trendChart').style.display='none';
   document.getElementById('trend-note').style.display='none';
   document.getElementById('trend-monthly-cards').style.display='none';
-
-  dailyAnalyticsAdapter.load(api, function(err, monthly, rawData) {
+  dailyAnalyticsAdapter.load(api,function(err,monthly,rawData){
     document.getElementById('trend-loading').style.display='none';
-    if(err) {
-      document.getElementById('trend-error').textContent='Kunde inte ladda driftdata: ' + (err.message||err);
-      document.getElementById('trend-error').style.display='';
-      return;
-    }
-    if(!monthly || !monthly.length) {
-      document.getElementById('trend-error').textContent='Ingen driftdata tillgänglig från API.';
-      document.getElementById('trend-error').style.display='';
-      return;
-    }
+    if(err){document.getElementById('trend-error').textContent='Kunde inte ladda: '+(err.message||err);document.getElementById('trend-error').style.display='';return;}
+    if(!monthly||!monthly.length){document.getElementById('trend-error').textContent='Ingen driftdata.';document.getElementById('trend-error').style.display='';return;}
+    var isStatic=monthly[0]&&monthly[0].supplyIsStatic;
     document.getElementById('trendChart').style.display='';
     document.getElementById('trend-note').style.display='';
+    if(isStatic){document.getElementById('trend-note').innerHTML='⚠ <strong>Supply är statisk</strong> — dailyRosteredFte identisk i alla månader. P4 (cc_pool_supply_history) ej exekverats. Se Klassificering-fliken.';}
     document.getElementById('trend-monthly-cards').style.display='';
     renderTrendChart(monthly);
     renderTrendMonthlyCards(monthly);
@@ -962,155 +1098,234 @@ function loadAnalyticsTrend(){
 
 function renderTrendChart(monthly){
   destroyChart('trend');
-  var data = monthly.slice(-_trendWindow).reverse();
-  if(!data.length) return;
-  var ctx = document.getElementById('trendChart').getContext('2d');
-  _charts['trend'] = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels: data.map(m=>m.year_month),
-      datasets:[
-        {
-          label:'Analytisk FTE-estimat (tickets→FTE)',
-          data: data.map(m=>parseFloat(m.analyticsFteRequired.toFixed(2))),
-          borderColor:'#818cf8',backgroundColor:'rgba(129,140,248,0.1)',borderWidth:2,pointRadius:4,fill:true,
-          yAxisID:'y'
-        },
-        {
-          label:'dailyRosteredFte (pool config)',
-          data: data.map(m=>parseFloat(m.dailyRosteredFte.toFixed(2))),
-          borderColor:'#4ade80',backgroundColor:'rgba(74,222,128,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[5,3],fill:false,
-          yAxisID:'y'
-        },
-        {
-          label:'Tickets (tusental) →',
-          data: data.map(m=>parseFloat((m.totalTickets/1000).toFixed(2))),
-          borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],fill:false,
-          yAxisID:'y2'
-        }
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:true,
-      plugins:{
-        legend:{labels:{color:'#94a3b8',font:{size:11}}},
-        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{
-          afterTitle:function(){return '[Analys — ej officiellt planeringsmått]';}
-        }}
-      },
-      scales:{
-        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:10}}},
-        y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},
-        y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}
-      }
-    }
+  var data=monthly.slice(-_trendWindow).reverse();
+  if(!data.length)return;
+  var isStatic=data[0]&&data[0].supplyIsStatic;
+  var ctx=document.getElementById('trendChart').getContext('2d');
+  _charts['trend']=new Chart(ctx,{type:'line',
+    data:{labels:data.map(m=>m.year_month),datasets:[
+      {label:'Analytisk FTE-estimat',data:data.map(m=>parseFloat(m.analyticsFteRequired.toFixed(2))),borderColor:'#818cf8',backgroundColor:'rgba(129,140,248,0.1)',borderWidth:2,pointRadius:4,fill:true,yAxisID:'y'},
+      {label:'dailyRosteredFte'+(isStatic?' [statisk]':''),data:data.map(m=>parseFloat(m.dailyRosteredFte.toFixed(2))),borderColor:isStatic?'#f59e0b':'#4ade80',backgroundColor:'rgba(74,222,128,0.05)',borderWidth:1.5,pointRadius:3,borderDash:isStatic?[3,3]:[5,3],fill:false,yAxisID:'y'},
+      {label:'Tickets (k)',data:data.map(m=>parseFloat((m.totalTickets/1000).toFixed(2))),borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],fill:false,yAxisID:'y2'}
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys — ej officiellt planeringsmatt]'}}},
+      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:10}}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}}}
   });
 }
 
 function renderTrendMonthlyCards(monthly){
-  var data = monthly.slice(-_trendWindow).reverse();
-  document.getElementById('trend-cards-inner').innerHTML = data.map(function(m){
-    var gap = m.analyticsGapFte;
-    var gapColor = gap >= 0 ? '#4ade80' : '#fca5a5';
-    var covOk = m.analyticsCovPct >= COV_THRESHOLD;
+  var data=monthly.slice(-_trendWindow).reverse();
+  document.getElementById('trend-cards-inner').innerHTML=data.map(function(m){
+    var gap=m.analyticsGapFte;
+    var gapColor=gap>=0?'#4ade80':'#fca5a5';
+    var covOk=m.analyticsCovPct>=COV_THRESHOLD;
+    var sw=m.supplyIsStatic?'<div style="font-size:10px;color:#fcd34d;margin-top:4px">Supply statisk</div>':'';
     return '<div class="analytics-month-card">'
       +'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
       +'<div class="amc-row"><span class="amc-label">Tickets</span><span class="amc-val">'+m.totalTickets.toLocaleString('sv-SE')+'</span></div>'
       +'<div class="amc-row"><span class="amc-label">FTE-estimat</span><span class="amc-val">'+m.analyticsFteRequired.toFixed(2)+'</span></div>'
       +'<div class="amc-row"><span class="amc-label">dailyRosteredFte</span><span class="amc-val">'+m.dailyRosteredFte.toFixed(2)+'</span></div>'
-      +'<div class="amc-gap" style="color:'+gapColor+'">Gap (analys): '+(gap>=0?'+':'')+gap.toFixed(2)+' FTE</div>'
-      +'<div class="amc-cov '+(covOk?'ok':'warn')+'">Täckning: '+m.analyticsCovPct.toFixed(0)+'%</div>'
-      +'</div>';
+      +'<div class="amc-gap" style="color:'+gapColor+'">Gap: '+(gap>=0?'+':'')+gap.toFixed(2)+'</div>'
+      +'<div class="amc-cov '+(covOk?'ok':'warn')+'">'+m.analyticsCovPct.toFixed(0)+'%</div>'
+      +sw+'</div>';
   }).join('');
 }
 
-// ── PLANNING LAYER: Pool gaps ──
 function renderPoolGaps(){
-  var sorted = [...dashboardViewModel.getPools()].sort((a,b)=>a.gapFte-b.gapFte);
-  var maxVal = Math.max(...WP.pools.map(p=>Math.max(p.supply,p.demandPeak)))||1;
-  document.getElementById('pool-gaps').innerHTML = sorted.map(p=>{
+  var sorted=[...planningModelAdapter.pools].sort((a,b)=>a.gapFte-b.gapFte);
+  var maxVal=Math.max(...planningModelAdapter.pools.map(p=>Math.max(p.supply,p.demandPeak)))||1;
+  document.getElementById('pool-gaps').innerHTML=sorted.map(p=>{
     var cls=p.status==='Critical'?'crit':p.status==='Tight'?'warn':'ok';
     var gapCls2=p.gapFte<0?'neg':Math.abs(p.gapFte)<0.1?'zero':'pos';
     var supPct=Math.round(p.supply/maxVal*100),demPct=Math.round(p.demandPeak/maxVal*100);
     return '<div class="pool-row '+cls+'">'
-      +'<div class="pool-header">'
-      +'<span class="pool-name">'+p.pool+'</span>'
-      +'<span class="pool-gap-val '+gapCls2+'">'+(p.gapFte>=0?'+':'')+p.gapFte.toFixed(2)+' FTE</span>'
-      +'</div>'
-      +'<div class="pool-stats">'
-      +'<div class="pool-stat"><strong>'+p.supply.toFixed(2)+'</strong>Effective Supply</div>'
-      +'<div class="pool-stat"><strong>'+p.demandPeak.toFixed(2)+'</strong>Peak Demand</div>'
-      +'<div class="pool-stat"><strong>'+p.comfortable.toFixed(2)+'</strong>Comfortable FTE</div>'
-      +'<div class="pool-stat"><strong>'+(p.agents||'–')+'</strong>Agenter</div>'
-      +'</div>'
-      +'<div class="pool-bar-wrap">'
-      +'<div class="pool-bar-supply" style="width:'+supPct+'%"></div>'
-      +'<div class="pool-bar-demand" style="width:'+demPct+'%"></div>'
-      +'</div>'
-      +'<div class="pool-bar-label"><span>Supply (grön) vs Peak Demand (blå)</span><span class="tag '+cls+'">'+(p.status==='Critical'?'Kritiskt underskott':p.status==='Tight'?'Tight':'OK')+'</span></div>'
+      +'<div class="pool-header"><span class="pool-name">'+p.pool+'</span><span class="pool-gap-val '+gapCls2+'">'+(p.gapFte>=0?'+':'')+p.gapFte.toFixed(2)+' FTE</span></div>'
+      +'<div class="pool-stats"><div class="pool-stat"><strong>'+p.supply.toFixed(2)+'</strong>Effective Supply</div><div class="pool-stat"><strong>'+p.demandPeak.toFixed(2)+'</strong>Peak Demand</div><div class="pool-stat"><strong>'+p.comfortable.toFixed(2)+'</strong>Comfortable FTE</div><div class="pool-stat"><strong>'+(p.agents||'-')+'</strong>Agenter</div></div>'
+      +'<div class="pool-bar-wrap"><div class="pool-bar-supply" style="width:'+supPct+'%"></div><div class="pool-bar-demand" style="width:'+demPct+'%"></div></div>'
+      +'<div class="pool-bar-label"><span>Supply (gron) vs Peak Demand (bla)</span><span class="tag '+cls+'">'+(p.status==='Critical'?'Kritiskt underskott':p.status==='Tight'?'Tight':'OK')+'</span></div>'
+      +'</div>';
+  }).join('');
+}
+function renderPoolGapChart(){
+  destroyChart('poolGap');
+  var sorted=[...planningModelAdapter.pools].sort((a,b)=>a.gapFte-b.gapFte);
+  var ctx=document.getElementById('poolGapChart').getContext('2d');
+  _charts['poolGap']=new Chart(ctx,{type:'bar',
+    data:{labels:sorted.map(p=>p.pool),datasets:[{label:'Gap FTE',data:sorted.map(p=>p.gapFte),
+      backgroundColor:sorted.map(p=>p.gapFte<-0.1?'rgba(239,68,68,0.7)':Math.abs(p.gapFte)<0.2?'rgba(245,158,11,0.7)':'rgba(34,197,94,0.7)'),
+      borderColor:sorted.map(p=>p.gapFte<-0.1?'#ef4444':Math.abs(p.gapFte)<0.2?'#f59e0b':'#22c55e'),borderWidth:1,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Gap FTE',color:'#475569'}},y:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}}}}
+  });
+}
+function renderScenarioChart(){
+  destroyChart('scenario');
+  var sc=planningModelAdapter.scenarios;
+  var ctx=document.getElementById('scenarioChart').getContext('2d');
+  _charts['scenario']=new Chart(ctx,{type:'bar',
+    data:{labels:sc.map(s=>s.name),datasets:[
+      {label:'Required FTE',data:sc.map(s=>s.requiredFte),backgroundColor:'rgba(252,211,77,0.6)',borderColor:'#fcd34d',borderWidth:1,borderRadius:3},
+      {label:'Effective Supply FTE',data:sc.map(s=>s.supplyFte),backgroundColor:'rgba(74,222,128,0.6)',borderColor:'#4ade80',borderWidth:1,borderRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},suggestedMin:4,title:{display:true,text:'FTE',color:'#475569'}}}}
+  });
+}
+
+// ── CLASSIFICATION TAB ──
+function initClassifyTab(){
+  window._clL=true;
+  renderRoutingRulesGrid();
+  renderProductMappingTable();
+  refreshClassificationData();
+}
+
+function renderRoutingRulesGrid(){
+  var cfg=ticketClassificationModel.POOL_CONFIG;
+  document.getElementById('routing-rules-grid').innerHTML=cfg.map(function(c){
+    var col=ticketClassificationModel.POOL_COLORS[c.pool]||'#475569';
+    return '<div class="classif-card '+c.pool+'">'
+      +'<div class="classif-title" style="color:'+col+'">'+c.label+' Pool</div>'
+      +'<div style="font-size:12px;color:#94a3b8;margin-bottom:8px">'+c.description+'</div>'
+      +'<div style="font-size:11px;color:#64748b;margin-bottom:6px">Freshdesk-produkter som routas hit:</div>'
+      +'<div class="classif-products">'+c.products.map(function(p){return '<span class="product-chip">'+p+'</span>';}).join('')+'</div>'
+      +'<div class="routing-rule">'+c.routingRule+'</div>'
+      +'<div class="classif-note">'+c.note+'</div>'
       +'</div>';
   }).join('');
 }
 
-function renderPoolGapChart(){
-  destroyChart('poolGap');
-  var sorted=[...dashboardViewModel.getPools()].sort((a,b)=>a.gapFte-b.gapFte);
-  var ctx=document.getElementById('poolGapChart').getContext('2d');
-  _charts['poolGap']=new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels:sorted.map(p=>p.pool),
-      datasets:[{
-        label:'Gap FTE (Effective Supply − Peak Demand)',
-        data:sorted.map(p=>p.gapFte),
-        backgroundColor:sorted.map(p=>p.gapFte<-0.1?'rgba(239,68,68,0.7)':Math.abs(p.gapFte)<0.2?'rgba(245,158,11,0.7)':'rgba(34,197,94,0.7)'),
-        borderColor:sorted.map(p=>p.gapFte<-0.1?'#ef4444':Math.abs(p.gapFte)<0.2?'#f59e0b':'#22c55e'),
-        borderWidth:1,borderRadius:4
-      }]
-    },
-    options:{
-      indexAxis:'y',responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-      scales:{
-        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Gap FTE',color:'#475569'}},
-        y:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}}
-      }
-    }
-  });
+function renderProductMappingTable(){
+  var map=ticketClassificationModel.PRODUCT_TO_POOL;
+  var last30={'All Products':188,'Simployer Classic':183,'Expert NO':117,'Simployer One':107,'Capitech':100,'Expert':71,'Expert SE':47,'Employee Survey (&frankly)':40,'Simployer Classic - Handbook':33,'Invoices & Agreements':27,'Talent':22,'Learn':20,'Equal Pay':4};
+  var seen=new Set();
+  var allProds=Object.keys(last30).concat(Object.keys(map)).filter(function(p){if(seen.has(p))return false;seen.add(p);return true;});
+  var rows=allProds.map(function(p){
+    var pool=map[p]||'unknown';
+    var col=ticketClassificationModel.POOL_COLORS[pool]||'#475569';
+    var count=last30[p]||0;
+    var type=ticketClassificationModel.inferTicketType(p);
+    return '<tr><td style="font-weight:500">'+p+'</td><td><span style="color:'+col+';font-weight:700">'+pool+'</span></td><td><span class="tag info" style="font-size:10px">'+type+'</span></td><td class="n">'+(count>0?count:'-')+'</td><td style="font-size:11px;color:#475569">'+(pool==='unknown'?'Okand mapping':'')+'</td></tr>';
+  }).join('');
+  document.getElementById('product-mapping-table').innerHTML=rows;
 }
 
-function renderScenarioChart(){
-  destroyChart('scenario');
-  var sc=dashboardViewModel.getScenarios();
-  var ctx=document.getElementById('scenarioChart').getContext('2d');
-  _charts['scenario']=new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels:sc.map(s=>s.name),
-      datasets:[
-        {label:'Required FTE',data:sc.map(s=>s.requiredFte),backgroundColor:'rgba(252,211,77,0.6)',borderColor:'#fcd34d',borderWidth:1,borderRadius:3},
-        {label:'Effective Supply FTE',data:sc.map(s=>s.supplyFte),backgroundColor:'rgba(74,222,128,0.6)',borderColor:'#4ade80',borderWidth:1,borderRadius:3}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-      scales:{
-        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},
-        y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},suggestedMin:4,title:{display:true,text:'FTE',color:'#475569'}}
-      }
+function hexToRgba(hex,a){var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return 'rgba('+r+','+g+','+b+','+a+')';}
+
+async function refreshClassificationData(){
+  document.getElementById('classification-loading').style.display='';
+  document.getElementById('classification-error').style.display='none';
+  document.getElementById('classif-summary-grid').style.display='none';
+  document.getElementById('classif-xtab-wrap').style.display='none';
+  document.getElementById('classif-chart-wrap').style.display='none';
+  try{
+    var stats12=await api('/aht-stats?months=12');
+    var products=await api('/products');
+    document.getElementById('classification-loading').style.display='none';
+    var prodList=(products.products||[]).filter(function(p){return p.last_30_days>0;});
+    var colors=ticketClassificationModel.POOL_COLORS;
+    var byPool={};
+    var byProduct={};
+    prodList.forEach(function(p){
+      var pool=ticketClassificationModel.resolveQueueGroup(p.product);
+      byPool[pool]=(byPool[pool]||0)+p.last_30_days;
+      byProduct[p.product]={count:p.last_30_days,pool:pool};
+    });
+    var months=stats12.months||[];
+    var ticketMonths=months.filter(function(m){return m.pools.some(function(p){return p.raw_tickets>0;});});
+    var poolActuals={};
+    ticketMonths.forEach(function(m){
+      (m.pools||[]).forEach(function(p){
+        if(!poolActuals[p.pool])poolActuals[p.pool]={raw:0,filtered:0,months:0};
+        poolActuals[p.pool].raw+=p.raw_tickets;
+        poolActuals[p.pool].filtered+=p.filtered_tickets;
+        if(p.raw_tickets>0)poolActuals[p.pool].months++;
+      });
+    });
+    var enrichPct=parseFloat(stats12.enrichment_coverage||0);
+    var totalTickets=stats12.total_tickets||0;
+    var enriched=stats12.enriched_tickets||0;
+    document.getElementById('classif-summary-cards').innerHTML=[
+      '<div class="wc"><div class="wl">Total tickets (all time)</div><div class="wv" style="font-size:22px">'+totalTickets.toLocaleString('sv-SE')+'</div></div>',
+      '<div class="wc"><div class="wl">Berikade tickets</div><div class="wv '+(enrichPct>=80?'ok':enrichPct>20?'warn':'crit')+'" style="font-size:22px">'+enriched.toLocaleString('sv-SE')+'</div><div class="wl">'+enrichPct.toFixed(1)+'% tackning</div></div>',
+      '<div class="wc"><div class="wl">Ej berikade</div><div class="wv crit" style="font-size:22px">'+(totalTickets-enriched).toLocaleString('sv-SE')+'</div><div class="wl">Utan produktklassif.</div></div>',
+      '<div class="wc"><div class="wl">Manader med ticketdata</div><div class="wv ok" style="font-size:22px">'+ticketMonths.length+'</div><div class="wl">av 12 senaste</div></div>',
+      '<div class="wc"><div class="wl">Supply-status</div><div class="wv warn" style="font-size:16px">Statisk</div><div class="wl">P4 ej exekverats</div></div>'
+    ].join('');
+    document.getElementById('classif-summary-grid').style.display='';
+    var pools=['classic','s1','frankly','talent','switchboard','unknown'];
+    var poolLabels={classic:'Classic',s1:'S1',frankly:'Frankly',talent:'Talent',switchboard:'Switchboard',unknown:'Okand'};
+    var prodRows=Object.keys(byProduct).sort(function(a,b){return byProduct[b].count-byProduct[a].count;});
+    var thead='<thead><tr><th>Produkt (cf_category_1)</th>'+pools.map(function(pool){return '<th class="r" style="color:'+(colors[pool]||'#475569')+'">'+poolLabels[pool]+'</th>';}).join('')+'<th class="r">Totalt</th></tr></thead>';
+    var tbody='<tbody>';
+    prodRows.forEach(function(prod){
+      var assignedPool=byProduct[prod].pool;
+      var count=byProduct[prod].count;
+      var cells=pools.map(function(pool){
+        var val=pool===assignedPool?count:0;
+        return '<td class="n val-cell '+(val===0?'zero':val>100?'high':'low')+'">'+(val>0?val:'-')+'</td>';
+      }).join('');
+      tbody+='<tr><td style="font-size:12px">'+prod+'</td>'+cells+'<td class="n" style="font-weight:800">'+count+'</td></tr>';
+    });
+    tbody+='<tr class="total-row"><td style="font-size:12px;font-weight:700">Totalt (API faktiska tickets)</td>';
+    var grandTotal=0;
+    pools.forEach(function(pool){
+      var act=poolActuals[pool];var raw=act?act.raw:0;grandTotal+=raw;
+      tbody+='<td class="n" style="color:'+(colors[pool]||'#94a3b8')+';font-weight:800">'+(raw>0?raw.toLocaleString('sv-SE'):'-')+'</td>';
+    });
+    tbody+='<td class="n" style="font-weight:800">'+grandTotal.toLocaleString('sv-SE')+'</td></tr></tbody>';
+    document.getElementById('classif-xtab').innerHTML=thead+tbody;
+    document.getElementById('classif-xtab-wrap').style.display='';
+    var tableRows='';
+    months.forEach(function(m){
+      (m.pools||[]).forEach(function(p){
+        if(p.raw_tickets===0&&p.fte_supply===0)return;
+        var gapColor=p.gap<0?'#fca5a5':p.gap<=0.5?'#fcd34d':'#4ade80';
+        var staticFlag=p.raw_tickets===0&&p.fte_supply>0?' [supply only]':'';
+        tableRows+='<tr><td style="font-variant-numeric:tabular-nums">'+m.year_month+'</td>'
+          +'<td style="color:'+(colors[p.pool]||'#94a3b8')+';font-weight:600">'+p.pool_name+'</td>'
+          +'<td class="n">'+(p.raw_tickets>0?p.raw_tickets:'-')+'</td>'
+          +'<td class="n">'+(p.filtered_tickets>0?p.filtered_tickets:'-')+'</td>'
+          +'<td class="n">'+(p.raw_tickets>0?p.effective_aht:'-')+'</td>'
+          +'<td class="n">'+(p.filtered_fte>0?p.filtered_fte.toFixed(2):'-')+'</td>'
+          +'<td class="n" style="color:'+(p.raw_tickets===0?'#f59e0b':'#94a3b8')+'">'+p.fte_supply.toFixed(2)+staticFlag+'</td>'
+          +'<td class="n" style="color:'+gapColor+'">'+p.gap.toFixed(2)+'</td>'
+          +'<td class="n" style="color:'+(p.coverage_pct<COV_THRESHOLD&&p.raw_tickets>0?'#fca5a5':'#64748b')+'">'+p.coverage_pct+'%</td></tr>';
+      });
+    });
+    document.getElementById('monthly-pool-table').innerHTML=tableRows||'<tr><td colspan="9" style="color:#475569;text-align:center;padding:24px">Ingen data</td></tr>';
+    destroyChart('classif');
+    var poolNames=Object.keys(byPool).filter(function(k){return byPool[k]>0;});
+    if(poolNames.length>0){
+      var ctx=document.getElementById('classifChart').getContext('2d');
+      _charts['classif']=new Chart(ctx,{type:'bar',
+        data:{labels:poolNames.map(function(p){return p.charAt(0).toUpperCase()+p.slice(1);}),
+          datasets:[{label:'Tickets senaste 30 dagar',data:poolNames.map(function(p){return byPool[p];}),
+            backgroundColor:poolNames.map(function(p){return hexToRgba(colors[p]||'#475569',0.6);}),
+            borderColor:poolNames.map(function(p){return colors[p]||'#475569';}),borderWidth:1,borderRadius:4}]},
+        options:{responsive:true,maintainAspectRatio:true,
+          plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+          scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}}}}
+      });
+      document.getElementById('classif-chart-wrap').style.display='';
     }
-  });
+  }catch(e){
+    document.getElementById('classification-loading').style.display='none';
+    document.getElementById('classification-error').textContent='Fel: '+(e.message||e);
+    document.getElementById('classification-error').style.display='';
+  }
 }
 </script><script>
 function renderMigrationTable(){
   var phaseClsMap={'Akut':'phase-akut','Fas 1':'phase-fas1','Fas 2':'phase-fas2','Fas 3':'phase-fas3','Expansion':'phase-expansion'};
-  document.getElementById('migration-table').innerHTML = dashboardViewModel.getMigration().map(m=>{
+  document.getElementById('migration-table').innerHTML=planningModelAdapter.migration.map(function(m){
     var pc=phaseClsMap[m.phase]||'';
-    var rnVal=m.recruitNeed===null?'–':(m.recruitNeed>=0?'+':'')+m.recruitNeed.toFixed(2);
+    var rnVal=m.recruitNeed===null?'-':(m.recruitNeed>=0?'+':'')+m.recruitNeed.toFixed(2);
     var rnCls=m.recruitNeed===null?'':m.recruitNeed>0.5?'style="color:#fca5a5;font-weight:700"':m.recruitNeed>0?'style="color:#fcd34d"':'';
-    return '<tr>'
-      +'<td style="font-weight:700">'+m.q+'</td>'
+    return '<tr><td style="font-weight:700">'+m.q+'</td>'
       +'<td><span class="phase-chip '+pc+'" style="font-size:10px;padding:2px 8px">'+m.phase+'</span></td>'
       +'<td class="n">'+m.migrated.toLocaleString('sv-SE')+'</td>'
       +'<td class="n">'+m.classicRemain.toLocaleString('sv-SE')+'</td>'
@@ -1119,119 +1334,85 @@ function renderMigrationTable(){
       +'<td class="n">'+m.s1WithoutAi.toFixed(2)+'</td>'
       +'<td class="n" style="color:#4ade80;font-weight:700">'+m.s1WithAi.toFixed(2)+'</td>'
       +'<td class="n" '+rnCls+'>'+rnVal+'</td>'
-      +'<td class="n">'+m.costSek.toLocaleString('sv-SE')+' kr</td>'
-      +'</tr>';
+      +'<td class="n">'+m.costSek.toLocaleString('sv-SE')+' kr</td></tr>';
   }).join('');
 }
-
 function renderMigrationChart(){
   destroyChart('migration');
   var ctx=document.getElementById('migrationChart').getContext('2d');
-  _charts['migration']=new Chart(ctx,{
-    type:'line',
-    data:{
-      labels:WP.migration.map(m=>m.q),
-      datasets:[
-        {label:'S1 FTE med AI-deflection',data:WP.migration.map(m=>m.s1WithAi),borderColor:'#4ade80',backgroundColor:'rgba(74,222,128,0.1)',borderWidth:2.5,pointRadius:5,fill:true},
-        {label:'S1 FTE utan AI-deflection',data:WP.migration.map(m=>m.s1WithoutAi),borderColor:'#fcd34d',backgroundColor:'rgba(252,211,77,0.05)',borderWidth:2,pointRadius:4,borderDash:[5,3],fill:false},
-        {label:'Classic volym (tusental)',data:WP.migration.map(m=>m.classicVol/1000),borderColor:'#f87171',backgroundColor:'rgba(248,113,113,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],yAxisID:'y2',fill:false}
-      ]
-    },
-    options:{
-      responsive:true,maintainAspectRatio:true,
-      plugins:{
-        legend:{labels:{color:'#94a3b8',font:{size:11}}},
-        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}
-      },
-      scales:{
-        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},
-        y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE',color:'#475569'},suggestedMin:2,suggestedMax:5},
-        y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#ef4444'},title:{display:true,text:'Classic kunder (k)',color:'#ef4444'}}
-      }
-    }
+  _charts['migration']=new Chart(ctx,{type:'line',
+    data:{labels:planningModelAdapter.migration.map(function(m){return m.q;}),datasets:[
+      {label:'S1 FTE med AI-deflection',data:planningModelAdapter.migration.map(function(m){return m.s1WithAi;}),borderColor:'#4ade80',backgroundColor:'rgba(74,222,128,0.1)',borderWidth:2.5,pointRadius:5,fill:true},
+      {label:'S1 FTE utan AI-deflection',data:planningModelAdapter.migration.map(function(m){return m.s1WithoutAi;}),borderColor:'#fcd34d',backgroundColor:'rgba(252,211,77,0.05)',borderWidth:2,pointRadius:4,borderDash:[5,3],fill:false},
+      {label:'Classic volym (tusental)',data:planningModelAdapter.migration.map(function(m){return m.classicVol/1000;}),borderColor:'#f87171',backgroundColor:'rgba(248,113,113,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],yAxisID:'y2',fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE',color:'#475569'},suggestedMin:2,suggestedMax:5},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#ef4444'},title:{display:true,text:'Classic kunder (k)',color:'#ef4444'}}}}
   });
 }
-
 function renderSensitivityTable(){
-  document.getElementById('sensitivity-table').innerHTML = dashboardViewModel.getSensitivity().map(s=>{
-    var fmt=s.unit==='SEK'?(v=>v.toLocaleString('sv-SE')+' kr'):(v=>v.toFixed(2)+' FTE');
-    return '<tr>'
-      +'<td><strong>'+s.driver+'</strong></td>'
+  document.getElementById('sensitivity-table').innerHTML=planningModelAdapter.sensitivity.map(function(s){
+    var fmt=s.unit==='SEK'?function(v){return v.toLocaleString('sv-SE')+' kr';}:function(v){return v.toFixed(2)+' FTE';};
+    return '<tr><td><strong>'+s.driver+'</strong></td>'
       +'<td class="n" style="color:#fca5a5">'+fmt(s.m20)+'</td>'
       +'<td class="n" style="color:#fcd34d">'+fmt(s.m10)+'</td>'
       +'<td class="n" style="color:#e2e8f0;font-weight:800">'+fmt(s.base)+'</td>'
       +'<td class="n" style="color:#fcd34d">'+fmt(s.p10)+'</td>'
       +'<td class="n" style="color:#fca5a5">'+fmt(s.p20)+'</td>'
-      +'<td><span class="tag info">'+s.unit+'</span></td>'
-      +'</tr>';
+      +'<td><span class="tag info">'+s.unit+'</span></td></tr>';
   }).join('');
 }
-
 function renderSensitivityChart(){
   destroyChart('sensitivity');
-  var fteOnly=dashboardViewModel.getSensitivity().filter(s=>s.unit==='FTE');
-  var sorted=[...fteOnly].sort((a,b)=>Math.abs(b.p20-b.m20)-Math.abs(a.p20-a.m20));
+  var fteOnly=planningModelAdapter.sensitivity.filter(function(s){return s.unit==='FTE';});
+  var sorted=[...fteOnly].sort(function(a,b){return Math.abs(b.p20-b.m20)-Math.abs(a.p20-a.m20);});
   var ctx=document.getElementById('sensitivityChart').getContext('2d');
-  _charts['sensitivity']=new Chart(ctx,{
-    type:'bar',
-    data:{
-      labels:sorted.map(s=>s.driver),
-      datasets:[
-        {label:'−20%',data:sorted.map(s=>s.m20-s.base),backgroundColor:'rgba(239,68,68,0.6)',borderColor:'#ef4444',borderWidth:1,borderRadius:3},
-        {label:'+20%',data:sorted.map(s=>s.p20-s.base),backgroundColor:'rgba(99,102,241,0.6)',borderColor:'#6366f1',borderWidth:1,borderRadius:3}
-      ]
-    },
-    options:{
-      indexAxis:'y',responsive:true,maintainAspectRatio:true,
-      plugins:{
-        legend:{labels:{color:'#94a3b8',font:{size:11}}},
-        tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',
-          callbacks:{label:ctx2=>ctx2.dataset.label+': '+(ctx2.raw>=0?'+':'')+ctx2.raw.toFixed(2)+' FTE vs bas'}}
-      },
-      scales:{
-        x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Avvikelse från 10.10 FTE',color:'#475569'}},
-        y:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}}
-      }
-    }
+  _charts['sensitivity']=new Chart(ctx,{type:'bar',
+    data:{labels:sorted.map(function(s){return s.driver;}),datasets:[
+      {label:'-20%',data:sorted.map(function(s){return s.m20-s.base;}),backgroundColor:'rgba(239,68,68,0.6)',borderColor:'#ef4444',borderWidth:1,borderRadius:3},
+      {label:'+20%',data:sorted.map(function(s){return s.p20-s.base;}),backgroundColor:'rgba(99,102,241,0.6)',borderColor:'#6366f1',borderWidth:1,borderRadius:3}
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{label:function(ctx2){return ctx2.dataset.label+': '+(ctx2.raw>=0?'+':'')+ctx2.raw.toFixed(2)+' FTE vs bas';}}}},
+      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Avvikelse fran 10.10 FTE',color:'#475569'}},y:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}}}}
   });
 }
 
-// ═══════════════════════════════════════════════════
-// LEGACY TABS
-// ═══════════════════════════════════════════════════
+// ── LEGACY TABS ──
 async function loadOverview(){
   try{
     var d=await api('/products');var ps=d.products||[];
-    var tot30=ps.reduce((s,p)=>s+parseInt(p.last_30_days),0),tot0=ps.reduce((s,p)=>s+parseInt(p.today),0);
+    var tot30=ps.reduce(function(s,p){return s+parseInt(p.last_30_days);},0),tot0=ps.reduce(function(s,p){return s+parseInt(p.today);},0);
     document.getElementById('t0').textContent=tot0;document.getElementById('t30').textContent=tot30;
-    document.getElementById('ap').textContent=ps.filter(p=>parseInt(p.today)>0).length;
-    var top=ps.filter(p=>parseInt(p.today)>0).sort((a,b)=>b.today-a.today)[0];
+    document.getElementById('ap').textContent=ps.filter(function(p){return parseInt(p.today)>0;}).length;
+    var top=ps.filter(function(p){return parseInt(p.today)>0;}).sort(function(a,b){return b.today-a.today;})[0];
     if(top){document.getElementById('tp').textContent=top.today;document.getElementById('tpc').textContent=top.product;}
-    var mx=Math.max(...ps.map(p=>parseInt(p.last_30_days)))||1;
-    document.getElementById('ptb').innerHTML=ps.slice(0,10).map(p=>'<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>').join('');
-    document.getElementById('ptb2').innerHTML=ps.map(p=>'<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>').join('');
+    var mx=Math.max(...ps.map(function(p){return parseInt(p.last_30_days);}),1);
+    document.getElementById('ptb').innerHTML=ps.slice(0,10).map(function(p){return '<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>';}).join('');
+    document.getElementById('ptb2').innerHTML=ps.map(function(p){return '<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>';}).join('');
     document.getElementById('upd').textContent='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
   }catch(e){console.error(e);}
 }
-async function loadRecent(){try{var d=await api('/recent');document.getElementById('tlist').innerHTML=(d.tickets||[]).map(t=>'<div class="tr2"><span class="ti">#'+t.ticket_id+'</span><div><div style="font-size:14px;margin-bottom:3px">'+h(t.subject||t.product||'')+'</div><div style="font-size:12px;color:#64748b">'+h(t.product||'')+'</div></div>'+bdg(t.channel)+'<span class="tt">'+new Date(t.created_at).toLocaleDateString('sv-SE')+'</span></div>').join('');}catch(e){console.error(e);}}
-async function loadTrend(){try{var d=await api('/trend');document.getElementById('trendt').innerHTML=(d.trend||[]).reverse().map(r=>'<tr><td>'+r.day+'</td><td class="n">'+r.tickets+'</td></tr>').join('');}catch(e){console.error(e);}}
+async function loadRecent(){try{var d=await api('/recent');document.getElementById('tlist').innerHTML=(d.tickets||[]).map(function(t){return '<div class="tr2"><span class="ti">#'+t.ticket_id+'</span><div><div style="font-size:14px;margin-bottom:3px">'+h(t.subject||t.product||'')+'</div><div style="font-size:12px;color:#64748b">'+h(t.product||'')+'</div></div>'+bdg(t.channel)+'<span class="tt">'+new Date(t.created_at).toLocaleDateString('sv-SE')+'</span></div>';}).join('');}catch(e){console.error(e);}}
+async function loadTrend(){try{var d=await api('/trend');document.getElementById('trendt').innerHTML=(d.trend||[]).reverse().map(function(r){return '<tr><td>'+r.day+'</td><td class="n">'+r.tickets+'</td></tr>';}).join('');}catch(e){console.error(e);}}
 
 var _allDaily=[];
 async function loadWorkforce(){
   window._wfL=true;
   try{
     var d=await api('/aht-stats?months=12');
-    var sum=(d.months||[]).map(m=>{var cov=parseFloat(m.avg_coverage_pct||0);return{year_month:m.year_month,fte_required_total:m.total_filtered_fte,fte_supply_total:m.total_supply,net_gap:m.total_gap,worst_gap_pool:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.pool||'-',worst_gap_value:(m.pools||[]).sort((a,b)=>a.gap-b.gap)[0]?.gap||0,total_tickets:(m.pools||[]).reduce((s,p)=>s+p.filtered_tickets,0),coverage_pct:cov};});
+    var sum=(d.months||[]).map(function(m){var cov=parseFloat(m.avg_coverage_pct||0);return{year_month:m.year_month,fte_required_total:m.total_filtered_fte,fte_supply_total:m.total_supply,net_gap:m.total_gap,total_tickets:(m.pools||[]).reduce(function(s,p){return s+p.filtered_tickets;},0),coverage_pct:cov};});
     var l=sum[0]||{};
-    document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste månad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Krav</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillgänglig</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Datatäckning</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div></div>'].join('');
+    document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Krav (analytik)</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillgang (API)</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Datatackning</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div></div>'].join('');
     var months=sum.slice(0,12).reverse();
-    document.getElementById('monthly-grid').innerHTML=months.map(m=>{var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;var cov=parseFloat(m.coverage_pct||0);var covHtml=cov<COV_THRESHOLD?'<div class="cov-warn">⚠ Datatäckning '+cov.toFixed(0)+'%</div>':'<div class="cov-ok">✓ '+cov.toFixed(0)+'%</div>';return'<div class="mc '+(gap<-0.5?'crit-b':gap<0?'under-b':'ok-b')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Behov: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgång: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+'</div>'+covHtml+'</div>';}).join('');
+    document.getElementById('monthly-grid').innerHTML=months.map(function(m){var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;var cov=parseFloat(m.coverage_pct||0);var covHtml=cov<COV_THRESHOLD?'<div class="cov-warn">Datatackning '+cov.toFixed(0)+'%</div>':'<div class="cov-ok">'+cov.toFixed(0)+'%</div>';return'<div class="mc '+(gap<-0.5?'crit-b':gap<0?'under-b':'ok-b')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+'</div>'+covHtml+'</div>';}).join('');
     document.getElementById('pool-filter').innerHTML='<button class="active" onclick="fp(this)" data-pool="">Alla</button>';
     renderDailyTable('');
   }catch(e){console.error(e);}
 }
-function fp(btn){document.querySelectorAll('#pool-filter button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderDailyTable(btn.dataset.pool);}
-function renderDailyTable(pool){var rows=pool?_allDaily.filter(r=>r.pool_slug===pool):_allDaily;document.getElementById('daily-table').innerHTML=rows.slice(0,200).map(r=>'<tr><td>'+r.stat_date+'</td><td>'+h(r.pool_slug)+'</td><td class="n">'+r.ticket_count+'</td><td class="n">'+fmtFTE(r.peak_fte_calculated)+'</td><td class="n">'+fmtFTE(r.gap_fte)+'</td><td><span class="ga '+(r.capacity_status==='critical'?'crit':r.capacity_status==='under'?'under':'ok')+'">'+r.capacity_status+'</span></td></tr>').join('');}
+function fp(btn){document.querySelectorAll('#pool-filter button').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');renderDailyTable(btn.dataset.pool);}
+function renderDailyTable(pool){var rows=pool?_allDaily.filter(function(r){return r.pool_slug===pool;}):_allDaily;document.getElementById('daily-table').innerHTML=rows.slice(0,200).map(function(r){return '<tr><td>'+r.stat_date+'</td><td>'+h(r.pool_slug)+'</td><td class="n">'+r.ticket_count+'</td><td class="n">'+fmtFTE(r.peak_fte_calculated)+'</td><td class="n">'+fmtFTE(r.gap_fte)+'</td><td><span class="ga '+(r.capacity_status==='critical'?'crit':r.capacity_status==='under'?'under':'ok')+'">'+r.capacity_status+'</span></td></tr>';}).join('');}
 
 var _ahtData=null,_view='all';
 async function loadAHT(){
@@ -1239,23 +1420,22 @@ async function loadAHT(){
   await updateEnrichStatus();
   try{
     var d=await api('/aht-stats?months=12');_ahtData=d;
-    // Invalidate analytics cache so it can re-use this fresh data
     dailyAnalyticsAdapter.invalidate();
     var cov=parseFloat(d.enrichment_coverage||0),latest=d.months&&d.months[d.months.length-1];
     var s=['<div class="wc"><div class="wl">Enrichment</div><div class="wv '+(cov>=COV_THRESHOLD?'ok':cov>20?'warn':'crit')+'">'+cov.toFixed(1)+'%</div><div class="wl">'+d.enriched_tickets+'/'+d.total_tickets+'</div></div>'];
-    if(latest){s.push('<div class="wc"><div class="wl">Senaste månad</div><div class="wv" style="font-size:18px">'+h(latest.year_month)+'</div></div>');s.push('<div class="wc"><div class="wl">FTE-gap</div><div class="wv '+(latest.total_gap>=0?'ok':latest.total_gap>=-0.5?'warn':'crit')+'">'+fmtFTE(latest.total_gap)+'</div></div>');}
+    if(latest){s.push('<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(latest.year_month)+'</div></div>');s.push('<div class="wc"><div class="wl">FTE-gap</div><div class="wv '+(latest.total_gap>=0?'ok':latest.total_gap>=-0.5?'warn':'crit')+'">'+fmtFTE(latest.total_gap)+'</div></div>');}
     document.getElementById('aht-summary').innerHTML=s.join('');
     var pools=d.pools||[];
-    document.getElementById('aht-pool-filter').innerHTML='<button class="pool-btn active" onclick="filterAHT(this)" data-pool="">Alla</button>'+pools.map(p=>'<button class="pool-btn" onclick="filterAHT(this)" data-pool="'+h(p.slug)+'">'+h(p.name)+'</button>').join('');
+    document.getElementById('aht-pool-filter').innerHTML='<button class="pool-btn active" onclick="filterAHT(this)" data-pool="">Alla</button>'+pools.map(function(p){return '<button class="pool-btn" onclick="filterAHT(this)" data-pool="'+h(p.slug)+'">'+h(p.name)+'</button>';}).join('');
     renderAHTGrid(d,'');
   }catch(e){console.error('AHT',e);}
 }
-function setView(v,btn){_view=v;document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}
-function filterAHT(btn){document.querySelectorAll('#aht-pool-filter .pool-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,btn.dataset.pool);}
-function renderAHTGrid(d,fPool){var months=d.months||[];document.getElementById('aht-grid').innerHTML=months.map(m=>{var pools=fPool?m.pools.filter(p=>p.pool===fPool):m.pools;if(!pools.length)return'';var useCC=_view==='cc',totF=pools.reduce((s,p)=>s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte),0),totS=pools.reduce((s,p)=>s+p.fte_supply,0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';var avgCov=parseFloat(m.avg_coverage_pct||0);return'<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(p=>{var fte=useCC?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,cnt=useCC?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,pct=p.raw_tickets>0?Math.round(cnt/p.raw_tickets*100):100,pCov=parseFloat(p.coverage_pct||0);return'<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+cnt+' ('+pct+'%)'+(useCC?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(pCov>0?' <span style="padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Krav: '+fmtFTE(totF)+' | Tillgång: '+fmtFTE(totS)+'</div>'+(avgCov<COV_THRESHOLD?'<div class="cov-warn">⚠ '+avgCov.toFixed(0)+'% datatäckning</div>':'')+'</div>';}).join('');}
+function setView(v,btn){_view=v;document.querySelectorAll('.vt-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}
+function filterAHT(btn){document.querySelectorAll('#aht-pool-filter .pool-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,btn.dataset.pool);}
+function renderAHTGrid(d,fPool){var months=d.months||[];document.getElementById('aht-grid').innerHTML=months.map(function(m){var pools=fPool?m.pools.filter(function(p){return p.pool===fPool;}):m.pools;if(!pools.length)return'';var useCC=_view==='cc',totF=pools.reduce(function(s,p){return s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte);},0),totS=pools.reduce(function(s,p){return s+p.fte_supply;},0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';var avgCov=parseFloat(m.avg_coverage_pct||0);return'<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(function(p){var fte=useCC?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,cnt=useCC?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,pct=p.raw_tickets>0?Math.round(cnt/p.raw_tickets*100):100,pCov=parseFloat(p.coverage_pct||0);return'<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+cnt+' ('+pct+'%)'+(useCC?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(pCov>0?' <span style="padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'+(avgCov<COV_THRESHOLD?'<div class="cov-warn">'+avgCov.toFixed(0)+'% datatackning</div>':'')+'</div>';}).join('');}
 
 async function updateEnrichStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('enrich-status').textContent='Enrichment: '+d.enriched_tickets+'/'+d.total_tickets+' ('+pct.toFixed(1)+'%) | CC-scope: '+(d.cc_scope_tickets||0)+' | Samtal: '+(d.phone_with_duration||0);var prog=document.getElementById('enrich-prog');if(prog)prog.style.width=pct+'%';if(pct>=100){var btn=document.getElementById('enrich-btn');if(btn){btn.disabled=true;btn.textContent='Klart!';}}}catch(e){}}
-async function runEnrich(){var btn=document.getElementById('enrich-btn');btn.disabled=true;btn.textContent='Hämtar...';try{var r=await fetch('https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',{headers:{'apikey':K,'Authorization':'Bearer '+K}});var d=await r.json();btn.textContent='Klart: '+(d.processed||0)+' behandlade';await updateEnrichStatus();var d2=await api('/aht-stats?months=12');_ahtData=d2;dailyAnalyticsAdapter.invalidate();renderAHTGrid(d2,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}catch(e){btn.textContent='Fel: '+e.message;}setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Hämta Freshdesk-data';}},8000);}
+async function runEnrich(){var btn=document.getElementById('enrich-btn');btn.disabled=true;btn.textContent='Hamtar...';try{var r=await fetch('https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',{headers:{'apikey':K,'Authorization':'Bearer '+K}});var d=await r.json();btn.textContent='Klart: '+(d.processed||0)+' behandlade';await updateEnrichStatus();var d2=await api('/aht-stats?months=12');_ahtData=d2;dailyAnalyticsAdapter.invalidate();renderAHTGrid(d2,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}catch(e){btn.textContent='Fel: '+e.message;}setTimeout(function(){if(btn){btn.disabled=false;btn.textContent='Hamta Freshdesk-data';}},8000);}
 
 function initPrognos(){window._pgL=true;var now=new Date();document.getElementById('pg-start-month').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');if(_ahtData)runPrognos();}
 async function runPrognos(){
@@ -1264,25 +1444,22 @@ async function runPrognos(){
   var months=_ahtData.months||[];
   if(!months.length){document.getElementById('forecast-grid').innerHTML='<div style="color:#64748b;padding:20px">Ingen basdata</div>';return;}
   var base=months[months.length-1]||months[0];
-  var baseVol=base.pools?base.pools.reduce((s,p)=>s+p.filtered_tickets,0):0;
-  var baseAHT=base.pools&&base.pools.length?base.pools.reduce((s,p)=>s+p.effective_aht,0)/base.pools.length:15;
-  var baseSupply=base.pools?base.pools.reduce((s,p)=>s+p.fte_supply,0):WP.effectiveSupplyFte;
+  var baseVol=base.pools?base.pools.reduce(function(s,p){return s+p.filtered_tickets;},0):0;
+  var baseAHT=base.pools&&base.pools.length?base.pools.reduce(function(s,p){return s+p.effective_aht;},0)/base.pools.length:15;
+  var baseSupply=base.pools?base.pools.reduce(function(s,p){return s+p.fte_supply;},0):WP.effectiveSupplyFte;
   var sp=startMonth.split('-'),sy=parseInt(sp[0]),sm=parseInt(sp[1]);
   var rows=[],totReq=0,totGap=0,surp=0,def=0;
-  for(var i=0;i<12;i++){var mn=sm+i,my=sy;while(mn>12){mn-=12;my++;}var ym=my+'-'+String(mn).padStart(2,'0');var vol=baseVol*Math.pow(1+volChg/100,i+1),aht=baseAHT*Math.pow(1+ahtChg/100,i+1),sup=baseSupply+(supChg*(i+1)),wd=swedishWorkingDays(my,mn),req=computeFTE(vol,aht,ym),gap=sup-req;totReq+=req;totGap+=gap;if(gap>=0)surp++;else def++;rows.push({ym,vol:Math.round(vol),aht:aht.toFixed(1),wd,req,sup,gap});}
+  for(var i=0;i<12;i++){var mn=sm+i,my=sy;while(mn>12){mn-=12;my++;}var ym=my+'-'+String(mn).padStart(2,'0');var vol=baseVol*Math.pow(1+volChg/100,i+1),aht=baseAHT*Math.pow(1+ahtChg/100,i+1),sup=baseSupply+(supChg*(i+1)),wd=swedishWorkingDays(my,mn),req=computeFTE(vol,aht,ym),gap=sup-req;totReq+=req;totGap+=gap;if(gap>=0)surp++;else def++;rows.push({ym:ym,vol:Math.round(vol),aht:aht.toFixed(1),wd:wd,req:req,sup:sup,gap:gap});}
   var avgGap=totGap/12;
-  document.getElementById('prognos-summary').innerHTML=['<div class="wc"><div class="wl">Snitt FTE-gap</div><div class="wv '+(avgGap>=0?'ok':'crit')+'">'+fmtFTE(avgGap)+'</div></div>','<div class="wc"><div class="wl">Månader överskott</div><div class="wv ok">'+surp+'</div></div>','<div class="wc"><div class="wl">Månader underskott</div><div class="wv '+(def>0?'crit':'ok')+'">'+def+'</div></div>','<div class="wc"><div class="wl">Total FTE-krav</div><div class="wv warn">'+fmtFTE(totReq)+'</div></div>'].join('');
-  document.getElementById('forecast-grid').innerHTML=rows.map(r=>{var gap=parseFloat(r.gap),cls=gap>0.5?'surplus':gap<-0.5?'deficit':'marginal',mx=Math.max(r.req,r.sup)||1;return'<div class="fc '+cls+'"><div class="fh"><span class="fm">'+r.ym+'</span><span class="ga '+(gap>=0?'ok':gap>=-0.5?'under':'crit')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(r.req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(r.req/mx*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgång: '+fmtFTE(r.sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(r.sup/mx*100)+'%"></div></div></div><div class="mv">Volym: '+r.vol+' | AHT: '+r.aht+'min | Arbdagar: '+r.wd+'</div></div>';}).join('');
-  document.getElementById('forecast-table').innerHTML=rows.map(r=>{var gap=parseFloat(r.gap),cls=gap<-0.5?'crit':gap<0?'under':'ok';return'<tr><td>'+r.ym+'</td><td class="n">'+r.vol+'</td><td class="n">'+r.aht+'</td><td class="n">'+r.wd+'</td><td class="n">'+fmtFTE(r.req)+'</td><td class="n">'+fmtFTE(r.sup)+'</td><td class="n"><span class="ga '+cls+'">'+fmtFTE(gap)+'</span></td><td><span class="ga '+cls+'">'+(gap>=0?'Överskott':'Underskott')+'</span></td></tr>';}).join('');
+  document.getElementById('prognos-summary').innerHTML=['<div class="wc"><div class="wl">Snitt FTE-gap</div><div class="wv '+(avgGap>=0?'ok':'crit')+'">'+fmtFTE(avgGap)+'</div></div>','<div class="wc"><div class="wl">Manader overskott</div><div class="wv ok">'+surp+'</div></div>','<div class="wc"><div class="wl">Manader underskott</div><div class="wv '+(def>0?'crit':'ok')+'">'+def+'</div></div>','<div class="wc"><div class="wl">Total FTE-krav</div><div class="wv warn">'+fmtFTE(totReq)+'</div></div>'].join('');
+  document.getElementById('forecast-grid').innerHTML=rows.map(function(r){var gap=parseFloat(r.gap),cls=gap>0.5?'surplus':gap<-0.5?'deficit':'marginal',mx=Math.max(r.req,r.sup)||1;return'<div class="fc '+cls+'"><div class="fh"><span class="fm">'+r.ym+'</span><span class="ga '+(gap>=0?'ok':gap>=-0.5?'under':'crit')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(r.req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(r.req/mx*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(r.sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(r.sup/mx*100)+'%"></div></div></div><div class="mv">Volym: '+r.vol+' | AHT: '+r.aht+'min | Arbdagar: '+r.wd+'</div></div>';}).join('');
+  document.getElementById('forecast-table').innerHTML=rows.map(function(r){var gap=parseFloat(r.gap),cls=gap<-0.5?'crit':gap<0?'under':'ok';return'<tr><td>'+r.ym+'</td><td class="n">'+r.vol+'</td><td class="n">'+r.aht+'</td><td class="n">'+r.wd+'</td><td class="n">'+fmtFTE(r.req)+'</td><td class="n">'+fmtFTE(r.sup)+'</td><td class="n"><span class="ga '+cls+'">'+fmtFTE(gap)+'</span></td><td><span class="ga '+cls+'">'+(gap>=0?'Overskott':'Underskott')+'</span></td></tr>';}).join('');
 }
 
 function loadSetupTab(){window._setupL=true;renderWorkdayTable();loadSetupStatus();}
 function renderWorkdayTable(){var now=new Date(),rows=[];for(var i=11;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var y=d.getFullYear(),m=d.getMonth()+1,ym=y+'-'+String(m).padStart(2,'0'),wd=swedishWorkingDays(y,m),av=wd*7*60,diff=av-9450;rows.push('<tr><td>'+ym+'</td><td class="n">'+wd+'</td><td class="n">'+av.toLocaleString('sv-SE')+'</td><td class="n" style="color:'+(diff>0?'#fca5a5':'#4ade80')+'">'+diff+'</td></tr>');}var t=document.getElementById('workday-table');if(t)t.innerHTML=rows.join('');}
-async function loadSetupStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('setup-enrich-detail').innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px"><div class="wc"><div class="wl">Total tickets</div><div class="wv" style="font-size:18px">'+d.total_tickets+'</div></div><div class="wc"><div class="wl">Berikade</div><div class="wv ok" style="font-size:18px">'+d.enriched_tickets+'</div></div><div class="wc"><div class="wl">Kvarstående</div><div class="wv '+(d.total_tickets-d.enriched_tickets>0?'crit':'ok')+'" style="font-size:18px">'+(d.total_tickets-d.enriched_tickets)+'</div></div><div class="wc"><div class="wl">Täckning</div><div class="wv '+(pct>=COV_THRESHOLD?'ok':'crit')+'">'+pct.toFixed(1)+'%</div></div><div class="wc"><div class="wl">CC-scope</div><div class="wv warn" style="font-size:18px">'+(d.cc_scope_tickets||0)+'</div></div></div>';}catch(e){document.getElementById('setup-enrich-detail').textContent='Fel: '+e.message;}}
+async function loadSetupStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('setup-enrich-detail').innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px"><div class="wc"><div class="wl">Total tickets</div><div class="wv" style="font-size:18px">'+d.total_tickets+'</div></div><div class="wc"><div class="wl">Berikade</div><div class="wv ok" style="font-size:18px">'+d.enriched_tickets+'</div></div><div class="wc"><div class="wl">Kvarstende</div><div class="wv '+(d.total_tickets-d.enriched_tickets>0?'crit':'ok')+'" style="font-size:18px">'+(d.total_tickets-d.enriched_tickets)+'</div></div><div class="wc"><div class="wl">Tackning</div><div class="wv '+(pct>=COV_THRESHOLD?'ok':'crit')+'">'+pct.toFixed(1)+'%</div></div><div class="wc"><div class="wl">CC-scope</div><div class="wv warn" style="font-size:18px">'+(d.cc_scope_tickets||0)+'</div></div></div>';}catch(e){document.getElementById('setup-enrich-detail').textContent='Fel: '+e.message;}}
 
-// ═══════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded',function(){
   loadOverview();
   loadRecent();
