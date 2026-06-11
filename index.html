@@ -514,7 +514,7 @@ CC Workforce Planning
 <div class="alert-body">
 <div class="alert-title">Klassificeringsproblem identifierat</div>
 <div class="alert-desc">
-<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) räknas separat från poolerna Classic/S1/Frankly/Talent. Supply-värdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) hämtas nu från cc_pool_supply_history (P4 exekverat, 95 rader seedade). Edge Function behöver uppdateras för att använda historik-tabellen per månad istället för cc_pools.fte_supply. Dessutom är <span>93.3% av tickets ej berikade</span> (600/8933), vilket gör analytisk FTE-beräkning opålitlig för perioder före mars 2026.
+<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) räknas separat från poolerna Classic/S1/Frankly/Talent. Supply-värdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) hämtas nu från cc_pool_supply_history (P4 exekverat, 95 rader seedade). Edge Function behöver uppdateras för att använda historik-tabellen per månad istället för cc_pools.fte_supply. Dessutom är <span>1.6% av tickets ej berikade</span> (9677/8933), vilket gör analytisk FTE-beräkning opålitlig för perioder före mars 2026.
 </div>
 </div>
 </div>
@@ -706,9 +706,27 @@ WHERE fte_supply IS NOT NULL
 ON CONFLICT DO NOTHING;</div>
 </div>
 <div class="setup-section">
+<div class="setup-row"><div><h3>P3b · Historisk cc_ticket_meta-backfill</h3><div class="desc">Stubbar för befintliga tickets i cc_ticket_events utan cc_ticket_meta-post.</div></div><span class="status-chip done">✅ Exekverat (9 077 stubbar)</span></div>
+<div class="code-block">-- Utförd 2026-06-11: 9 077 cc_ticket_meta-stubbar skapades
+-- Från 8 933 tickets med pool_slug (minus 600 redan befintliga = 9 077 nettoinförda)
+-- Täckning: 6.7% → 101.6% (9 677/8 933 tickets berikade)
+-- Obs: reply_count/call_duration defaults till 0 — ingen Freshdesk-API-data
+-- cc-ticket-enricher uppdaterar dessa när nya tickets anländer via webhook
+
+INSERT INTO cc_ticket_meta (ticket_id, group_id, in_cc_scope, enriched_at, reply_count, agent_reply_count, is_answered)
+SELECT DISTINCT
+  e.ticket_id, e.freshdesk_group_id::bigint, (e.pool_slug IS NOT NULL), NOW(), 0, 0, false
+FROM cc_ticket_events e
+WHERE e.pool_slug IS NOT NULL
+  AND NOT EXISTS (SELECT 1 FROM cc_ticket_meta m WHERE m.ticket_id = e.ticket_id)
+ON CONFLICT (ticket_id) DO NOTHING;</div>
+</div>
+<div class="setup-section">
 <div class="setup-row"><div><h3>P7 · Freshcaller API-nyckel</h3><div class="desc">Uppdatera Vault-hemligheten.</div></div><span class="status-chip pending">⏳ Kräver API-nyckel</span></div>
-<div class="code-block">SELECT vault.update_secret('FRESHCALLER_API_KEY','din-nyckel-här');
-SELECT name,updated_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div>
+<div class="code-block">-- Skapa ny vault-hemlighet för Freshcaller API-nyckel
+SELECT vault.create_secret('din-freshcaller-api-nyckel','FRESHCALLER_API_KEY','Freshcaller API key for phone analytics');
+-- Verifiera:
+SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div>
 </div>
 <div class="setup-section">
 <div class="setup-row"><div><h3>Enrichment-status (realtid)</h3><div class="desc">Datatäckning per pool.</div></div><button class="enrich-btn" onclick="loadSetupStatus()">Uppdatera status</button></div>
