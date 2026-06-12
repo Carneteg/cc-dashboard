@@ -1122,6 +1122,40 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:10px;">Daglig aktivitet per pool -- franvarodetektering</div>
 <div id="ag-absence-detail" style="color:#7a8799;font-size:12px;padding:16px;background:#f4f6f9;border-radius:8px;">Laddar daglig data...</div>
 </div>
+
+<!-- INDIVIDUAL AGENT LEVEL SECTION (v27) -->
+<div id="ag-individual-section" style="margin-top:28px;margin-bottom:20px;">
+  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+    Individuell agentniva
+    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#1f6f8b;border:1px solid #bfdbfe;">Estimat baserat pa pooldata</span>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:14px;">
+    <button class="ag-ind-period-btn" data-period="day" onclick="setAgentIndividualPeriod('day',this)" style="background:#1f6f8b;color:#fff;border:none;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Dag</button>
+    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualPeriod('week',this)" style="background:#f1f5f9;color:#4a5568;border:1px solid #dce1e8;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Vecka</button>
+    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualPeriod('month',this)" style="background:#f1f5f9;color:#4a5568;border:1px solid #dce1e8;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Manad</button>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid #dce1e8;">
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Pool</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Agenter</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:right;">Tickets (period)</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:right;">Tickets/agent</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:right;">AHT (min)</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:right;">Handl.tid/agent</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:right;">Belaggning</th>
+        </tr>
+      </thead>
+      <tbody id="ag-individual-tbody">
+        <tr><td colspan="7" style="text-align:center;padding:24px;color:#7a8799;">Laddar individuell data...</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:8px;font-size:11px;color:#7a8799;line-height:1.5;">
+    <strong>i</strong> Tickets/agent och AHT beraknas fran pooldata dividerat med antal konfigurerade agenter. Handl.tid = tickets x AHT per agent. Belaggning = handl.tid / tillganglig tid (7h/dag).
+  </div>
+</div>
 <div class="ag-data-note">
 <div class="ag-data-note__title">i Operativ analys -- pool-/teamniva, ej individuell agent</div>
 <div class="ag-data-note__body">Datan visar tickets och FTE-krav per pool/team baserat pa riktig data fran Supabase. Franvaro detekteras automatiskt: om en pool haft 0 tickets en arbetsdag markeras det som trolig franvaro och den justerade FTE-tillgangen minskas proportionellt. Detta pavaerkar den tillgaengliga FTE-kalkylatorn.</div>
@@ -2070,6 +2104,7 @@ function renderAgentTable() {
       bannerEl.innerHTML='<div style="display:flex;align-items:flex-start;gap:12px;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;"><div style="font-size:16px;">warning</div><div><div style="font-size:13px;font-weight:700;color:#b45309;">Franvaro detekterad</div><div style="font-size:12px;color:#4a5568;margin-top:2px;">En eller flera pooler hade 0 tickets vissa arbetsdagar - troligen franvaro. Justerad FTE-tillgang ar korrigerad proportionellt.</div></div></div>';
     } else { bannerEl.style.display='none'; }
   }
+  renderAgentIndividual();
 }
 
 function renderAgentAbsenceDetail(ym) {
@@ -2133,4 +2168,59 @@ function renderSparkChart() {
     '</div>';
   }).join('');
 }
+
+// ========================================
+// INDIVIDUAL AGENT LEVEL - v27
+// ========================================
+var _agIndividualPeriod = 'day';
+var _agIndividualPoolAgents = {
+  'classic': 3, 'switchboard': 3, 's1': 2, 'frankly': 1, 'talent': 2
+};
+
+function setAgentIndividualPeriod(period, btn) {
+  _agIndividualPeriod = period;
+  document.querySelectorAll('.ag-ind-period-btn').forEach(function(b) {
+    b.style.background = '#f1f5f9';
+    b.style.color = '#4a5568';
+    b.style.border = '1px solid #dce1e8';
+  });
+  if (btn) { btn.style.background = '#1f6f8b'; btn.style.color = '#fff'; btn.style.border = 'none'; }
+  renderAgentIndividual();
+}
+
+function renderAgentIndividual() {
+  var tbody = document.getElementById('ag-individual-tbody');
+  if (!tbody || !_agentTabData) return;
+  var pools = _agentTabData.pools || [];
+  var ym = (document.getElementById('ag-filter-period')||{value:'2026-05'}).value;
+  var ymParts = ym.split('-');
+  var yr = parseInt(ymParts[0]), mo = parseInt(ymParts[1]);
+  var workdaysInMonth = swedishWorkingDays(yr, mo) || 19;
+  var weeksInMonth = Math.max(1, Math.round(workdaysInMonth / 5));
+  var POOL_COLORS = {switchboard:'#1f6f8b',classic:'#4338ca',s1:'#16a34a',frankly:'#b45309',talent:'#9333ea'};
+  var periodDivisor = _agIndividualPeriod === 'day' ? workdaysInMonth : _agIndividualPeriod === 'week' ? weeksInMonth : 1;
+  var rows = pools.map(function(p) {
+    var numAgents = _agIndividualPoolAgents[p.pool] || 1;
+    var totalTickets = p.raw_tickets || 0;
+    var aht = parseFloat(p.effective_aht) || 0;
+    var ticketsInPeriod = periodDivisor > 0 ? totalTickets / periodDivisor : totalTickets;
+    var ticketsPerAgent = numAgents > 0 ? ticketsInPeriod / numAgents : 0;
+    var handlingMinsPerAgent = aht > 0 && numAgents > 0 ? ticketsInPeriod * aht / numAgents : 0;
+    var availMins = _agIndividualPeriod === 'day' ? 420 : _agIndividualPeriod === 'week' ? 2100 : 420 * workdaysInMonth;
+    var occupancy = availMins > 0 ? Math.min(Math.round(handlingMinsPerAgent / availMins * 100), 100) : 0;
+    var occupancyColor = occupancy > 90 ? '#b45309' : occupancy > 70 ? '#16a34a' : '#1f6f8b';
+    var poolColor = POOL_COLORS[p.pool] || '#7a8799';
+    return '<tr style="border-bottom:1px solid #dce1e8;">'
+      + '<td style="padding:10px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:'+poolColor+';">'+p.pool_name+'</span></td>'
+      + '<td style="padding:10px 12px;font-weight:600;">'+numAgents+'</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:600;">'+Math.round(ticketsInPeriod).toLocaleString('sv-SE')+'</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:'+poolColor+';">'+ticketsPerAgent.toFixed(1)+'</td>'
+      + '<td style="padding:10px 12px;text-align:right;">'+aht.toFixed(1)+'</td>'
+      + '<td style="padding:10px 12px;text-align:right;">'+Math.round(handlingMinsPerAgent)+' min</td>'
+      + '<td style="padding:10px 12px;text-align:right;"><span style="padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:'+occupancyColor+';">'+occupancy+'%</span></td>'
+      + '</tr>';
+  });
+  tbody.innerHTML = rows.length > 0 ? rows.join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#7a8799;">Ingen data.</td></tr>';
+}
+
 </script></body></html>
