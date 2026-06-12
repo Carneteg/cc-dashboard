@@ -2203,7 +2203,7 @@ function renderSparkChart() {
   const rows = Array.from(ptb.querySelectorAll('tr')).filter(r => r.cells.length >= 3);
   const data = rows.map(r => ({
     name: r.cells[0] ? r.cells[0].textContent.trim() : '',
-    val30: parseInt((r.cells[2] ? r.cells[2].textContent.trim() : '0').replace(/[^0-9]/g,'')) || 0
+    val30: parseInt((r.cells[3] ? r.cells[3].textContent.trim() : '0').replace(/[^0-9]/g,'')) || 0
   })).filter(d => d.name && d.val30 > 0);
   const max = Math.max(...data.map(d => d.val30), 1);
   el.innerHTML = data.map(function(d) {
