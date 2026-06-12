@@ -389,7 +389,7 @@ CC Workforce Planning
 </div>
 <div style="font-size:11px;color:#475569;padding:8px 12px;background:#0f1117;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er från Excel-modellen. Analytics-estimat (lila, nedan) kan avvika — de är driftanalys, ej beslutskälla. Se <em>Klassificering</em>-fliken för supply-avvikelser och routing-diagnostik.</div>
 </div>
-<!-- /CFO DECISION LAYER -->ged from v17) -->
+<!-- /CFO DECISION LAYER -->
 <div id="tab-wp" class="tc active">
 <div class="section-header" style="margin-top:0">
 <span class="section-title">§ 1 · Executive Summary — nuläge</span>
@@ -455,7 +455,6 @@ CC Workforce Planning
 </div>
 <div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planering</span> (blå) = Excel, officiell. &nbsp;·&nbsp; <span style="color:#818cf8;font-weight:600">Analys</span> (lila) = API-trend, ej beslutskälla. &nbsp;·&nbsp; Månader utan demand-data visas grayed-out med "Ingen demand-data" — innehåller INTE verkliga gap-beräkningar.</div>
 </div></div>
-</div>
 <div class="section-header">
 <span class="section-title">§ 2 · Staffing Over Time</span>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -631,7 +630,7 @@ CC Workforce Planning
 <span style="font-size:16px">🔍</span>
 <div style="font-size:12px;color:#94a3b8"><strong style="color:#818cf8">Diagnostikvy — ej styrningssida.</strong> Klassificeringsmodell, routing-logik, supply-källor och datakvalitet. För officiella workforce-beslut, se Workforce Planning → CFO Beslutslager.</div>
 </div>
-<div id="tab-classify" class="tc">
+
 
 <div class="section-header" style="margin-top:0">
 <span class="section-title">Ticketklassificering — Produktmodell &amp; Routinglogik</span>
@@ -748,7 +747,7 @@ CC Workforce Planning
 </table>
 </div>
 
-</div></div><!-- /tab-classify -->
+</div><!-- /tab-classify -->
 
 <!-- OVERVIEW TAB -->
 <div id="tab-overview" class="tc">
@@ -816,7 +815,7 @@ CC Workforce Planning
         <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;" title="Andel av total ticketvolym senaste 30 dagar">Andel (30d)</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="ptb">
       <tr style="transition:background .12s;">
         <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Simployer Classic</strong></td>
         <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
@@ -946,12 +945,11 @@ CC Workforce Planning
     </button>
     <div class="ctx-body">
       <div style="font-size:12px;color:#7a8799;margin-bottom:10px;">30-dagarsdata är komplett och verifierad. Används för kapacitets- och resursplanering — inte daglig operativ styrning.</div>
-      <div style="background:#f4f6f9;border:1px dashed #dce1e8;border-radius:6px;min-height:130px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:#7a8799;font-size:12px;margin-bottom:14px;">
-        <!-- TODO: replace with ticketutveckling 30d chart -->
-        <span style="font-size:22px;opacity:.35;">📈</span>
-        <span>Ticketutveckling — senaste 30 dagar per produkt</span>
-        <span style="font-size:11px;opacity:.7;">TODO: koppla till chart-library</span>
-      </div>
+      <div style="border:1px dashed #334155;border-radius:8px;padding:16px 20px;margin-top:8px;color:#64748b;font-size:12px;">
+  <div style="font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:12px;">📊 Ticketutveckling — senaste 30 dagar per produkt</div>
+  <div id="ov-spark-chart" style="display:flex;flex-direction:column;gap:6px;"><!-- Genereras av renderSparkChart() --></div>
+  <div style="margin-top:10px;font-size:11px;color:#475569;font-style:italic;">Källa: 30-dagarsdata via Supabase.</div>
+</div>
     </div>
   </div>
 
@@ -1079,16 +1077,16 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
   <!-- FILTERS -->
   <div class="ag-filter-bar">
     <label>Period</label>
-    <select><option>Maj 2026</option><option>Apr 2026</option><option>Mar 2026</option></select>
+    <select id="ag-filter-period" onchange="filterAgents()"><option>Maj 2026</option><option>Apr 2026</option><option>Mar 2026</option></select>
     <div class="fdiv"></div>
     <label>Agent</label>
-    <select><option>Alla agenter</option><option>Anna Lindberg</option><option>Björn Karlsson</option><option>Cecilia Nordin</option><option>David Ek</option><option>Emma Strand</option><option>Farid Moussa</option></select>
+    <select id="ag-filter-agent" onchange="filterAgents()"><option>Alla agenter</option><option>Anna Lindberg</option><option>Björn Karlsson</option><option>Cecilia Nordin</option><option>David Ek</option><option>Emma Strand</option><option>Farid Moussa</option></select>
     <div class="fdiv"></div>
     <label>Team / Kö</label>
-    <select><option>Alla team</option><option>Classic</option><option>Switchboard</option><option>Talent</option><option>Frankly</option><option>S1</option></select>
+    <select id="ag-filter-team" onchange="filterAgents()"><option>Alla team</option><option>Classic</option><option>Switchboard</option><option>Talent</option><option>Frankly</option><option>S1</option></select>
     <div class="fdiv"></div>
     <label>Ärendertyp</label>
-    <select><option>Alla typer</option><option>Fakturafråga</option><option>Teknisk support</option><option>Kontohantering</option><option>Reklamation</option><option>Ny kund</option></select>
+    <select id="ag-filter-type" onchange="filterAgents()"><option>Alla typer</option><option>Fakturafråga</option><option>Teknisk support</option><option>Kontohantering</option><option>Reklamation</option><option>Ny kund</option></select>
     <button class="ag-reset" onclick="document.querySelectorAll('#tab-agent select').forEach(function(s){s.selectedIndex=0})">↺ Återställ</button>
   </div>
 
@@ -1119,7 +1117,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
         <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Andel av teamvolym</th>
       </tr></thead>
       <tbody>
-        <tr class="ag-row is-selected" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+        <tr class="ag-row is-selected" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')" data-agent="Anna Lindberg" data-team="Classic">
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;"><strong>Anna Lindberg</strong></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#e8f2f6;color:#1f6f8b;">Classic</span></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;">342</td>
@@ -1135,7 +1133,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
             </div>
           </td>
         </tr>
-        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')" data-agent="Björn Karlsson" data-team="Switchboard">
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Björn Karlsson</strong></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Switchboard</span></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">298</td>
@@ -1151,7 +1149,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
             </div>
           </td>
         </tr>
-        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')" data-agent="Cecilia Nordin" data-team="Talent">
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Cecilia Nordin</strong></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Talent</span></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">310</td>
@@ -1167,7 +1165,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
             </div>
           </td>
         </tr>
-        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')" data-agent="David Ek" data-team="S1">
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>David Ek</strong></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#e8f2f6;color:#1f6f8b;">S1</span></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">387</td>
@@ -1183,7 +1181,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
             </div>
           </td>
         </tr>
-        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')" data-agent="Emma Strand" data-team="Frankly">
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Emma Strand</strong></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Frankly</span></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">265</td>
@@ -1199,7 +1197,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
             </div>
           </td>
         </tr>
-        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')" data-agent="Farid Moussa" data-team="Classic">
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Farid Moussa</strong></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Classic</span></td>
           <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">240</td>
@@ -1608,7 +1606,11 @@ var _timeGran='monthly';
 var _trendWindow=12;
 
 function h(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function api(p){return fetch(A+p,{headers:{'apikey':K,'Authorization':'Bearer '+K}}).then(r=>r.json());}
+const _apiCache = {};
+function api(p){
+  if(_apiCache[p] && Date.now()-_apiCache[p].t < 300000) return Promise.resolve(_apiCache[p].d);
+  return fetch(A+p,{headers:{'apikey':K,'Authorization':'Bearer '+K}}).then(r=>r.json()).then(function(d){ _apiCache[p]={d:d,t:Date.now()}; return d; });
+}
 function fmtFTE(n){return(Math.round(parseFloat(n||0)*100)/100).toFixed(2);}
 function gapCls(g){return g<-0.5?'crit':g<0?'under':'ok';}
 function bdg(c){var m={'email':'b-email','phone':'b-phone','portal':'b-portal','chat':'b-chat'};return '<span class="badge '+(m[c]||'b-other')+'">'+h(c)+'</span>';}
@@ -1624,6 +1626,10 @@ function showTab(id,btn){
   if(id==='classify'&&!window._clL)initClassifyTab();
   if(id==='prognos'&&!window._pgL)initPrognos();
   if(id==='setup'&&!window._setupL)loadSetupTab();
+
+  // Auto-scroll to active tab content
+  const _tabEl = document.getElementById('tab-' + id);
+  if (_tabEl) { const _y = _tabEl.getBoundingClientRect().top + window.scrollY - 60; window.scrollTo({top: _y < 10 ? 0 : _y, behavior: 'smooth'}); }
 }
 
 // ═══════════════════════════════════════════════════
@@ -2039,18 +2045,18 @@ async function loadOverview(){
   try{
     var d=await api('/products');var ps=d.products||[];
     var tot30=ps.reduce(function(s,p){return s+parseInt(p.last_30_days);},0),tot0=ps.reduce(function(s,p){return s+parseInt(p.today);},0);
-    document.getElementById('t0').textContent=tot0;document.getElementById('t30').textContent=tot30;
-    document.getElementById('ap').textContent=ps.filter(function(p){return parseInt(p.today)>0;}).length;
+    (document.getElementById('t0')||{}).textContent =tot0;(document.getElementById('t30')||{}).textContent =tot30;
+    (document.getElementById('ap')||{}).textContent =ps.filter(function(p){return parseInt(p.today)>0;}).length;
     var top=ps.filter(function(p){return parseInt(p.today)>0;}).sort(function(a,b){return b.today-a.today;})[0];
-    if(top){document.getElementById('tp').textContent=top.today;document.getElementById('tpc').textContent=top.product;}
+    if(top){(document.getElementById('tp')||{}).textContent =top.today;(document.getElementById('tpc')||{}).textContent =top.product;}
     var mx=Math.max(...ps.map(function(p){return parseInt(p.last_30_days);}),1);
-    document.getElementById('ptb').innerHTML=ps.slice(0,10).map(function(p){return '<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>';}).join('');
-    document.getElementById('ptb2').innerHTML=ps.map(function(p){return '<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>';}).join('');
-    document.getElementById('upd').textContent='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    (document.getElementById('ptb')||{}).innerHTML =ps.slice(0,10).map(function(p){return '<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>';}).join('');
+    (document.getElementById('ptb2')||{}).innerHTML =ps.map(function(p){return '<tr><td>'+h(p.product)+'</td><td class="n" style="color:#6366f1;font-size:18px">'+p.today+'</td><td class="n">'+p.last_30_days+'</td><td class="bc"><div class="bb"><div class="bf" style="width:'+Math.round(parseInt(p.last_30_days)/mx*100)+'%;background:#6366f1"></div></div></td></tr>';}).join('');
+    (document.getElementById('upd')||{}).textContent ='Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
   }catch(e){console.error(e);}
 }
-async function loadRecent(){try{var d=await api('/recent');document.getElementById('tlist').innerHTML=(d.tickets||[]).map(function(t){return '<div class="tr2"><span class="ti">#'+t.ticket_id+'</span><div><div style="font-size:14px;margin-bottom:3px">'+h(t.subject||t.product||'')+'</div><div style="font-size:12px;color:#64748b">'+h(t.product||'')+'</div></div>'+bdg(t.channel)+'<span class="tt">'+new Date(t.created_at).toLocaleDateString('sv-SE')+'</span></div>';}).join('');}catch(e){console.error(e);}}
-async function loadTrend(){try{var d=await api('/trend');document.getElementById('trendt').innerHTML=(d.trend||[]).reverse().map(function(r){return '<tr><td>'+r.day+'</td><td class="n">'+r.tickets+'</td></tr>';}).join('');}catch(e){console.error(e);}}
+async function loadRecent(){try{var d=await api('/recent');(document.getElementById('tlist')||{}).innerHTML =(d.tickets||[]).map(function(t){return '<div class="tr2"><span class="ti">#'+t.ticket_id+'</span><div><div style="font-size:14px;margin-bottom:3px">'+h(t.subject||t.product||'')+'</div><div style="font-size:12px;color:#64748b">'+h(t.product||'')+'</div></div>'+bdg(t.channel)+'<span class="tt">'+new Date(t.created_at).toLocaleDateString('sv-SE')+'</span></div>';}).join('');}catch(e){console.error(e);}}
+async function loadTrend(){try{var d=await api('/trend');(document.getElementById('trendt')||{}).innerHTML =(d.trend||[]).reverse().map(function(r){return '<tr><td>'+r.day+'</td><td class="n">'+r.tickets+'</td></tr>';}).join('');}catch(e){console.error(e);}}
 
 var _allDaily=[];
 async function loadWorkforce(){
@@ -2058,11 +2064,11 @@ async function loadWorkforce(){
   try{
     var d=await api('/aht-stats?months=12');
     var sum=(d.months||[]).map(function(m){var cov=parseFloat(m.avg_coverage_pct||0);return{year_month:m.year_month,fte_required_total:m.total_filtered_fte,fte_supply_total:m.total_supply,net_gap:m.total_gap,total_tickets:(m.pools||[]).reduce(function(s,p){return s+p.filtered_tickets;},0),coverage_pct:cov};});
-    var l=sum[0]||{};
-    document.getElementById('wf-summary').innerHTML=['<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Krav (analytik)</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillgang (API)</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Datatackning</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div></div>'].join('');
+    var l=(sum.find(function(m){return m.pct>0;})||sum[0])||{};
+    (document.getElementById('wf-summary')||{}).innerHTML =['<div class="wc"><div class="wl">Senaste manad</div><div class="wv" style="font-size:18px">'+h(l.year_month||'-')+'</div></div>','<div class="wc"><div class="wl">Netto FTE-gap</div><div class="wv '+(parseFloat(l.net_gap||0)>=0?'ok':'crit')+'">'+fmtFTE(l.net_gap||0)+'</div></div>','<div class="wc"><div class="wl">FTE Krav (analytik)</div><div class="wv warn">'+fmtFTE(l.fte_required_total||0)+'</div></div>','<div class="wc"><div class="wl">FTE Tillgang (API)</div><div class="wv ok">'+fmtFTE(l.fte_supply_total||0)+'</div></div>','<div class="wc"><div class="wl">Datatackning</div><div class="wv '+(parseFloat(l.coverage_pct||0)>=COV_THRESHOLD?'ok':'crit')+'">'+parseFloat(l.coverage_pct||0).toFixed(1)+'%</div></div>'].join('');
     var months=sum.slice(0,12).reverse();
-    document.getElementById('monthly-grid').innerHTML=months.map(function(m){var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;var cov=parseFloat(m.coverage_pct||0);var covHtml=cov<COV_THRESHOLD?'<div class="cov-warn">Datatackning '+cov.toFixed(0)+'%</div>':'<div class="cov-ok">'+cov.toFixed(0)+'%</div>';return'<div class="mc '+(gap<-0.5?'crit-b':gap<0?'under-b':'ok-b')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+'</div>'+covHtml+'</div>';}).join('');
-    document.getElementById('pool-filter').innerHTML='<button class="active" onclick="fp(this)" data-pool="">Alla</button>';
+    (document.getElementById('monthly-grid')||{}).innerHTML =months.map(function(m){var req=parseFloat(m.fte_required_total||0),sup=parseFloat(m.fte_supply_total||0),gap=parseFloat(m.net_gap||0),mx2=Math.max(req,sup)||1;var cov=parseFloat(m.coverage_pct||0);var covHtml=cov<COV_THRESHOLD?'<div class="cov-warn">Datatackning '+cov.toFixed(0)+'%</div>':'<div class="cov-ok">'+cov.toFixed(0)+'%</div>';return'<div class="mc '+(gap<-0.5?'crit-b':gap<0?'under-b':'ok-b')+'"><div class="mh"><span class="mn2">'+m.year_month+'</span><span class="ga '+(gap<-0.5?'crit':gap<0?'under':'ok')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(req/mx2*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(sup/mx2*100)+'%"></div></div></div><div class="mv">Tickets: '+m.total_tickets+'</div>'+covHtml+'</div>';}).join('');
+    (document.getElementById('pool-filter')||{}).innerHTML ='<button class="active" onclick="fp(this)" data-pool="">Alla</button>';
     renderDailyTable('');
   }catch(e){console.error(e);}
 }
@@ -2116,9 +2122,43 @@ function renderWorkdayTable(){var now=new Date(),rows=[];for(var i=11;i>=0;i--){
 async function loadSetupStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('setup-enrich-detail').innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px"><div class="wc"><div class="wl">Total tickets</div><div class="wv" style="font-size:18px">'+d.total_tickets+'</div></div><div class="wc"><div class="wl">Berikade</div><div class="wv ok" style="font-size:18px">'+d.enriched_tickets+'</div></div><div class="wc"><div class="wl">Kvarstende</div><div class="wv '+(d.total_tickets-d.enriched_tickets>0?'crit':'ok')+'" style="font-size:18px">'+(d.total_tickets-d.enriched_tickets)+'</div></div><div class="wc"><div class="wl">Tackning</div><div class="wv '+(pct>=COV_THRESHOLD?'ok':'crit')+'">'+pct.toFixed(1)+'%</div></div><div class="wc"><div class="wl">CC-scope</div><div class="wv warn" style="font-size:18px">'+(d.cc_scope_tickets||0)+'</div></div></div>';}catch(e){document.getElementById('setup-enrich-detail').textContent='Fel: '+e.message;}}
 
 document.addEventListener('DOMContentLoaded',function(){
-  loadOverview();
+  const _upd = document.getElementById('upd'); if(_upd) _upd.textContent = 'Uppdaterat ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit',minute:'2-digit'});
+
+  loadOverview(); setTimeout(renderSparkChart, 800);
   loadRecent();
   loadTrend();
   initWP();
 });
+
+function filterAgents() {
+  const agent  = (document.getElementById('ag-filter-agent')||{value:''}).value;
+  const team   = (document.getElementById('ag-filter-team')||{value:''}).value;
+  document.querySelectorAll('#tab-agent tbody tr[data-agent]').forEach(function(row) {
+    const matchAgent = !agent || agent === 'Alla agenter' || row.dataset.agent === agent;
+    const matchTeam  = !team  || team  === 'Alla team'    || row.dataset.team  === team;
+    row.style.display = (matchAgent && matchTeam) ? '' : 'none';
+  });
+}
+function renderSparkChart() {
+  const el = document.getElementById('ov-spark-chart');
+  if (!el) return;
+  const ptb = document.getElementById('ptb');
+  if (!ptb || !ptb.children.length) { el.innerHTML = '<span style="color:#475569;font-style:italic">Väntar på data...</span>'; return; }
+  const rows = Array.from(ptb.querySelectorAll('tr')).filter(r => r.cells.length >= 3);
+  const data = rows.map(r => ({
+    name: r.cells[0] ? r.cells[0].textContent.trim() : '',
+    val30: parseInt((r.cells[2] ? r.cells[2].textContent.trim() : '0').replace(/[^0-9]/g,'')) || 0
+  })).filter(d => d.name && d.val30 > 0);
+  const max = Math.max(...data.map(d => d.val30), 1);
+  el.innerHTML = data.map(function(d) {
+    const pct = Math.round(d.val30 / max * 100);
+    return '<div style="display:flex;align-items:center;gap:8px;font-size:11px;">' +
+      '<span style="width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#94a3b8;">' + d.name + '</span>' +
+      '<div style="flex:1;background:#1e293b;border-radius:2px;height:12px;">' +
+        '<div style="width:' + pct + '%;background:#1f6f8b;height:100%;border-radius:2px;"></div>' +
+      '</div>' +
+      '<span style="width:30px;text-align:right;color:#64748b;">' + d.val30 + '</span>' +
+    '</div>';
+  }).join('');
+}
 </script></body></html>
