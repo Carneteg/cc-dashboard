@@ -20,7 +20,7 @@ main{padding:24px;max-width:1440px;margin:0 auto}
 .section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
 .section-note{font-size:11px;color:#475569;font-style:italic}
 .card{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px}
-.card.hl{border-color:#6366f1}.card.warn{border-color:#f59e0b}.card.crit{border-color:#ef4444}.card.ok{border-color:#22c55e}
+.card.hl{border-color:#6366f1}.card.warn{border-color:#f59e0b}.card.crit{border-color:h#ef4444}.card.ok{border-color:#22c55e}
 .cl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
 .cv{font-size:36px;font-weight:700;color:#e2e8f0;line-height:1;margin-bottom:4px}
 .cv.ok{color:#4ade80}.cv.warn{color:#fcd34d}.cv.crit{color:#fca5a5}.cv.info{color:#818cf8}
@@ -379,12 +379,12 @@ CC Workforce Planning
 <div class="tw" style="margin-bottom:12px">
 <table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>Beslutsåtgärd</th></tr></thead>
 <tbody>
-<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.25</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">−1.15</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgående. Accelerera S1-migration.</td></tr>
+<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.20</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">−1.20</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgående. Accelerera S1-migration.</td></tr>
 <tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimalt buffer. Bevaka volymökning.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Kapacitet för migrationstillväxt.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil. Bevaka volym.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil.</td></tr>
-<tr style="background:#12141e;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.10</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt — men Classic‑underskott −1.15 FTE är kritiskt.</td></tr>
+<tr style="background:#12141e;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt — men Classic‑underskott −1.20 FTE är kritiskt.</td></tr>
 </tbody></table>
 </div>
 <div style="font-size:11px;color:#475569;padding:8px 12px;background:#0f1117;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er från Excel-modellen. Analytics-estimat (lila, nedan) kan avvika — de är driftanalys, ej beslutskälla. Se <em>Klassificering</em>-fliken för supply-avvikelser och routing-diagnostik.</div>
@@ -407,7 +407,7 @@ CC Workforce Planning
 </div>
 <div class="kpi-card supply">
 <div class="kpi-label">Effective Supply FTE</div>
-<div class="kpi-value supply">11.10</div>
+<div class="kpi-value supply">11.05</div>
 <div class="kpi-sub">Produktiv kapacitet efter seniority &amp; allokering</div>
 <div class="kpi-tooltip">Modellens beräknade tillgängliga kapacitet. Kan vara ≠ Actual FTE pga seniority-viktning. Källa: FTE Calc-fliken.</div>
 </div>
@@ -421,14 +421,14 @@ CC Workforce Planning
 <div class="kpi-label">Net Gap FTE</div>
 <div class="kpi-value gap-pos">+1.00</div>
 <div class="kpi-sub">Effective Supply − Required FTE</div>
-<div class="kpi-tooltip">⚠ Positivt totalt gap döljer kritiskt underskott i Classic (-1.15 FTE). Se Pool Capacity Gaps nedan.</div>
+<div class="kpi-tooltip">⚠ Positivt totalt gap döljer kritiskt underskott i Classic (-1.20 FTE). Se Pool Capacity Gaps nedan.</div>
 </div>
 </div>
 <div class="alert-banner crit">
 <div class="alert-icon">🚨</div>
 <div class="alert-body">
-<div class="alert-title">Classic är underbemannad med -1.15 FTE trots total balans</div>
-<div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Supply: <span>2.25 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.15 FTE</span>.</div>
+<div class="alert-title">Classic är underbemannad med -1.20 FTE trots total balans</div>
+<div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Supply: <span>2.20 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.20 FTE</span>.</div>
 </div>
 </div>
 <div style="background:#0f172a;border:1px solid #2563eb;border-radius:10px;padding:16px 20px;margin-bottom:32px">
@@ -521,9 +521,9 @@ CC Workforce Planning
 <div class="scenario-card active-scenario">
 <div class="sc-name">Now <span class="tag info">Nuläge</span></div>
 <div class="sc-gap" style="color:#4ade80">+1.00</div>
-<div class="sc-deficit">⚠ Classic -1.15 FTE underskott</div>
+<div class="sc-deficit">⚠ Classic -1.20 FTE underskott</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">10.10</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.05</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">9.10</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
 <div class="sc-row"><span class="sc-key">Månadskostnad</span><span class="sc-val">~110k SEK</span></div>
@@ -551,7 +551,7 @@ CC Workforce Planning
 <div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategi</span></div>
 <div class="sc-gap" style="color:#4ade80">+1.80</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.30</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.05</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.30</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
 <div class="sc-row"><span class="sc-key">AI deflection</span><span class="sc-val" style="color:#4ade80">30%</span></div>
@@ -610,7 +610,7 @@ CC Workforce Planning
 <div class="section-header"><span class="section-title">§ 7 · Definitioner &amp; Modellnoter</span></div>
 <div class="def-grid">
 <div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Faktiskt antal anställda. <strong>Mastervärde = 11 FTE.</strong></div><div class="def-example">Ej detsamma som Effective Supply.</div></div>
-<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. Nuläge: 11.10 FTE.</div></div>
+<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. Nuläge: 11.05 FTE.</div></div>
 <div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Totalt FTE-behov: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
 <div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Effective Supply − Required FTE. ⚠ Totalt positivt gap döljer pool-level underskott.</div></div>
 <div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Poolens konfigurerade supply per dag. Analytiksvärde — inte officiellt planeringsmått.</div><div class="def-example">Ej detsamma som Effective Supply FTE.</div></div>
@@ -654,7 +654,7 @@ CC Workforce Planning
 <div class="supply-sources">
 <div class="supply-source-card">
 <div class="supply-source-title">1. Planeringsmodell (Excel)</div>
-<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val">2.25 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val">2.20 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val">2.69 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val">4.34 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val">2.35 FTE</span></div>
@@ -1275,24 +1275,24 @@ return {
 var planningModelAdapter = (function() {
 var WP = {
   actualFte: 11,
-  effectiveSupplyFte: 11.10,
+  effectiveSupplyFte: 11.05,
   requiredFte: 10.10,
   ticketFtePeak: 9.10,
   overheadFte: 1.00,
   netGapFte: 1.00,
   monthlyCostSek: 110000,
   pools: [
-    { pool:'Classic',     supply:2.25, demandPeak:3.40, comfortable:2.80, gapFte:-1.15, status:'Critical', agents:3 },
+    { pool:'Classic',     supply:2.20, demandPeak:3.40, comfortable:2.80, gapFte:-1.20, status:'Critical', agents:3 },
     { pool:'Switchboard', supply:2.69, demandPeak:2.65, comfortable:2.20, gapFte: 0.04, status:'Tight',    agents:3 },
     { pool:'Talent',      supply:1.49, demandPeak:0.95, comfortable:0.80, gapFte: 0.54, status:'OK',       agents:2 },
     { pool:'Frankly',     supply:2.35, demandPeak:1.65, comfortable:1.40, gapFte: 0.70, status:'OK',       agents:1 },
     { pool:'S1',          supply:4.34, demandPeak:2.45, comfortable:2.00, gapFte: 1.89, status:'OK',       agents:2 }
   ],
   scenarios: [
-    { name:'Now',           requiredFte:10.10, supplyFte:11.10, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -1.15' },
+    { name:'Now',           requiredFte:10.10, supplyFte:11.05, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -1.15' },
     { name:'Post-aug best', requiredFte: 9.80, supplyFte:11.60, gapFte: 1.80, monthlyCostSek:107000, largestDeficit:'Classic' },
     { name:'Post-aug worst',requiredFte: 9.50, supplyFte: 7.00, gapFte:-2.50, monthlyCostSek: 76000, largestDeficit:'Classic' },
-    { name:'AI deflect 30%',requiredFte: 9.30, supplyFte:11.10, gapFte: 1.80, monthlyCostSek:110000, largestDeficit:'Classic' }
+    { name:'AI deflect 30%',requiredFte: 9.30, supplyFte:11.05, gapFte: 1.80, monthlyCostSek:110000, largestDeficit:'Classic' }
   ],
   migration: [
     {q:'Q0', phase:'Akut',      migrated:0,    classicRemain:4200,s1Vol:1850,classicVol:4200,s1WithoutAi:2.93,s1WithAi:2.93,recruitNeed:null,costSek:29300},
@@ -1320,7 +1320,7 @@ var WP = {
   timeline: {
     labels:   ['Nu','Post-aug best','Post-aug worst','AI deflect 30%','Migration Q5','Migration Q10'],
     actual:   [11,   null,           null,            11,              11,            12],
-    supply:   [11.10,11.60,           7.00,           11.10,           11.10,         12.00],
+    supply:   [11.05,11.60,           7.00,           11.05,           11.05,         12.00],
     required: [10.10, 9.80,           9.50,            9.30,           10.50,         11.20],
     isForecast:[false,true,           true,            true,            true,          true]
   }
