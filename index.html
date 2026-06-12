@@ -260,6 +260,89 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .status-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
 .status-chip.done{background:#14532d;color:#4ade80}.status-chip.pending{background:#713f12;color:#fcd34d}.status-chip.info{background:#1e3a5f;color:#60a5fa}
 .setup-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+
+
+/* ===== v22: DAGLIG OVERSIKT IMPROVEMENTS + AGENT TAB ===== */
+:root { --dq-warn: #b45309; --dq-warn-bg: #fef3c7; --dq-warn-border: #fcd34d; --dq-ok: #166534; --dq-ok-bg: #dcfce7; --dq-ok-border: #86efac; --dq-err-bg: #fee2e2; --dq-err: #991b1b; }
+.dq-banner { display:flex; align-items:flex-start; gap:12px; background:var(--dq-warn-bg); border:1px solid var(--dq-warn-border); border-radius:8px; padding:12px 16px; margin-bottom:20px; }
+.dq-banner--ok { background:var(--dq-ok-bg); border-color:var(--dq-ok-border); }
+.dq-banner__icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.dq-banner__title { font-size:13px; font-weight:700; color:var(--dq-warn); }
+.dq-banner--ok .dq-banner__title { color:var(--dq-ok); }
+.dq-banner__text { font-size:12px; color:#4a5568; margin-top:2px; line-height:1.6; }
+.dq-banner__dismiss { font-size:11px; color:#1f6f8b; text-decoration:underline; cursor:pointer; margin-top:4px; display:inline-block; background:none; border:none; padding:0; font-family:inherit; }
+.dq-pill { display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:600; padding:2px 7px; border-radius:10px; vertical-align:middle; }
+.dq-pill--warn { background:var(--dq-warn-bg); color:var(--dq-warn); }
+.dq-pill--ok { background:var(--dq-ok-bg); color:var(--dq-ok); }
+.dq-pill--unknown { background:#f1f5f9; color:#7a8799; }
+.hdr-status { display:flex; align-items:center; gap:6px; font-size:12px; }
+.status-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.status-dot--warn { background:var(--dq-warn); animation:sdpulse 2s infinite; }
+.status-dot--ok { background:var(--dq-ok); }
+@keyframes sdpulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+.kpi-def { font-size:10px; color:#7a8799; margin-top:6px; padding-top:6px; border-top:1px solid #dce1e8; line-height:1.4; }
+.ov-kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+.ov-kpi-card { background:#fff; border:1px solid #dce1e8; border-radius:10px; padding:14px 16px; box-shadow:0 1px 3px rgba(0,0,0,.07); position:relative; }
+.ov-kpi-card--warn { border-color:var(--dq-warn-border); }
+.ov-kpi-label { font-size:11px; color:#7a8799; font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px; }
+.ov-kpi-value { font-size:24px; font-weight:700; color:#1a2535; line-height:1; }
+.ov-kpi-value--zero { color:#7a8799; }
+.ov-kpi-compare { font-size:11px; color:#7a8799; margin-top:5px; }
+.ov-kpi-compare strong { color:#1a2535; }
+.ov-kpi-card__status { position:absolute; top:10px; right:10px; }
+.ctx-toggle { display:flex; align-items:center; gap:6px; font-size:12px; color:#1f6f8b; cursor:pointer; padding:6px 0; background:none; border:none; font-family:inherit; }
+.ctx-arrow { display:inline-block; transition:transform .2s; font-style:normal; }
+.ctx-toggle.open .ctx-arrow { transform:rotate(90deg); }
+.ctx-body { display:none; padding-top:12px; }
+.ctx-body.open { display:block; }
+.ov-table-note { font-size:11px; color:#7a8799; margin-top:6px; display:flex; align-items:flex-start; gap:4px; line-height:1.5; }
+.tfoot-total td { background:#f4f6f9; font-weight:700; font-size:12px; border-top:2px solid #dce1e8; }
+.ag-filter-bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:#fff; border:1px solid #dce1e8; border-radius:6px; padding:10px 14px; margin-bottom:16px; }
+.ag-filter-bar label { font-size:11px; color:#7a8799; font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
+.ag-filter-bar select { font-size:12px; font-family:inherit; color:#1a2535; background:#f4f6f9; border:1px solid #dce1e8; border-radius:5px; padding:4px 8px; cursor:pointer; }
+.ag-filter-bar .fdiv { width:1px; height:20px; background:#dce1e8; margin:0 4px; }
+.ag-reset { font-size:12px; color:#1f6f8b; padding:4px 8px; border:1px solid #1f6f8b; border-radius:5px; background:#e8f2f6; margin-left:auto; cursor:pointer; }
+.ag-kpi-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:20px; }
+.ag-kpi-card { background:#fff; border:1px solid #dce1e8; border-radius:10px; padding:12px 14px; box-shadow:0 1px 3px rgba(0,0,0,.07); }
+.ag-kpi-card--warn { border-color:var(--dq-warn-border); }
+.ag-kpi-label { font-size:10px; color:#7a8799; font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px; }
+.ag-kpi-value { font-size:20px; font-weight:700; color:#1a2535; line-height:1; }
+.ag-kpi-sub { font-size:10px; color:#7a8799; margin-top:4px; }
+.ag-row.is-selected { background:#e8f2f6 !important; }
+.ag-row:hover { background:#f4f6f9; cursor:pointer; }
+.ag-detail { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ag-detail-stat__label { font-size:11px; color:#7a8799; text-transform:uppercase; letter-spacing:.05em; font-weight:600; }
+.ag-detail-stat__value { font-size:17px; font-weight:700; color:#1a2535; }
+.ag-detail-stat__sub { font-size:11px; color:#7a8799; }
+.ag-interp { grid-column:1/-1; background:#f1f5f9; border:1px solid #dce1e8; border-radius:5px; padding:10px 14px; font-size:12px; color:#4a5568; line-height:1.6; }
+.ag-type-row { display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid #dce1e8; }
+.ag-type-row:last-child { border-bottom:none; }
+.ag-type-label { font-size:12px; color:#1a2535; width:130px; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ag-type-track { flex:1; height:9px; background:#f1f5f9; border-radius:5px; overflow:hidden; }
+.ag-type-fill { height:100%; background:#1f6f8b; border-radius:5px; }
+.ag-type-meta { font-size:11px; color:#7a8799; width:155px; text-align:right; white-space:nowrap; }
+.ag-day-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:14px; }
+.ag-day-card { background:#f4f6f9; border:1px solid #dce1e8; border-radius:5px; padding:9px; text-align:center; }
+.ag-day-card.peak { background:var(--dq-warn-bg); border-color:var(--dq-warn-border); }
+.ag-day-card.low { background:var(--dq-ok-bg); border-color:var(--dq-ok-border); }
+.ag-day-name { font-size:10px; color:#7a8799; font-weight:600; margin-bottom:3px; }
+.ag-day-val { font-size:15px; font-weight:700; color:#1a2535; }
+.ag-day-sub { font-size:10px; color:#7a8799; margin-top:2px; }
+.ag-chart-ph { background:#f4f6f9; border:1px dashed #dce1e8; border-radius:5px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:5px; min-height:150px; color:#7a8799; font-size:12px; }
+.ag-charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ag-kpi-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+.ag-strip-item { flex:1; min-width:110px; background:#f4f6f9; border:1px solid #dce1e8; border-radius:5px; padding:7px 10px; }
+.ag-strip-label { font-size:10px; color:#7a8799; text-transform:uppercase; letter-spacing:.05em; font-weight:600; }
+.ag-strip-val { font-size:14px; font-weight:700; color:#1a2535; }
+.ag-data-note { background:#fff; border:1px solid #dce1e8; border-left:4px solid #1f6f8b; border-radius:5px; padding:12px 14px; }
+.ag-data-note__title { font-size:12px; font-weight:700; color:#1f6f8b; margin-bottom:4px; }
+.ag-data-note__body { font-size:12px; color:#4a5568; line-height:1.7; }
+.ag-sparkbar { width:60px; height:8px; background:#f1f5f9; border-radius:4px; overflow:hidden; display:inline-block; vertical-align:middle; }
+.ag-sparkbar__fill { height:100%; background:#1f6f8b; border-radius:4px; }
+.ag-sparkbar__fill--warn { background:var(--dq-warn); }
+.ag-sparkbar__fill--ok { background:#16a34a; }
+@media(max-width:900px){.ov-kpi-grid{grid-template-columns:repeat(2,1fr)}.ag-kpi-grid{grid-template-columns:repeat(3,1fr)}.ag-detail{grid-template-columns:1fr}.ag-charts-grid{grid-template-columns:1fr}.ag-day-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.ov-kpi-grid{grid-template-columns:1fr 1fr}.ag-kpi-grid{grid-template-columns:1fr 1fr}.ag-day-strip{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
 <header>
 <div class="logo">
@@ -280,6 +363,8 @@ CC Workforce Planning
 <button onclick="showTab('classify',this)">🔍 Klassificering</button>
 <button onclick="showTab('prognos',this)">Prognos</button>
 <button onclick="showTab('setup',this)">Setup</button>
+
+<button onclick="showTab('agent',this)" style="background:none;border:none;cursor:pointer;padding:12px 14px;font-size:13px;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;font-family:inherit;color:#64748b;">Agent</button>
 </nav>
 <main>
 
@@ -667,15 +752,211 @@ CC Workforce Planning
 
 <!-- OVERVIEW TAB -->
 <div id="tab-overview" class="tc">
-<div class="sr">
-<div class="card hl"><div class="cl">Tickets idag</div><div class="cv-lg" id="t0">-</div><div class="cs">CC totalt</div></div>
-<div class="card"><div class="cl">Senaste 30 dagar</div><div class="cv-lg" id="t30">-</div><div class="cs">Alla produkter</div></div>
-<div class="card"><div class="cl">Mest aktiv idag</div><div class="cv-lg" id="tp" style="font-size:18px">-</div><div class="cs" id="tpc"></div></div>
-<div class="card"><div class="cl">Produkter aktiva</div><div class="cv-lg" id="ap">-</div><div class="cs">med tickets idag</div></div>
-</div>
-<div class="st">Per produkt - idag</div>
-<div class="tw"><table><thead><tr><th>Produkt</th><th class="r">Idag</th><th class="r">30 dagar</th><th>Andel</th></tr></thead><tbody id="ptb"></tbody></table></div>
-</div>
+
+  <!-- === DAGLIG ÖVERSIKT (v22) === -->
+
+  <!-- DATA QUALITY BANNER -->
+  <!-- TODO: show/hide based on /api/status pipeline response -->
+  <div class="dq-banner" id="dq-zero-banner">
+    <div class="dq-banner__icon">⚠️</div>
+    <div>
+      <div class="dq-banner__title">Inga tickets registrerade idag — avviker från normalnivå</div>
+      <div class="dq-banner__text">Alla värden för "idag" visar 0 samtidigt som snittet senaste 30 dagar är ~32 tickets/dag. Kan bero på felsökt pipeline, tidszonsproblem, filterproblem eller verklig nollaktivitet. <strong>Verifiera datakällan innan du fattar operativa beslut.</strong></div>
+      <button class="dq-banner__dismiss" onclick="document.getElementById('dq-zero-banner').style.display='none'">Dölj varning</button>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <!-- TODO: inject from /api/daily/kpi?date=today -->
+  <div class="ov-kpi-grid">
+    <div class="ov-kpi-card ov-kpi-card--warn">
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--warn">⚠ Obekräftad</span></div>
+      <div class="ov-kpi-label">Tickets idag</div>
+      <div class="ov-kpi-value ov-kpi-value--zero">0</div>
+      <div class="ov-kpi-compare">— Igår: <strong>34</strong></div>
+      <div class="kpi-def">Tickets med created_at = dagens datum (UTC+2). Alla produkter, alla köer.</div>
+    </div>
+    <div class="ov-kpi-card ov-kpi-card--warn">
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--warn">⚠ Obekräftad</span></div>
+      <div class="ov-kpi-label">Produkter aktiva idag</div>
+      <div class="ov-kpi-value ov-kpi-value--zero">0</div>
+      <div class="ov-kpi-compare">— Igår: <strong>7</strong> av 9</div>
+      <div class="kpi-def">Produkter med minst 1 ticket idag.</div>
+    </div>
+    <div class="ov-kpi-card">
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">✓ Komplett</span></div>
+      <div class="ov-kpi-label">Snitt tickets / dag (7d)</div>
+      <div class="ov-kpi-value">31,4</div>
+      <div class="ov-kpi-compare">— Snitt 30d: <strong>32,0</strong></div>
+      <div class="kpi-def">Totala tickets senaste 7 dagar / 7. Normaliseringsreferens.</div>
+    </div>
+    <div class="ov-kpi-card">
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">✓ Komplett</span></div>
+      <div class="ov-kpi-label">Totalt — senaste 30 dagar</div>
+      <div class="ov-kpi-value" style="font-size:20px;">959</div>
+      <div class="ov-kpi-compare">— Föregående 30d: <strong>912</strong> <span style="color:#166534;">(+5,1%)</span></div>
+      <div class="kpi-def">Alla tickets senaste 30 kalenderdagar. Planeringskontext.</div>
+    </div>
+  </div>
+
+  <!-- PER PRODUKT TABLE (improved) -->
+  <!-- TODO: inject from /api/daily/per-product?date=today -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;">Per produkt — idag <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:#7a8799;">jämfört med igår och senaste 7 dagar</span></div>
+    <span class="dq-pill dq-pill--warn">⚠ Idag-data ej verifierad</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid #dce1e8;margin-bottom:6px;">
+  <table style="width:100%;border-collapse:collapse;font-size:13px;">
+    <thead>
+      <tr>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Produkt</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#b45309;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;" title="Ej verifierad data">Idag ⚠</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Igår</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">7 dagar</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;" title="Andel av total ticketvolym senaste 30 dagar">Andel (30d)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Simployer Classic</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">8</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">58</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:95%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">19.1%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Expert NO</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">5</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">38</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:61%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">12.2%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Simployer One</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">4</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">34</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:56%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">11.1%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Capitech</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">4</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">32</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:52%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">10.4%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Expert</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">3</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">22</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:37%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">7.4%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Expert SE</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">2</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">15</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:25%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">4.9%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Employee Survey (&frankly)</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">2</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">13</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:21%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">4.2%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Simployer Classic - Handbook</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">1</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">10</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:17%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">3.4%</span>
+          </div>
+        </td>
+      </tr>
+      <tr style="transition:background .12s;">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;"><strong>Invoices & Agreements</strong></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;">0</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">1</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">9</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div class="ag-sparkbar"><div class="ag-sparkbar__fill" style="width:14%"></div></div>
+            <span style="font-size:11px;color:#7a8799;">2.8%</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="tfoot-total">
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">Totalt — alla produkter</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">0 <span style="font-size:10px;color:#b45309;">⚠ ej verif.</span></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">34</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">221</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;border-top:2px solid #dce1e8;border-bottom:none;font-size:11px;color:#7a8799;">100% av 959 (30d)</td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+  <div class="ov-table-note"><span>⚠</span><span>Kolumnen "Idag" visar 0 för alla produkter — avviker från normalt snitt (~32/dag). "Igår" och "7 dagar" är historisk data och bedöms fullständig. Kolumnen "All Products" har tagits bort som dubblerad rad; totalen visas istället i raden ovan.</span></div>
+
+  <!-- 30-DAGARSKONTEXT (kollapsbar) -->
+  <div style="margin-top:16px;">
+    <button class="ctx-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+      <span class="ctx-arrow">▶</span> Visa 30-dagarskontext &amp; planeringsreferens
+    </button>
+    <div class="ctx-body">
+      <div style="font-size:12px;color:#7a8799;margin-bottom:10px;">30-dagarsdata är komplett och verifierad. Används för kapacitets- och resursplanering — inte daglig operativ styrning.</div>
+      <div style="background:#f4f6f9;border:1px dashed #dce1e8;border-radius:6px;min-height:130px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:#7a8799;font-size:12px;margin-bottom:14px;">
+        <!-- TODO: replace with ticketutveckling 30d chart -->
+        <span style="font-size:22px;opacity:.35;">📈</span>
+        <span>Ticketutveckling — senaste 30 dagar per produkt</span>
+        <span style="font-size:11px;opacity:.7;">TODO: koppla till chart-library</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-overview -->
+
 <div id="tab-products" class="tc">
 <div class="st">Alla produkter - 30 dagar</div>
 <div class="tw"><table><thead><tr><th>Produkt</th><th class="r">Idag</th><th class="r">30 dagar</th><th>Andel</th></tr></thead><tbody id="ptb2"></tbody></table></div>
@@ -781,6 +1062,269 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <div class="tw" style="margin-top:12px"><table><thead><tr><th>Månad</th><th class="r">Arbetsdagar</th><th class="r">Tillg. min (7h)</th><th class="r">Diff vs 9450</th></tr></thead><tbody id="workday-table"></tbody></table></div>
 </div>
 </div>
+
+
+<!-- ============================================================ -->
+<!-- TAB: AGENT (v22) - Operativ agentanalys -->
+<!-- ============================================================ -->
+<div id="tab-agent" class="tc">
+
+  <div style="margin-bottom:16px;">
+    <h2 style="font-size:20px;font-weight:700;color:#1a2535;margin:0;">Agent</h2>
+    <div style="font-size:13px;color:#4a5568;margin-top:2px;">Operativ analys av hanterade tickets, ärendertyper och tidssåtgång</div>
+    <div style="font-size:11px;color:#7a8799;margin-top:4px;">Uppdaterat 2026-06-12 06:30 &nbsp;&bull;&nbsp; Visar: maj 2026</div>
+    <div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#f1f5f9;border:1px solid #dce1e8;border-radius:20px;font-size:11px;color:#7a8799;">ⓘ Ej officiellt prestationsmått — operativ analys</div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="ag-filter-bar">
+    <label>Period</label>
+    <select><option>Maj 2026</option><option>Apr 2026</option><option>Mar 2026</option></select>
+    <div class="fdiv"></div>
+    <label>Agent</label>
+    <select><option>Alla agenter</option><option>Anna Lindberg</option><option>Björn Karlsson</option><option>Cecilia Nordin</option><option>David Ek</option><option>Emma Strand</option><option>Farid Moussa</option></select>
+    <div class="fdiv"></div>
+    <label>Team / Kö</label>
+    <select><option>Alla team</option><option>Classic</option><option>Switchboard</option><option>Talent</option><option>Frankly</option><option>S1</option></select>
+    <div class="fdiv"></div>
+    <label>Ärendertyp</label>
+    <select><option>Alla typer</option><option>Fakturafråga</option><option>Teknisk support</option><option>Kontohantering</option><option>Reklamation</option><option>Ny kund</option></select>
+    <button class="ag-reset" onclick="document.querySelectorAll('#tab-agent select').forEach(function(s){s.selectedIndex=0})">↺ Återställ</button>
+  </div>
+
+  <!-- TODO: inject from /api/agent/kpi?period=2026-05 -->
+  <div class="ag-kpi-grid">
+    <div class="ag-kpi-card"><div class="ag-kpi-label">Aktiva agenter</div><div class="ag-kpi-value">6</div><div class="ag-kpi-sub">Maj 2026</div></div>
+    <div class="ag-kpi-card"><div class="ag-kpi-label">Hanterade tickets</div><div class="ag-kpi-value">1 842</div><div class="ag-kpi-sub">Totalt denna månad</div></div>
+    <div class="ag-kpi-card" style="border-color:#bfdbfe;"><div class="ag-kpi-label">Total spent time idag</div><div class="ag-kpi-value" style="color:#1f6f8b;">14h 22m</div><div class="ag-kpi-sub">Alla agenter</div></div>
+    <div class="ag-kpi-card"><div class="ag-kpi-label">Total spent time denna månad</div><div class="ag-kpi-value">312h</div><div class="ag-kpi-sub">Maj 2026</div></div>
+    <div class="ag-kpi-card ag-kpi-card--warn"><div class="ag-kpi-label">Snittid per ticket</div><div class="ag-kpi-value" style="color:#b45309;">10,2 min</div><div class="ag-kpi-sub">Genomsnitt teamet</div></div>
+    <div class="ag-kpi-card"><div class="ag-kpi-label">Median per ticket</div><div class="ag-kpi-value">7,8 min</div><div class="ag-kpi-sub">Median teamet</div></div>
+  </div>
+
+  <!-- TODO: inject rows from /api/agent/overview?period=2026-05 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:10px;">Agentöversikt</div>
+    <div style="overflow-x:auto;border-radius:10px;border:1px solid #dce1e8;">
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead><tr>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Agent</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Team</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Tickets</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Total spent time</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Snittid / ticket</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Median / ticket</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Tickets / dag</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Huvud. ärendertyper</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;">Andel av teamvolym</th>
+      </tr></thead>
+      <tbody>
+        <tr class="ag-row is-selected" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;"><strong>Anna Lindberg</strong></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#e8f2f6;color:#1f6f8b;">Classic</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;">342</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;">58h 30m</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;"><span style="background:#fef3c7;color:#b45309;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;">10,3 min</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;">8,1 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;">16.3</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;"><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Fakturafråga</span><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Reklamation</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="ag-sparkbar"><div class="ag-sparkbar__fill " style="width:72%"></div></div>
+              <span style="font-size:11px;color:#7a8799;">18.6%</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Björn Karlsson</strong></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Switchboard</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">298</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">41h 10m</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">8,3 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,2 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">14.2</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Teknisk support</span><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Kontohantering</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="ag-sparkbar"><div class="ag-sparkbar__fill ag-sparkbar__fill--ok" style="width:63%"></div></div>
+              <span style="font-size:11px;color:#7a8799;">16.2%</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Cecilia Nordin</strong></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Talent</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">310</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">63h 20m</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="background:#fef3c7;color:#b45309;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;">12,2 min</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">9,5 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">14.8</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Ny kund</span><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Reklamation</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="ag-sparkbar"><div class="ag-sparkbar__fill ag-sparkbar__fill--warn" style="width:65%"></div></div>
+              <span style="font-size:11px;color:#7a8799;">16.8%</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>David Ek</strong></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#e8f2f6;color:#1f6f8b;">S1</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">387</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">48h 15m</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,5 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">6,8 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">18.4</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Kontohantering</span><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Fakturafråga</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="ag-sparkbar"><div class="ag-sparkbar__fill ag-sparkbar__fill--ok" style="width:81%"></div></div>
+              <span style="font-size:11px;color:#7a8799;">21%</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Emma Strand</strong></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Frankly</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">265</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">38h 50m</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">8,8 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,5 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">12.6</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Reklamation</span><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Teknisk support</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="ag-sparkbar"><div class="ag-sparkbar__fill " style="width:56%"></div></div>
+              <span style="font-size:11px;color:#7a8799;">14.4%</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="ag-row" onclick="var all=document.querySelectorAll('.ag-row');all.forEach(function(r){r.classList.remove('is-selected')});this.classList.add('is-selected')">
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><strong>Farid Moussa</strong></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:#4a5568;">Classic</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">240</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">36h 00m</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">9,0 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">8,2 min</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">11.4</td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;"><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Fakturafråga</span><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:#f1f5f9;color:#7a8799;border:1px solid #dce1e8;margin-right:2px;">Ny kund</span></td>
+          <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">
+            <div style="display:flex;align-items:center;gap:5px;">
+              <div class="ag-sparkbar"><div class="ag-sparkbar__fill " style="width:50%"></div></div>
+              <span style="font-size:11px;color:#7a8799;">13%</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- TODO: update on row click from /api/agent/detail?agent_id={id}&period=2026-05 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:10px;">Vald agent — <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:13px;color:#4a5568;">Anna Lindberg</span></div>
+    <div style="background:#fff;border:1px solid #dce1e8;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+        <div><div style="font-size:16px;font-weight:700;">Anna Lindberg</div><div style="font-size:12px;color:#7a8799;">Team: Classic &nbsp;&bull;&nbsp; Kögrupp: Classic &nbsp;&bull;&nbsp; Maj 2026</div></div>
+        <span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;background:#e8f2f6;color:#1f6f8b;">Aktiv agent</span>
+      </div>
+      <div class="ag-detail">
+        <div><div class="ag-detail-stat__label">Hanterade tickets</div><div class="ag-detail-stat__value">342</div><div class="ag-detail-stat__sub">Maj 2026 &nbsp;&bull;&nbsp; 18,6% av teamvolym</div></div>
+        <div><div class="ag-detail-stat__label">Total spent time</div><div class="ag-detail-stat__value">58h 30m</div><div class="ag-detail-stat__sub">Maj 2026</div></div>
+        <div><div class="ag-detail-stat__label">Snittid per ticket</div><div class="ag-detail-stat__value" style="color:#b45309;">10,3 min</div><div class="ag-detail-stat__sub">⚠ Över teamets snitt (10,2 min)</div></div>
+        <div><div class="ag-detail-stat__label">Median per ticket</div><div class="ag-detail-stat__value">8,1 min</div><div class="ag-detail-stat__sub">Teamets median: 7,8 min</div></div>
+        <div class="ag-interp"><strong>Operativ tolkning:</strong> Anna hanterar främst Fakturafrågor och Reklamationer — två kategorier med hög genomsnittlig handläggningstid. Snittiden per ticket är marginellt över teamets snitt, vilket sannolikt speglar ärendertyp snarare än agentens effektivitet. Kontrollera ticketmix före jämförelse.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO: inject from /api/agent/ticket-types?agent_id={id}&period=2026-05 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:10px;">Ärendertyper per agent — Anna Lindberg</div>
+    <div style="background:#fff;border:1px solid #dce1e8;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:20px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div style="font-size:11px;color:#7a8799;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Volym per typ</div>
+          <div class="ag-type-row"><div class="ag-type-label">Fakturafråga</div><div class="ag-type-track"><div class="ag-type-fill" style="width:68%"></div></div><div class="ag-type-meta">142 tickets | 41%</div></div>
+          <div class="ag-type-row"><div class="ag-type-label">Reklamation</div><div class="ag-type-track"><div class="ag-type-fill" style="width:52%"></div></div><div class="ag-type-meta">108 tickets | 32%</div></div>
+          <div class="ag-type-row"><div class="ag-type-label">Kontohantering</div><div class="ag-type-track"><div class="ag-type-fill" style="width:28%"></div></div><div class="ag-type-meta">58 tickets | 17%</div></div>
+          <div class="ag-type-row"><div class="ag-type-label">Teknisk support</div><div class="ag-type-track"><div class="ag-type-fill" style="width:14%"></div></div><div class="ag-type-meta">24 tickets | 7%</div></div>
+          <div class="ag-type-row"><div class="ag-type-label">Övrigt</div><div class="ag-type-track"><div class="ag-type-fill" style="width:5%"></div></div><div class="ag-type-meta">10 tickets | 3%</div></div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#7a8799;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Tidsfördelning per typ</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px;"><thead><tr><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #dce1e8;font-weight:700;font-size:11px;color:#7a8799;text-transform:uppercase;">Ärendertyp</th><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #dce1e8;font-weight:700;font-size:11px;color:#7a8799;text-transform:uppercase;">Total tid</th><th style="text-align:left;padding:6px 8px;border-bottom:1px solid #dce1e8;font-weight:700;font-size:11px;color:#7a8799;text-transform:uppercase;">Snittid</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">Fakturafråga</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">22h 40m</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">9,6 min</td></tr>
+            <tr><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">Reklamation</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">21h 30m</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">12,0 min</td></tr>
+            <tr><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">Kontohantering</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">8h 20m</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">8,6 min</td></tr>
+            <tr><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">Teknisk support</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">5h 10m</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">12,9 min</td></tr>
+            <tr><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">Övrigt</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">0h 50m</td><td style="padding:6px 8px;border-bottom:1px solid #dce1e8;">5,0 min</td></tr>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO: inject chart data from /api/agent/daily?agent_id={id}&period=2026-05 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:10px;">Daglig effektivitet</div>
+    <div style="background:#fff;border:1px solid #dce1e8;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:20px;">
+      <div class="ag-day-strip">
+        <div class="ag-day-card"><div class="ag-day-name">Mån 6 maj</div><div class="ag-day-val">2h 45m</div><div class="ag-day-sub">16 tickets</div></div>
+        <div class="ag-day-card peak"><div class="ag-day-name">Tis 7 maj ⚠</div><div class="ag-day-val">3h 30m</div><div class="ag-day-sub">20 tickets (högst)</div></div>
+        <div class="ag-day-card"><div class="ag-day-name">Ons 8 maj</div><div class="ag-day-val">2h 50m</div><div class="ag-day-sub">17 tickets</div></div>
+        <div class="ag-day-card low"><div class="ag-day-name">Tor 9 maj ✓</div><div class="ag-day-val">1h 55m</div><div class="ag-day-sub">13 tickets (lägst)</div></div>
+        <div class="ag-day-card"><div class="ag-day-name">Fre 10 maj</div><div class="ag-day-val">2h 30m</div><div class="ag-day-sub">15 tickets</div></div>
+      </div>
+      <div class="ag-charts-grid">
+        <div class="ag-chart-ph"><!-- TODO: bar chart: total spent time per day --><span style="font-size:22px;opacity:.35;">⏱</span><span>Total spent time per dag</span><span style="font-size:11px;opacity:.7;">Stapeldiagram &bull; maj 2026</span></div>
+        <div class="ag-chart-ph"><!-- TODO: line chart: tickets per day --><span style="font-size:22px;opacity:.35;">🏷</span><span>Hanterade tickets per dag</span><span style="font-size:11px;opacity:.7;">Linjediagram &bull; maj 2026</span></div>
+      </div>
+      <div class="ag-kpi-strip">
+        <div class="ag-strip-item"><div class="ag-strip-label">Högst spent time dag</div><div class="ag-strip-val">3h 30m</div></div>
+        <div class="ag-strip-item"><div class="ag-strip-label">Lägst spent time dag</div><div class="ag-strip-val">1h 55m</div></div>
+        <div class="ag-strip-item"><div class="ag-strip-label">Snitt tickets/dag</div><div class="ag-strip-val">16,3</div></div>
+        <div class="ag-strip-item"><div class="ag-strip-label">Snitt spent time/dag</div><div class="ag-strip-val">2h 47m</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TODO: inject from /api/agent/monthly?agent_id={id} -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;margin-bottom:10px;">Månadsvis effektivitet</div>
+    <div style="background:#fff;border:1px solid #dce1e8;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:20px;">
+      <div class="ag-chart-ph" style="min-height:130px;margin-bottom:14px;"><!-- TODO: multi-line trend chart --><span style="font-size:22px;opacity:.35;">📈</span><span>Månadsvis trend</span><span style="font-size:11px;opacity:.7;">Tickets, total tid, snittid &bull; senaste 6 månader</span></div>
+      <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead><tr>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Månad</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Tickets</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Total spent time</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Snittid / ticket</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Median / ticket</th>
+          <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Tickets / prod. timme</th>
+        </tr></thead>
+        <tbody>
+          <tr><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">Dec 2025</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">271</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">44h 10m</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">9,8 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,5 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">6,1</td></tr>
+          <tr><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">Jan 2026</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">295</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">47h 30m</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">9,7 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,6 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">6,2</td></tr>
+          <tr><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">Feb 2026</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">280</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">45h 00m</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">9,6 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,4 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">6,2</td></tr>
+          <tr><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">Mar 2026</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">315</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">53h 20m</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">10,2 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">7,9 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">5,9</td></tr>
+          <tr><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">Apr 2026</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">328</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">55h 40m</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">10,2 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">8,0 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;">5,9</td></tr>
+          <tr style="background:#e8f2f6;font-weight:700;"><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;border-bottom:none;">Maj 2026 (pågående)</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;border-bottom:none;">342</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;border-bottom:none;">58h 30m</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;border-bottom:none;">10,3 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;border-bottom:none;">8,1 min</td><td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#1a2535;background:#e8f2f6;border-bottom:none;">5,8</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ag-data-note">
+    <div class="ag-data-note__title">ⓘ Operativ analys — inte officiellt prestationsmått</div>
+    <div class="ag-data-note__body">Denna vy visar operativa handläggningsdata baserade på ticketvolym och registrerad tidsförbrukning (spent time). <strong>Inte</strong> för formell bedömning av individuell agentprestation. Snittid och ticketvolym påverkas av ärendertyp, komplexitet, kögrupp, produktkategori och eskaleringsgrad. Jämförelser måste ta hänsyn till ticketmix och kontextskillnader.</div>
+  </div>
+
+</div><!-- /tab-agent -->
+
 </main><script>
 // ═══════════════════════════════════════════════════
 // TICKET CLASSIFICATION MODEL
