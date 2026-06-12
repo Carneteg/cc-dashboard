@@ -2041,93 +2041,41 @@ function renderSensitivityChart(){
 }
 
 // ── LEGACY TABS ──
-async function loadOverview() {
+async async function loadOverview() {
   try {
-    const [prodData, trendData] = await Promise.all([api('/products'), api('/trend')]);
-    const ps    = prodData.products || [];
-    const trend = trendData.trend   || [];
+    const d = await api('/overview');
+    const ps = d.products || [];
 
-    const tot30   = ps.reduce((s,p) => s + (p.last_30_days||0), 0);
-    const tot0    = ps.reduce((s,p) => s + (p.today||0), 0);
-    const active0 = ps.filter(p => (p.today||0) > 0).length;
+    // KPI cards
+    const cards = document.querySelectorAll('#tab-overview .ov-kpi-card');
+    const setCard = (i, val) => {
+      if (!cards[i]) return;
+      const v = cards[i].querySelector('.ov-kpi-value');
+      if (v) v.textContent = val;
+    };
+    setCard(0, d.today_total ?? '—');
+    setCard(1, d.active_today ?? '—');
+    setCard(2, d.avg_7d != null ? d.avg_7d.toFixed(1) : '—');
+    setCard(3, (d.last_30d_total ?? 0).toLocaleString('sv-SE'));
 
-    const today = new Date(); today.setHours(0,0,0,0);
-    const yest  = new Date(today); yest.setDate(yest.getDate()-1);
-    const d7    = new Date(today); d7.setDate(d7.getDate()-7);
-    const yestStr = yest.toISOString().substring(0,10);
-    const todayStr = today.toISOString().substring(0,10);
-
-    const yestEntry = trend.find(t => t.day === yestStr);
-    const tot1 = yestEntry ? yestEntry.tickets : null;
-    const last7 = trend.filter(t => t.day >= d7.toISOString().substring(0,10) && t.day < todayStr);
-    const avg7  = last7.length >= 3 ? Math.round(last7.reduce((s,t)=>s+t.tickets,0)/last7.length*10)/10 : null;
-
-    const ovCards = document.querySelectorAll('#tab-overview .ov-kpi-card');
-
-    const card0 = ovCards[0];
-    if (card0) {
-      const valEl = card0.querySelector('.ov-kpi-value');
-      const secEl = card0.querySelector('.ov-kpi-secondary');
-      const pillEl = card0.querySelector('.dq-pill');
-      if (valEl) { valEl.textContent = tot0; valEl.className = 'ov-kpi-value'+(tot0===0?' ov-kpi-value--zero':''); }
-      if (secEl && tot1 !== null) secEl.textContent = '— Igår: '+tot1;
-      if (pillEl) { pillEl.textContent = tot0===0 ? '⚠ Obekärftad' : '✓ Komplett'; pillEl.className = 'dq-pill '+(tot0===0?'warn':'ok'); }
-    }
-
-    const card1 = ovCards[1];
-    if (card1) {
-      const valEl = card1.querySelector('.ov-kpi-value');
-      const secEl = card1.querySelector('.ov-kpi-secondary');
-      const pillEl = card1.querySelector('.dq-pill');
-      if (valEl) { valEl.textContent = active0; valEl.className = 'ov-kpi-value'+(active0===0?' ov-kpi-value--zero':''); }
-      if (secEl) secEl.textContent = '— Igår: — av '+ps.length;
-      if (pillEl) { pillEl.textContent = active0===0 ? '⚠ Obekärftad' : '✓ Komplett'; pillEl.className = 'dq-pill '+(active0===0?'warn':'ok'); }
-    }
-
-    const card2 = ovCards[2];
-    if (card2) {
-      const valEl = card2.querySelector('.ov-kpi-value');
-      const secEl = card2.querySelector('.ov-kpi-secondary');
-      if (valEl && avg7 !== null) valEl.textContent = avg7.toLocaleString('sv-SE');
-      if (secEl) secEl.textContent = '— Snitt 30d: '+(tot30?Math.round(tot30/30*10)/10:0).toLocaleString('sv-SE');
-    }
-
-    const card3 = ovCards[3];
-    if (card3) {
-      const valEl = card3.querySelector('.ov-kpi-value');
-      if (valEl) valEl.textContent = tot30.toLocaleString('sv-SE');
-    }
-
-    const banner = document.getElementById('dq-zero-banner');
-    if (banner) banner.style.display = tot0===0 ? '' : 'none';
-
-    const mx  = Math.max(...ps.map(p=>p.last_30_days||0), 1);
-    const ptb = document.getElementById('ptb');
-    if (ptb) {
-      ptb.innerHTML = ps.filter(p=>p.product!=='All Products').map(function(p) {
-        const sh30 = tot30>0 ? Math.round(p.last_30_days/tot30*100) : 0;
-        const barW = Math.round((p.last_30_days||0)/mx*100);
-        const igr  = tot1!==null ? (p.today>0?p.today:'0') : '—';
-        return '<tr><td>'+h(p.product)+'</td><td class="r'+(p.today===0?' zero':'')+'">'+p.today+'</td><td class="r">'+igr+'</td><td class="r">'+(p.last_30_days||0)+'</td><td class="r"><div style="display:flex;align-items:center;gap:6px;"><div style="width:60px;background:#1e293b;border-radius:2px;height:8px;"><div style="width:'+barW+'%;background:#1f6f8b;height:100%;border-radius:2px;"></div></div><span>'+sh30+'%</span></div></td></tr>';
-      }).join('');
-    }
-
+    // Product table
+    const ptb  = document.getElementById('ptb');
     const ptb2 = document.getElementById('ptb2');
-    if (ptb2) {
-      ptb2.innerHTML = ps.filter(p=>p.product!=='All Products').map(function(p) {
-        const sh30 = tot30>0 ? Math.round(p.last_30_days/tot30*1000)/10 : 0;
-        return '<tr><td>'+h(p.product)+'</td><td class="r">'+(p.today||0)+'</td><td class="r">'+(p.last_30_days||0)+'</td><td class="r">'+sh30+'%</td></tr>';
-      }).join('');
-    }
-
-    const upd = document.getElementById('upd');
-    if (upd) upd.textContent = 'Uppdaterat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'});
+    const total30 = ps.reduce((s, p) => s + (p.last_30_days || 0), 0) || 1;
+    const makeRow = p => {
+      const share = Math.round(p.last_30_days / total30 * 100);
+      return '<tr><td>' + (p.product || '—') + '</td><td>' + (p.today ?? 0) + '</td><td>' + (p.yesterday ?? 0) + '</td><td>' + (p.last_7_days ?? '—') + '</td><td>' + share + '%</td></tr>';
+    };
+    if (ptb)  ptb.innerHTML  = ps.map(makeRow).join('');
+    if (ptb2) ptb2.innerHTML = ps.map(makeRow).join('');
 
     setTimeout(renderSparkChart, 200);
 
+    const ts = document.getElementById('ov-ts');
+    if (ts) ts.textContent = 'Uppdaterat: ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit', minute:'2-digit'});
+
   } catch(err) { console.error('loadOverview error:', err); }
 }
-
 function fp(btn){document.querySelectorAll('#pool-filter button').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');renderDailyTable(btn.dataset.pool);}
 function renderDailyTable(pool){var rows=pool?_allDaily.filter(function(r){return r.pool_slug===pool;}):_allDaily;document.getElementById('daily-table').innerHTML=rows.slice(0,200).map(function(r){return '<tr><td>'+r.stat_date+'</td><td>'+h(r.pool_slug)+'</td><td class="n">'+r.ticket_count+'</td><td class="n">'+fmtFTE(r.peak_fte_calculated)+'</td><td class="n">'+fmtFTE(r.gap_fte)+'</td><td><span class="ga '+(r.capacity_status==='critical'?'crit':r.capacity_status==='under'?'under':'ok')+'">'+r.capacity_status+'</span></td></tr>';}).join('');}
 
