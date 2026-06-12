@@ -2041,7 +2041,7 @@ function renderSensitivityChart(){
 }
 
 // ── LEGACY TABS ──
-async async function loadOverview() {
+async function loadOverview() {
   try {
     const d = await api('/overview');
     const ps = d.products || [];
