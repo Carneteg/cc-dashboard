@@ -144,8 +144,8 @@ function renderAgentTable() {
     var poolColor = POOL_COLORS[p.pool]||'#7a8799';
     var absDisplay = absInfo.totalWorkdays>0 ? (absInfo.absenceDays+' ('+(Math.round(absenceRate*100))+'%)') : '--';
     var adjFteDisplay = absInfo.totalWorkdays>0 ? adjustedFteSupply.toFixed(2)+' FTE' : p.fte_supply.toFixed(2)+' FTE';
-    return '<tr style="border-bottom:1px solid #2d3148;">'
-      +'<td style="padding:10px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#1e2133;color:'+poolColor+';">'+p.pool_name+'</span></td>'
+    return '<tr style="border-bottom:1px solid #dde3ee;">'
+      +'<td style="padding:10px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:'+poolColor+';">'+p.pool_name+'</span></td>'
       +'<td style="padding:10px 12px;font-weight:600;">'+(p.raw_tickets||0).toLocaleString('sv-SE')+'</td>'
       +'<td style="padding:10px 12px;">'+(p.filtered_fte||0).toFixed(2)+' FTE</td>'
       +'<td style="padding:10px 12px;">'+(p.fte_supply||0).toFixed(2)+' FTE</td>'
@@ -163,7 +163,7 @@ function renderAgentTable() {
   if (bannerEl) {
     if (hasMissingDays) {
       bannerEl.style.display='';
-      bannerEl.innerHTML='<div style="display:flex;align-items:flex-start;gap:12px;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;"><div style="font-size:16px;">warning</div><div><div style="font-size:13px;font-weight:700;color:#b45309;">Franvaro detekterad</div><div style="font-size:12px;color:#94a3b8;margin-top:2px;">En eller flera pooler hade 0 tickets vissa arbetsdagar - troligen franvaro. Justerad FTE-tillgang ar korrigerad proportionellt.</div></div></div>';
+      bannerEl.innerHTML='<div style="display:flex;align-items:flex-start;gap:12px;background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:12px 16px;"><div style="font-size:16px;">warning</div><div><div style="font-size:13px;font-weight:700;color:#b45309;">Franvaro detekterad</div><div style="font-size:12px;color:#64748b;margin-top:2px;">En eller flera pooler hade 0 tickets vissa arbetsdagar - troligen franvaro. Justerad FTE-tillgang ar korrigerad proportionellt.</div></div></div>';
     } else { bannerEl.style.display='none'; }
   }
   renderAgentIndividual();
@@ -192,7 +192,7 @@ function renderAgentAbsenceDetail(ym) {
     var avgPerDay=activeDays.length>0?(totalTickets/activeDays.length).toFixed(1):'0';
     var color=POOL_COLORS[pool]||'#7a8799';
     var absRate=days.length>0?Math.round(zeroDays.length/days.length*100):0;
-    html+='<div style="background:#1a1d27;border:1px solid #2d3148;border-radius:8px;padding:12px;border-left:3px solid '+color+';">'
+    html+='<div style="background:#ffffff;border:1px solid #dde3ee;border-radius:8px;padding:12px;border-left:3px solid '+color+';">'
       +'<div style="font-size:12px;font-weight:700;color:'+color+';margin-bottom:8px;">'+pool.toUpperCase()+'</div>'
       +'<div style="font-size:11px;display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:#64748b;">Aktiva dagar</span><span style="font-weight:600;">'+activeDays.length+'/'+days.length+'</span></div>'
       +'<div style="font-size:11px;display:flex;justify-content:space-between;margin-bottom:4px;"><span style="color:#64748b;">Nolldagar (franvaro)</span><span style="font-weight:600;color:'+(zeroDays.length>0?'#b45309':'#16a34a')+'">'+zeroDays.length+' ('+absRate+'%)</span></div>'
@@ -203,8 +203,8 @@ function renderAgentAbsenceDetail(ym) {
   });
   html+='</div>';
   el.innerHTML=html;
-  el.style.background='#12141e';
-  el.style.border='1px solid #2d3148';
+  el.style.background='#f0f4f8';
+  el.style.border='1px solid #dde3ee';
   el.style.borderRadius='8px';
   el.style.padding='16px';
 }
@@ -222,7 +222,7 @@ function renderSparkChart() {
   el.innerHTML = data.map(function(d) {
     const pct = Math.round(d.val30 / max * 100);
     return '<div style="display:flex;align-items:center;gap:8px;font-size:11px;">' +
-      '<span style="width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#94a3b8;">' + d.name + '</span>' +
+      '<span style="width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#64748b;">' + d.name + '</span>' +
       '<div style="flex:1;background:#1e293b;border-radius:2px;height:12px;">' +
         '<div style="width:' + pct + '%;background:#1f6f8b;height:100%;border-radius:2px;"></div>' +
       '</div>' +
@@ -242,9 +242,9 @@ var _agIndividualPoolAgents = {
 function setAgentIndividualPeriod(period, btn) {
   _agIndividualPeriod = period;
   document.querySelectorAll('.ag-ind-period-btn').forEach(function(b) {
-    b.style.background='#1e2133';
+    b.style.background='#f1f5f9';
     b.style.color='#94a3b8';
-    b.style.border='1px solid #2d3148';
+    b.style.border='1px solid #dde3ee';
   });
   if (btn) { btn.style.background = '#1f6f8b'; btn.style.color = '#fff'; btn.style.border = 'none'; }
   renderAgentIndividual();
@@ -275,13 +275,13 @@ function renderAgentIndividual() {
     var occupancyColor = occupancy > 90 ? '#ef4444' : occupancy > 70 ? '#16a34a' : occupancy > 40 ? '#f59e0b' : '#64748b';
     var gapColor = gapMinsPerDay < 0 ? '#ef4444' : gapMinsPerDay < 60 ? '#f59e0b' : '#16a34a';
     var poolColor = POOL_COLORS[p.pool] || '#7a8799';
-    return '<tr style="border-bottom:1px solid #2d3148;">'
-      + '<td style="padding:10px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#1e2133;color:'+poolColor+';">'+p.pool_name+'</span></td>'
+    return '<tr style="border-bottom:1px solid #dde3ee;">'
+      + '<td style="padding:10px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:'+poolColor+';">'+p.pool_name+'</span></td>'
       + '<td style="padding:10px 12px;text-align:right;font-weight:600;">'+numAgents+'</td>'
       + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:'+poolColor+';">'+displayTickets.toFixed(1)+'</td>'
       + '<td style="padding:10px 12px;text-align:right;">'+aht.toFixed(1)+'</td>'
       + '<td style="padding:10px 12px;text-align:right;font-weight:600;">'+Math.round(handlMinsPerDayPerAgent)+' min</td>'
-      + '<td style="padding:10px 12px;text-align:right;"><span style="padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#12141e;color:'+occupancyColor+';">'+occupancy+'%</span></td>'
+      + '<td style="padding:10px 12px;text-align:right;"><span style="padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;background:#f0f4f8;color:'+occupancyColor+';">'+occupancy+'%</span></td>'
       + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:'+gapColor+';">'+Math.round(gapMinsPerDay)+' min</td>'
       + '</tr>';
   });
@@ -332,22 +332,22 @@ function renderAgentProductBreakdown() {
       var pct = totalProdTickets > 0 ? Math.round(prod.tickets/totalProdTickets*100) : 0;
       var ticketsPerAgentPerDay = numAgents>0 ? prod.tickets/30/numAgents : 0;
       var handlMins = ticketsPerAgentPerDay * pd.aht;
-      return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #2d3148;">'
-        +'<div style="flex:1;font-size:11px;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+prod.name+'</div>'
+      return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #dde3ee;">'
+        +'<div style="flex:1;font-size:11px;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+prod.name+'</div>'
         +'<div style="font-size:11px;font-weight:700;color:'+poolColor+';min-width:38px;text-align:right;">'+prod.tickets+'</div>'
         +'<div style="font-size:10px;color:#64748b;min-width:30px;text-align:right;">'+pct+'%</div>'
-        +'<div style="font-size:10px;color:#94a3b8;min-width:68px;text-align:right;white-space:nowrap;">~'+ticketsPerAgentPerDay.toFixed(1)+'/dag '+Math.round(handlMins)+'min</div>'
+        +'<div style="font-size:10px;color:#64748b;min-width:68px;text-align:right;white-space:nowrap;">~'+ticketsPerAgentPerDay.toFixed(1)+'/dag '+Math.round(handlMins)+'min</div>'
         +'</div>';
     }).join('');
     var totalHandlMins = numAgents>0 ? totalProdTickets/30/numAgents*pd.aht : 0;
     var totalOcc = Math.round(totalHandlMins/420*100);
     var occColor = totalOcc>90?'#ef4444':totalOcc>70?'#16a34a':totalOcc>40?'#f59e0b':'#64748b';
-    return '<div style="background:#1a1d27;border:1px solid #2d3148;border-top:2px solid '+poolColor+';border-radius:8px;padding:14px;">'
+    return '<div style="background:#ffffff;border:1px solid #dde3ee;border-top:2px solid '+poolColor+';border-radius:8px;padding:14px;">'
       +'<div style="font-size:12px;font-weight:700;color:'+poolColor+';margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;">'
         +'<span>'+pd.pool_name+'</span>'
         +'<div style="display:flex;gap:8px;align-items:center;">'
           +'<span style="font-size:10px;color:#64748b;">AHT '+pd.aht.toFixed(1)+' min</span>'
-          +'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:#12141e;color:'+occColor+';">'+totalOcc+'% belaggning</span>'
+          +'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:#f0f4f8;color:'+occColor+';">'+totalOcc+'% belaggning</span>'
         +'</div>'
       +'</div>'
       +'<div style="font-size:10px;color:#64748b;margin-bottom:10px;">'+numAgents+' agent'+( numAgents>1?'er':'')+' Â· '+totalProdTickets+' tickets/30d</div>'
