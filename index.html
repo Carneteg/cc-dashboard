@@ -295,7 +295,7 @@ CC Workforce
 </div>
 <div class="kpi-card supply">
 <div class="kpi-label">Effective Supply FTE</div>
-<div class="kpi-value supply">11.05</div>
+<div class="kpi-value supply">11.10</div>
 <div class="kpi-sub">Productive capacity after seniority &amp; allocation</div>
 <div class="kpi-tooltip">Model calculated available capacity. May differ from →  Actual FTE due to seniority weighting. Source: FTE Calc tab.</div>
 </div>
@@ -309,14 +309,14 @@ CC Workforce
 <div class="kpi-label">Net Gap FTE</div>
 <div class="kpi-value gap-pos">+1.00</div>
 <div class="kpi-sub">Effective Supply − Required FTE</div>
-<div class="kpi-tooltip">⚠ Positive total gap hides a critical deficit in Classic (-1.20 FTE). See Pool Capacity Gaps below.</div>
+<div class="kpi-tooltip">⚠ Positive total gap hides a tight gap in Classic (−0.30 FTE). See Pool Capacity Gaps below.</div>
 </div>
 </div>
 <div class="alert-banner crit">
 <div class="alert-icon">🚨</div>
 <div class="alert-body">
-<div class="alert-title">Classic is understaffed by -1.20 FTE despite total balance</div>
-<div class="alert-desc">Total net surplus of <span>+1.00 FTE</span> masks a critical deficit in the Classic pool. Supply: <span>2.20 FTE</span> · Required Peak: <span>3.40 FTE</span> · Gap: <span>-1.20 FTE</span>.</div>
+<div class="alert-title">Classic has a tight gap of −0.30 FTE — monitor closely</div>
+<div class="alert-desc">Total net surplus of <span>+1.00 FTE</span> masks a critical deficit in the Classic pool. Supply: <span>3.10 FTE</span> · Required Peak: <span>3.40 FTE</span> · Gap: <span>−0.30 FTE</span>.</div>
 </div>
 </div>
 <div style="background:#0f172a;border:1px solid #2563eb;border-radius:10px;padding:16px 20px;margin-bottom:32px">
@@ -409,9 +409,9 @@ CC Workforce
 <div class="scenario-card active-scenario">
 <div class="sc-name">Now <span class="tag info">Current</span></div>
 <div class="sc-gap" style="color:#4ade80">+1.00</div>
-<div class="sc-deficit">⚠ Classic -1.20 FTE deficit</div>
+<div class="sc-deficit">⚠ Classic −0.30 FTE tight</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">10.10</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.05</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">9.10</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
 <div class="sc-row"><span class="sc-key">Monthly cost</span><span class="sc-val">~110k SEK</span></div>
@@ -439,7 +439,7 @@ CC Workforce
 <div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategy</span></div>
 <div class="sc-gap" style="color:#4ade80">+1.80</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.30</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.05</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.30</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
 <div class="sc-row"><span class="sc-key">AI deflection</span><span class="sc-val" style="color:#4ade80">30%</span></div>
@@ -498,7 +498,7 @@ CC Workforce
 <div class="section-header"><span class="section-title">§ 7 · Definitions &amp; Model Notes</span></div>
 <div class="def-grid">
 <div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Actual number of employees. <strong>Master value = 11 FTE.</strong></div><div class="def-example">Not the same as Effective Supply.</div></div>
-<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Model productive capacity after seniority weighting. Current: 11.05 FTE.</div></div>
+<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Model productive capacity after seniority weighting. Current: 11.10 FTE.</div></div>
 <div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Total FTE requirement: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
 <div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Effective Supply − Required FTE. ⚠ Total positive gap hides pool-level deficits.</div></div>
 <div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analytics</span></div><div class="def-body">Pool configured supply per day. Analytics value — not an official planning metric.</div><div class="def-example">Not the same as Effective Supply FTE.</div></div>
@@ -1143,7 +1143,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=15"></script>
+</main><script type="module" src="js/main.js?v=16"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
