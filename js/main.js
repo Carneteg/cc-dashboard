@@ -1,27 +1,8 @@
-// js/main.js  --  Tab router, global init, event wiring
-import { initWP, showTab as _showTabWP, loadOverview } from './tab-wp.js';
-import { loadAgentTab, aeInit }                         from './tab-agent.js';
-import { naInit }                                       from './tab-agent-eff.js';
-
-const _initialised = new Set();
-
-export function showTab(tabId, btn) {
-  document.querySelectorAll('.tc').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  const el = document.getElementById(tabId);
-  if (el) el.classList.add('active');
-  if (btn) btn.classList.add('active');
-
-  if (!_initialised.has(tabId)) {
-    _initialised.add(tabId);
-    if (tabId === 'wp')      initWP();
-    if (tabId === 'overview') loadOverview();
-    if (tabId === 'agent')   loadAgentTab();
-  }
-}
-
-// Re-export to window so HTML onclick handlers work
-window.showTab = showTab;
+// js/main.js  --  Global init, error wiring
+// Note: showTab is defined and assigned to window in tab-wp.js (it uses 'tab-'+id prefix)
+// Note: aeInit is a self-executing named IIFE in tab-agent.js, no import needed
+import { loadAgentTab }   from './tab-agent.js';
+import { naInit }         from './tab-agent-eff.js';
 
 // Global error boundary
 window.addEventListener('unhandledrejection', ev => {
@@ -35,18 +16,5 @@ window.onerror = (msg, src, line, col, err) => {
 document.addEventListener('DOMContentLoaded', () => {
   const upd = document.getElementById('upd');
   if (upd) upd.textContent = 'Uppdaterat ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit', minute:'2-digit'});
-
-  // Init agent efficiency panel (always-on)
-  aeInit();
   naInit();
-
-  // Show default tab (first active nav button, or 'wp')
-  const activeBtn = document.querySelector('nav button.active');
-  if (activeBtn) {
-    const id = activeBtn.getAttribute('onclick')?.match(/showTab\('(\w+)'/)?.[1];
-    if (id) showTab(id, activeBtn);
-  } else {
-    const wpBtn = document.querySelector('nav button[onclick*=\'wp\']');
-    showTab('wp', wpBtn);
-  }
 });
