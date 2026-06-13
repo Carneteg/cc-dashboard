@@ -386,8 +386,8 @@ function renderStaffingChart(){
       {label:'11 FTE Baseline',data:tl.labels.map(()=>11),borderColor:'#475569',borderWidth:1,borderDash:[3,6],pointRadius:0,fill:false}
     ]},
     options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:11}}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},suggestedMin:5,suggestedMax:14,title:{display:true,text:'FTE',color:'#475569'}}}}
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b',font:{size:11}}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},suggestedMin:5,suggestedMax:14,title:{display:true,text:'FTE',color:'#475569'}}}}
   });
 }
 
@@ -424,8 +424,8 @@ function renderTrendChart(monthly){
       {label:'Tickets (k)',data:data.map(m=>parseFloat((m.totalTickets/1000).toFixed(2))),borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],fill:false,yAxisID:'y2'}
     ]},
     options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys â ej officiellt planeringsmatt]'}}},
-      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:10}}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}}}
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys â ej officiellt planeringsmatt]'}}},
+      scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b',font:{size:10}}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}}}
   });
 }
 
@@ -442,13 +442,13 @@ var driverHtml='';
 if(!noData&&prev&&prev.totalTickets>0){
 var dVol=m.totalTickets-prev.totalTickets;
 var dFte=m.analyticsFteRequired-prev.analyticsFteRequired;
-driverHtml='<div style="margin-top:6px;padding-top:6px;border-top:1px solid #2d3148;font-size:10px;color:#475569">'
+driverHtml='<div style="margin-top:6px;padding-top:6px;border-top:1px solid #dde3ee;font-size:10px;color:#475569">'
 +'MoM: <span style="color:'+(dVol>=0?'#fca5a5':'#4ade80')+'">'+(dVol>=0?'â²':'â¼')+' volym '+(dVol>=0?'+':'')+dVol+'</span> Â· '
 +'<span style="color:'+(dFte<0?'#4ade80':'#fca5a5')+'">'+(dFte>=0?'â²':'â¼')+' FTE '+(dFte>=0?'+':'')+dFte.toFixed(2)+'</span>'
 +'</div>';
 }
 if(noData){
-return '<div class="analytics-month-card" style="opacity:0.45;border-color:#2d3148">'
+return '<div class="analytics-month-card" style="opacity:0.45;border-color:#dde3ee">'
 +'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
 +'<div style="font-size:11px;color:#475569;margin-top:8px;font-style:italic">Ingen demand-data</div>'
 +'<div class="amc-row" style="margin-top:6px"><span class="amc-label">Supply</span><span class="amc-val" style="color:#f59e0b">'+m.dailyRosteredFte.toFixed(2)+' FTE</span></div>'
@@ -490,8 +490,8 @@ function renderPoolGapChart(){
       backgroundColor:sorted.map(p=>p.gapFte<-0.1?'rgba(239,68,68,0.7)':Math.abs(p.gapFte)<0.2?'rgba(245,158,11,0.7)':'rgba(34,197,94,0.7)'),
       borderColor:sorted.map(p=>p.gapFte<-0.1?'#ef4444':Math.abs(p.gapFte)<0.2?'#f59e0b':'#22c55e'),borderWidth:1,borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Gap FTE',color:'#475569'}},y:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}}}}
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},title:{display:true,text:'Gap FTE',color:'#475569'}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8'}}}}
   });
 }
 function renderScenarioChart(){
@@ -504,8 +504,8 @@ function renderScenarioChart(){
       {label:'Effective Supply FTE',data:sc.map(s=>s.supplyFte),backgroundColor:'rgba(74,222,128,0.6)',borderColor:'#4ade80',borderWidth:1,borderRadius:3}
     ]},
     options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},suggestedMin:4,title:{display:true,text:'FTE',color:'#475569'}}}}
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},suggestedMin:4,title:{display:true,text:'FTE',color:'#475569'}}}}
   });
 }
 
@@ -523,7 +523,7 @@ function renderRoutingRulesGrid(){
     var col=ticketClassificationModel.POOL_COLORS[c.pool]||'#475569';
     return '<div class="classif-card '+c.pool+'">'
       +'<div class="classif-title" style="color:'+col+'">'+c.label+' Pool</div>'
-      +'<div style="font-size:12px;color:#94a3b8;margin-bottom:8px">'+c.description+'</div>'
+      +'<div style="font-size:12px;color:#64748b;margin-bottom:8px">'+c.description+'</div>'
       +'<div style="font-size:11px;color:#64748b;margin-bottom:6px">Freshdesk-produkter som routas hit:</div>'
       +'<div class="classif-products">'+c.products.map(function(p){return '<span class="product-chip">'+p+'</span>';}).join('')+'</div>'
       +'<div class="routing-rule">'+c.routingRule+'</div>'
@@ -643,8 +643,8 @@ tableRows+='<tr style="'+(noData?'opacity:0.55':'')+'"><td style="font-variant-n
             backgroundColor:poolNames.map(function(p){return hexToRgba(colors[p]||'#475569',0.6);}),
             borderColor:poolNames.map(function(p){return colors[p]||'#475569';}),borderWidth:1,borderRadius:4}]},
         options:{responsive:true,maintainAspectRatio:true,
-          plugins:{legend:{display:false},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-          scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}}}}
+          plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+          scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8'}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'}}}}
       });
       document.getElementById('classif-chart-wrap').style.display='';
     }
@@ -684,8 +684,8 @@ function renderMigrationChart(){
       {label:'Classic volym (tusental)',data:planningModelAdapter.migration.map(function(m){return m.classicVol/1000;}),borderColor:'#f87171',backgroundColor:'rgba(248,113,113,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],yAxisID:'y2',fill:false}
     ]},
     options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
-      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE',color:'#475569'},suggestedMin:2,suggestedMax:5},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#ef4444'},title:{display:true,text:'Classic kunder (k)',color:'#ef4444'}}}}
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8'}},
+      scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},title:{display:true,text:'FTE',color:'#475569'},suggestedMin:2,suggestedMax:5},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#ef4444'},title:{display:true,text:'Classic kunder (k)',color:'#ef4444'}}}}
   });
 }
 function renderSensitivityTable(){
@@ -694,7 +694,7 @@ function renderSensitivityTable(){
     return '<tr><td><strong>'+s.driver+'</strong></td>'
       +'<td class="n" style="color:#fca5a5">'+fmt(s.m20)+'</td>'
       +'<td class="n" style="color:#fcd34d">'+fmt(s.m10)+'</td>'
-      +'<td class="n" style="color:#e2e8f0;font-weight:800">'+fmt(s.base)+'</td>'
+      +'<td class="n" style="color:#1e293b;font-weight:800">'+fmt(s.base)+'</td>'
       +'<td class="n" style="color:#fcd34d">'+fmt(s.p10)+'</td>'
       +'<td class="n" style="color:#fca5a5">'+fmt(s.p20)+'</td>'
       +'<td><span class="tag info">'+s.unit+'</span></td></tr>';
@@ -711,8 +711,8 @@ function renderSensitivityChart(){
       {label:'+20%',data:sorted.map(function(s){return s.p20-s.base;}),backgroundColor:'rgba(99,102,241,0.6)',borderColor:'#6366f1',borderWidth:1,borderRadius:3}
     ]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{label:function(ctx2){return ctx2.dataset.label+': '+(ctx2.raw>=0?'+':'')+ctx2.raw.toFixed(2)+' FTE vs bas';}}}},
-      scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'Avvikelse fran 10.10 FTE',color:'#475569'}},y:{grid:{color:'#1e2133'},ticks:{color:'#94a3b8'}}}}
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{label:function(ctx2){return ctx2.dataset.label+': '+(ctx2.raw>=0?'+':'')+ctx2.raw.toFixed(2)+' FTE vs bas';}}}},
+      scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},title:{display:true,text:'Avvikelse fran 10.10 FTE',color:'#475569'}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8'}}}}
   });
 }
 
@@ -773,7 +773,7 @@ async function loadAHT(){
 }
 function setView(v,btn){_view=v;document.querySelectorAll('.vt-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}
 function filterAHT(btn){document.querySelectorAll('#aht-pool-filter .pool-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');if(_ahtData)renderAHTGrid(_ahtData,btn.dataset.pool);}
-function renderAHTGrid(d,fPool){var months=d.months||[];document.getElementById('aht-grid').innerHTML=months.map(function(m){var pools=fPool?m.pools.filter(function(p){return p.pool===fPool;}):m.pools;if(!pools.length)return'';var useCC=_view==='cc',totF=pools.reduce(function(s,p){return s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte);},0),totS=pools.reduce(function(s,p){return s+p.fte_supply;},0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';var avgCov=parseFloat(m.avg_coverage_pct||0);return'<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(function(p){var fte=useCC?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,cnt=useCC?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,pct=p.raw_tickets>0?Math.round(cnt/p.raw_tickets*100):100,pCov=parseFloat(p.coverage_pct||0);return'<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+cnt+' ('+pct+'%)'+(useCC?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(pCov>0?' <span style="padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #2d3148;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'+(avgCov<COV_THRESHOLD?'<div class="cov-warn">'+avgCov.toFixed(0)+'% datatackning</div>':'')+'</div>';}).join('');}
+function renderAHTGrid(d,fPool){var months=d.months||[];document.getElementById('aht-grid').innerHTML=months.map(function(m){var pools=fPool?m.pools.filter(function(p){return p.pool===fPool;}):m.pools;if(!pools.length)return'';var useCC=_view==='cc',totF=pools.reduce(function(s,p){return s+(useCC?p.cc_scope_fte||p.filtered_fte:p.filtered_fte);},0),totS=pools.reduce(function(s,p){return s+p.fte_supply;},0),gap=totS-totF,cls=gap<-0.5?'crit':gap<0?'under':'ok';var avgCov=parseFloat(m.avg_coverage_pct||0);return'<div class="ac '+cls+'"><div class="ah">'+m.year_month+' <span class="ga '+cls+'">Gap: '+fmtFTE(gap)+'</span></div>'+pools.map(function(p){var fte=useCC?(p.cc_scope_fte||p.filtered_fte):p.filtered_fte,cnt=useCC?(p.cc_scope_tickets||p.filtered_tickets):p.filtered_tickets,pct=p.raw_tickets>0?Math.round(cnt/p.raw_tickets*100):100,pCov=parseFloat(p.coverage_pct||0);return'<div class="ar"><span>'+h(p.pool_name)+'</span><span class="av '+gapCls(p.gap)+'">'+fmtFTE(p.gap)+'</span></div><div style="font-size:11px;color:#64748b;margin-bottom:6px">'+cnt+' ('+pct+'%)'+(useCC?'<span class="scope-badge">CC</span>':'')+' | AHT: '+p.effective_aht+'min | FTE: '+fmtFTE(fte)+'/'+fmtFTE(p.fte_supply)+(pCov>0?' <span style="padding:1px 5px;border-radius:3px;font-size:10px;background:'+(pCov>=COV_THRESHOLD?'#14532d':'#7f1d1d')+';color:'+(pCov>=COV_THRESHOLD?'#4ade80':'#fca5a5')+'">'+pCov.toFixed(0)+'%</span>':'')+'</div>';}).join('')+'<div style="border-top:1px solid #dde3ee;margin-top:6px;padding-top:6px;font-size:12px;color:#64748b">Krav: '+fmtFTE(totF)+' | Tillgang: '+fmtFTE(totS)+'</div>'+(avgCov<COV_THRESHOLD?'<div class="cov-warn">'+avgCov.toFixed(0)+'% datatackning</div>':'')+'</div>';}).join('');}
 
 async function updateEnrichStatus(){try{var d=await api('/enrich-status');var pct=parseFloat(d.coverage_pct||0);document.getElementById('enrich-status').textContent='Enrichment: '+d.enriched_tickets+'/'+d.total_tickets+' ('+pct.toFixed(1)+'%) | CC-scope: '+(d.cc_scope_tickets||0)+' | Samtal: '+(d.phone_with_duration||0);var prog=document.getElementById('enrich-prog');if(prog)prog.style.width=pct+'%';if(pct>=100){var btn=document.getElementById('enrich-btn');if(btn){btn.disabled=true;btn.textContent='Klart!';}}}catch(e){}}
 async function runEnrich(){var btn=document.getElementById('enrich-btn');btn.disabled=true;btn.textContent='Hamtar...';try{var r=await fetch('https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',{headers:{'apikey':K,'Authorization':'Bearer '+K}});var d=await r.json();btn.textContent='Klart: '+(d.processed||0)+' behandlade';await updateEnrichStatus();var d2=await api('/aht-stats?months=12');_ahtData=d2;dailyAnalyticsAdapter.invalidate();renderAHTGrid(d2,document.querySelector('#aht-pool-filter .pool-btn.active')?.dataset.pool||'');}catch(e){btn.textContent='Fel: '+e.message;}setTimeout(function(){if(btn){btn.disabled=false;btn.textContent='Hamta Freshdesk-data';}},8000);}
