@@ -152,12 +152,12 @@ var WP = {
   pools: [
     { pool:'Classic',    supply:3.10, demandPeak:3.40, comfortable:2.80, gapFte:-0.30, status:'Tight',    agents:3 },
     { pool:'Switchboard', supply:2.80, demandPeak:2.65, comfortable:2.20, gapFte: 0.15, status:'OK',       agents:3 },
-    { pool:'Talent',     supply:1.00, demandPeak:0.95, comfortable:0.80, gapFte: 0.05, status:'OK',       agents:2 }
-    { pool:'Frankly',    supply:1.65, demandPeak:1.65, comfortable:1.40, gapFte: 0.00, status:'OK',       agents:1 }
+    { pool:'Talent',     supply:1.00, demandPeak:0.95, comfortable:0.80, gapFte: 0.05, status:'OK',       agents:2 },
+    { pool:'Frankly',    supply:1.65, demandPeak:1.65, comfortable:1.40, gapFte: 0.00, status:'OK',       agents:1 },
     { pool:'S1',         supply:2.55, demandPeak:2.45, comfortable:2.00, gapFte: 0.10, status:'OK',       agents:2 }
   ],
   scenarios: [
-    { name:'Now',           requiredFte:10.10, supplyFte:11.05, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -1.15' },
+    { name:'Now',           requiredFte:10.10, supplyFte:11.05, gapFte: 1.00, monthlyCostSek:110000, largestDeficit:'Classic -0.30' },
     { name:'Post-aug best', requiredFte: 9.80, supplyFte:11.60, gapFte: 1.80, monthlyCostSek:107000, largestDeficit:'Classic' },
     { name:'Post-aug worst',requiredFte: 9.50, supplyFte: 7.00, gapFte:-2.50, monthlyCostSek: 76000, largestDeficit:'Classic' },
     { name:'AI deflect 30%',requiredFte: 9.30, supplyFte:11.10, gapFte: 1.80, monthlyCostSek:110000, largestDeficit:'Classic' }
