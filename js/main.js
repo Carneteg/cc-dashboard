@@ -1,8 +1,12 @@
-// js/main.js  --  Global init, error wiring
-// Note: showTab is defined and assigned to window in tab-wp.js (it uses 'tab-'+id prefix)
-// Note: aeInit is a self-executing named IIFE in tab-agent.js, no import needed
-import { loadAgentTab }   from './tab-agent.js';
-import { naInit }         from './tab-agent-eff.js';
+// js/main.js  --  Module entry point, imports all tab modules
+// tab-wp.js assigns window.showTab, window.setTimeGran, etc. (uses 'tab-'+id prefix)
+// tab-agent.js assigns window.loadAgentTab, window.renderAgentTable, etc.
+// aeInit is a self-executing named IIFE in tab-agent.js - no import needed
+// naInit is exported from tab-agent-eff.js - called on DOMContentLoaded
+
+import './tab-wp.js';
+import './tab-agent.js';
+import { naInit } from './tab-agent-eff.js';
 
 // Global error boundary
 window.addEventListener('unhandledrejection', ev => {
