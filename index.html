@@ -269,10 +269,10 @@ CC Workforce
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Surplus</span></td><td style="font-size:11px;color:#94a3b8">Capacity for migration growth.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Surplus</span></td><td style="font-size:11px;color:#94a3b8">Stable. Monitor volume.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Surplus</span></td><td style="font-size:11px;color:#94a3b8">Stable.</td></tr>
-<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Total positive — men Classic→underskott −1.20 FTE is critical.</td></tr>
+<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Total</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic hidden</span></td><td style="font-size:11px;color:#fca5a5">Total positive — men Classic→underskott −1.20 FTE is critical.</td></tr>
 </tbody></table>
 </div>
-<div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planning:</strong> Officiella KPI:er från Excel-modellen. Analytics-estimat (lila, nedan) kan avvika — de är operational analysis, ej beslutskälla. Se <em>Classification</em>-fliken för supply-avvikelser och routing-diagnostik.</div>
+<div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planning:</strong> Official KPIs from the Excel model. Analytics estimates (purple, below) may deviate — they are operational analysis, not an official source. See the <em>Classification</em> tab for supply deviations and routing diagnostics.</div>
 </div>
 <!-- /CFO DECISION LAYER -->
 <div id="tab-wp" class="tc active">
@@ -310,7 +310,7 @@ CC Workforce
 </div>
 </div>
 <div class="alert-banner crit">
-<div class="alert-icon">ð¨</div>
+<div class="alert-icon">🚨</div>
 <div class="alert-body">
 <div class="alert-title">Classic is understaffed by -1.20 FTE despite total balance</div>
 <div class="alert-desc">Total net surplus of <span>+1.00 FTE</span> masks a critical deficit in the Classic pool. Supply: <span>2.20 FTE</span> · Required Peak: <span>3.40 FTE</span> · Gap: <span>-1.20 FTE</span>.</div>
@@ -344,7 +344,7 @@ CC Workforce
 <span class="section-title">§ 2 · Staffing Over Time</span>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
 <span class="layer-badge planning">Planning</span>
-<span class="layer-badge analytics">Analys</span>
+<span class="layer-badge analytics">Analytics</span>
 <div class="chart-controls">
 <button class="chart-btn active" onclick="setTimeGran('monthly',this)">Monthly</button>
 <button class="chart-btn" onclick="setTimeGran('quarterly',this)">Quarterly</button>
@@ -358,17 +358,17 @@ CC Workforce
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
 <div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div><div class="cs">Worst case · aug 2025</div></div>
-<div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE med AI-deflection</div></div>
-<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">Med AI-deflection · topp migration</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE with AI deflection</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">With AI deflection · peak migration</div></div>
 </div>
 <div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analytics · Actual workload &amp; coverage (API data)</span><div class="layer-divider-line"></div></div>
 <div class="trend-container">
 <div class="trend-header">
-<span class="trend-title">Monthly workload: Actual tickets &amp; calculated FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
+<span class="trend-title">Monthly workload: Actual tickets &amp; calculated FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analytics</span></span>
 <div class="chart-controls">
-<button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mån</button>
-<button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mån</button>
-<button class="chart-btn" id="trendBtn3" onclick="setTrendWindow(3,this)">3 mån</button>
+<button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mo</button>
+<button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mo</button>
+<button class="chart-btn" id="trendBtn3" onclick="setTrendWindow(3,this)">3 mo</button>
 </div>
 </div>
 <div id="trend-loading" class="trend-loading">Loading operational data from API...</div>
@@ -455,7 +455,7 @@ CC Workforce
 </div>
 <div style="margin-bottom:14px">
 <div class="alert-banner warn">
-<div class="alert-icon">ð</div>
+<div class="alert-icon">🚨</div>
 <div class="alert-body">
 <div class="alert-title">Migration strategy requires S1 recruitment by Q4–Q6</div>
 <div class="alert-desc">S1 FTE requirement grows from <span>2.93</span> at Q0 to <span>4.05</span> at Q10 with AI deflection. Classic volume decreases in parallel.</div>
@@ -463,11 +463,11 @@ CC Workforce
 </div>
 </div>
 <div class="migration-phases">
-<span class="phase-chip phase-akut">ð´ Akut (Q0–Q1)</span>
-<span class="phase-chip phase-fas1">ð  Fas 1 (Q2–Q3)</span>
-<span class="phase-chip phase-fas2">ð¡ Fas 2 (Q4–Q6)</span>
-<span class="phase-chip phase-fas3">ð¢ Fas 3 (Q7–Q8)</span>
-<span class="phase-chip phase-expansion">ðµ Expansion (Q9–Q10)</span>
+<span class="phase-chip phase-akut">🔴 Critical (Q0–Q1)</span>
+<span class="phase-chip phase-fas1">🟡 Phase 1 (Q2–Q3)</span>
+<span class="phase-chip phase-fas2">🟡 Phase 2 (Q4–Q6)</span>
+<span class="phase-chip phase-fas3">🟢 Phase 3 (Q7–Q8)</span>
+<span class="phase-chip phase-expansion">🔵 Expansion (Q9–Q10)</span>
 </div>
 <div class="chart-wrap" style="margin-bottom:16px">
 <h4>S1 FTE Requirement · Migration Q0–Q10 <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planning</span></h4>
@@ -498,8 +498,8 @@ CC Workforce
 <div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Model productive capacity after seniority weighting. Current: 11.05 FTE.</div></div>
 <div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Total FTE requirement: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
 <div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Effective Supply − Required FTE. ⚠ Total positive gap hides pool-level deficits.</div></div>
-<div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Pool configured supply per day. Analytics value — not an official planning metric.</div><div class="def-example">Not the same as Effective Supply FTE.</div></div>
-<div class="def-item"><div class="def-term">queueGroup <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">The routing destination for a ticket: Switchboard, Classic, S1, Frankly, Talent. Separate dimension from product.</div></div>
+<div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analytics</span></div><div class="def-body">Pool configured supply per day. Analytics value — not an official planning metric.</div><div class="def-example">Not the same as Effective Supply FTE.</div></div>
+<div class="def-item"><div class="def-term">queueGroup <span class="layer-badge analytics" style="font-size:9px">Analytics</span></div><div class="def-body">The routing destination for a ticket: Switchboard, Classic, S1, Frankly, Talent. Separate dimension from product.</div></div>
 <div class="def-item"><div class="def-term">product</div><div class="def-body">The Freshdesk product (cf_category_1): Simployer Classic, Expert NO, Simployer One, etc. Separate from queueGroup.</div></div>
 <div class="def-item"><div class="def-term">AI Deflection</div><div class="def-body">Andel tickets avleds av AI. 30% deflection → Required FTE → 9.30.</div></div>
 <div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Share of paid time not available for ticket work. Increases Required FTE.</div></div>
@@ -593,7 +593,7 @@ CC Workforce
 <div class="section-header" style="margin-top:24px">
 <span class="section-title">Valideringstabell — Tickets per produkt &times; queueGroup</span>
 <div style="display:flex;gap:8px;align-items:center">
-<span class="layer-badge analytics">Analys</span>
+<span class="layer-badge analytics">Analytics</span>
 <button class="chart-btn" onclick="refreshClassificationData()" style="margin-left:8px">→» Uppdatera</button>
 </div>
 </div>
@@ -615,7 +615,7 @@ CC Workforce
 <!-- Per-product breakdown chart -->
 <div id="classif-chart-wrap" style="display:none">
 <div class="chart-wrap">
-<h4>Tickets per produkt-grupp <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys · senaste 3 månader</span></h4>
+<h4>Tickets per produkt-grupp <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analytics · senaste 3 månader</span></h4>
 <canvas id="classifChart" height="80"></canvas>
 </div>
 </div>
@@ -937,7 +937,7 @@ SELECT vault.create_secret('din-freshcaller-api-nyckel','FRESHCALLER_API_KEY','F
 SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>Enrichment status (real-time)</h3><div class="desc">Data coverage per pool.</div></div><button class="enrich-btn" onclick="loadSetupStatus()">Uppdatera status</button></div>
+<div class="setup-row"><div><h3>Enrichment status (real-time)</h3><div class="desc">Data coverage per pool.</div></div><button class="enrich-btn" onclick="loadSetupStatus()">Refresh status</button></div>
 <div id="setup-enrich-detail" style="margin-top:12px;font-size:13px;color:#64748b">Click to refresh...</div>
 </div>
 <div class="setup-section">
@@ -955,18 +955,18 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <h2 style="font-size:20px;font-weight:700;color:#1e293b;margin:0;">Agent</h2>
 <div style="font-size:13px;color:#94a3b8;margin-top:2px;">Operational analysis of handled tickets, time utilization and absence per team/pool</div>
 <div style="font-size:11px;color:#64748b;margin-top:4px;" id="ag-updated-ts">Updated --:--</div>
-<div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#f1f5f9;border:1px solid #2d3148;border-radius:20px;font-size:11px;color:#64748b;">i Ej officiellt prestationsmattt</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#f1f5f9;border:1px solid #2d3148;border-radius:20px;font-size:11px;color:#64748b;">i Not an official performance metric</div>
 </div>
 <div class="ag-filter-bar">
 <label>Period</label>
 <select id="ag-filter-period" onchange="loadAgentTab()">
 <option value="2026-06">Jun 2026</option>
-<option value="2026-05" selected>Maj 2026</option>
+<option value="2026-05" selected>May 2026</option>
 <option value="2026-04">Apr 2026</option>
 <option value="2026-03">Mar 2026</option>
 </select>
 <div class="fdiv"></div>
-<label>Team / Ko</label>
+<label>Team / Pool</label>
 <select id="ag-filter-team" onchange="renderAgentTable()">
 <option value="">All teams</option>
 <option value="classic">Classic</option>
@@ -975,7 +975,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <option value="frankly">Frankly</option>
 <option value="talent">Talent</option>
 </select>
-<button class="ag-reset" onclick="document.getElementById('ag-filter-team').value='';renderAgentTable()">Aterstaell</button>
+<button class="ag-reset" onclick="document.getElementById('ag-filter-team').value='';renderAgentTable()">Reset</button>
 </div>
 <div class="ag-kpi-grid" id="ag-kpi-grid">
 <div class="ag-kpi-card"><div class="ag-kpi-label">Loading...</div><div class="ag-kpi-value" style="color:#64748b">--</div></div>
@@ -1063,14 +1063,14 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <!-- ===== NAMED AGENTS DROP-IN ===== -->
 <div id="named-agents" style="margin-bottom:24px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;">
 <h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">Named Agents</h3>
-<p style="color:#64748b;font-size:12.5px;margin:0 0 16px;">Handled tickets per agent fr&#xe5;n Freshdesk (tilldelad responder). Termination r&#xe4;knas logiskt till switchboard. Ej officiellt prestationsm&#xe5;tt &#x2014; operational analysis.</p>
+<p style="color:#64748b;font-size:12.5px;margin:0 0 16px;">Handled tickets per agent from Freshdesk (assigned responder). Termination is logically counted under switchboard. Not an official performance metric — operational analysis.</p>
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
 <label style="color:#94a3b8;font-size:12px;">Period<select id="na-month" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"></select></label>
 <label style="color:#94a3b8;font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"><option value="">All pools</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
 <span style="margin-left:auto;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums;" id="na-meta">&#x2014;</span>
 </div>
 <div id="na-body"><div style="color:#64748b;font-size:13px;padding:18px 4px;">Loading&#x2026;</div></div>
-<p style="color:#475569;font-size:11.5px;margin-top:12px;line-height:1.4;">K&#xe4;lla: cc-dashboard-api <code style="background:#f8fafc;padding:1px 4px;border-radius:3px;color:#818cf8;">/agent-breakdown</code>.</p>
+<p style="color:#475569;font-size:11.5px;margin-top:12px;line-height:1.4;">Source: cc-dashboard-api <code style="background:#f8fafc;padding:1px 4px;border-radius:3px;color:#818cf8;">/agent-breakdown</code>.</p>
 </div>
 <!-- ===== END NAMED AGENTS DROP-IN ===== -->
 
@@ -1140,7 +1140,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=9"></script>
+</main><script type="module" src="js/main.js?v=10"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
