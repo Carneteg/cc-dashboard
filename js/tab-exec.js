@@ -1,5 +1,5 @@
 // js/tab-exec.js — CFO Executive Summary Tab
-// v1 — June 2026
+// v2 — June 2026 — corrected FTE from masterdata
 // Reads from the same planning constants used by tab-wp.js
 // No external API calls — all values from the official Excel model (hardcoded constants)
 // so this tab always loads instantly even if Supabase is down.
@@ -10,22 +10,22 @@
 /* ── Planning constants (mirror of tab-wp.js) ── */
 const PLAN = {
   actualFte: 11,
-  effectiveSupply: 11.05,
+  effectiveSupply: 11.10,
   requiredFte: 10.10,
   ticketFte: 9.10,
   overheadFte: 1.00,
   pools: [
-    { name:'Classic',    supply:2.20, required:3.40, status:'crit',  color:'#ef4444' },
-    { name:'Switchboard',supply:2.69, required:2.65, status:'warn',  color:'#f59e0b' },
-    { name:'S1',         supply:4.34, required:2.45, status:'ok',    color:'#22c55e' },
-    { name:'Frankly',    supply:2.35, required:1.65, status:'ok',    color:'#22c55e' },
-    { name:'Talent',     supply:1.49, required:0.95, status:'ok',    color:'#22c55e' }
+    { name:'Classic',    supply:3.10, required:3.40, status:'warn',  color:'#f59e0b' },
+    { name:'Switchboard',supply:2.80, required:2.65, status:'ok',    color:'#22c55e' },
+    { name:'S1',         supply:2.55, required:2.45, status:'ok',    color:'#22c55e' },
+    { name:'Frankly',    supply:1.65, required:1.65, status:'ok',    color:'#22c55e' },
+    { name:'Talent',     supply:1.00, required:0.95, status:'ok',    color:'#22c55e' }
   ],
   scenarios: [
-    { name:'Now',            supply:11.05, required:10.10, label:'Current',   color:'#4f46e5' },
+    { name:'Now',            supply:11.10, required:10.10, label:'Current',   color:'#4f46e5' },
     { name:'Post-aug Best',  supply:11.60, required: 9.80, label:'Optimistic',color:'#22c55e' },
     { name:'Post-aug Worst', supply: 7.00, required: 9.50, label:'Critical',  color:'#ef4444' },
-    { name:'AI Deflection',  supply:11.05, required: 9.30, label:'Strategy',  color:'#0ea5e9' }
+    { name:'AI Deflection',  supply:11.10, required: 9.30, label:'Strategy',  color:'#0ea5e9' }
   ]
 };
 
@@ -58,7 +58,8 @@ function calcHealthScore(){
   const classic = PLAN.pools.find(p=>p.name==='Classic');
   const classicGap = classic.supply - classic.required;
   if(classicGap < -1) score -= 20;
-  else if(classicGap < 0) score -= 10;
+  else if(classicGap < -0.5) score -= 10;
+  else if(classicGap < 0) score -= 5;
 
   // Post-aug worst case: supply drops to 7.0 vs required 9.5 = -2.5 gap
   // This is a forward risk: -10 pts
@@ -143,10 +144,10 @@ function renderExec(){
     <div style="font-size:30px;font-weight:800;color:${gapColor(gap)};letter-spacing:-.03em;line-height:1">${fmtGap(gap)}</div>
     <div style="font-size:11px;color:#94a3b8;margin-top:5px">⚠ Hides Classic −1.20</div>
   </div>
-  <div style="background:#fff;border:1px solid #fecaca;border-radius:12px;padding:18px 20px;box-shadow:0 2px 6px rgba(0,0,0,.06);background:#fff1f2">
+  <div style="background:#fff;border:1px solid #fde68a;border-radius:12px;padding:18px 20px;box-shadow:0 2px 6px rgba(0,0,0,.06);background:#fffbeb">
     <div style="font-size:11px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Classic Gap</div>
-    <div style="font-size:30px;font-weight:800;color:#ef4444;letter-spacing:-.03em;line-height:1">${fmtGap(classicGap)}</div>
-    <div style="font-size:11px;color:#f87171;margin-top:5px">Critical — hire immediately</div>
+    <div style="font-size:30px;font-weight:800;color:#d97706;letter-spacing:-.03em;line-height:1">${fmtGap(classicGap)}</div>
+    <div style="font-size:11px;color:#f87171;margin-top:5px">Tight — monitor · accelerate S1 migration</div>
   </div>
 </div>
 
@@ -233,11 +234,11 @@ function renderExec(){
     <span style="font-size:10px;font-weight:600;background:#fef3c7;color:#d97706;padding:2px 7px;border-radius:10px">CFO / WFM</span>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-    <div style="display:flex;gap:12px;padding:12px 14px;background:#fff1f2;border:1px solid #fecaca;border-radius:9px;align-items:flex-start">
-      <span style="font-size:18px;margin-top:1px">🔴</span>
+    <div style="display:flex;gap:12px;padding:12px 14px;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;align-items:flex-start">
+      <span style="font-size:18px;margin-top:1px">🟡</span>
       <div>
-        <div style="font-size:12px;font-weight:700;color:#1e293b;margin-bottom:2px">Classic: Hire 1–2 FTE immediately</div>
-        <div style="font-size:11px;color:#64748b;line-height:1.5">−1.20 FTE deficit in Classic pool. Accelerate migration to S1 or hire directly. Classic has surplus AHT capacity in S1 (+1.89 FTE) that can absorb volume if routing is adjusted.</div>
+        <div style="font-size:12px;font-weight:700;color:#1e293b;margin-bottom:2px">Classic: Tight gap −0.30 FTE — accelerate S1 migration</div>
+        <div style="font-size:11px;color:#64748b;line-height:1.5">−0.30 FTE gap in Classic pool. Not critical but tight — one absence day tips into deficit. Accelerate S1 migration to reduce Classic volume. S1 has +0.10 FTE headroom currently.</div>
       </div>
     </div>
     <div style="display:flex;gap:12px;padding:12px 14px;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;align-items:flex-start">
