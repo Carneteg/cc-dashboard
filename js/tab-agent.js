@@ -37,7 +37,7 @@ return cnt;
 }
 
 // ========================================
-// AGENT TAB v26 - Riktig data fran API
+// AGENT TAB v26 - Real data from API
 // ========================================
 var _agentTabData = null;
 var _agentDailyData = null;
@@ -47,9 +47,9 @@ async function loadAgentTab() {
   var periodSel = document.getElementById('ag-filter-period');
   var ym = periodSel ? periodSel.value : '2026-05';
   var tsEl = document.getElementById('ag-updated-ts');
-  if (tsEl) tsEl.textContent = 'Uppdaterat ' + new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'}) + ' - Visar: ' + ym;
+  if (tsEl) tsEl.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) + ' - Showing: ' + ym;
   var tbody = document.getElementById('ag-team-table-body');
-  if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;color:#7a8799;">Laddar data...</td></tr>';
+  if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;color:#7a8799;">Loading data...</td></tr>';
   try {
     var ahtData = await api('/aht-stats?months=4');
     var months = ahtData.months || [];
@@ -116,7 +116,7 @@ function renderAgentKPIs(monthData, ym) {
   if (!kpiGrid) return;
   kpiGrid.innerHTML = [
     '<div class="ag-kpi-card"><div class="ag-kpi-label">Aktiva pooler</div><div class="ag-kpi-value">'+activePools.length+'</div><div class="ag-kpi-sub">'+ym+'</div></div>',
-    '<div class="ag-kpi-card"><div class="ag-kpi-label">Totala tickets</div><div class="ag-kpi-value">'+totalTickets.toLocaleString('sv-SE')+'</div><div class="ag-kpi-sub">Raa ticket-events</div></div>',
+    '<div class="ag-kpi-card"><div class="ag-kpi-label">Totala tickets</div><div class="ag-kpi-value">'+totalTickets.toLocaleString('en-US')+'</div><div class="ag-kpi-sub">Raa ticket-events</div></div>',
     '<div class="ag-kpi-card" style="border-color:#bfdbfe;"><div class="ag-kpi-label">FTE-krav (analys)</div><div class="ag-kpi-value" style="color:#1f6f8b;">'+totalFteReq.toFixed(2)+'</div><div class="ag-kpi-sub">Beraknat fran AHT</div></div>',
     '<div class="ag-kpi-card"><div class="ag-kpi-label">FTE-tillgang</div><div class="ag-kpi-value">'+totalFteSupply.toFixed(2)+'</div><div class="ag-kpi-sub">Konfigurerad supply</div></div>',
     '<div class="ag-kpi-card '+(totalGap<-0.5?'ag-kpi-card--warn':'')+'"><div class="ag-kpi-label">Gap FTE</div><div class="ag-kpi-value" style="color:'+(totalGap>=0?'#16a34a':'#b45309')+'">'+(totalGap>=0?'+':'')+totalGap.toFixed(2)+'</div><div class="ag-kpi-sub">Supply minus Krav</div></div>',
@@ -146,7 +146,7 @@ function renderAgentTable() {
     var adjFteDisplay = absInfo.totalWorkdays>0 ? adjustedFteSupply.toFixed(2)+' FTE' : p.fte_supply.toFixed(2)+' FTE';
     return '<tr style="border-bottom:1px solid #dde3ee;">'
       +'<td style="padding:10px 12px;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:#f1f5f9;color:'+poolColor+';">'+p.pool_name+'</span></td>'
-      +'<td style="padding:10px 12px;font-weight:600;">'+(p.raw_tickets||0).toLocaleString('sv-SE')+'</td>'
+      +'<td style="padding:10px 12px;font-weight:600;">'+(p.raw_tickets||0).toLocaleString('en-US')+'</td>'
       +'<td style="padding:10px 12px;">'+(p.filtered_fte||0).toFixed(2)+' FTE</td>'
       +'<td style="padding:10px 12px;">'+(p.fte_supply||0).toFixed(2)+' FTE</td>'
       +'<td style="padding:10px 12px;font-weight:700;color:'+gapColor+'">'+(p.gap>=0?'+':'')+p.gap.toFixed(2)+'</td>'
@@ -212,7 +212,7 @@ function renderSparkChart() {
   const el = document.getElementById('ov-spark-chart');
   if (!el) return;
   const ptb = document.getElementById('ptb');
-  if (!ptb || !ptb.children.length) { el.innerHTML = '<span style="color:#475569;font-style:italic">VÃ¤ntar pÃ¥ data...</span>'; return; }
+  if (!ptb || !ptb.children.length) { el.innerHTML = '<span style="color:#475569;font-style:italic">Waiting for data...</span>'; return; }
   const rows = Array.from(ptb.querySelectorAll('tr')).filter(r => r.cells.length >= 3);
   const data = rows.map(r => ({
     name: r.cells[0] ? r.cells[0].textContent.trim() : '',
@@ -336,7 +336,7 @@ function renderAgentProductBreakdown() {
         +'<div style="flex:1;font-size:11px;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+prod.name+'</div>'
         +'<div style="font-size:11px;font-weight:700;color:'+poolColor+';min-width:38px;text-align:right;">'+prod.tickets+'</div>'
         +'<div style="font-size:10px;color:#64748b;min-width:30px;text-align:right;">'+pct+'%</div>'
-        +'<div style="font-size:10px;color:#64748b;min-width:68px;text-align:right;white-space:nowrap;">~'+ticketsPerAgentPerDay.toFixed(1)+'/dag '+Math.round(handlMins)+'min</div>'
+        +'<div style="font-size:10px;color:#64748b;min-width:68px;text-align:right;white-space:nowrap;">~'+ticketsPerAgentPerDay.toFixed(1)+'/day '+Math.round(handlMins)+'min</div>'
         +'</div>';
     }).join('');
     var totalHandlMins = numAgents>0 ? totalProdTickets/30/numAgents*pd.aht : 0;
@@ -350,7 +350,7 @@ function renderAgentProductBreakdown() {
           +'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:#f0f4f8;color:'+occColor+';">'+totalOcc+'% belaggning</span>'
         +'</div>'
       +'</div>'
-      +'<div style="font-size:10px;color:#64748b;margin-bottom:10px;">'+numAgents+' agent'+( numAgents>1?'er':'')+' Â· '+totalProdTickets+' tickets/30d</div>'
+      +'<div style="font-size:10px;color:#64748b;margin-bottom:10px;">'+numAgents+' agent'+( numAgents>1?'s':'')+' Â· '+totalProdTickets+' tickets/30d</div>'
       +(pd.products.length>0?rows:'<div style="font-size:11px;color:#64748b;padding:8px 0;">Inga produktmatchningar funna.</div>')
     +'</div>';
   });
@@ -365,7 +365,7 @@ function renderAgentProductBreakdown() {
   const AE_SEG = ["--seg1","--seg2","--seg3","--seg4","--seg5","--seg6"];
   const AE_POOL_LABEL = { switchboard:"Switchboard", classic:"Classic", s1:"S1", frankly:"Frankly", talent:"Talent" };
 
-  function aeFmt(n,d=0){ return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function aeFmt(n,d=0){ return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}); }
   function aePct(x){ return aeFmt(x*100,0)+" %"; }
   function aeEsc(s){ return String(s ?? "").replace(/[&<>"]/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c])); }
   function aePoolName(p){ return AE_POOL_LABEL[p] || p; }
@@ -375,7 +375,7 @@ function renderAgentProductBreakdown() {
     for(let i=0;i<6;i++){
       const d=new Date(now.getFullYear(),now.getMonth()-i,1);
       const ym=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
-      const l=d.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
+      const l=d.toLocaleDateString("en-US",{month:"long",year:"numeric"});
       opts.push(`<option value="${ym}">${l.charAt(0).toUpperCase()+l.slice(1)}</option>`);
     }
     sel.innerHTML=opts.join("");
@@ -416,7 +416,7 @@ function renderAgentProductBreakdown() {
 
   async function renderAgentEff(month, occTarget){
     const body=document.getElementById("ae-body"), meta=document.getElementById("ae-meta");
-    body.innerHTML='<div class="ae-empty">Laddar…</div>';
+    body.innerHTML='<div class="ae-empty">Loading…</div>';
     try{
       const url=new URL(CC_API_BASE+"/agent-efficiency");
       url.searchParams.set("month",month);
@@ -426,9 +426,9 @@ function renderAgentProductBreakdown() {
       const data=await res.json();
       const agents=data.agents||[];
       const target=data.params?.occupancy_target ?? 0.75;
-      meta.textContent=`${data.agent_count} agenter · ${aeFmt(data.total_handled)} tickets · ${aeFmt((data.total_modeled_minutes||0)/60,0)} modellerade tim`;
+      meta.textContent=`${data.agent_count} agents · ${aeFmt(data.total_handled)} tickets · ${aeFmt((data.total_modeled_minutes||0)/60,0)} modeled hrs`;
 
-      if(!agents.length){ body.innerHTML='<div class="ae-empty">Ingen agentdata för perioden.</div>'; return; }
+      if(!agents.length){ body.innerHTML='<div class="ae-empty">No agent data for this period.</div>'; return; }
 
       const rows=agents.map(a=>`<tr>
         <td><div class="ae-name">${aeEsc(a.agent_name)}</div><div class="ae-lvl ${a.sen_factor<1?"j":""}">${aeEsc(a.level)}${a.sen_factor<1?` · faktor ${aeFmt(a.sen_factor,1)}`:""}</div></td>
@@ -443,15 +443,15 @@ function renderAgentProductBreakdown() {
       body.innerHTML=`<table>
         <thead><tr>
           <th>Agent</th>
-          <th class="num">Hanterade</th>
-          <th class="num">Modellerad tid (tim)</th>
-          <th class="mid">Belastningsgrad <span style="font-weight:400;text-transform:none">(mål ${aePct(target)})</span></th>
-          <th class="mid">Effektivitet <span style="font-weight:400;text-transform:none">(ref 100 %)</span></th>
-          <th>Tidsfördelning per pool</th>
+          <th class="num">Handled</th>
+          <th class="num">Modeled time (hrs)</th>
+          <th class="mid">Load factor <span style="font-weight:400;text-transform:none">(mål ${aePct(target)})</span></th>
+          <th class="mid">Efficiency <span style="font-weight:400;text-transform:none">(ref 100%)</span></th>
+          <th>Time distribution by pool</th>
         </tr></thead>
         <tbody>${rows}</tbody>
         <tfoot><tr>
-          <td>Totalt (${agents.length} agenter)</td>
+          <td>Total (${agents.length} agents)</td>
           <td class="num">${aeFmt(totHandled)}</td>
           <td class="num">${aeFmt(totHrs,1)}</td>
           <td></td><td></td><td></td>
@@ -461,7 +461,7 @@ function renderAgentProductBreakdown() {
       document.getElementById("ae-legend").innerHTML =
         Object.keys(AE_POOL_LABEL).map((p,i)=>`<span><i style="background:var(${AE_SEG[i%AE_SEG.length]})"></i>${AE_POOL_LABEL[p]}</span>`).join("");
     }catch(e){
-      body.innerHTML='<div class="ae-error">Kunde inte ladda data: '+aeEsc(e.message)+'</div>';
+      body.innerHTML='<div class="ae-error">Could not load data: '+aeEsc(e.message)+'</div>';
     }
   }
 
