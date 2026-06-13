@@ -7,7 +7,7 @@ header{background:#ffffff;border-bottom:1px solid #dde3ee;padding:16px 24px;disp
 .logo{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700}
 .logo svg{width:28px;height:28px}
 .ts{font-size:12px;color:#64748b}
-nav{background:#ffffff;border-bottom:1px solid #dde3ee;padding:0 24px;display:flex;gap:2px;flex-wrap:wrap;overflow:visible}
+nav{background:#ffffff;border-bottom:1px solid #dde3ee;padding:0 24px;display:flex;gap:2px;flex-wrap:wrap;}
 nav button{background:none;border:none;color:#64748b;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
 nav button:hover{color:#1e293b}
 nav button.active{color:#6366f1;border-bottom-color:#6366f1}
@@ -433,7 +433,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
   #agent-eff .ae-legend i{ display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px; }
 
 /* ===== GROUPED NAV ===== */
-nav#main-nav{background:#ffffff;border-bottom:2px solid #dde3ee;padding:0 24px;display:flex;align-items:stretch;overflow:visible;position:relative;}
+nav#main-nav{background:#ffffff;border-bottom:2px solid #dde3ee;padding:0 24px;display:flex;align-items:stretch;overflow:visible!important;position:relative;}
 .nav-group{display:flex;align-items:stretch;gap:2px;flex-wrap:wrap;}
 .nav-tab{background:none;border:none;color:#64748b;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;position:relative;top:2px;}
 .nav-tab:hover{color:#1e293b;background:#f1f5f9;}
@@ -1375,7 +1375,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=5"></script>
+</main><script type="module" src="js/main.js?v=6"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
