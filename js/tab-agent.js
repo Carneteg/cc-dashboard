@@ -2,6 +2,40 @@
 // Migrated from index.html inline scripts (AGENT TAB v26 + INDIVIDUAL AGENT LEVEL v27)
 // Functions assigned to window for HTML onclick compatibility
 
+// ---- Runtime dependencies: api() helper + Swedish calendar ----
+var _agApiBase = "https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api";
+var _agAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ";
+var _agApiCache = {};
+function api(p){
+  if(_agApiCache[p] && Date.now()-_agApiCache[p].t < 30000) return Promise.resolve(_agApiCache[p].d);
+  return fetch(_agApiBase+p,{headers:{'apikey':_agAnonKey,'Authorization':'Bearer '+_agAnonKey}}).then(r=>r.json()).then(function(d){_agApiCache[p]={d:d,t:Date.now()};return d;});
+}
+function swedishHolidays(yr){
+var s=new Set();
+function add(m,d){s.add(yr+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'));}
+// Fixed holidays
+add(1,1);add(1,6);add(5,1);add(6,6);add(12,24);add(12,25);add(12,26);add(12,31);
+// Easter-based (Gauss algorithm)
+var a=yr%19,b=Math.floor(yr/100),c=yr%100;
+var d2=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3);
+var h=(19*a+b-d2-g+15)%30,i=Math.floor(c/4),k=c%4;
+var l=(32+2*e+2*i-h-k)%7,m2=Math.floor((a+11*h+22*l)/451);
+var month=Math.floor((h+l-7*m2+114)/31),day=((h+l-7*m2+114)%31)+1;
+var easter=new Date(yr,month-1,day);
+function addEaster(offset){var d3=new Date(easter);d3.setDate(d3.getDate()+offset);add(d3.getMonth()+1,d3.getDate());}
+addEaster(-2);addEaster(0);addEaster(1);addEaster(39);addEaster(49);addEaster(50);
+// Midsommar (Friday between Jun 19-25)
+var ms=new Date(yr,5,19);while(ms.getDay()!==5)ms.setDate(ms.getDate()+1);add(ms.getMonth()+1,ms.getDate());
+// Alla helgons dag (Saturday Oct 31 - Nov 6)
+var ah=new Date(yr,9,31);while(ah.getDay()!==6)ah.setDate(ah.getDate()+1);add(ah.getMonth()+1,ah.getDate());
+return s;
+}
+function swedishWorkingDays(yr,mo){
+var h=swedishHolidays(yr),cnt=0,d=new Date(yr,mo-1,1);
+while(d.getMonth()===mo-1){var dw=d.getDay();if(dw!==0&&dw!==6){var ds=yr+'-'+String(mo).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(!h.has(ds))cnt++;}d.setDate(d.getDate()+1);}
+return cnt;
+}
+
 // ========================================
 // AGENT TAB v26 - Riktig data fran API
 // ========================================
