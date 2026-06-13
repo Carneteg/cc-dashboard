@@ -1,486 +1,251 @@
 <!DOCTYPE html><!-- v-fix-named-agents --><html lang="sv"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CC Workforce Planning</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh}
-header{background:#ffffff;border-bottom:1px solid #dde3ee;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.logo{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700}
-.logo svg{width:28px;height:28px}
-.ts{font-size:12px;color:#64748b}
-nav{background:#ffffff;border-bottom:1px solid #dde3ee;padding:0 24px;display:flex;gap:2px;flex-wrap:wrap;}
-nav button{background:none;border:none;color:#64748b;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-nav button:hover{color:#1e293b}
-nav button.active{color:#6366f1;border-bottom-color:#6366f1}
-nav .nav-sep{width:1px;background:#dde3ee;margin:8px 4px;flex-shrink:0}
-main{padding:24px;max-width:1440px;margin:0 auto}
-.tc{display:none}.tc.active{display:block}
+/* ── Reset & Base ── */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f5f5f7;
+  --surface:#ffffff;
+  --border:#d2d2d7;
+  --accent:#4f46e5;
+  --accent-light:#ede9fe;
+  --text:#1d1d1f;
+  --text2:#6e6e73;
+  --text3:#aeaeb2;
+  --green:#16a34a;
+  --red:#dc2626;
+  --amber:#d97706;
+  --radius:12px;
+  --shadow:0 2px 8px rgba(0,0,0,.07);
+  --shadow-md:0 4px 20px rgba(0,0,0,.10);
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;}
 
-/* ââ SHARED ââ */
-.section-header{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px}
-.section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
-.section-note{font-size:11px;color:#475569;font-style:italic}
-.card{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px}
-.card.hl{border-color:#6366f1}.card.warn{border-color:#f59e0b}.card.crit{border-color:h#ef4444}.card.ok{border-color:#22c55e}
-.cl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
-.cv{font-size:36px;font-weight:700;color:#1e293b;line-height:1;margin-bottom:4px}
-.cv.ok{color:#4ade80}.cv.warn{color:#fcd34d}.cv.crit{color:#fca5a5}.cv.info{color:#818cf8}
-.cs{font-size:11px;color:#64748b}
-.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.tag.master{background:#312e81;color:#a5b4fc;border:1px solid #4f46e5}
-.tag.ok{background:#14532d;color:#4ade80}.tag.warn{background:#713f12;color:#fcd34d}
-.tag.crit{background:#7f1d1d;color:#fca5a5}.tag.info{background:#1e3a5f;color:#60a5fa}
-.tag.forecast{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
-.tag.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
-.tag.analytics{background:#1a2744;color:#818cf8;border:1px solid #6366f1}
-.tw{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;overflow:hidden}
-table{width:100%;border-collapse:collapse}
-thead th{background:#f0f4f8;padding:11px 16px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:1px solid #dde3ee}
-thead th.r{text-align:right}
-tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:#f0f4f8}
-td{padding:12px 16px;font-size:13px}
-td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+/* ── Header ── */
+header{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.015em;}
+.logo svg{width:24px;height:24px;}
+.ts{font-size:12px;color:var(--text3);font-weight:400;}
 
-/* ââ LAYER BADGES ââ */
-.layer-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
-.layer-badge.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
-.layer-badge.analytics{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
-.layer-divider{display:flex;align-items:center;gap:10px;margin:28px 0 16px}
-.layer-divider-line{flex:1;height:1px;background:#dde3ee}
-.layer-divider-label{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
-
-/* ââ WP KPI CARDS ââ */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
-.kpi-card{background:#ffffff;border:1px solid #dde3ee;border-radius:14px;padding:22px;position:relative;overflow:hidden}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.kpi-card.actual::before{background:linear-gradient(90deg,#6366f1,#818cf8)}
-.kpi-card.supply::before{background:linear-gradient(90deg,#22c55e,#4ade80)}
-.kpi-card.required::before{background:linear-gradient(90deg,#f59e0b,#fcd34d)}
-.kpi-card.gap::before{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
-.kpi-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.kpi-value{font-size:44px;font-weight:800;line-height:1;margin-bottom:6px}
-.kpi-value.actual{color:#818cf8}.kpi-value.supply{color:#4ade80}
-.kpi-value.required{color:#fcd34d}.kpi-value.gap-pos{color:#4ade80}.kpi-value.gap-neg{color:#fca5a5}
-.kpi-sub{font-size:11px;color:#64748b;line-height:1.4}
-.kpi-tooltip{font-size:10px;color:#475569;margin-top:8px;padding-top:8px;border-top:1px solid #1e293b;line-height:1.5}
-
-/* Alert banner */
-.alert-banner{border-radius:10px;padding:14px 18px;margin-bottom:24px;display:flex;align-items:flex-start;gap:12px}
-.alert-banner.crit{background:#450a0a;border:1px solid #ef4444}
-.alert-banner.warn{background:#431407;border:1px solid #f59e0b}
-.alert-banner.ok{background:#052e16;border:1px solid #22c55e}
-.alert-banner.info{background:#0f172a;border:1px solid #2563eb}
-.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
-.alert-body .alert-title{font-size:14px;font-weight:700;margin-bottom:3px}
-.alert-body .alert-desc{font-size:12px;color:#94a3b8;line-height:1.5}
-.alert-body .alert-desc span{color:#1e293b;font-weight:600}
-
-/* Chart containers */
-.chart-wrap{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px;margin-bottom:8px}
-.chart-wrap h4{font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.chart-controls{display:flex;gap:6px}
-.chart-btn{background:#dde3ee;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:500}
-.chart-btn.active{background:#6366f1;color:#fff}
-.chart-note{font-size:11px;color:#475569;padding:6px 12px;background:#f8fafc;border-radius:6px;margin-top:6px}
-
-/* Pool gaps */
-.pool-grid{display:flex;flex-direction:column;gap:10px}
-.pool-row{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px}
-.pool-row.crit{border-left:4px solid #ef4444}.pool-row.warn{border-left:4px solid #f59e0b}.pool-row.ok{border-left:4px solid #22c55e}
-.pool-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.pool-name{font-size:14px;font-weight:700}
-.pool-gap-val{font-size:16px;font-weight:800}
-.pool-gap-val.neg{color:#fca5a5}.pool-gap-val.pos{color:#4ade80}.pool-gap-val.zero{color:#fcd34d}
-.pool-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-@media(max-width:700px){.pool-stats{grid-template-columns:repeat(2,1fr)}}
-.pool-stat{font-size:11px;color:#64748b}
-.pool-stat strong{display:block;font-size:14px;font-weight:700;color:#1e293b;margin-bottom:1px}
-.pool-bar-wrap{background:#f8fafc;border-radius:4px;height:10px;overflow:hidden;position:relative}
-.pool-bar-supply{height:100%;border-radius:4px;background:#4ade80;position:absolute;left:0;top:0}
-.pool-bar-demand{height:100%;border-radius:2px;background:#6366f1;position:absolute;left:0;top:0;opacity:.8}
-.pool-bar-label{display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:3px}
-
-/* Scenario cards */
-.scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-@media(max-width:1000px){.scenario-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.scenario-grid{grid-template-columns:1fr}}
-.scenario-card{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
-.scenario-card.active-scenario{border-color:#6366f1;box-shadow:0 0 0 1px #6366f1}
-.sc-name{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
-.sc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1e293b;font-size:12px}
-.sc-row:last-child{border-bottom:none}
-.sc-key{color:#64748b}.sc-val{font-weight:700;font-variant-numeric:tabular-nums}
-.sc-gap{font-size:18px;font-weight:800;margin:10px 0 4px}
-.sc-deficit{font-size:11px;color:#f87171}
-
-/* Migration forecast */
-.migration-phases{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.phase-chip{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid}
-.phase-akut{background:#450a0a;border-color:#ef4444;color:#fca5a5}
-.phase-fas1{background:#431407;border-color:#f97316;color:#fdba74}
-.phase-fas2{background:#713f12;border-color:#f59e0b;color:#fcd34d}
-.phase-fas3{background:#14532d;border-color:#22c55e;color:#4ade80}
-.phase-expansion{background:#1e3a5f;border-color:#3b82f6;color:#93c5fd}
-
-/* Sensitivity */
-.sensitivity-row{display:flex;align-items:center;gap:0;margin-bottom:6px;min-height:36px}
-.sens-label{font-size:12px;color:#94a3b8;width:140px;flex-shrink:0;text-align:right;padding-right:12px}
-
-/* Definitions */
-.def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.def-item{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:14px}
-.def-term{font-size:12px;font-weight:700;color:#818cf8;margin-bottom:5px}
-.def-body{font-size:12px;color:#94a3b8;line-height:1.5}
-.def-example{font-size:11px;color:#475569;margin-top:4px;font-style:italic}
-
-/* Analytics trend section */
-.trend-container{background:#ffffff;border:1px solid #4338ca;border-radius:12px;padding:20px;margin-bottom:8px;position:relative}
-.trend-container::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:12px 12px 0 0}
-.trend-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
-.trend-title{font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em}
-.trend-loading{font-size:12px;color:#64748b;text-align:center;padding:40px}
-.trend-error{font-size:12px;color:#f87171;padding:12px;background:#450a0a;border-radius:6px;margin-top:8px}
-.analytics-month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:12px}
-.analytics-month-card{background:#f0f4f8;border:1px solid #dde3ee;border-radius:8px;padding:12px}
-.amc-month{font-size:11px;color:#64748b;margin-bottom:6px}
-.amc-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
-.amc-label{color:#64748b}.amc-val{font-weight:600;font-variant-numeric:tabular-nums}
-.amc-gap{font-size:13px;font-weight:700;margin-top:6px;padding-top:6px;border-top:1px solid #dde3ee}
-.amc-cov{font-size:10px;margin-top:4px;padding:2px 6px;border-radius:3px;display:inline-block}
-.amc-cov.ok{background:#14532d;color:#4ade80}.amc-cov.warn{background:#7f1d1d;color:#fca5a5}
-
-/* ââ CLASSIFICATION MODEL STYLES ââ */
-.classif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:20px}
-.classif-card{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px}
-.classif-card.switchboard{border-left:4px solid #60a5fa}
-.classif-card.classic{border-left:4px solid #818cf8}
-.classif-card.s1{border-left:4px solid #4ade80}
-.classif-card.frankly{border-left:4px solid #fcd34d}
-.classif-card.talent{border-left:4px solid #f97316}
-.classif-card.unknown{border-left:4px solid #475569}
-.classif-title{font-size:13px;font-weight:700;margin-bottom:10px}
-.classif-products{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
-.product-chip{padding:2px 8px;border-radius:4px;font-size:11px;background:#f8fafc;border:1px solid #dde3ee;color:#94a3b8}
-.classif-note{font-size:11px;color:#475569;font-style:italic;margin-top:6px}
-.routing-rule{font-size:11px;color:#60a5fa;margin-top:4px;font-family:monospace;background:#f8fafc;padding:4px 8px;border-radius:4px}
-
-/* Cross-tab validation */
-.xtab{overflow-x:auto}
-.xtab table{min-width:600px}
-.xtab td.pool-head{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
-.xtab td.val-cell{text-align:right;font-variant-numeric:tabular-nums;font-size:12px}
-.xtab td.val-cell.zero{color:#475569}
-.xtab td.val-cell.low{color:#fcd34d}
-.xtab td.val-cell.high{color:#4ade80}
-.xtab td.total-row{font-weight:700;background:#f0f4f8}
-
-/* Supply discrepancy warning */
-.supply-warning{background:#431407;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;font-size:12px;line-height:1.6;margin-bottom:12px}
-.supply-warning .sw-title{font-weight:700;color:#fcd34d;margin-bottom:6px}
-.supply-sources{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px}
-.supply-source-card{background:#f8fafc;border-radius:6px;padding:10px;border:1px solid #dde3ee}
-.supply-source-title{font-size:10px;text-transform:uppercase;font-weight:700;color:#64748b;margin-bottom:6px}
-.supply-source-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px}
-.supply-source-key{color:#64748b}
-.supply-source-val{font-weight:600;font-variant-numeric:tabular-nums}
-
-/* ââ LEGACY TAB STYLES ââ */
-.sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
-.st{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin:24px 0 12px}
-.cv-lg{font-size:32px;font-weight:700;color:#1e293b;margin-bottom:4px}
-.bc{padding:14px 16px;min-width:140px}
-.bb{background:#dde3ee;border-radius:4px;height:8px;overflow:hidden}
-.bf{height:100%;border-radius:4px;transition:width .6s ease}
-.tl{display:flex;flex-direction:column;gap:8px}
-.tr2{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:16px}
-.ti{font-size:13px;color:#64748b;font-family:monospace}
-.tt{font-size:12px;color:#64748b;white-space:nowrap}
-.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase}
-.b-email{background:#1e3a5f;color:#60a5fa}.b-phone{background:#14532d;color:#4ade80}
-.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}.b-other{background:#f1f5f9;color:#94a3b8}
-.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.mc{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
-.mc.crit-b{border-color:#ef4444}.mc.under-b{border-color:#f59e0b}.mc.ok-b{border-color:#22c55e}
-.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.mn2{font-size:16px;font-weight:700}
-.mp{margin-bottom:8px}.ml{font-size:12px;color:#94a3b8;margin-bottom:2px}
-.mb{background:#f8fafc;border-radius:3px;height:6px;overflow:hidden}
-.mf{height:100%;border-radius:3px}.mf.req{background:#6366f1}.mf.sup{background:#22c55e}
-.mv{font-size:11px;color:#64748b;margin-top:2px}
-.ga{font-size:13px;font-weight:600;padding:3px 8px;border-radius:4px}
-.ga.ok{background:#14532d;color:#4ade80}.ga.under{background:#713f12;color:#fcd34d}.ga.crit{background:#7f1d1d;color:#fca5a5}
-.cov-warn{margin-top:6px;padding:4px 8px;background:#7f1d1d;color:#fca5a5;font-size:10px;font-weight:600;border-radius:4px}
-.cov-ok{margin-top:6px;padding:4px 8px;background:#14532d;color:#4ade80;font-size:10px;font-weight:600;border-radius:4px}
-.wf{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
-.wc{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px}
-.wv{font-size:28px;font-weight:700}.wl{font-size:12px;color:#64748b;margin-top:4px}
-.wv.ok{color:#4ade80}.wv.warn{color:#fcd34d}.wv.crit{color:#fca5a5}
-.fp{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.fp button{background:#dde3ee;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px}
-.fp button.active,.fp button:hover{background:#6366f1;color:#fff}
-.enrich-bar{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.enrich-info{flex:1;font-size:13px;color:#94a3b8;min-width:200px}
-.enrich-btn{background:#6366f1;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
-.enrich-btn:hover{background:#4f46e5}.enrich-btn:disabled{background:#dde3ee;color:#64748b;cursor:default}
-.pb{background:#f8fafc;border-radius:4px;height:8px;overflow:hidden;flex:1;max-width:200px}
-.pf{height:100%;background:#6366f1;border-radius:4px;transition:width .5s}
-.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
-.ac{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
-.ac.crit{border-color:#ef4444}.ac.under{border-color:#f59e0b}.ac.ok{border-color:#22c55e}
-.ah{font-size:15px;font-weight:700;margin-bottom:12px}
-.ar{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8}
-.av{font-weight:600;color:#1e293b}
-.pool-toggle{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.view-toggle{display:flex;gap:5px;margin-bottom:12px}
-.vt-btn{background:#dde3ee;border:none;color:#94a3b8;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:12px}
-.vt-btn.active{background:#6366f1;color:#fff}
-.scope-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#1e3a5f;color:#60a5fa;margin-left:6px}
-.pool-btn{background:#dde3ee;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
-.pool-btn.active,.pool-btn:hover{background:#6366f1;color:#fff}
-.prognos-inputs{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px;margin-bottom:24px}
-.prognos-inputs h3{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
-.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.input-group{display:flex;flex-direction:column;gap:6px}
-.input-group label{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.05em}
-.input-group input,.input-group select{background:#f8fafc;border:1px solid #dde3ee;color:#1e293b;padding:8px 12px;border-radius:6px;font-size:14px;width:100%}
-.input-group input:focus{outline:none;border-color:#6366f1}
-.run-btn{background:#6366f1;border:none;color:#fff;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;margin-top:16px}
-.run-btn:hover{background:#4f46e5}
-.forecast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.fc{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
-.fc.surplus{border-color:#22c55e}.fc.deficit{border-color:#ef4444}.fc.marginal{border-color:#f59e0b}
-.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.fm{font-size:16px;font-weight:700}
-.setup-section{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px;margin-bottom:20px}
-.setup-section h3{font-size:15px;font-weight:700;margin-bottom:4px}
-.setup-section .desc{font-size:13px;color:#64748b;margin-bottom:16px}
-.code-block{background:#f8fafc;border:1px solid #dde3ee;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;color:#a5b4fc;white-space:pre-wrap;overflow-x:auto;line-height:1.6}
-.status-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
-.status-chip.done{background:#14532d;color:#4ade80}.status-chip.pending{background:#713f12;color:#fcd34d}.status-chip.info{background:#1e3a5f;color:#60a5fa}
-.setup-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-
-
-/* ===== v22: DAGLIG OVERSIKT IMPROVEMENTS + AGENT TAB ===== */
-:root { --dq-warn: #b45309; --dq-warn-bg: #fef3c7; --dq-warn-border: #fcd34d; --dq-ok: #166534; --dq-ok-bg: #dcfce7; --dq-ok-border: #86efac; --dq-err-bg: #fee2e2; --dq-err: #991b1b; }
-.dq-banner { display:flex; align-items:flex-start; gap:12px; background:var(--dq-warn-bg); border:1px solid var(--dq-warn-border); border-radius:8px; padding:12px 16px; margin-bottom:20px; }
-.dq-banner--ok { background:var(--dq-ok-bg); border-color:var(--dq-ok-border); }
-.dq-banner__icon { font-size:16px; flex-shrink:0; margin-top:1px; }
-.dq-banner__title { font-size:13px; font-weight:700; color:var(--dq-warn); }
-.dq-banner--ok .dq-banner__title { color:var(--dq-ok); }
-.dq-banner__text { font-size:12px; color:#4a5568; margin-top:2px; line-height:1.6; }
-.dq-banner__dismiss { font-size:11px; color:#1f6f8b; text-decoration:underline; cursor:pointer; margin-top:4px; display:inline-block; background:none; border:none; padding:0; font-family:inherit; }
-.dq-pill { display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:600; padding:2px 7px; border-radius:10px; vertical-align:middle; }
-.dq-pill--warn { background:var(--dq-warn-bg); color:var(--dq-warn); }
-.dq-pill--ok { background:var(--dq-ok-bg); color:var(--dq-ok); }
-.dq-pill--unknown { background:#f1f5f9; color:#7a8799; }
-.hdr-status { display:flex; align-items:center; gap:6px; font-size:12px; }
-.status-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.status-dot--warn { background:var(--dq-warn); animation:sdpulse 2s infinite; }
-.status-dot--ok { background:var(--dq-ok); }
-@keyframes sdpulse { 0%,100%{opacity:1} 50%{opacity:.35} }
-.kpi-def { font-size:10px; color:#7a8799; margin-top:6px; padding-top:6px; border-top:1px solid #dce1e8; line-height:1.4; }
-.ov-kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
-.ov-kpi-card { background:#fff; border:1px solid #dce1e8; border-radius:10px; padding:14px 16px; box-shadow:0 1px 3px rgba(0,0,0,.07); position:relative; }
-.ov-kpi-card--warn { border-color:var(--dq-warn-border); }
-.ov-kpi-label { font-size:11px; color:#7a8799; font-weight:600; text-transform:uppercase; letter-spacing:.05em; margin-bottom:5px; }
-.ov-kpi-value { font-size:24px; font-weight:700; color:#1a2535; line-height:1; }
-.ov-kpi-value--zero { color:#7a8799; }
-.ov-kpi-compare { font-size:11px; color:#7a8799; margin-top:5px; }
-.ov-kpi-compare strong { color:#1a2535; }
-.ov-kpi-card__status { position:absolute; top:10px; right:10px; }
-.ctx-toggle { display:flex; align-items:center; gap:6px; font-size:12px; color:#1f6f8b; cursor:pointer; padding:6px 0; background:none; border:none; font-family:inherit; }
-.ctx-arrow { display:inline-block; transition:transform .2s; font-style:normal; }
-.ctx-toggle.open .ctx-arrow { transform:rotate(90deg); }
-.ctx-body { display:none; padding-top:12px; }
-.ctx-body.open { display:block; }
-.ov-table-note { font-size:11px; color:#7a8799; margin-top:6px; display:flex; align-items:flex-start; gap:4px; line-height:1.5; }
-.tfoot-total td { background:#f4f6f9; font-weight:700; font-size:12px; border-top:2px solid #dce1e8; }
-.ag-filter-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#ffffff;border:1px solid #dde3ee;border-radius:6px;padding:10px 14px;margin-bottom:16px;}
-.ag-filter-bar label{font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
-.ag-filter-bar select{font-size:12px;font-family:inherit;color:#1e293b;background:#f8fafc;border:1px solid #dde3ee;border-radius:5px;padding:4px 8px;cursor:pointer;}
-.ag-filter-bar .fdiv{width:1px;height:20px;background:#dde3ee;margin:0 4px;}
-.ag-reset{font-size:12px;color:#60a5fa;padding:4px 8px;border:1px solid #dde3ee;border-radius:5px;background:#f0f4f8;margin-left:auto;cursor:pointer;}
-.ag-kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;}
-.ag-kpi-card{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:12px 14px;}
-.ag-kpi-card--warn{border-color:#f59e0b;}
-.ag-kpi-label{font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
-.ag-kpi-value{font-size:20px;font-weight:700;color:#1e293b;line-height:1;}
-.ag-kpi-sub{font-size:10px;color:#475569;margin-top:4px;}
-.ag-row.is-selected{background:#f0f4f8!important;}
-.ag-row:hover{background:#f0f4f8;cursor:pointer;}
-.ag-detail{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.ag-detail-stat__label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
-.ag-detail-stat__value{font-size:17px;font-weight:700;color:#1e293b;}
-.ag-detail-stat__sub{font-size:11px;color:#475569;}
-.ag-interp{grid-column:1/-1;background:#f0f4f8;border:1px solid #dde3ee;border-radius:5px;padding:10px 14px;font-size:12px;color:#94a3b8;line-height:1.6;}
-.ag-type-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #dde3ee;}
-.ag-type-row:last-child{border-bottom:none;}
-.ag-type-label{font-size:12px;color:#1e293b;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.ag-type-track{flex:1;height:9px;background:#f0f4f8;border-radius:5px;overflow:hidden;}
-.ag-type-fill{height:100%;background:#6366f1;border-radius:5px;}
-.ag-type-meta{font-size:11px;color:#64748b;width:155px;text-align:right;white-space:nowrap;}
-.ag-day-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;}
-.ag-day-card{background:#f0f4f8;border:1px solid #dde3ee;border-radius:5px;padding:9px;text-align:center;}
-.ag-day-card.peak{background:#431407;border-color:#f59e0b;}
-.ag-day-card.low{background:#052e16;border-color:#22c55e;}
-.ag-day-name{font-size:10px;color:#64748b;font-weight:600;margin-bottom:3px;}
-.ag-day-val{font-size:15px;font-weight:700;color:#1e293b;}
-.ag-day-sub{font-size:10px;color:#475569;margin-top:2px;}
-.ag-chart-ph{background:#f0f4f8;border:1px dashed #dde3ee;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;min-height:150px;color:#475569;font-size:12px;}
-.ag-charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.ag-kpi-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
-.ag-strip-item{flex:1;min-width:110px;background:#f0f4f8;border:1px solid #dde3ee;border-radius:5px;padding:7px 10px;}
-.ag-strip-label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
-.ag-strip-val{font-size:14px;font-weight:700;color:#1e293b;}
-.ag-data-note{background:#f0f4f8;border:1px solid #dde3ee;border-left:4px solid #6366f1;border-radius:5px;padding:12px 14px;}
-.ag-data-note__title{font-size:12px;font-weight:700;color:#818cf8;margin-bottom:4px;}
-.ag-data-note__body{font-size:12px;color:#64748b;line-height:1.7;}
-.ag-sparkbar{width:60px;height:8px;background:#f1f5f9;border-radius:4px;overflow:hidden;display:inline-block;vertical-align:middle;}
-.ag-sparkbar__fill{height:100%;background:#6366f1;border-radius:4px;}
-.ag-sparkbar__fill--warn{background:#f59e0b;}
-.ag-sparkbar__fill--ok{background:#22c55e;}
-@media(max-width:900px){.ov-kpi-grid{grid-template-columns:repeat(2,1fr)}.ag-kpi-grid{grid-template-columns:repeat(3,1fr)}.ag-detail{grid-template-columns:1fr}.ag-charts-grid{grid-template-columns:1fr}.ag-day-strip{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.ov-kpi-grid{grid-template-columns:1fr 1fr}.ag-kpi-grid{grid-template-columns:1fr 1fr}.ag-day-strip{grid-template-columns:repeat(2,1fr)}}
-
-/* ===== NAMED AGENTS TABLE STYLES (dark) ===== */
-#named-agents table{ width:100%; border-collapse:collapse; font-size:13px; }
-#named-agents thead th{ text-align:left; font-weight:600; color:#64748b; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; border-bottom:1px solid #dde3ee; }
-#named-agents thead th.num{ text-align:right; }
-#named-agents tbody td{ padding:9px 10px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
-#named-agents tbody tr:last-child td{ border-bottom:none; }
-#named-agents tbody tr:hover{ background:#f0f4f8; }
-#named-agents td.num{ text-align:right; font-variant-numeric:tabular-nums; }
-#named-agents .na-name{ font-weight:600; color:#1e293b; }
-#named-agents .na-pools{ color:#475569; font-size:11.5px; }
-#named-agents .na-bar-wrap{ display:flex; align-items:center; gap:8px; justify-content:flex-end; }
-#named-agents .na-bar{ height:6px; border-radius:3px; background:#2563eb; }
-#named-agents .na-bar-track{ width:90px; height:6px; border-radius:3px; background:#1e3a5f; overflow:hidden; }
-#named-agents tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid #dde3ee; color:#94a3b8; }
-
-<style>-blocket (eller slå ihop med din CSS).
-  3. Klistra in <script>-blocket. Återanvänd din globala CC_API_BASE om du har en.
-  4. Wira din befintliga period-väljare: anropa renderAgentEff(month) i dess
-     change-handler (month = 'YYYY-MM'). Inbyggd väljare fungerar fristående.
-
-  Komplett & körbar som den är — öppna i webbläsare för att verifiera mot live-data.
--->
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Effektivitet & belastningsgrad</title>
-
-<!-- ===== STYLE ===== -->
-<style>
-  :root{
-    --ink:#1a1d21; --muted:#6b7280; --line:#e5e7eb; --bg:#ffffff;
-    --plan:#2563eb; --plan-soft:#eff4ff;
-    --pos:#15803d; --pos-soft:#ecfdf3;
-    --warn:#b45309; --warn-soft:#fff7ed;
-    --neg:#b91c1c;
-    /* pool-segment: tints av plan + neutral grå, ingen gradient */
-    --seg1:#2563eb; --seg2:#60a5fa; --seg3:#93c5fd; --seg4:#c7d7f5; --seg5:#9ca3af; --seg6:#d1d5db;
-  }
-  #agent-eff{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink); background:var(--bg);
-    border:1px solid var(--line); border-radius:10px; padding:20px 22px; max-width:1180px;
-  }
-  #agent-eff h3{ margin:0 0 2px; font-size:16px; font-weight:600; letter-spacing:-.01em; }
-  #agent-eff .ae-sub{ color:var(--muted); font-size:12.5px; margin:0 0 16px; }
-  #agent-eff .ae-controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
-  #agent-eff select{ font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); cursor:pointer; }
-  #agent-eff label{ font-size:12.5px; color:var(--muted); display:flex; gap:6px; align-items:center; }
-  #agent-eff .ae-meta{ margin-left:auto; color:var(--muted); font-size:12.5px; font-variant-numeric:tabular-nums; }
-  #agent-eff table{ width:100%; border-collapse:collapse; font-size:13px; }
-  #agent-eff thead th{ text-align:left; font-weight:600; color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; border-bottom:1px solid var(--line); }
-  #agent-eff thead th.num{ text-align:right; }
-  #agent-eff thead th.mid{ text-align:center; }
-  #agent-eff tbody td{ padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:middle; }
-  #agent-eff tbody tr:last-child td{ border-bottom:none; }
-  #agent-eff td.num{ text-align:right; font-variant-numeric:tabular-nums; }
-  #agent-eff .ae-name{ font-weight:600; }
-  #agent-eff .ae-lvl{ color:var(--muted); font-size:11px; font-weight:500; }
-  #agent-eff .ae-lvl.j{ color:var(--plan); }
-
-  /* Belastningsgrad: stapel mot 75 %-mål-markör (husstilens divergerande motiv) */
-  #agent-eff .ae-gauge{ display:flex; align-items:center; gap:8px; justify-content:flex-end; }
-  #agent-eff .ae-gauge .v{ font-variant-numeric:tabular-nums; min-width:42px; text-align:right; }
-  #agent-eff .ae-track{ position:relative; width:120px; height:8px; border-radius:4px; background:var(--plan-soft); overflow:hidden; }
-  #agent-eff .ae-track.warn{ background:var(--warn-soft); }
-  #agent-eff .ae-fill{ position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:var(--plan); }
-  #agent-eff .ae-fill.over{ background:var(--warn); }
-  #agent-eff .ae-mark{ position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--ink); opacity:.45; }
-
-  /* Effektivitet: stapel mot 100 %-referens */
-  #agent-eff .ae-fill.eff{ background:var(--pos); }
-  #agent-eff .ae-track.eff{ background:var(--pos-soft); }
-  #agent-eff .ae-fill.eff.low{ background:#9ca3af; }
-  #agent-eff .ae-track.eff.low{ background:#f3f4f6; }
-
-  /* Tidsfördelning per pool */
-  #agent-eff .ae-mix{ display:flex; height:8px; border-radius:4px; overflow:hidden; width:170px; background:#f3f4f6; }
-  #agent-eff .ae-mix span{ height:100%; }
-  #agent-eff .ae-mixtxt{ color:var(--muted); font-size:11px; margin-top:3px; line-height:1.3; }
-  #agent-eff tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid var(--line); }
-  #agent-eff .ae-note{ color:var(--muted); font-size:11.5px; margin-top:12px; line-height:1.45; }
-  #agent-eff .ae-empty,#agent-eff .ae-error{ color:var(--muted); font-size:13px; padding:18px 4px; }
-  #agent-eff .ae-error{ color:var(--neg); }
-  #agent-eff .ae-legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:11px; color:var(--muted); }
-  #agent-eff .ae-legend i{ display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px; }
-
-/* ===== GROUPED NAV ===== */
-nav#main-nav{background:#ffffff;border-bottom:2px solid #dde3ee;padding:0 24px;display:flex;align-items:stretch;overflow:visible!important;position:relative;}
-.nav-group{display:flex;align-items:stretch;gap:2px;flex-wrap:wrap;}
-.nav-tab{background:none;border:none;color:#64748b;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;position:relative;top:2px;}
-.nav-tab:hover{color:#1e293b;background:#f1f5f9;}
-.nav-tab.active{color:#4f46e5;border-bottom-color:#4f46e5;font-weight:600;}
+/* ── Nav ── */
+nav#main-nav{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:stretch;overflow:visible!important;position:sticky;top:52px;z-index:99;}
+.nav-group{display:flex;align-items:stretch;gap:0;}
+.nav-tab{background:none;border:none;color:var(--text2);padding:0 16px;height:44px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;position:relative;}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
 .nav-dropdown-group{position:relative;display:flex;align-items:stretch;}
-.nav-dropdown-trigger{background:none;border:none;color:#64748b;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;position:relative;top:2px;display:flex;align-items:center;gap:4px;}
-.nav-dropdown-trigger:hover,.nav-dropdown-trigger.open{color:#1e293b;background:#f1f5f9;}
-.nav-dropdown-trigger.has-active{color:#4f46e5;border-bottom-color:#4f46e5;font-weight:600;}
-.nav-dropdown{display:none;position:absolute;top:calc(100% + 2px);left:0;background:#ffffff;border:1px solid #dde3ee;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.10);min-width:180px;z-index:200;padding:6px;}
+.nav-dropdown-trigger{background:none;border:none;color:var(--text2);padding:0 16px;height:44px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:color .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.nav-dropdown-trigger:hover,.nav-dropdown-trigger.open{color:var(--text);}
+.nav-dropdown-trigger.has-active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
+.nav-dropdown-trigger svg{width:10px;height:10px;transition:transform .15s;}
+.nav-dropdown-trigger.open svg{transform:rotate(180deg);}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);min-width:190px;z-index:200;padding:5px;overflow:visible;}
 .nav-dropdown.open{display:block;}
-.nav-dropdown button{display:block;width:100%;text-align:left;background:none;border:none;color:#374151;padding:9px 14px;font-size:13px;cursor:pointer;border-radius:5px;white-space:nowrap;transition:background .1s;}
-.nav-dropdown button:hover{background:#f1f5f9;color:#1e293b;}
-.nav-dropdown button.active{color:#4f46e5;background:#ede9fe;font-weight:600;}
+.nav-dropdown button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);padding:9px 12px;font-size:13px;cursor:pointer;border-radius:7px;white-space:nowrap;transition:background .1s;}
+.nav-dropdown button:hover{background:var(--bg);color:var(--text);}
+.nav-dropdown button.active{color:var(--accent);background:var(--accent-light);font-weight:600;}
+
+/* ── Layout ── */
+main{padding:24px 32px;max-width:1440px;margin:0 auto;}
+.tc{display:none;}.tc.active{display:block;}
+
+/* ── Section headers ── */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px;}
+.section-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;}
+.section-note{font-size:12px;color:var(--text3);}
+
+/* ── Cards ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+.card.hl{border-color:var(--accent);}
+.card.warn{border-color:var(--amber);}
+.card.crit{border-color:var(--red);}
+.card.ok{border-color:#bbf7d0;}
+.cl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.cv{font-size:32px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px;letter-spacing:-.02em;}
+.cv.ok{color:var(--green);}
+.cv.warn{color:var(--amber);}
+.cv.crit{color:var(--red);}
+.cv.info{color:#818cf8;}
+.cs{font-size:11px;color:var(--text3);}
+
+/* ── Tags / Badges ── */
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.tag.master{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;}
+.tag.ok{background:#dcfce7;color:#16a34a;}
+.tag.warn{background:#fef3c7;color:#d97706;}
+.tag.crit{background:#fee2e2;color:#dc2626;}
+.tag.info{background:#ede9fe;color:#4f46e5;}
+.tag.forecast{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
+.tag.planning{background:#faf5ff;color:#7c3aed;border:1px solid #e9d5ff;}
+.tag.analytics{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
+.tw{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+
+/* ── Tables ── */
+table{width:100%;border-collapse:collapse;}
+thead th{background:var(--bg);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);}
+thead th.r{text-align:right;}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--bg);}
+td{padding:12px 14px;font-size:13px;}
+td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;}
+
+/* ── Layer badges (simplified) ── */
+.layer-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle;margin-left:4px;}
+.layer-badge.planning{background:#ede9fe;color:#5b21b6;}
+.layer-badge.analytics{background:#dcfce7;color:#166534;}
+.layer-divider{display:flex;align-items:center;gap:10px;margin:20px 0 12px;}
+.layer-divider-line{flex:1;height:1px;background:var(--border);}
+.layer-divider-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;}
+
+/* ── Alert banner ── */
+.alert-banner{border-radius:var(--radius);padding:14px 18px;display:flex;align-items:flex-start;gap:12px;margin:16px 0;}
+.alert-banner.crit{background:#fff1f2;border:1px solid #fecaca;}
+.alert-banner.warn{background:#fffbeb;border:1px solid #fde68a;}
+.alert-banner.info{background:#eff6ff;border:1px solid #bfdbfe;}
+
+/* ── KPI grid ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:16px 0;}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
+.kpi-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.kpi-value{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1;}
+.kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;}
+
+/* ── Chart wrapper ── */
+.chart-wrap{position:relative;height:300px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
+.chart-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:16px;}
+
+/* ── Pool chips ── */
+.pool-chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg);color:var(--text);}
+
+/* ── Decision layer styles ── */
+.decision-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+
+/* ── Agent KPI ── */
+.ag-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
+.ag-kpi-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.ag-kpi-value{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1;}
+.ag-kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;}
+.ag-kpi-card--warn{border-color:var(--amber);}
+
+/* ── Agent efficiency ── */
+.ae-gauge{display:flex;align-items:center;gap:8px;}
+.ae-gauge .v{font-size:12px;font-weight:700;color:var(--text);min-width:38px;}
+.ae-track{display:inline-block;width:120px;height:6px;background:var(--bg);border-radius:3px;position:relative;overflow:visible;}
+.ae-track.warn .ae-fill{background:#fbbf24;}
+.ae-track.eff .ae-fill{background:#34d399;}
+.ae-track.eff.low .ae-fill{background:#f87171;}
+.ae-fill{display:inline-block;height:100%;border-radius:3px;background:var(--accent);position:absolute;left:0;top:0;}
+.ae-fill.over{background:var(--red);}
+.ae-mark{position:absolute;top:-3px;width:2px;height:12px;background:var(--text2);border-radius:1px;}
+.ae-mix{height:6px;border-radius:3px;overflow:hidden;display:flex;width:120px;background:var(--bg);}
+.ae-mixtxt{font-size:10px;color:var(--text3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;}
+.ae-empty{padding:40px;text-align:center;color:var(--text3);font-size:13px;}
+.ae-error{padding:20px;background:#fff1f2;border:1px solid #fecaca;border-radius:8px;color:#dc2626;font-size:12px;}
+.ae-name{font-size:13px;font-weight:600;color:var(--text);}
+.ae-lvl{font-size:11px;color:var(--text3);margin-top:2px;}
+.ae-lvl.j{color:var(--amber);}
+--seg1:#4f46e5;--seg2:#0ea5e9;--seg3:#16a34a;--seg4:#d97706;--seg5:#9333ea;--seg6:#dc2626;
+.ae-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
+.ae-legend span{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2);}
+.ae-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;}
+table .ae-gauge .ae-track{width:100px;}
+table .ae-mix{width:100px;}
+table .num{text-align:right;font-variant-numeric:tabular-nums;font-size:12px;}
+table .mid{text-align:center;}
+
+/* ── Scenario sliders ── */
+.scenario-input{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:13px;width:70px;text-align:center;color:var(--text);}
+.scenario-input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent;}
+
+/* ── Supply sources ── */
+.supply-source-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+.supply-source-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;}
+
+/* ── Setup form ── */
+.setup-field{margin-bottom:16px;}
+.setup-label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
+.setup-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);}
+.setup-input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:opacity .15s;}
+.btn.primary{background:var(--accent);color:#fff;}
+.btn.primary:hover{opacity:.9;}
+.btn.secondary{background:var(--bg);color:var(--text);border:1px solid var(--border);}
+.btn.secondary:hover{background:var(--border);}
+
+/* ── Classify ── */
+.classify-filter{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--text);}
+
+/* ── Def list ── */
+.def-list{display:flex;flex-direction:column;gap:0;}
+.def-item{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);}
+.def-item:last-child{border-bottom:none;}
+.def-term{font-size:13px;font-weight:600;color:var(--text);}
+.def-body{font-size:13px;color:var(--text2);line-height:1.5;}
+
+/* ── CSS vars for ae colors ── */
+.ae-seg1{background:#4f46e5;}
+.ae-seg2{background:#0ea5e9;}
+.ae-seg3{background:#16a34a;}
+.ae-seg4{background:#d97706;}
+.ae-seg5{background:#9333ea;}
+.ae-seg6{background:#dc2626;}
+
+/* ── Named agents ── */
+.na-table table{width:100%;}
+.na-bar-bg{background:var(--bg);border-radius:3px;height:6px;width:100px;overflow:hidden;display:inline-block;vertical-align:middle;}
+.na-bar-fill{height:100%;border-radius:3px;background:var(--accent);}
+.na-aht-note{font-size:10px;color:var(--text3);}
+
+/* ── Period selector ── */
+.period-select{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;}
+.period-select:focus{outline:2px solid var(--accent);outline-offset:-1px;}
+
+/* ── Scrollbars ── */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* ── GROUPED NAV (override legacy rules) ── */
+nav{background:rgba(255,255,255,.85)!important;border-bottom:1px solid var(--border)!important;overflow:visible!important;}
+nav button{background:none!important;border-width:0 0 2px 0!important;}
+nav button:hover{background:none!important;color:var(--text)!important;}
+nav button.active{color:var(--accent)!important;border-bottom-color:var(--accent)!important;}
+nav .nav-sep{display:none;}
 </style>
 </style></head><body>
 <header>
 <div class="logo">
-<svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#6366f1"/><path d="M8 20l4-8 4 5 3-4 3 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-CC Workforce Planning
+<svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#4f46e5"/><path d="M7 20l5-8 4 6 3-4 4 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+CC Workforce
 </div>
-<div class="ts" id="upd">Uppdaterat --:--</div>
+<div class="ts" id="upd">--:--</div>
 </header>
 <nav id="main-nav">
 <div class="nav-group">
-  <button class="nav-tab active" onclick="showTab('wp',this)" data-tab="wp">Workforce Planning</button>
+  <button class="nav-tab active" onclick="showTab('wp',this)" data-tab="wp">Overview</button>
   <div class="nav-dropdown-group">
-    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Planering &#9662;</button>
+    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Planning <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
     <div class="nav-dropdown">
       <button onclick="showTab('workforce',this)" data-tab="workforce">Workforce Gap</button>
       <button onclick="showTab('aht',this)" data-tab="aht">AHT &amp; FTE</button>
-      <button onclick="showTab('prognos',this)" data-tab="prognos">Prognos</button>
+      <button onclick="showTab('prognos',this)" data-tab="prognos">Forecast</button>
     </div>
   </div>
   <div class="nav-dropdown-group">
-    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Analys &#9662;</button>
+    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Analytics <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
     <div class="nav-dropdown">
-      <button onclick="showTab('overview',this)" data-tab="overview">Daglig översikt</button>
-      <button onclick="showTab('products',this)" data-tab="products">Per produkt</button>
+      <button onclick="showTab('overview',this)" data-tab="overview">Daily Overview</button>
+      <button onclick="showTab('products',this)" data-tab="products">By Product</button>
       <button onclick="showTab('trend',this)" data-tab="trend">Trend</button>
-      <button onclick="showTab('recent',this)" data-tab="recent">Senaste tickets</button>
+      <button onclick="showTab('recent',this)" data-tab="recent">Recent Tickets</button>
     </div>
   </div>
-  <button class="nav-tab" onclick="showTab('agent',this)" data-tab="agent">Agent</button>
+  <button class="nav-tab" onclick="showTab('agent',this)" data-tab="agent">Agents</button>
   <div class="nav-dropdown-group">
-    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Verktyg &#9662;</button>
+    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Tools <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
     <div class="nav-dropdown">
-      <button onclick="showTab('classify',this)" data-tab="classify">Klassificering</button>
+      <button onclick="showTab('classify',this)" data-tab="classify">Classify</button>
       <button onclick="showTab('setup',this)" data-tab="setup">Setup</button>
     </div>
   </div>
@@ -493,28 +258,28 @@ CC Workforce Planning
 <div style="background:#f0f4f8;border:2px solid #4338ca;border-radius:14px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden">
 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366f1,#818cf8,#60a5fa)"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-<div><div style="font-size:13px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Officiell planeringsmodell Â· Ãndras aldrig av API-data</div></div>
+<div><div style="font-size:13px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Official planning model Â· Ãndras aldrig av API-data</div></div>
 <span class="layer-badge planning">Officiell beslutskÃ¤lla</span>
 </div>
 <div class="tw" style="margin-bottom:12px">
 <table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>BeslutsÃ¥tgÃ¤rd</th></tr></thead>
 <tbody>
-<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.20</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">â1.20</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgÃ¥ende. Accelerera S1-migration.</td></tr>
-<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimalt buffer. Bevaka volymÃ¶kning.</td></tr>
+<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.20</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">â1.20</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgÃ¥ende. Accelerate S1 migration.</td></tr>
+<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimal buffer. Bevaka volymÃ¶kning.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Kapacitet fÃ¶r migrationstillvÃ¤xt.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil. Bevaka volym.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil.</td></tr>
-<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">â  Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt â men Classicâunderskott â1.20 FTE Ã¤r kritiskt.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stable. Monitor volume.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stable.</td></tr>
+<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">â  Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Total positive â men Classicâunderskott â1.20 FTE Ã¤r kritiskt.</td></tr>
 </tbody></table>
 </div>
-<div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">â  <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er frÃ¥n Excel-modellen. Analytics-estimat (lila, nedan) kan avvika â de Ã¤r driftanalys, ej beslutskÃ¤lla. Se <em>Klassificering</em>-fliken fÃ¶r supply-avvikelser och routing-diagnostik.</div>
+<div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">â  <strong style="color:#fcd34d">Analytics vs Planning:</strong> Officiella KPI:er frÃ¥n Excel-modellen. Analytics-estimat (lila, nedan) kan avvika â de Ã¤r operational analysis, ej beslutskÃ¤lla. Se <em>Klassificering</em>-fliken fÃ¶r supply-avvikelser och routing-diagnostik.</div>
 </div>
 <!-- /CFO DECISION LAYER -->
 <div id="tab-wp" class="tc active">
 <div class="section-header" style="margin-top:0">
 <span class="section-title">Â§ 1 Â· Executive Summary â nulÃ¤ge</span>
 <div style="display:flex;align-items:center;gap:8px">
-<span class="layer-badge planning">Planering</span>
+<span class="layer-badge planning">Planning</span>
 <span class="section-note">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Dashboard + FTE Calc</span>
 </div>
 </div>
@@ -522,26 +287,26 @@ CC Workforce Planning
 <div class="kpi-card actual">
 <div class="kpi-label"><span>Actual FTE</span><span class="tag master">Masterdata</span></div>
 <div class="kpi-value actual">11</div>
-<div class="kpi-sub">Faktisk bemanning Â· Business baseline</div>
+<div class="kpi-sub">Actual headcount Â· Business baseline</div>
 <div class="kpi-tooltip">Faktiskt antal anstÃ¤llda. MastervÃ¤rde = 11. Ej detsamma som Effective Supply â pÃ¥verkas ej av modellberÃ¤kningar.</div>
 </div>
 <div class="kpi-card supply">
 <div class="kpi-label">Effective Supply FTE</div>
 <div class="kpi-value supply">11.05</div>
-<div class="kpi-sub">Produktiv kapacitet efter seniority &amp; allokering</div>
-<div class="kpi-tooltip">Modellens berÃ¤knade tillgÃ¤ngliga kapacitet. Kan vara â  Actual FTE pga seniority-viktning. KÃ¤lla: FTE Calc-fliken.</div>
+<div class="kpi-sub">Productive capacity after seniority &amp; allocation</div>
+<div class="kpi-tooltip">Modellens berÃ¤knade tillgÃ¤ngliga kapacitet. May differ from â  Actual FTE due to seniority weighting. KÃ¤lla: FTE Calc-fliken.</div>
 </div>
 <div class="kpi-card required">
 <div class="kpi-label">Required FTE</div>
 <div class="kpi-value required">10.10</div>
 <div class="kpi-sub">Ticket FTE 9.10 + Overhead FTE 1.00</div>
-<div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. BerÃ¤knat pÃ¥ volym, AHT, occupancy, shrinkage och peak buffer per pool.</div>
+<div class="kpi-tooltip">Total FTE requirement incl. overhead. BerÃ¤knat pÃ¥ volym, AHT, occupancy, shrinkage and peak buffer per pool.</div>
 </div>
 <div class="kpi-card gap">
 <div class="kpi-label">Net Gap FTE</div>
 <div class="kpi-value gap-pos">+1.00</div>
 <div class="kpi-sub">Effective Supply â Required FTE</div>
-<div class="kpi-tooltip">â  Positivt totalt gap dÃ¶ljer kritiskt underskott i Classic (-1.20 FTE). Se Pool Capacity Gaps nedan.</div>
+<div class="kpi-tooltip">â  Positive total gap dÃ¶ljer kritiskt underskott i Classic (-1.20 FTE). See Pool Capacity Gaps below.</div>
 </div>
 </div>
 <div class="alert-banner crit">
@@ -554,7 +319,7 @@ CC Workforce Planning
 <div style="background:#0f172a;border:1px solid #2563eb;border-radius:10px;padding:16px 20px;margin-bottom:32px">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
 <span style="font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em">Analytics Confidence</span>
-<span class="layer-badge planning" style="font-size:9px">Planering = officiell kÃ¤lla</span>
+<span class="layer-badge planning" style="font-size:9px">Planning = officiell kÃ¤lla</span>
 </div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
 <div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
@@ -573,12 +338,12 @@ CC Workforce Planning
 <div style="font-size:10px;color:#475569;margin-top:2px">MÃ¥nader med demand-data / 12</div>
 </div>
 </div>
-<div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planering</span> (blÃ¥) = Excel, officiell. &nbsp;Â·&nbsp; <span style="color:#818cf8;font-weight:600">Analys</span> (lila) = API-trend, ej beslutskÃ¤lla. &nbsp;Â·&nbsp; MÃ¥nader utan demand-data visas grayed-out med "Ingen demand-data" â innehÃ¥ller INTE verkliga gap-berÃ¤kningar.</div>
+<div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planning</span> (blÃ¥) = Excel, officiell. &nbsp;Â·&nbsp; <span style="color:#818cf8;font-weight:600">Analys</span> (lila) = API-trend, ej beslutskÃ¤lla. &nbsp;Â·&nbsp; MÃ¥nader utan demand-data visas grayed-out med "Ingen demand-data" â innehÃ¥ller INTE verkliga gap-berÃ¤kningar.</div>
 </div></div>
 <div class="section-header">
 <span class="section-title">Â§ 2 Â· Staffing Over Time</span>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-<span class="layer-badge planning">Planering</span>
+<span class="layer-badge planning">Planning</span>
 <span class="layer-badge analytics">Analys</span>
 <div class="chart-controls">
 <button class="chart-btn active" onclick="setTimeGran('monthly',this)">MÃ¥nadsvis</button>
@@ -586,9 +351,9 @@ CC Workforce Planning
 </div>
 </div>
 </div>
-<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Planering Â· Scenario-driven utveckling</span><div class="layer-divider-line"></div></div>
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Planning Â· Scenario-driven utveckling</span><div class="layer-divider-line"></div></div>
 <div class="chart-wrap" style="margin-bottom:12px">
-<h4>FTE-planering: Actual Â· Effective Supply Â· Required Â· Scenariopunkter <span class="layer-badge planning" style="font-size:9px">Planering</span></h4>
+<h4>FTE-planering: Actual Â· Effective Supply Â· Required Â· Scenariopunkter <span class="layer-badge planning" style="font-size:9px">Planning</span></h4>
 <canvas id="staffingChart" height="90"></canvas>
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
@@ -596,21 +361,21 @@ CC Workforce Planning
 <div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE med AI-deflection</div></div>
 <div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">Med AI-deflection Â· topp migration</div></div>
 </div>
-<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys Â· Faktisk arbetsbelastning &amp; tÃ¤ckning (API-data)</span><div class="layer-divider-line"></div></div>
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys Â· Faktisk arbetsload &amp; tÃ¤ckning (API-data)</span><div class="layer-divider-line"></div></div>
 <div class="trend-container">
 <div class="trend-header">
-<span class="trend-title">MÃ¥nadsvis arbetsbelastning: Faktiska tickets &amp; berÃ¤knad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
+<span class="trend-title">MÃ¥nadsvis arbetsload: Faktiska tickets &amp; berÃ¤knad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
 <div class="chart-controls">
 <button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mÃ¥n</button>
 <button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mÃ¥n</button>
 <button class="chart-btn" id="trendBtn3" onclick="setTrendWindow(3,this)">3 mÃ¥n</button>
 </div>
 </div>
-<div id="trend-loading" class="trend-loading">Laddar driftdata frÃ¥n API...</div>
+<div id="trend-loading" class="trend-loading">Loading driftdata frÃ¥n API...</div>
 <div id="trend-error" class="trend-error" style="display:none"></div>
 <canvas id="trendChart" height="80" style="display:none"></canvas>
 <p id="trend-note" class="chart-note" style="display:none">
-â  <strong>Analytikslager:</strong> Dessa vÃ¤rden Ã¤r driftanalys fÃ¶r trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply â approximationsvÃ¤rde, ej officiellt planeringsmÃ¥tt. Se <em>Klassificering</em>-fliken fÃ¶r fÃ¶rklaring av supplyavvikelse och produktklassificering.
+â  <strong>Analytics layer:</strong> Dessa vÃ¤rden Ã¤r operational analysis fÃ¶r trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply â approximationsvÃ¤rde, ej officiellt planeringsmÃ¥tt. Se <em>Klassificering</em>-fliken fÃ¶r fÃ¶rklaring av supplyavvikelse och produktklassificering.
 </p>
 </div>
 <div id="trend-monthly-cards" style="display:none;margin-top:12px">
@@ -619,21 +384,21 @@ CC Workforce Planning
 <div class="section-header">
 <span class="section-title">Â§ 3 Â· Pool Capacity Gaps â nulÃ¤ge</span>
 <div style="display:flex;gap:8px;align-items:center">
-<span class="layer-badge planning">Planering</span>
+<span class="layer-badge planning">Planning</span>
 <span class="section-note">Sorterat: lÃ¤gst gap Ã¶verst</span>
 </div>
 </div>
 <div class="pool-grid" id="pool-gaps"></div>
 <div style="margin-top:12px">
 <div class="chart-wrap" style="margin-bottom:0">
-<h4>Gap FTE per pool (Effective Supply â Peak Demand) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>Gap FTE per pool (Effective Supply â Peak Demand) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planning</span></h4>
 <canvas id="poolGapChart" height="60"></canvas>
 </div>
 </div>
 <div class="section-header">
 <span class="section-title">Â§ 4 Â· Scenario Comparison</span>
 <div style="display:flex;gap:8px;align-items:center">
-<span class="layer-badge planning">Planering</span>
+<span class="layer-badge planning">Planning</span>
 <span class="section-note">KÃ¤lla: CC_FTE_Calculator.xlsx</span>
 </div>
 </div>
@@ -678,13 +443,13 @@ CC Workforce Planning
 </div>
 </div>
 <div class="chart-wrap">
-<h4>Scenario Compare: Required FTE vs Effective Supply <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>Scenario Compare: Required FTE vs Effective Supply <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planning</span></h4>
 <canvas id="scenarioChart" height="70"></canvas>
 </div>
 <div class="section-header">
 <span class="section-title">Â§ 5 Â· Migration Forecast â Classic â S1</span>
 <div style="display:flex;gap:8px;align-items:center">
-<span class="layer-badge planning">Planering</span>
+<span class="layer-badge planning">Planning</span>
 <span class="section-note">Q0 = nulÃ¤ge</span>
 </div>
 </div>
@@ -705,7 +470,7 @@ CC Workforce Planning
 <span class="phase-chip phase-expansion">ðµ Expansion (Q9âQ10)</span>
 </div>
 <div class="chart-wrap" style="margin-bottom:16px">
-<h4>S1 FTE-behov Â· Migration Q0âQ10 <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>S1 FTE-behov Â· Migration Q0âQ10 <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planning</span></h4>
 <canvas id="migrationChart" height="90"></canvas>
 </div>
 <div class="tw" style="margin-bottom:16px">
@@ -715,12 +480,12 @@ CC Workforce Planning
 <div class="section-header">
 <span class="section-title">Â§ 6 Â· Vad driver bemanningsbehovet?</span>
 <div style="display:flex;gap:8px;align-items:center">
-<span class="layer-badge planning">Planering</span>
+<span class="layer-badge planning">Planning</span>
 <span class="section-note">Basfall: 10.10 Required FTE</span>
 </div>
 </div>
 <div class="chart-wrap" style="margin-bottom:12px">
-<h4>Tornado: FTE-impact per driver <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>Tornado: FTE-impact per driver <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planning</span></h4>
 <canvas id="sensitivityChart" height="100"></canvas>
 </div>
 <div class="tw">
@@ -729,19 +494,19 @@ CC Workforce Planning
 </div>
 <div class="section-header"><span class="section-title">Â§ 7 Â· Definitioner &amp; Modellnoter</span></div>
 <div class="def-grid">
-<div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Faktiskt antal anstÃ¤llda. <strong>MastervÃ¤rde = 11 FTE.</strong></div><div class="def-example">Ej detsamma som Effective Supply.</div></div>
-<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. NulÃ¤ge: 11.05 FTE.</div></div>
-<div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Totalt FTE-behov: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
-<div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Effective Supply â Required FTE. â  Totalt positivt gap dÃ¶ljer pool-level underskott.</div></div>
+<div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Faktiskt antal anstÃ¤llda. <strong>MastervÃ¤rde = 11 FTE.</strong></div><div class="def-example">Ej detsamma som Effective Supply.</div></div>
+<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. NulÃ¤ge: 11.05 FTE.</div></div>
+<div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Totalt FTE-behov: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
+<div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planning</span></div><div class="def-body">Effective Supply â Required FTE. â  Total positive gap dÃ¶ljer pool-level underskott.</div></div>
 <div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Poolens konfigurerade supply per dag. AnalytiksvÃ¤rde â inte officiellt planeringsmÃ¥tt.</div><div class="def-example">Ej detsamma som Effective Supply FTE.</div></div>
 <div class="def-item"><div class="def-term">queueGroup <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Routing-destinationen fÃ¶r ett ticket: Switchboard, Classic, S1, Frankly, Talent. Separat dimension frÃ¥n produkt.</div></div>
 <div class="def-item"><div class="def-term">product</div><div class="def-body">Freshdesk-produkten (cf_category_1): Simployer Classic, Expert NO, Simployer One, etc. Separat frÃ¥n queueGroup.</div></div>
 <div class="def-item"><div class="def-term">AI Deflection</div><div class="def-body">Andel tickets avleds av AI. 30% deflection â Required FTE â 9.30.</div></div>
 <div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Andel betald tid ej tillgÃ¤nglig fÃ¶r ticketarbete. Ãkar Required FTE.</div></div>
-<div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Andel tillgÃ¤nglig tid agenter spenderar pÃ¥ tickets. LÃ¤gre â hÃ¶gre Required FTE.</div></div>
+<div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Andel tillgÃ¤nglig tid agents spenderar pÃ¥ tickets. LÃ¤gre â hÃ¶gre Required FTE.</div></div>
 </div>
 <div style="margin-top:24px;padding:16px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
-<strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets vÃ¤rden hÃ¤mtas frÃ¥n CC_FTE_Calculator.xlsx. Avvikelse indikerar att Excel-modellen Ã¤r korrekt. Analyslagrets trenddata berÃ¤knas frÃ¥n dagliga ticketdata via API â operativa estimat, inte officiella planerings-KPI:er.
+<strong style="color:#64748b">Modellnoter:</strong> Planningslagrets vÃ¤rden hÃ¤mtas frÃ¥n CC_FTE_Calculator.xlsx. Avvikelse indikerar att Excel-modellen Ã¤r korrekt. Analyslagrets trenddata berÃ¤knas frÃ¥n dagliga ticketdata via API â operativa estimat, inte officiella planerings-KPI:er.
 </div>
 </div><!-- /tab-wp -->
 <!-- CLASSIFICATION MODEL TAB -->
@@ -773,7 +538,7 @@ CC Workforce Planning
 <div>FÃ¶ljande tre kÃ¤llor rapporterar <em>olika</em> FTE-supply per pool. Ingen av dem Ã¤r per definition "rÃ¤tt" â de mÃ¤ter olika saker:</div>
 <div class="supply-sources">
 <div class="supply-source-card">
-<div class="supply-source-title">1. Planeringsmodell (Excel)</div>
+<div class="supply-source-title">1. Planningsmodell (Excel)</div>
 <div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val">2.20 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val">2.69 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val">4.34 FTE</span></div>
@@ -832,7 +597,7 @@ CC Workforce Planning
 <button class="chart-btn" onclick="refreshClassificationData()" style="margin-left:8px">â» Uppdatera</button>
 </div>
 </div>
-<div id="classification-loading" style="font-size:12px;color:#64748b;padding:20px">Laddar klassificeringsdata...</div>
+<div id="classification-loading" style="font-size:12px;color:#64748b;padding:20px">Loading klassificeringsdata...</div>
 <div id="classification-error" style="display:none" class="trend-error"></div>
 
 <!-- Summary stats -->
@@ -907,14 +672,14 @@ CC Workforce Planning
       <div class="ov-kpi-label">Snitt tickets / dag (7d)</div>
       <div class="ov-kpi-value">31,4</div>
       <div class="ov-kpi-compare">â Snitt 30d: <strong>32,0</strong></div>
-      <div class="kpi-def">Totala tickets senaste 7 dagar / 7. Normaliseringsreferens.</div>
+      <div class="kpi-def">Total tickets senaste 7 dagar / 7. Normaliseringsreferens.</div>
     </div>
     <div class="ov-kpi-card">
       <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">â Komplett</span></div>
       <div class="ov-kpi-label">Totalt â senaste 30 dagar</div>
       <div class="ov-kpi-value" style="font-size:20px;">959</div>
       <div class="ov-kpi-compare">â FÃ¶regÃ¥ende 30d: <strong>912</strong> <span style="color:#166534;">(+5,1%)</span></div>
-      <div class="kpi-def">Alla tickets senaste 30 kalenderdagar. Planeringskontext.</div>
+      <div class="kpi-def">Alla tickets senaste 30 kalenderdagar. Planningskontext.</div>
     </div>
   </div>
 
@@ -1081,20 +846,20 @@ CC Workforce Planning
 </div>
 <div id="tab-recent" class="tc"><div class="tl" id="tlist"></div></div>
 <div id="tab-trend" class="tc">
-<div class="st">Daglig volym - senaste 30 dagar</div>
+<div class="st">Daylig volym - senaste 30 dagar</div>
 <div class="tw"><table><thead><tr><th>Datum</th><th class="r">Tickets</th></tr></thead><tbody id="trendt"></tbody></table></div>
 </div>
 <div id="tab-workforce" class="tc">
 <div class="wf" id="wf-summary"></div>
 <div class="st">MÃ¥nadsÃ¶versikt - senaste 12 mÃ¥nader</div>
 <div class="mg" id="monthly-grid"></div>
-<div class="st">Daglig kapacitet</div>
+<div class="st">Daily capacity</div>
 <div class="fp" id="pool-filter"></div>
 <div class="tw"><table><thead><tr><th>Datum</th><th>Pool</th><th class="r">Tickets</th><th class="r">Peak FTE</th><th class="r">Gap FTE</th><th>Status</th></tr></thead><tbody id="daily-table"></tbody></table></div>
 </div>
 <div id="tab-aht" class="tc">
 <div class="enrich-bar">
-<div class="enrich-info" id="enrich-status">Laddar...</div>
+<div class="enrich-info" id="enrich-status">Loading...</div>
 <div class="pb"><div class="pf" id="enrich-prog" style="width:0%"></div></div>
 <button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">HÃ¤mta Freshdesk-data</button>
 </div>
@@ -1103,7 +868,7 @@ CC Workforce Planning
 <button class="vt-btn active" id="vt-all" onclick="setView('all',this)">Alla tickets</button>
 <button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope</button>
 </div>
-<div class="st">AHT-justerad FTE per pool - 12 mÃ¥nader</div>
+<div class="st">AHT-adjusted FTE per pool - 12 mÃ¥nader</div>
 <div class="pool-toggle" id="aht-pool-filter"></div>
 <div class="ag" id="aht-grid"></div>
 </div>
@@ -1123,7 +888,7 @@ CC Workforce Planning
 <div class="forecast-grid" id="forecast-grid"></div>
 <div style="margin-top:24px">
 <div class="st">Prognostabell</div>
-<div class="tw"><table><thead><tr><th>MÃ¥nad</th><th class="r">Volym</th><th class="r">AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE-krav</th><th class="r">FTE-tillgÃ¥ng</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
+<div class="tw"><table><thead><tr><th>MÃ¥nad</th><th class="r">Volym</th><th class="r">AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE Required</th><th class="r">FTE-tillgÃ¥ng</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
 </div>
 </div>
 <div id="tab-setup" class="tc">
@@ -1188,8 +953,8 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <div id="tab-agent" class="tc">
 <div style="margin-bottom:16px;">
 <h2 style="font-size:20px;font-weight:700;color:#1e293b;margin:0;">Agent</h2>
-<div style="font-size:13px;color:#94a3b8;margin-top:2px;">Operativ analys av hanterade tickets, tidssatgang och franvaro per team/pool</div>
-<div style="font-size:11px;color:#64748b;margin-top:4px;" id="ag-updated-ts">Uppdaterat --:--</div>
+<div style="font-size:13px;color:#94a3b8;margin-top:2px;">Operational analysis av handled tickets, tidssatgang och franvaro per team/pool</div>
+<div style="font-size:11px;color:#64748b;margin-top:4px;" id="ag-updated-ts">Updated --:--</div>
 <div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#f1f5f9;border:1px solid #2d3148;border-radius:20px;font-size:11px;color:#64748b;">i Ej officiellt prestationsmattt</div>
 </div>
 <div class="ag-filter-bar">
@@ -1203,7 +968,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <div class="fdiv"></div>
 <label>Team / Ko</label>
 <select id="ag-filter-team" onchange="renderAgentTable()">
-<option value="">Alla team</option>
+<option value="">All teams</option>
 <option value="classic">Classic</option>
 <option value="switchboard">Switchboard</option>
 <option value="s1">S1</option>
@@ -1213,7 +978,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <button class="ag-reset" onclick="document.getElementById('ag-filter-team').value='';renderAgentTable()">Aterstaell</button>
 </div>
 <div class="ag-kpi-grid" id="ag-kpi-grid">
-<div class="ag-kpi-card"><div class="ag-kpi-label">Laddar...</div><div class="ag-kpi-value" style="color:#64748b">--</div></div>
+<div class="ag-kpi-card"><div class="ag-kpi-label">Loading...</div><div class="ag-kpi-value" style="color:#64748b">--</div></div>
 </div>
 <div id="ag-absence-banner" style="display:none;margin-bottom:16px;"></div>
 <div style="margin-bottom:20px;">
@@ -1223,88 +988,88 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <thead><tr>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tickets</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE-krav</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE Required</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE-tillgang</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Gap</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">AHT</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Arb.dagar</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Workdays</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Franvaro-dagar</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Just. FTE</th>
 <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tackning</th>
 </tr></thead>
 <tbody id="ag-team-table-body">
-<tr><td colspan="10" style="text-align:center;padding:24px;color:#64748b;">Laddar data...</td></tr>
+<tr><td colspan="10" style="text-align:center;padding:24px;color:#64748b;">Loading data...</td></tr>
 </tbody>
 </table>
 </div>
 </div>
 <div style="margin-bottom:20px;">
-<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:10px;">Daglig aktivitet per pool -- franvarodetektering</div>
-<div id="ag-absence-detail" style="color:#64748b;font-size:12px;padding:16px;background:#f0f4f8;border-radius:8px;">Laddar daglig data...</div>
+<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:10px;">Daily activity by pool -- franvarodetektering</div>
+<div id="ag-absence-detail" style="color:#64748b;font-size:12px;padding:16px;background:#f0f4f8;border-radius:8px;">Loading daglig data...</div>
 </div>
 
 <!-- INDIVIDUAL AGENT LEVEL SECTION (v30-daily) -->
-<div id="ag-individual-section" style="margin-top:28px;margin-bottom:20px;">
+<div id="ag-individualual-section" style="margin-top:28px;margin-bottom:20px;">
   <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
-    Daglig produktion per agent
+    Daily output per agent
     <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#1f6f8b;border:1px solid #2d3148;">Estimat baserat pa pooldata</span>
   </div>
-  <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Daglig genomsnittsproduktion per agent baserat pa faktiska tickets och AHT i vald manad. Visar hur mycket tid av en agents dag som gar till tickets vs. ledig kapacitet.</div>
+  <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Daylig average output per agent baserat pa faktiska tickets och AHT i vald manad. Visar hur mycket tid av en agents dag som gar till tickets vs. ledig kapacitet.</div>
   <div style="display:flex;gap:6px;margin-bottom:14px;">
-    <button class="ag-ind-period-btn" data-period="day" onclick="setAgentIndividualPeriod('day',this)" style="background:#1f6f8b;color:#fff;border:none;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Dag</button>
-    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualPeriod('week',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Vecka</button>
-    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualPeriod('month',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Manad</button>
+    <button class="ag-ind-period-btn" data-period="day" onclick="setAgentIndividualualPeriod('day',this)" style="background:#1f6f8b;color:#fff;border:none;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Day</button>
+    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualualPeriod('week',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Week</button>
+    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualualPeriod('month',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Manad</button>
   </div>
   <div style="overflow-x:auto;border-radius:10px;border:1px solid #2d3148;">
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead>
         <tr>
           <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;">Agenter</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;">Agents</th>
           <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Genomsnittliga tickets per agent under vald period">Tickets/agent</th>
           <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Average Handle Time i minuter">AHT (min)</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Tid per agent per dag som gar till tickets = (tickets/agent/dag) x AHT">Handl.min/dag</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Tid per agent per dag som gar till tickets = (tickets/agent/dag) x AHT">Handle min/day</th>
           <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Andel av 7h arbdag som gar till tickethantering (420 min = 100%)">Belaggning</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Ledig tid per agent per dag = 420 min minus handlaggning">Gap min/dag</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Ledig tid per agent per dag = 420 min minus handlaggning">Gap min/day</th>
         </tr>
       </thead>
-      <tbody id="ag-individual-tbody">
-        <tr><td colspan="7" style="text-align:center;padding:24px;color:#64748b;">Laddar individuell data...</td></tr>
+      <tbody id="ag-individualual-tbody">
+        <tr><td colspan="7" style="text-align:center;padding:24px;color:#64748b;">Loading individualuell data...</td></tr>
       </tbody>
     </table>
   </div>
   <div style="margin-top:8px;font-size:11px;color:#64748b;line-height:1.5;">
-    <strong>i</strong> Tickets/agent = poolens dagliga genomsnitt / antal agenter. Handl.min/dag = tickets/agent/dag x AHT. Belaggning = handl.min / 420 (7h). Gap = ledig tid per dag (negativt = overtidssignal).
+    <strong>i</strong> Tickets/agent = poolens dagliga genomsnitt / antal agents. Handle min/day = tickets/agent/dag x AHT. Belaggning = handl.min / 420 (7h). Gap = ledig tid per dag (negativt = overtidssignal).
   </div>
 </div>
 
 <!-- PRODUCT BREAKDOWN PER POOL SECTION (v30) -->
 <div id="ag-product-section" style="margin-top:24px;margin-bottom:20px;">
   <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
-    Produktmix per pool
-    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#9333ea;border:1px solid #2d3148;">30 dagars data</span>
+    Product mix by pool
+    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#9333ea;border:1px solid #2d3148;">30-day data</span>
   </div>
-  <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Tickets per produkt/omrade kopplat till respektive pool. Inte alla agenter kan alla produkter - fordelningen nedan visar varje pools faktiska produktmix och uppskattad daglig last per agent.</div>
+  <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Tickets per produkt/omrade kopplat till respektive pool. Inte alla agents kan alla produkter - fordelningen nedan visar varje pools faktiska produktmix och uppskattad daglig last per agent.</div>
   <div id="ag-product-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;">
-    <div style="color:#64748b;font-size:12px;padding:16px;">Laddar produktdata...</div>
+    <div style="color:#64748b;font-size:12px;padding:16px;">Loading product data...</div>
   </div>
 </div>
 
 <div class="ag-data-note">
-<div class="ag-data-note__title">i Operativ analys -- pool-/teamniva, ej individuell agent</div>
-<div class="ag-data-note__body">Datan visar tickets och FTE-krav per pool/team baserat pa riktig data fran Supabase. Franvaro detekteras automatiskt: om en pool haft 0 tickets en arbetsdag markeras det som trolig franvaro och den justerade FTE-tillgangen minskas proportionellt. Detta pavaerkar den tillgaengliga FTE-kalkylatorn.</div>
+<div class="ag-data-note__title">i Operational analysis -- pool-/teamniva, ej individualual agent</div>
+<div class="ag-data-note__body">Datan visar tickets och FTE Required per pool/team baserat pa riktig data fran Supabase. Franvaro detekteras automatiskt: om en pool haft 0 tickets en arbetsdag markeras det som trolig franvaro och den justerade FTE-tillgangen minskas proportionellt. Detta pavaerkar den tillgaengliga FTE-kalkylatorn.</div>
 </div>
 
 <!-- ===== NAMED AGENTS DROP-IN ===== -->
 <div id="named-agents" style="margin-bottom:24px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;">
-<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">Namngivna agenter</h3>
-<p style="color:#64748b;font-size:12.5px;margin:0 0 16px;">Hanterade tickets per agent fr&#xe5;n Freshdesk (tilldelad responder). Termination r&#xe4;knas logiskt till switchboard. Ej officiellt prestationsm&#xe5;tt &#x2014; driftanalys.</p>
+<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">Named agents</h3>
+<p style="color:#64748b;font-size:12.5px;margin:0 0 16px;">Handled tickets per agent fr&#xe5;n Freshdesk (tilldelad responder). Termination r&#xe4;knas logiskt till switchboard. Ej officiellt prestationsm&#xe5;tt &#x2014; operational analysis.</p>
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
 <label style="color:#94a3b8;font-size:12px;">Period<select id="na-month" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"></select></label>
-<label style="color:#94a3b8;font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"><option value="">Alla pooler</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
+<label style="color:#94a3b8;font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"><option value="">All pools</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
 <span style="margin-left:auto;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums;" id="na-meta">&#x2014;</span>
 </div>
-<div id="na-body"><div style="color:#64748b;font-size:13px;padding:18px 4px;">Laddar&#x2026;</div></div>
+<div id="na-body"><div style="color:#64748b;font-size:13px;padding:18px 4px;">Loading&#x2026;</div></div>
 <p style="color:#475569;font-size:11.5px;margin-top:12px;line-height:1.4;">K&#xe4;lla: cc-dashboard-api <code style="background:#f8fafc;padding:1px 4px;border-radius:3px;color:#818cf8;">/agent-breakdown</code>.</p>
 </div>
 <!-- ===== END NAMED AGENTS DROP-IN ===== -->
@@ -1318,7 +1083,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
     <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #22c55e;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#4ade80;margin-bottom:5px;">Namngivna agenter</div>
+      <div style="font-size:12px;font-weight:700;color:#4ade80;margin-bottom:5px;">Named agents</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Koppla agent_id/namn fran Freshdesk-API:et sa varje rad visar en verklig person. Kraver agent-falt i cc_ticket_meta och nytt endpoint /agent-breakdown.</div>
     </div>
     <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #6366f1;border-radius:8px;padding:14px;">
@@ -1327,7 +1092,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
     </div>
     <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #f59e0b;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#fcd34d;margin-bottom:5px;">Verklig AHT fran Freshcaller</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Ersatt estimerad AHT med faktisk samtalstid per agent via Freshcaller API (P7). Ger exakt belaggning och avvikelsedetektion per individ.</div>
+      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Ersatt estimerad AHT med faktisk samtalstid per agent via Freshcaller API (P7). Ger exakt belaggning och avvikelsedetektion per individual.</div>
     </div>
     <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #60a5fa;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#60a5fa;margin-bottom:5px;">Franvarokalender</div>
@@ -1346,12 +1111,12 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 
 <div id="agent-eff">
-  <h3>Effektivitet &amp; belastningsgrad</h3>
-  <p class="ae-sub">Per agent, baserat på FTE-modellen (CC_FTE_Calculator.xlsx) och ärendefördelningen per pool. Modellerad tid = hanterade ärenden × pool-AHT.</p>
+  <h3>Efficiency &amp; loadsgrad</h3>
+  <p class="ae-sub">Per agent, baserat på FTE-modellen (CC_FTE_Calculator.xlsx) och ärendefördelningen per pool. Modeled time = handled ärenden × pool-AHT.</p>
 
   <div class="ae-controls">
     <label>Period <select id="ae-month"></select></label>
-    <label>Beläggningsmål <select id="ae-occ">
+    <label>Occupancysmål <select id="ae-occ">
       <option value="0.70">70 %</option>
       <option value="0.75" selected>75 %</option>
       <option value="0.80">80 %</option>
@@ -1359,60 +1124,50 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
     <span class="ae-meta" id="ae-meta">—</span>
   </div>
 
-  <div id="ae-body"><div class="ae-empty">Laddar…</div></div>
+  <div id="ae-body"><div class="ae-empty">Loading…</div></div>
 
   <div class="ae-legend" id="ae-legend"></div>
 
   <p class="ae-note">
-    Källa: cc-dashboard-api <code>/agent-efficiency</code>. <b>Belastningsgrad</b> = modellerad
-    hanteringstid / produktiv kapacitet (markör = beläggningsmål). <b>Effektivitet</b> = realiserat
+    Källa: cc-dashboard-api <code>/agent-efficiency</code>. <b>Loadsgrad</b> = modellerad
+    hanteringstid / produktiv kapacitet (markör = occupancysmål). <b>Efficiency</b> = realiserat
     FTE-bidrag / planerat FTE-bidrag, där planerat väger in Sen Factor (Senior 1,0 · Junior/Temp 0,7) —
     referens 100 %. Uppmätt per-ärende-tid saknas i Freshdesk-webhooken, så båda måtten bygger på
-    modellerad tid (volym × AHT). Kapacitet/FTE = 7,5h × arbetsdagar (Mån–Fre minus helgdagar) ×
+    modeled time (volym × AHT). Kapacitet/FTE = 7,5h × arbetsdagar (Mån–Fre minus helgdagar) ×
     (1−25 % shrinkage); innevarande månad pro-rata. Ej officiellt prestationsmått — bemanningsanalys.
   </p>
 </div>
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=6"></script>
+</main><script type="module" src="js/main.js?v=7"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
   var dropdown=parent.querySelector('.nav-dropdown');
   var isOpen=dropdown.classList.contains('open');
-  // Close all
-  document.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));
-  document.querySelectorAll('.nav-dropdown-trigger').forEach(t=>t.classList.remove('open'));
-  // Toggle clicked
+  document.querySelectorAll('.nav-dropdown').forEach(function(d){d.classList.remove('open');});
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(function(t){t.classList.remove('open');});
   if(!isOpen){dropdown.classList.add('open');btn.classList.add('open');}
 }
-// Close dropdowns when clicking outside
 document.addEventListener('click',function(e){
   if(!e.target.closest('.nav-dropdown-group')){
-    document.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));
-    document.querySelectorAll('.nav-dropdown-trigger').forEach(t=>t.classList.remove('open'));
+    document.querySelectorAll('.nav-dropdown').forEach(function(d){d.classList.remove('open');});
+    document.querySelectorAll('.nav-dropdown-trigger').forEach(function(t){t.classList.remove('open');});
   }
 });
-// Patch showTab to handle dropdown active states
-var _origShowTab = window.showTab;
-window.showTab = function(id, btn){
-  if(_origShowTab) _origShowTab(id, btn);
-  // Update nav-tab active
-  document.querySelectorAll('.nav-tab').forEach(b=>{
-    b.classList.toggle('active', b.dataset && b.dataset.tab===id);
+var _origST=window.showTab;
+window.showTab=function(id,btn){
+  if(_origST)_origST(id,btn);
+  document.querySelectorAll('.nav-tab').forEach(function(b){b.classList.toggle('active',b.dataset&&b.dataset.tab===id);});
+  document.querySelectorAll('.nav-dropdown button').forEach(function(b){b.classList.toggle('active',b.dataset&&b.dataset.tab===id);});
+  document.querySelectorAll('.nav-dropdown-group').forEach(function(g){
+    var hasA=g.querySelector('.nav-dropdown button.active');
+    g.querySelector('.nav-dropdown-trigger').classList.toggle('has-active',!!hasA);
   });
-  // Update dropdown buttons active + trigger has-active
-  document.querySelectorAll('.nav-dropdown button').forEach(b=>{
-    b.classList.toggle('active', b.dataset && b.dataset.tab===id);
-  });
-  document.querySelectorAll('.nav-dropdown-group').forEach(g=>{
-    var hasActive = g.querySelector('.nav-dropdown button.active');
-    g.querySelector('.nav-dropdown-trigger').classList.toggle('has-active', !!hasActive);
-  });
-  // Close dropdowns after selection
-  document.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));
-  document.querySelectorAll('.nav-dropdown-trigger').forEach(t=>t.classList.remove('open'));
+  document.querySelectorAll('.nav-dropdown').forEach(function(d){d.classList.remove('open');});
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(function(t){t.classList.remove('open');});
 };
 </script>
+
 </body>
