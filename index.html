@@ -306,7 +306,7 @@ CC Workforce
 <div class="kpi-label">Net Gap FTE</div>
 <div class="kpi-value gap-pos">+1.00</div>
 <div class="kpi-sub">Effective Supply − Required FTE</div>
-<div class="kpi-tooltip">⚠ Positive total gap döljer kritiskt underskott i Classic (-1.20 FTE). See Pool Capacity Gaps below.</div>
+<div class="kpi-tooltip">⚠ Positive total gap hides a critical deficit in Classic (-1.20 FTE). See Pool Capacity Gaps below.</div>
 </div>
 </div>
 <div class="alert-banner crit">
@@ -359,7 +359,7 @@ CC Workforce
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
 <div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div><div class="cs">Worst case · aug 2025</div></div>
 <div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE with AI deflection</div></div>
-<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">With AI deflection · peak migration</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE at Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">With AI deflection · peak migration</div></div>
 </div>
 <div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analytics · Actual workload &amp; coverage (API data)</span><div class="layer-divider-line"></div></div>
 <div class="trend-container">
@@ -433,7 +433,7 @@ CC Workforce
 <div class="sc-row"><span class="sc-key">Largest pool deficit</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
 </div>
 <div class="scenario-card">
-<div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategi</span></div>
+<div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategy</span></div>
 <div class="sc-gap" style="color:#4ade80">+1.80</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.30</span></div>
 <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.05</span></div>
@@ -1140,7 +1140,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=10"></script>
+</main><script type="module" src="js/main.js?v=11"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
