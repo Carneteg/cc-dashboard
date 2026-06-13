@@ -2407,7 +2407,7 @@ if(!res.ok) throw new Error("HTTP " + res.status);
 var data = await res.json();
 var agents = data.agents || [];
 var EXCLUDED_AGENTS = ["Espen Øren","Carl Fredrik Vorum","Martin André Johansen","Anna Schönfelder","Øivind Anders Elvestad","Ida Ljungberg","Lotta Sprangers","Tor Arne Uran","Inga Helen Mork","Fredrik Ågren","Eirik Juul-Jørgensen","Arzu Kazimova Sel","Ellbjørg Halås","Kjetil Enger Olsen","Ståle Karstein Wik","Ole Martin Wiig","Atle Torp","Camilla Schie-Veslum","Karoline Amundsen Dystebakken","Emil Golmen","Fride Paulsen Fiskerstrand","Hans Gjermund Gauslaa"];
-agents = agents.filter(function(a){ return EXCLUDED_AGENTS.indexOf(a.agent_name) === -1; });
+agents = agents.filter(function(a){ var norm=function(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}; return EXCLUDED_AGENTS.every(function(ex){return norm(ex)!==norm(a.agent_name);}); });
 if(meta) meta.textContent = (data.agent_count||agents.length) + " agenter · " + naFmt(data.total_handled||0) + " tickets";
 if(!agents.length){
 body.innerHTML = '<div class="na-empty">Ingen agentdata för perioden.</div>';
