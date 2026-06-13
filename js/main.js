@@ -1,39 +1,45 @@
 // js/main.js  --  Tab router, global init, event wiring
+import { initWP, showTab as _showTab, loadOverview } from './tab-wp.js';
+
 const _initialised = new Set();
 
 export function showTab(tabId, btn) {
   document.querySelectorAll('.tc').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  const pane = document.getElementById('tab-' + tabId);
-  if (pane) pane.classList.add('active');
+  const el = document.getElementById(tabId);
+  if (el) el.classList.add('active');
   if (btn) btn.classList.add('active');
-  if (!_initialised.has(tabId)) { _initialised.add(tabId); _initTab(tabId); }
-}
 
-function _initTab(tabId) {
-  switch (tabId) {
-    case 'wp':       if (typeof initWP         === 'function') initWP(); break;
-    case 'classify': if (typeof initClassifyTab === 'function') initClassifyTab(); break;
-    case 'agent':    if (typeof loadAgentTab    === 'function') loadAgentTab(); break;
-    case 'overview': if (typeof loadOverview    === 'function') loadOverview(); break;
-    case 'aht':      if (typeof loadAHT         === 'function') loadAHT(); break;
-    case 'prognos':  if (typeof initPrognos     === 'function') initPrognos(); break;
-    case 'setup':    if (typeof loadSetupTab    === 'function') loadSetupTab(); break;
-    default: break;
+  if (!_initialised.has(tabId)) {
+    _initialised.add(tabId);
+    if (tabId === 'wp')       initWP();
+    if (tabId === 'overview') typeof loadOverview === 'function' && loadOverview();
+    if (tabId === 'agent')    typeof loadAgentTab === 'function' && loadAgentTab();
   }
 }
 
-window.addEventListener('error', e =>
-  console.error('[cc-dashboard]', e.message, e.filename, e.lineno));
-window.addEventListener('unhandledrejection', e =>
-  console.error('[cc-dashboard] rejected:', e.reason));
-
+// Re-export showTab to window so HTML onclick handlers work
 window.showTab = showTab;
 
+// Global error boundary
+window.addEventListener('unhandledrejection', ev => {
+  console.error('[cc-dashboard] Unhandled promise rejection:', ev.reason);
+});
+window.onerror = (msg, src, line, col, err) => {
+  console.error('[cc-dashboard] Global error:', msg, src + ':' + line + ':' + col, err);
+};
+
+// Bootstrap
 document.addEventListener('DOMContentLoaded', () => {
-  const firstBtn = document.querySelector('nav button');
-  if (firstBtn) {
-    const m = (firstBtn.getAttribute('onclick') || '').match(/showTab\('(\w+)'/);
-    if (m) showTab(m[1], firstBtn);
+  const upd = document.getElementById('upd');
+  if (upd) upd.textContent = 'Uppdaterat ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit', minute:'2-digit'});
+
+  const activeBtn = document.querySelector('nav button.active');
+  if (activeBtn) {
+    const id = activeBtn.getAttribute('onclick')?.match(/showTab\('(\w+)'/)?.[1];
+    if (id) showTab(id, activeBtn);
+  } else {
+    const wpBtn = document.querySelector('nav button[onclick*=\'wp\']');
+    showTab('wp', wpBtn);
   }
 });
