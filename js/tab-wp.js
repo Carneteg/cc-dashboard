@@ -424,7 +424,7 @@ function renderTrendChart(monthly){
       {label:'Tickets (k)',data:data.map(m=>parseFloat((m.totalTickets/1000).toFixed(2))),borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],fill:false,yAxisID:'y2'}
     ]},
     options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys â ej officiellt planeringsmatt]'}}},
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#ffffff',borderColor:'#dde3ee',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys â ej officiellt planningsmatt]'}}},
       scales:{x:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b',font:{size:10}}},y:{grid:{color:'#f1f5f9'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}}}
   });
 }
@@ -475,7 +475,7 @@ function renderPoolGaps(){
     var supPct=Math.round(p.supply/maxVal*100),demPct=Math.round(p.demandPeak/maxVal*100);
     return '<div class="pool-row '+cls+'">'
       +'<div class="pool-header"><span class="pool-name">'+p.pool+'</span><span class="pool-gap-val '+gapCls2+'">'+(p.gapFte>=0?'+':'')+p.gapFte.toFixed(2)+' FTE</span></div>'
-      +'<div class="pool-stats"><div class="pool-stat"><strong>'+p.supply.toFixed(2)+'</strong>Effective Supply</div><div class="pool-stat"><strong>'+p.demandPeak.toFixed(2)+'</strong>Peak Demand</div><div class="pool-stat"><strong>'+p.comfortable.toFixed(2)+'</strong>Comfortable FTE</div><div class="pool-stat"><strong>'+(p.agents||'-')+'</strong>Agenter</div></div>'
+      +'<div class="pool-stats"><div class="pool-stat"><strong>'+p.supply.toFixed(2)+'</strong>Effective Supply</div><div class="pool-stat"><strong>'+p.demandPeak.toFixed(2)+'</strong>Peak Demand</div><div class="pool-stat"><strong>'+p.comfortable.toFixed(2)+'</strong>Comfortable FTE</div><div class="pool-stat"><strong>'+(p.agents||'-')+'</strong>Agents</div></div>'
       +'<div class="pool-bar-wrap"><div class="pool-bar-supply" style="width:'+supPct+'%"></div><div class="pool-bar-demand" style="width:'+demPct+'%"></div></div>'
       +'<div class="pool-bar-label"><span>Supply (gron) vs Peak Demand (bla)</span><span class="tag '+cls+'">'+(p.status==='Critical'?'Kritiskt underskott':p.status==='Tight'?'Tight':'OK')+'</span></div>'
       +'</div>';
@@ -748,7 +748,7 @@ async function loadOverview() {
     setTimeout(renderSparkChart, 200);
 
     const ts = document.getElementById('ov-ts');
-    if (ts) ts.textContent = 'Uppdaterat: ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit', minute:'2-digit'});
+    if (ts) ts.textContent = 'Updated: ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit', minute:'2-digit'});
 
   } catch(err) { console.error('loadOverview error:', err); }
 }
@@ -792,7 +792,7 @@ async function runPrognos(){
   var rows=[],totReq=0,totGap=0,surp=0,def=0;
   for(var i=0;i<12;i++){var mn=sm+i,my=sy;while(mn>12){mn-=12;my++;}var ym=my+'-'+String(mn).padStart(2,'0');var vol=baseVol*Math.pow(1+volChg/100,i+1),aht=baseAHT*Math.pow(1+ahtChg/100,i+1),sup=baseSupply+(supChg*(i+1)),wd=swedishWorkingDays(my,mn),req=computeFTE(vol,aht,ym),gap=sup-req;totReq+=req;totGap+=gap;if(gap>=0)surp++;else def++;rows.push({ym:ym,vol:Math.round(vol),aht:aht.toFixed(1),wd:wd,req:req,sup:sup,gap:gap});}
   var avgGap=totGap/12;
-  document.getElementById('prognos-summary').innerHTML=['<div class="wc"><div class="wl">Snitt FTE-gap</div><div class="wv '+(avgGap>=0?'ok':'crit')+'">'+fmtFTE(avgGap)+'</div></div>','<div class="wc"><div class="wl">Manader overskott</div><div class="wv ok">'+surp+'</div></div>','<div class="wc"><div class="wl">Manader underskott</div><div class="wv '+(def>0?'crit':'ok')+'">'+def+'</div></div>','<div class="wc"><div class="wl">Total FTE-krav</div><div class="wv warn">'+fmtFTE(totReq)+'</div></div>'].join('');
+  document.getElementById('prognos-summary').innerHTML=['<div class="wc"><div class="wl">Snitt FTE-gap</div><div class="wv '+(avgGap>=0?'ok':'crit')+'">'+fmtFTE(avgGap)+'</div></div>','<div class="wc"><div class="wl">Manader overskott</div><div class="wv ok">'+surp+'</div></div>','<div class="wc"><div class="wl">Manader underskott</div><div class="wv '+(def>0?'crit':'ok')+'">'+def+'</div></div>','<div class="wc"><div class="wl">Total FTE Required</div><div class="wv warn">'+fmtFTE(totReq)+'</div></div>'].join('');
   document.getElementById('forecast-grid').innerHTML=rows.map(function(r){var gap=parseFloat(r.gap),cls=gap>0.5?'surplus':gap<-0.5?'deficit':'marginal',mx=Math.max(r.req,r.sup)||1;return'<div class="fc '+cls+'"><div class="fh"><span class="fm">'+r.ym+'</span><span class="ga '+(gap>=0?'ok':gap>=-0.5?'under':'crit')+'">Gap: '+fmtFTE(gap)+'</span></div><div class="mp"><div class="ml">FTE Krav: '+fmtFTE(r.req)+'</div><div class="mb"><div class="mf req" style="width:'+Math.round(r.req/mx*100)+'%"></div></div></div><div class="mp"><div class="ml">FTE Tillgang: '+fmtFTE(r.sup)+'</div><div class="mb"><div class="mf sup" style="width:'+Math.round(r.sup/mx*100)+'%"></div></div></div><div class="mv">Volym: '+r.vol+' | AHT: '+r.aht+'min | Arbdagar: '+r.wd+'</div></div>';}).join('');
   document.getElementById('forecast-table').innerHTML=rows.map(function(r){var gap=parseFloat(r.gap),cls=gap<-0.5?'crit':gap<0?'under':'ok';return'<tr><td>'+r.ym+'</td><td class="n">'+r.vol+'</td><td class="n">'+r.aht+'</td><td class="n">'+r.wd+'</td><td class="n">'+fmtFTE(r.req)+'</td><td class="n">'+fmtFTE(r.sup)+'</td><td class="n"><span class="ga '+cls+'">'+fmtFTE(gap)+'</span></td><td><span class="ga '+cls+'">'+(gap>=0?'Overskott':'Underskott')+'</span></td></tr>';}).join('');
 }
