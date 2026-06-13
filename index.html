@@ -15,7 +15,7 @@ nav .nav-sep{width:1px;background:#2d3148;margin:8px 4px;flex-shrink:0}
 main{padding:24px;max-width:1440px;margin:0 auto}
 .tc{display:none}.tc.active{display:block}
 
-/* ── SHARED ── */
+/* ââ SHARED ââ */
 .section-header{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px}
 .section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
 .section-note{font-size:11px;color:#475569;font-style:italic}
@@ -42,7 +42,7 @@ tbody tr:hover{background:#1e2235}
 td{padding:12px 16px;font-size:13px}
 td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 
-/* ── LAYER BADGES ── */
+/* ââ LAYER BADGES ââ */
 .layer-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
 .layer-badge.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
 .layer-badge.analytics{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
@@ -50,7 +50,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .layer-divider-line{flex:1;height:1px;background:#2d3148}
 .layer-divider-label{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
 
-/* ── WP KPI CARDS ── */
+/* ââ WP KPI CARDS ââ */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
@@ -152,7 +152,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .amc-cov{font-size:10px;margin-top:4px;padding:2px 6px;border-radius:3px;display:inline-block}
 .amc-cov.ok{background:#14532d;color:#4ade80}.amc-cov.warn{background:#7f1d1d;color:#fca5a5}
 
-/* ── CLASSIFICATION MODEL STYLES ── */
+/* ââ CLASSIFICATION MODEL STYLES ââ */
 .classif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:20px}
 .classif-card{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
 .classif-card.switchboard{border-left:4px solid #60a5fa}
@@ -187,7 +187,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .supply-source-key{color:#64748b}
 .supply-source-val{font-weight:600;font-variant-numeric:tabular-nums}
 
-/* ── LEGACY TAB STYLES ── */
+/* ââ LEGACY TAB STYLES ââ */
 .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
 .st{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin:24px 0 12px}
 .cv-lg{font-size:32px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
@@ -343,7 +343,47 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .ag-sparkbar__fill--ok{background:#22c55e;}
 @media(max-width:900px){.ov-kpi-grid{grid-template-columns:repeat(2,1fr)}.ag-kpi-grid{grid-template-columns:repeat(3,1fr)}.ag-detail{grid-template-columns:1fr}.ag-charts-grid{grid-template-columns:1fr}.ag-day-strip{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.ov-kpi-grid{grid-template-columns:1fr 1fr}.ag-kpi-grid{grid-template-columns:1fr 1fr}.ag-day-strip{grid-template-columns:repeat(2,1fr)}}
-</style></head><body>
+
+/* ===== NAMED AGENTS DROP-IN STYLES ===== */
+:root{
+--ink:#1a1d21; --muted:#6b7280; --line:#e5e7eb; --bg:#ffffff;
+--plan:#2563eb;
+--plan-soft:#eff4ff;
+--pos:#15803d; --neg:#b91c1c;
+}
+#named-agents{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink); background:var(--bg);
+border:1px solid var(--line); border-radius:10px; padding:20px 22px;
+max-width:1080px;
+}
+#named-agents h3{ margin:0 0 2px; font-size:16px; font-weight:600; letter-spacing:-.01em; }
+#named-agents .na-sub{ color:var(--muted); font-size:12.5px; margin:0 0 16px; }
+#named-agents .na-controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+#named-agents select{
+font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:7px;
+background:#fff; color:var(--ink); cursor:pointer;
+}
+#named-agents .na-meta{ margin-left:auto; color:var(--muted); font-size:12.5px; font-variant-numeric:tabular-nums; }
+#named-agents table{ width:100%; border-collapse:collapse; font-size:13px; }
+#named-agents thead th{
+text-align:left; font-weight:600; color:var(--muted); font-size:11.5px;
+text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; border-bottom:1px solid var(--line);
+}
+#named-agents thead th.num{ text-align:right; }
+#named-agents tbody td{ padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:middle; }
+#named-agents tbody tr:last-child td{ border-bottom:none; }
+#named-agents td.num{ text-align:right; font-variant-numeric:tabular-nums; }
+#named-agents .na-name{ font-weight:600; }
+#named-agents .na-pools{ color:var(--muted); font-size:11.5px; }
+#named-agents .na-bar-wrap{ display:flex; align-items:center; gap:8px; justify-content:flex-end; }
+#named-agents .na-bar{ height:6px; border-radius:3px; background:var(--plan); opacity:.85; }
+#named-agents .na-bar-track{ width:90px; height:6px; border-radius:3px; background:var(--plan-soft); overflow:hidden; }
+#named-agents tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid var(--line); }
+#named-agents .na-note{ color:var(--muted); font-size:11.5px; margin-top:12px; line-height:1.4; }
+#named-agents .na-empty,#named-agents .na-error{ color:var(--muted); font-size:13px; padding:18px 4px; }
+#named-agents .na-error{ color:var(--neg); }
+/* ===== END NAMED AGENTS STYLES ===== */</style></head><body>
 <header>
 <div class="logo">
 <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#6366f1"/><path d="M8 20l4-8 4 5 3-4 3 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -352,15 +392,15 @@ CC Workforce Planning
 <div class="ts" id="upd">Uppdaterat --:--</div>
 </header>
 <nav>
-<button class="active" onclick="showTab('wp',this)">⬡ Workforce Planning</button>
+<button class="active" onclick="showTab('wp',this)">â¬¡ Workforce Planning</button>
 <div class="nav-sep"></div>
-<button onclick="showTab('overview',this)">Daglig översikt</button>
+<button onclick="showTab('overview',this)">Daglig Ã¶versikt</button>
 <button onclick="showTab('products',this)">Per produkt</button>
 <button onclick="showTab('recent',this)">Senaste tickets</button>
 <button onclick="showTab('trend',this)">Trend</button>
 <button onclick="showTab('workforce',this)">Workforce Gap</button>
 <button onclick="showTab('aht',this)">AHT FTE</button>
-<button onclick="showTab('classify',this)">🔍 Klassificering</button>
+<button onclick="showTab('classify',this)">ð Klassificering</button>
 <button onclick="showTab('prognos',this)">Prognos</button>
 <button onclick="showTab('setup',this)">Setup</button>
 
@@ -373,160 +413,160 @@ CC Workforce Planning
 <div style="background:#12141e;border:2px solid #4338ca;border-radius:14px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden">
 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366f1,#818cf8,#60a5fa)"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-<div><div style="font-size:13px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">Källa: CC_FTE_Calculator.xlsx · Officiell planeringsmodell · Ändras aldrig av API-data</div></div>
-<span class="layer-badge planning">Officiell beslutskälla</span>
+<div><div style="font-size:13px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Officiell planeringsmodell Â· Ãndras aldrig av API-data</div></div>
+<span class="layer-badge planning">Officiell beslutskÃ¤lla</span>
 </div>
 <div class="tw" style="margin-bottom:12px">
-<table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>Beslutsåtgärd</th></tr></thead>
+<table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>BeslutsÃ¥tgÃ¤rd</th></tr></thead>
 <tbody>
-<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.20</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">−1.20</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgående. Accelerera S1-migration.</td></tr>
-<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimalt buffer. Bevaka volymökning.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Kapacitet för migrationstillväxt.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil. Bevaka volym.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Överskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil.</td></tr>
-<tr style="background:#12141e;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt — men Classic‑underskott −1.20 FTE är kritiskt.</td></tr>
+<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.20</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">â1.20</td><td><span class="tag crit">Kritiskt</span></td><td style="font-size:11px;color:#fca5a5">Rekrytera omgÃ¥ende. Accelerera S1-migration.</td></tr>
+<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimalt buffer. Bevaka volymÃ¶kning.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Kapacitet fÃ¶r migrationstillvÃ¤xt.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil. Bevaka volym.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil.</td></tr>
+<tr style="background:#12141e;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">â  Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt â men Classicâunderskott â1.20 FTE Ã¤r kritiskt.</td></tr>
 </tbody></table>
 </div>
-<div style="font-size:11px;color:#475569;padding:8px 12px;background:#0f1117;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er från Excel-modellen. Analytics-estimat (lila, nedan) kan avvika — de är driftanalys, ej beslutskälla. Se <em>Klassificering</em>-fliken för supply-avvikelser och routing-diagnostik.</div>
+<div style="font-size:11px;color:#475569;padding:8px 12px;background:#0f1117;border-radius:6px">â  <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er frÃ¥n Excel-modellen. Analytics-estimat (lila, nedan) kan avvika â de Ã¤r driftanalys, ej beslutskÃ¤lla. Se <em>Klassificering</em>-fliken fÃ¶r supply-avvikelser och routing-diagnostik.</div>
 </div>
 <!-- /CFO DECISION LAYER -->
 <div id="tab-wp" class="tc active">
 <div class="section-header" style="margin-top:0">
-<span class="section-title">§ 1 · Executive Summary — nuläge</span>
+<span class="section-title">Â§ 1 Â· Executive Summary â nulÃ¤ge</span>
 <div style="display:flex;align-items:center;gap:8px">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Källa: CC_FTE_Calculator.xlsx · Dashboard + FTE Calc</span>
+<span class="section-note">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Dashboard + FTE Calc</span>
 </div>
 </div>
 <div class="kpi-grid">
 <div class="kpi-card actual">
 <div class="kpi-label"><span>Actual FTE</span><span class="tag master">Masterdata</span></div>
 <div class="kpi-value actual">11</div>
-<div class="kpi-sub">Faktisk bemanning · Business baseline</div>
-<div class="kpi-tooltip">Faktiskt antal anställda. Mastervärde = 11. Ej detsamma som Effective Supply — påverkas ej av modellberäkningar.</div>
+<div class="kpi-sub">Faktisk bemanning Â· Business baseline</div>
+<div class="kpi-tooltip">Faktiskt antal anstÃ¤llda. MastervÃ¤rde = 11. Ej detsamma som Effective Supply â pÃ¥verkas ej av modellberÃ¤kningar.</div>
 </div>
 <div class="kpi-card supply">
 <div class="kpi-label">Effective Supply FTE</div>
 <div class="kpi-value supply">11.05</div>
 <div class="kpi-sub">Produktiv kapacitet efter seniority &amp; allokering</div>
-<div class="kpi-tooltip">Modellens beräknade tillgängliga kapacitet. Kan vara ≠ Actual FTE pga seniority-viktning. Källa: FTE Calc-fliken.</div>
+<div class="kpi-tooltip">Modellens berÃ¤knade tillgÃ¤ngliga kapacitet. Kan vara â  Actual FTE pga seniority-viktning. KÃ¤lla: FTE Calc-fliken.</div>
 </div>
 <div class="kpi-card required">
 <div class="kpi-label">Required FTE</div>
 <div class="kpi-value required">10.10</div>
 <div class="kpi-sub">Ticket FTE 9.10 + Overhead FTE 1.00</div>
-<div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. Beräknat på volym, AHT, occupancy, shrinkage och peak buffer per pool.</div>
+<div class="kpi-tooltip">Totalt FTE-behov inkl. overhead. BerÃ¤knat pÃ¥ volym, AHT, occupancy, shrinkage och peak buffer per pool.</div>
 </div>
 <div class="kpi-card gap">
 <div class="kpi-label">Net Gap FTE</div>
 <div class="kpi-value gap-pos">+1.00</div>
-<div class="kpi-sub">Effective Supply − Required FTE</div>
-<div class="kpi-tooltip">⚠ Positivt totalt gap döljer kritiskt underskott i Classic (-1.20 FTE). Se Pool Capacity Gaps nedan.</div>
+<div class="kpi-sub">Effective Supply â Required FTE</div>
+<div class="kpi-tooltip">â  Positivt totalt gap dÃ¶ljer kritiskt underskott i Classic (-1.20 FTE). Se Pool Capacity Gaps nedan.</div>
 </div>
 </div>
 <div class="alert-banner crit">
-<div class="alert-icon">🚨</div>
+<div class="alert-icon">ð¨</div>
 <div class="alert-body">
-<div class="alert-title">Classic är underbemannad med -1.20 FTE trots total balans</div>
-<div class="alert-desc">Totalt nettoöverskott på <span>+1.00 FTE</span> döljer ett kritiskt underskott i Classic-poolen. Supply: <span>2.20 FTE</span> · Krav Peak: <span>3.40 FTE</span> · Gap: <span>-1.20 FTE</span>.</div>
+<div class="alert-title">Classic Ã¤r underbemannad med -1.20 FTE trots total balans</div>
+<div class="alert-desc">Totalt nettoÃ¶verskott pÃ¥ <span>+1.00 FTE</span> dÃ¶ljer ett kritiskt underskott i Classic-poolen. Supply: <span>2.20 FTE</span> Â· Krav Peak: <span>3.40 FTE</span> Â· Gap: <span>-1.20 FTE</span>.</div>
 </div>
 </div>
 <div style="background:#0f172a;border:1px solid #2563eb;border-radius:10px;padding:16px 20px;margin-bottom:32px">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
 <span style="font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em">Analytics Confidence</span>
-<span class="layer-badge planning" style="font-size:9px">Planering = officiell källa</span>
+<span class="layer-badge planning" style="font-size:9px">Planering = officiell kÃ¤lla</span>
 </div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
 <div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
 <div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Enrichment</div>
-<div id="conf-enrichment" style="font-size:18px;font-weight:800;color:#4ade80">—</div>
+<div id="conf-enrichment" style="font-size:18px;font-weight:800;color:#4ade80">â</div>
 <div style="font-size:10px;color:#475569;margin-top:2px">cc_ticket_meta / tickets</div>
 </div>
 <div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
 <div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Classification</div>
-<div id="conf-classification" style="font-size:18px;font-weight:800;color:#4ade80">—</div>
+<div id="conf-classification" style="font-size:18px;font-weight:800;color:#4ade80">â</div>
 <div style="font-size:10px;color:#475569;margin-top:2px">Tickets m. pool_slug / total</div>
 </div>
 <div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
 <div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Workforce calculability</div>
-<div id="conf-calculability" style="font-size:18px;font-weight:800;color:#fcd34d">—</div>
-<div style="font-size:10px;color:#475569;margin-top:2px">Månader med demand-data / 12</div>
+<div id="conf-calculability" style="font-size:18px;font-weight:800;color:#fcd34d">â</div>
+<div style="font-size:10px;color:#475569;margin-top:2px">MÃ¥nader med demand-data / 12</div>
 </div>
 </div>
-<div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planering</span> (blå) = Excel, officiell. &nbsp;·&nbsp; <span style="color:#818cf8;font-weight:600">Analys</span> (lila) = API-trend, ej beslutskälla. &nbsp;·&nbsp; Månader utan demand-data visas grayed-out med "Ingen demand-data" — innehåller INTE verkliga gap-beräkningar.</div>
+<div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planering</span> (blÃ¥) = Excel, officiell. &nbsp;Â·&nbsp; <span style="color:#818cf8;font-weight:600">Analys</span> (lila) = API-trend, ej beslutskÃ¤lla. &nbsp;Â·&nbsp; MÃ¥nader utan demand-data visas grayed-out med "Ingen demand-data" â innehÃ¥ller INTE verkliga gap-berÃ¤kningar.</div>
 </div></div>
 <div class="section-header">
-<span class="section-title">§ 2 · Staffing Over Time</span>
+<span class="section-title">Â§ 2 Â· Staffing Over Time</span>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
 <span class="layer-badge planning">Planering</span>
 <span class="layer-badge analytics">Analys</span>
 <div class="chart-controls">
-<button class="chart-btn active" onclick="setTimeGran('monthly',this)">Månadsvis</button>
+<button class="chart-btn active" onclick="setTimeGran('monthly',this)">MÃ¥nadsvis</button>
 <button class="chart-btn" onclick="setTimeGran('quarterly',this)">Kvartal</button>
 </div>
 </div>
 </div>
-<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Planering · Scenario-driven utveckling</span><div class="layer-divider-line"></div></div>
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Planering Â· Scenario-driven utveckling</span><div class="layer-divider-line"></div></div>
 <div class="chart-wrap" style="margin-bottom:12px">
-<h4>FTE-planering: Actual · Effective Supply · Required · Scenariopunkter <span class="layer-badge planning" style="font-size:9px">Planering</span></h4>
+<h4>FTE-planering: Actual Â· Effective Supply Â· Required Â· Scenariopunkter <span class="layer-badge planning" style="font-size:9px">Planering</span></h4>
 <canvas id="staffingChart" height="90"></canvas>
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
-<div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div><div class="cs">Worst case · aug 2025</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div><div class="cs">Worst case Â· aug 2025</div></div>
 <div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE med AI-deflection</div></div>
-<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">Med AI-deflection · topp migration</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE vid Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">Med AI-deflection Â· topp migration</div></div>
 </div>
-<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys · Faktisk arbetsbelastning &amp; täckning (API-data)</span><div class="layer-divider-line"></div></div>
+<div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analys Â· Faktisk arbetsbelastning &amp; tÃ¤ckning (API-data)</span><div class="layer-divider-line"></div></div>
 <div class="trend-container">
 <div class="trend-header">
-<span class="trend-title">Månadsvis arbetsbelastning: Faktiska tickets &amp; beräknad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
+<span class="trend-title">MÃ¥nadsvis arbetsbelastning: Faktiska tickets &amp; berÃ¤knad FTE per pool <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys</span></span>
 <div class="chart-controls">
-<button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mån</button>
-<button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mån</button>
-<button class="chart-btn" id="trendBtn3" onclick="setTrendWindow(3,this)">3 mån</button>
+<button class="chart-btn active" id="trendBtn12" onclick="setTrendWindow(12,this)">12 mÃ¥n</button>
+<button class="chart-btn" id="trendBtn6" onclick="setTrendWindow(6,this)">6 mÃ¥n</button>
+<button class="chart-btn" id="trendBtn3" onclick="setTrendWindow(3,this)">3 mÃ¥n</button>
 </div>
 </div>
-<div id="trend-loading" class="trend-loading">Laddar driftdata från API...</div>
+<div id="trend-loading" class="trend-loading">Laddar driftdata frÃ¥n API...</div>
 <div id="trend-error" class="trend-error" style="display:none"></div>
 <canvas id="trendChart" height="80" style="display:none"></canvas>
 <p id="trend-note" class="chart-note" style="display:none">
-⚠ <strong>Analytikslager:</strong> Dessa värden är driftanalys för trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply — approximationsvärde, ej officiellt planeringsmått. Se <em>Klassificering</em>-fliken för förklaring av supplyavvikelse och produktklassificering.
+â  <strong>Analytikslager:</strong> Dessa vÃ¤rden Ã¤r driftanalys fÃ¶r trendvisualisering. <em>dailyRosteredFte</em> = poolens konfigurerade supply â approximationsvÃ¤rde, ej officiellt planeringsmÃ¥tt. Se <em>Klassificering</em>-fliken fÃ¶r fÃ¶rklaring av supplyavvikelse och produktklassificering.
 </p>
 </div>
 <div id="trend-monthly-cards" style="display:none;margin-top:12px">
 <div class="analytics-month-grid" id="trend-cards-inner"></div>
 </div>
 <div class="section-header">
-<span class="section-title">§ 3 · Pool Capacity Gaps — nuläge</span>
+<span class="section-title">Â§ 3 Â· Pool Capacity Gaps â nulÃ¤ge</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Sorterat: lägst gap överst</span>
+<span class="section-note">Sorterat: lÃ¤gst gap Ã¶verst</span>
 </div>
 </div>
 <div class="pool-grid" id="pool-gaps"></div>
 <div style="margin-top:12px">
 <div class="chart-wrap" style="margin-bottom:0">
-<h4>Gap FTE per pool (Effective Supply − Peak Demand) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>Gap FTE per pool (Effective Supply â Peak Demand) <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
 <canvas id="poolGapChart" height="60"></canvas>
 </div>
 </div>
 <div class="section-header">
-<span class="section-title">§ 4 · Scenario Comparison</span>
+<span class="section-title">Â§ 4 Â· Scenario Comparison</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Källa: CC_FTE_Calculator.xlsx</span>
+<span class="section-note">KÃ¤lla: CC_FTE_Calculator.xlsx</span>
 </div>
 </div>
 <div class="scenario-grid">
 <div class="scenario-card active-scenario">
-<div class="sc-name">Now <span class="tag info">Nuläge</span></div>
+<div class="sc-name">Now <span class="tag info">NulÃ¤ge</span></div>
 <div class="sc-gap" style="color:#4ade80">+1.00</div>
-<div class="sc-deficit">⚠ Classic -1.20 FTE underskott</div>
+<div class="sc-deficit">â  Classic -1.20 FTE underskott</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">10.10</span></div>
 <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.05</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">9.10</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-<div class="sc-row"><span class="sc-key">Månadskostnad</span><span class="sc-val">~110k SEK</span></div>
+<div class="sc-row"><span class="sc-key">MÃ¥nadskostnad</span><span class="sc-val">~110k SEK</span></div>
 </div>
 <div class="scenario-card">
 <div class="sc-name">Post-aug Best <span class="tag ok">Optimistisk</span></div>
@@ -535,17 +575,17 @@ CC Workforce Planning
 <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.60</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.80</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-<div class="sc-row"><span class="sc-key">Störst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
+<div class="sc-row"><span class="sc-key">StÃ¶rst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
 </div>
 <div class="scenario-card" style="border-color:#ef4444">
 <div class="sc-name">Post-aug Worst <span class="tag crit">Kritisk</span></div>
 <div class="sc-gap" style="color:#fca5a5">-2.50</div>
-<div class="sc-deficit">Kraftigt underskott på total nivå</div>
+<div class="sc-deficit">Kraftigt underskott pÃ¥ total nivÃ¥</div>
 <div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.50</span></div>
 <div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#fca5a5">7.00</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.50</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-<div class="sc-row"><span class="sc-key">Störst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
+<div class="sc-row"><span class="sc-key">StÃ¶rst poolbrist</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
 </div>
 <div class="scenario-card">
 <div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategi</span></div>
@@ -562,38 +602,38 @@ CC Workforce Planning
 <canvas id="scenarioChart" height="70"></canvas>
 </div>
 <div class="section-header">
-<span class="section-title">§ 5 · Migration Forecast — Classic → S1</span>
+<span class="section-title">Â§ 5 Â· Migration Forecast â Classic â S1</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
-<span class="section-note">Q0 = nuläge</span>
+<span class="section-note">Q0 = nulÃ¤ge</span>
 </div>
 </div>
 <div style="margin-bottom:14px">
 <div class="alert-banner warn">
-<div class="alert-icon">📊</div>
+<div class="alert-icon">ð</div>
 <div class="alert-body">
-<div class="alert-title">Migrationsstrategi kräver S1-rekrytering senast Q4–Q6</div>
-<div class="alert-desc">S1 FTE-behov växer från <span>2.93</span> vid Q0 till <span>4.05</span> vid Q10 med AI-deflection. Classic-volym minskar parallellt.</div>
+<div class="alert-title">Migrationsstrategi krÃ¤ver S1-rekrytering senast Q4âQ6</div>
+<div class="alert-desc">S1 FTE-behov vÃ¤xer frÃ¥n <span>2.93</span> vid Q0 till <span>4.05</span> vid Q10 med AI-deflection. Classic-volym minskar parallellt.</div>
 </div>
 </div>
 </div>
 <div class="migration-phases">
-<span class="phase-chip phase-akut">🔴 Akut (Q0–Q1)</span>
-<span class="phase-chip phase-fas1">🟠 Fas 1 (Q2–Q3)</span>
-<span class="phase-chip phase-fas2">🟡 Fas 2 (Q4–Q6)</span>
-<span class="phase-chip phase-fas3">🟢 Fas 3 (Q7–Q8)</span>
-<span class="phase-chip phase-expansion">🔵 Expansion (Q9–Q10)</span>
+<span class="phase-chip phase-akut">ð´ Akut (Q0âQ1)</span>
+<span class="phase-chip phase-fas1">ð  Fas 1 (Q2âQ3)</span>
+<span class="phase-chip phase-fas2">ð¡ Fas 2 (Q4âQ6)</span>
+<span class="phase-chip phase-fas3">ð¢ Fas 3 (Q7âQ8)</span>
+<span class="phase-chip phase-expansion">ðµ Expansion (Q9âQ10)</span>
 </div>
 <div class="chart-wrap" style="margin-bottom:16px">
-<h4>S1 FTE-behov · Migration Q0–Q10 <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
+<h4>S1 FTE-behov Â· Migration Q0âQ10 <span class="layer-badge planning" style="font-size:9px;margin-left:4px">Planering</span></h4>
 <canvas id="migrationChart" height="90"></canvas>
 </div>
 <div class="tw" style="margin-bottom:16px">
-<table><thead><tr><th>Kvartal</th><th>Fas</th><th class="r">Migr. kunder tot.</th><th class="r">Classic kvar</th><th class="r">S1 volym (inkl SB)</th><th class="r">Classic volym</th><th class="r">S1 FTE u. AI</th><th class="r">S1 FTE m. AI</th><th class="r">Rekr. behov</th><th class="r">Kostnad S1/mån</th></tr></thead>
+<table><thead><tr><th>Kvartal</th><th>Fas</th><th class="r">Migr. kunder tot.</th><th class="r">Classic kvar</th><th class="r">S1 volym (inkl SB)</th><th class="r">Classic volym</th><th class="r">S1 FTE u. AI</th><th class="r">S1 FTE m. AI</th><th class="r">Rekr. behov</th><th class="r">Kostnad S1/mÃ¥n</th></tr></thead>
 <tbody id="migration-table"></tbody></table>
 </div>
 <div class="section-header">
-<span class="section-title">§ 6 · Vad driver bemanningsbehovet?</span>
+<span class="section-title">Â§ 6 Â· Vad driver bemanningsbehovet?</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge planning">Planering</span>
 <span class="section-note">Basfall: 10.10 Required FTE</span>
@@ -604,53 +644,53 @@ CC Workforce Planning
 <canvas id="sensitivityChart" height="100"></canvas>
 </div>
 <div class="tw">
-<table><thead><tr><th>Driver</th><th class="r">−20%</th><th class="r">−10%</th><th class="r">Bas (10.10)</th><th class="r">+10%</th><th class="r">+20%</th><th>Enhet</th></tr></thead>
+<table><thead><tr><th>Driver</th><th class="r">â20%</th><th class="r">â10%</th><th class="r">Bas (10.10)</th><th class="r">+10%</th><th class="r">+20%</th><th>Enhet</th></tr></thead>
 <tbody id="sensitivity-table"></tbody></table>
 </div>
-<div class="section-header"><span class="section-title">§ 7 · Definitioner &amp; Modellnoter</span></div>
+<div class="section-header"><span class="section-title">Â§ 7 Â· Definitioner &amp; Modellnoter</span></div>
 <div class="def-grid">
-<div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Faktiskt antal anställda. <strong>Mastervärde = 11 FTE.</strong></div><div class="def-example">Ej detsamma som Effective Supply.</div></div>
-<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. Nuläge: 11.05 FTE.</div></div>
+<div class="def-item"><div class="def-term">Actual FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Faktiskt antal anstÃ¤llda. <strong>MastervÃ¤rde = 11 FTE.</strong></div><div class="def-example">Ej detsamma som Effective Supply.</div></div>
+<div class="def-item"><div class="def-term">Effective Supply FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Modellens produktiva kapacitet efter seniority-viktning. NulÃ¤ge: 11.05 FTE.</div></div>
 <div class="def-item"><div class="def-term">Required FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Totalt FTE-behov: Ticket FTE peak (9.10) + Overhead (1.00).</div></div>
-<div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Effective Supply − Required FTE. ⚠ Totalt positivt gap döljer pool-level underskott.</div></div>
-<div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Poolens konfigurerade supply per dag. Analytiksvärde — inte officiellt planeringsmått.</div><div class="def-example">Ej detsamma som Effective Supply FTE.</div></div>
-<div class="def-item"><div class="def-term">queueGroup <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Routing-destinationen för ett ticket: Switchboard, Classic, S1, Frankly, Talent. Separat dimension från produkt.</div></div>
-<div class="def-item"><div class="def-term">product</div><div class="def-body">Freshdesk-produkten (cf_category_1): Simployer Classic, Expert NO, Simployer One, etc. Separat från queueGroup.</div></div>
-<div class="def-item"><div class="def-term">AI Deflection</div><div class="def-body">Andel tickets avleds av AI. 30% deflection → Required FTE ≈ 9.30.</div></div>
-<div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Andel betald tid ej tillgänglig för ticketarbete. Ökar Required FTE.</div></div>
-<div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Andel tillgänglig tid agenter spenderar på tickets. Lägre → högre Required FTE.</div></div>
+<div class="def-item"><div class="def-term">Gap FTE <span class="layer-badge planning" style="font-size:9px">Planering</span></div><div class="def-body">Effective Supply â Required FTE. â  Totalt positivt gap dÃ¶ljer pool-level underskott.</div></div>
+<div class="def-item"><div class="def-term">dailyRosteredFte <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Poolens konfigurerade supply per dag. AnalytiksvÃ¤rde â inte officiellt planeringsmÃ¥tt.</div><div class="def-example">Ej detsamma som Effective Supply FTE.</div></div>
+<div class="def-item"><div class="def-term">queueGroup <span class="layer-badge analytics" style="font-size:9px">Analys</span></div><div class="def-body">Routing-destinationen fÃ¶r ett ticket: Switchboard, Classic, S1, Frankly, Talent. Separat dimension frÃ¥n produkt.</div></div>
+<div class="def-item"><div class="def-term">product</div><div class="def-body">Freshdesk-produkten (cf_category_1): Simployer Classic, Expert NO, Simployer One, etc. Separat frÃ¥n queueGroup.</div></div>
+<div class="def-item"><div class="def-term">AI Deflection</div><div class="def-body">Andel tickets avleds av AI. 30% deflection â Required FTE â 9.30.</div></div>
+<div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Andel betald tid ej tillgÃ¤nglig fÃ¶r ticketarbete. Ãkar Required FTE.</div></div>
+<div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Andel tillgÃ¤nglig tid agenter spenderar pÃ¥ tickets. LÃ¤gre â hÃ¶gre Required FTE.</div></div>
 </div>
 <div style="margin-top:24px;padding:16px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
-<strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets värden hämtas från CC_FTE_Calculator.xlsx. Avvikelse indikerar att Excel-modellen är korrekt. Analyslagrets trenddata beräknas från dagliga ticketdata via API — operativa estimat, inte officiella planerings-KPI:er.
+<strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets vÃ¤rden hÃ¤mtas frÃ¥n CC_FTE_Calculator.xlsx. Avvikelse indikerar att Excel-modellen Ã¤r korrekt. Analyslagrets trenddata berÃ¤knas frÃ¥n dagliga ticketdata via API â operativa estimat, inte officiella planerings-KPI:er.
 </div>
 </div><!-- /tab-wp -->
 <!-- CLASSIFICATION MODEL TAB -->
 <div id="tab-classify" class="tc">
 <div style="background:#1a1d27;border:1px solid #4338ca;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
-<span style="font-size:16px">🔍</span>
-<div style="font-size:12px;color:#94a3b8"><strong style="color:#818cf8">Diagnostikvy — ej styrningssida.</strong> Klassificeringsmodell, routing-logik, supply-källor och datakvalitet. För officiella workforce-beslut, se Workforce Planning → CFO Beslutslager.</div>
+<span style="font-size:16px">ð</span>
+<div style="font-size:12px;color:#94a3b8"><strong style="color:#818cf8">Diagnostikvy â ej styrningssida.</strong> Klassificeringsmodell, routing-logik, supply-kÃ¤llor och datakvalitet. FÃ¶r officiella workforce-beslut, se Workforce Planning â CFO Beslutslager.</div>
 </div>
 
 
 <div class="section-header" style="margin-top:0">
-<span class="section-title">Ticketklassificering — Produktmodell &amp; Routinglogik</span>
-<span class="section-note">Tre separata dimensioner: product · type · queueGroup</span>
+<span class="section-title">Ticketklassificering â Produktmodell &amp; Routinglogik</span>
+<span class="section-note">Tre separata dimensioner: product Â· type Â· queueGroup</span>
 </div>
 
 <div class="alert-banner warn" style="margin-bottom:20px">
-<div class="alert-icon">⚠</div>
+<div class="alert-icon">â </div>
 <div class="alert-body">
 <div class="alert-title">Klassificeringsproblem identifierat</div>
 <div class="alert-desc">
-<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) räknas separat från poolerna Classic/S1/Frankly/Talent. Supply-värdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) hämtas nu från cc_pool_supply_history (P4 exekverat, 95 rader seedade). Edge Function behöver uppdateras för att använda historik-tabellen per månad istället för cc_pools.fte_supply. Dessutom är <span>1.6% av tickets ej berikade</span> (9677/8933), vilket gör analytisk FTE-beräkning opålitlig för perioder före mars 2026.
+<strong>Diagnostik (jun 2026):</strong> Switchboard-poolen har <span>0 tickets</span> trots <span>2.65 FTE supply</span>. Anledning: Freshdesk-produkten "Invoices &amp; Agreements" (som representerar Switchboard-routing) rÃ¤knas separat frÃ¥n poolerna Classic/S1/Frankly/Talent. Supply-vÃ¤rdet i API:et (<span>2.65/3.40/2.45/1.65/0.95 FTE</span>) hÃ¤mtas nu frÃ¥n cc_pool_supply_history (P4 exekverat, 95 rader seedade). Edge Function behÃ¶ver uppdateras fÃ¶r att anvÃ¤nda historik-tabellen per mÃ¥nad istÃ¤llet fÃ¶r cc_pools.fte_supply. Dessutom Ã¤r <span>1.6% av tickets ej berikade</span> (9677/8933), vilket gÃ¶r analytisk FTE-berÃ¤kning opÃ¥litlig fÃ¶r perioder fÃ¶re mars 2026.
 </div>
 </div>
 </div>
 
 <!-- Supply discrepancy section -->
 <div class="supply-warning">
-<div class="sw-title">⚠ Tre olika supply-källvärden — potentiell inkonsistens</div>
-<div>Följande tre källor rapporterar <em>olika</em> FTE-supply per pool. Ingen av dem är per definition "rätt" — de mäter olika saker:</div>
+<div class="sw-title">â  Tre olika supply-kÃ¤llvÃ¤rden â potentiell inkonsistens</div>
+<div>FÃ¶ljande tre kÃ¤llor rapporterar <em>olika</em> FTE-supply per pool. Ingen av dem Ã¤r per definition "rÃ¤tt" â de mÃ¤ter olika saker:</div>
 <div class="supply-sources">
 <div class="supply-source-card">
 <div class="supply-source-title">1. Planeringsmodell (Excel)</div>
@@ -659,16 +699,16 @@ CC Workforce Planning
 <div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val">4.34 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val">2.35 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val">1.49 FTE</span></div>
-<div style="font-size:10px;color:#475569;margin-top:6px">Källa: CC_FTE_Calculator.xlsx · Effective Supply per pool</div>
+<div style="font-size:10px;color:#475569;margin-top:6px">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Effective Supply per pool</div>
 </div>
 <div class="supply-source-card">
-<div class="supply-source-title">2. API per-månad (cc_capacity_daily)</div>
+<div class="supply-source-title">2. API per-mÃ¥nad (cc_capacity_daily)</div>
 <div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:#fcd34d">3.40 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:#fcd34d">2.65 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:#fcd34d">2.45 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:#fcd34d">1.65 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:#fcd34d">0.95 FTE</span></div>
-<div style="font-size:10px;color:#475569;margin-top:6px">Statisk — <strong>P4 (cc_pool_supply_history) ej exekverats</strong>. Alla 12 månader visar samma värde.</div>
+<div style="font-size:10px;color:#475569;margin-top:6px">Statisk â <strong>P4 (cc_pool_supply_history) ej exekverats</strong>. Alla 12 mÃ¥nader visar samma vÃ¤rde.</div>
 </div>
 <div class="supply-source-card">
 <div class="supply-source-title">3. cc_pools config (API top-level)</div>
@@ -677,39 +717,39 @@ CC Workforce Planning
 <div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:#fca5a5">0.30 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:#fca5a5">0.50 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:#fca5a5">0.20 FTE</span></div>
-<div style="font-size:10px;color:#475569;margin-top:6px">Från cc_pools.fte_supply — bör uppdateras för att matcha planeringsmodellen.</div>
+<div style="font-size:10px;color:#475569;margin-top:6px">FrÃ¥n cc_pools.fte_supply â bÃ¶r uppdateras fÃ¶r att matcha planeringsmodellen.</div>
 </div>
 </div>
 <div style="margin-top:10px;font-size:11px;color:#94a3b8">
-<strong>✅ P4 exekverat:</strong> cc_pool_supply_history innehåller 95 rader (5 pooler × 19 månader). <strong>Nästa steg:</strong> Uppdatera Edge Function (/aht-stats) för att JOIN:a med cc_pool_supply_history per year_month istället för att läsa cc_pools.fte_supply direkt.
+<strong>â P4 exekverat:</strong> cc_pool_supply_history innehÃ¥ller 95 rader (5 pooler Ã 19 mÃ¥nader). <strong>NÃ¤sta steg:</strong> Uppdatera Edge Function (/aht-stats) fÃ¶r att JOIN:a med cc_pool_supply_history per year_month istÃ¤llet fÃ¶r att lÃ¤sa cc_pools.fte_supply direkt.
 </div>
 </div>
 
 <!-- Explicit Routing Rules -->
 <div class="section-header" style="margin-top:24px">
-<span class="section-title">Explicit Routing-modell — resolveQueueGroup()</span>
-<span class="section-note">Produkt och typ är separata dimensioner — typ förstör ej produktidentitet</span>
+<span class="section-title">Explicit Routing-modell â resolveQueueGroup()</span>
+<span class="section-note">Produkt och typ Ã¤r separata dimensioner â typ fÃ¶rstÃ¶r ej produktidentitet</span>
 </div>
 <div class="classif-grid" id="routing-rules-grid"></div>
 
 <!-- Product taxonomy table -->
 <div class="section-header">
-<span class="section-title">Freshdesk produkttaxonomi → Pool-mapping</span>
-<span class="section-note">cf_category_1 → queueGroup (baserat på klassificeringsmodell)</span>
+<span class="section-title">Freshdesk produkttaxonomi â Pool-mapping</span>
+<span class="section-note">cf_category_1 â queueGroup (baserat pÃ¥ klassificeringsmodell)</span>
 </div>
 <div class="tw">
 <table>
-<thead><tr><th>Freshdesk Produkt (cf_category_1)</th><th>→ queueGroup</th><th>Kategori</th><th class="r">Senaste 30 dagar</th><th>Notering</th></tr></thead>
+<thead><tr><th>Freshdesk Produkt (cf_category_1)</th><th>â queueGroup</th><th>Kategori</th><th class="r">Senaste 30 dagar</th><th>Notering</th></tr></thead>
 <tbody id="product-mapping-table"></tbody>
 </table>
 </div>
 
 <!-- Validation cross-tab -->
 <div class="section-header" style="margin-top:24px">
-<span class="section-title">Valideringstabell — Tickets per produkt &times; queueGroup</span>
+<span class="section-title">Valideringstabell â Tickets per produkt &times; queueGroup</span>
 <div style="display:flex;gap:8px;align-items:center">
 <span class="layer-badge analytics">Analys</span>
-<button class="chart-btn" onclick="refreshClassificationData()" style="margin-left:8px">↻ Uppdatera</button>
+<button class="chart-btn" onclick="refreshClassificationData()" style="margin-left:8px">â» Uppdatera</button>
 </div>
 </div>
 <div id="classification-loading" style="font-size:12px;color:#64748b;padding:20px">Laddar klassificeringsdata...</div>
@@ -720,7 +760,7 @@ CC Workforce Planning
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px" id="classif-summary-cards"></div>
 </div>
 
-<!-- Cross-tab: product × queueGroup -->
+<!-- Cross-tab: product Ã queueGroup -->
 <div id="classif-xtab-wrap" style="display:none">
 <div class="tw xtab" style="margin-bottom:16px">
 <table id="classif-xtab"></table>
@@ -730,19 +770,19 @@ CC Workforce Planning
 <!-- Per-product breakdown chart -->
 <div id="classif-chart-wrap" style="display:none">
 <div class="chart-wrap">
-<h4>Tickets per produkt-grupp <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys · senaste 3 månader</span></h4>
+<h4>Tickets per produkt-grupp <span class="layer-badge analytics" style="font-size:9px;margin-left:4px">Analys Â· senaste 3 mÃ¥nader</span></h4>
 <canvas id="classifChart" height="80"></canvas>
 </div>
 </div>
 
 <!-- Monthly breakdown by queueGroup -->
 <div class="section-header" style="margin-top:24px">
-<span class="section-title">Månadsvis per pool — ticket-volym &amp; FTE-estimat</span>
-<span class="section-note">API-data · 12 månader · visar variation (ej statisk)</span>
+<span class="section-title">MÃ¥nadsvis per pool â ticket-volym &amp; FTE-estimat</span>
+<span class="section-note">API-data Â· 12 mÃ¥nader Â· visar variation (ej statisk)</span>
 </div>
 <div id="monthly-pool-breakdown" class="tw">
 <table>
-<thead><tr><th>Månad</th><th>Pool</th><th class="r">Råa tickets</th><th class="r">Filtrerade</th><th class="r">AHT (min)</th><th class="r">FTE-estimat</th><th class="r">Supply (API)</th><th class="r">Gap (analys)</th><th class="r">Täckning</th></tr></thead>
+<thead><tr><th>MÃ¥nad</th><th>Pool</th><th class="r">RÃ¥a tickets</th><th class="r">Filtrerade</th><th class="r">AHT (min)</th><th class="r">FTE-estimat</th><th class="r">Supply (API)</th><th class="r">Gap (analys)</th><th class="r">TÃ¤ckning</th></tr></thead>
 <tbody id="monthly-pool-table"></tbody>
 </table>
 </div>
@@ -752,16 +792,16 @@ CC Workforce Planning
 <!-- OVERVIEW TAB -->
 <div id="tab-overview" class="tc">
 
-  <!-- === DAGLIG ÖVERSIKT (v22) === -->
+  <!-- === DAGLIG ÃVERSIKT (v22) === -->
 
   <!-- DATA QUALITY BANNER -->
   <!-- TODO: show/hide based on /api/status pipeline response -->
   <div class="dq-banner" id="dq-zero-banner">
-    <div class="dq-banner__icon">⚠️</div>
+    <div class="dq-banner__icon">â ï¸</div>
     <div>
-      <div class="dq-banner__title">Inga tickets registrerade idag — avviker från normalnivå</div>
-      <div class="dq-banner__text">Alla värden för "idag" visar 0 samtidigt som snittet senaste 30 dagar är ~32 tickets/dag. Kan bero på felsökt pipeline, tidszonsproblem, filterproblem eller verklig nollaktivitet. <strong>Verifiera datakällan innan du fattar operativa beslut.</strong></div>
-      <button class="dq-banner__dismiss" onclick="document.getElementById('dq-zero-banner').style.display='none'">Dölj varning</button>
+      <div class="dq-banner__title">Inga tickets registrerade idag â avviker frÃ¥n normalnivÃ¥</div>
+      <div class="dq-banner__text">Alla vÃ¤rden fÃ¶r "idag" visar 0 samtidigt som snittet senaste 30 dagar Ã¤r ~32 tickets/dag. Kan bero pÃ¥ felsÃ¶kt pipeline, tidszonsproblem, filterproblem eller verklig nollaktivitet. <strong>Verifiera datakÃ¤llan innan du fattar operativa beslut.</strong></div>
+      <button class="dq-banner__dismiss" onclick="document.getElementById('dq-zero-banner').style.display='none'">DÃ¶lj varning</button>
     </div>
   </div>
 
@@ -769,31 +809,31 @@ CC Workforce Planning
   <!-- TODO: inject from /api/daily/kpi?date=today -->
   <div class="ov-kpi-grid">
     <div class="ov-kpi-card ov-kpi-card--warn">
-      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--warn">⚠ Obekräftad</span></div>
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--warn">â  ObekrÃ¤ftad</span></div>
       <div class="ov-kpi-label">Tickets idag</div>
       <div class="ov-kpi-value ov-kpi-value--zero">0</div>
-      <div class="ov-kpi-compare">— Igår: <strong>34</strong></div>
-      <div class="kpi-def">Tickets med created_at = dagens datum (UTC+2). Alla produkter, alla köer.</div>
+      <div class="ov-kpi-compare">â IgÃ¥r: <strong>34</strong></div>
+      <div class="kpi-def">Tickets med created_at = dagens datum (UTC+2). Alla produkter, alla kÃ¶er.</div>
     </div>
     <div class="ov-kpi-card ov-kpi-card--warn">
-      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--warn">⚠ Obekräftad</span></div>
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--warn">â  ObekrÃ¤ftad</span></div>
       <div class="ov-kpi-label">Produkter aktiva idag</div>
       <div class="ov-kpi-value ov-kpi-value--zero">0</div>
-      <div class="ov-kpi-compare">— Igår: <strong>7</strong> av 9</div>
+      <div class="ov-kpi-compare">â IgÃ¥r: <strong>7</strong> av 9</div>
       <div class="kpi-def">Produkter med minst 1 ticket idag.</div>
     </div>
     <div class="ov-kpi-card">
-      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">✓ Komplett</span></div>
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">â Komplett</span></div>
       <div class="ov-kpi-label">Snitt tickets / dag (7d)</div>
       <div class="ov-kpi-value">31,4</div>
-      <div class="ov-kpi-compare">— Snitt 30d: <strong>32,0</strong></div>
+      <div class="ov-kpi-compare">â Snitt 30d: <strong>32,0</strong></div>
       <div class="kpi-def">Totala tickets senaste 7 dagar / 7. Normaliseringsreferens.</div>
     </div>
     <div class="ov-kpi-card">
-      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">✓ Komplett</span></div>
-      <div class="ov-kpi-label">Totalt — senaste 30 dagar</div>
+      <div class="ov-kpi-card__status"><span class="dq-pill dq-pill--ok">â Komplett</span></div>
+      <div class="ov-kpi-label">Totalt â senaste 30 dagar</div>
       <div class="ov-kpi-value" style="font-size:20px;">959</div>
-      <div class="ov-kpi-compare">— Föregående 30d: <strong>912</strong> <span style="color:#166534;">(+5,1%)</span></div>
+      <div class="ov-kpi-compare">â FÃ¶regÃ¥ende 30d: <strong>912</strong> <span style="color:#166534;">(+5,1%)</span></div>
       <div class="kpi-def">Alla tickets senaste 30 kalenderdagar. Planeringskontext.</div>
     </div>
   </div>
@@ -801,16 +841,16 @@ CC Workforce Planning
   <!-- PER PRODUKT TABLE (improved) -->
   <!-- TODO: inject from /api/daily/per-product?date=today -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;">Per produkt — idag <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:#7a8799;">jämfört med igår och senaste 7 dagar</span></div>
-    <span class="dq-pill dq-pill--warn">⚠ Idag-data ej verifierad</span>
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1a2535;">Per produkt â idag <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:#7a8799;">jÃ¤mfÃ¶rt med igÃ¥r och senaste 7 dagar</span></div>
+    <span class="dq-pill dq-pill--warn">â  Idag-data ej verifierad</span>
   </div>
   <div style="overflow-x:auto;border-radius:10px;border:1px solid #dce1e8;margin-bottom:6px;">
   <table style="width:100%;border-collapse:collapse;font-size:13px;">
     <thead>
       <tr>
         <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Produkt</th>
-        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#b45309;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;" title="Ej verifierad data">Idag ⚠</th>
-        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">Igår</th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#b45309;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;" title="Ej verifierad data">Idag â </th>
+        <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">IgÃ¥r</th>
         <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;">7 dagar</th>
         <th style="background:#f4f6f9;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#7a8799;padding:10px 12px;border-bottom:1px solid #dce1e8;text-align:left;white-space:nowrap;" title="Andel av total ticketvolym senaste 30 dagar">Andel (30d)</th>
       </tr>
@@ -927,8 +967,8 @@ CC Workforce Planning
     </tbody>
     <tfoot>
       <tr class="tfoot-total">
-        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">Totalt — alla produkter</td>
-        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">0 <span style="font-size:10px;color:#b45309;">⚠ ej verif.</span></td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">Totalt â alla produkter</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;color:#7a8799;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">0 <span style="font-size:10px;color:#b45309;">â  ej verif.</span></td>
         <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">34</td>
         <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;font-weight:700;border-top:2px solid #dce1e8;border-bottom:none;">221</td>
         <td style="padding:10px 12px;border-bottom:1px solid #dce1e8;vertical-align:middle;background:#f4f6f9;border-top:2px solid #dce1e8;border-bottom:none;font-size:11px;color:#7a8799;">100% av 959 (30d)</td>
@@ -936,19 +976,19 @@ CC Workforce Planning
     </tfoot>
   </table>
   </div>
-  <div class="ov-table-note"><span>⚠</span><span>Kolumnen "Idag" visar 0 för alla produkter — avviker från normalt snitt (~32/dag). "Igår" och "7 dagar" är historisk data och bedöms fullständig. Kolumnen "All Products" har tagits bort som dubblerad rad; totalen visas istället i raden ovan.</span></div>
+  <div class="ov-table-note"><span>â </span><span>Kolumnen "Idag" visar 0 fÃ¶r alla produkter â avviker frÃ¥n normalt snitt (~32/dag). "IgÃ¥r" och "7 dagar" Ã¤r historisk data och bedÃ¶ms fullstÃ¤ndig. Kolumnen "All Products" har tagits bort som dubblerad rad; totalen visas istÃ¤llet i raden ovan.</span></div>
 
   <!-- 30-DAGARSKONTEXT (kollapsbar) -->
   <div style="margin-top:16px;">
     <button class="ctx-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
-      <span class="ctx-arrow">▶</span> Visa 30-dagarskontext &amp; planeringsreferens
+      <span class="ctx-arrow">â¶</span> Visa 30-dagarskontext &amp; planeringsreferens
     </button>
     <div class="ctx-body">
-      <div style="font-size:12px;color:#7a8799;margin-bottom:10px;">30-dagarsdata är komplett och verifierad. Används för kapacitets- och resursplanering — inte daglig operativ styrning.</div>
+      <div style="font-size:12px;color:#7a8799;margin-bottom:10px;">30-dagarsdata Ã¤r komplett och verifierad. AnvÃ¤nds fÃ¶r kapacitets- och resursplanering â inte daglig operativ styrning.</div>
       <div style="border:1px dashed #334155;border-radius:8px;padding:16px 20px;margin-top:8px;color:#64748b;font-size:12px;">
-  <div style="font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:12px;">📊 Ticketutveckling — senaste 30 dagar per produkt</div>
+  <div style="font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:12px;">ð Ticketutveckling â senaste 30 dagar per produkt</div>
   <div id="ov-spark-chart" style="display:flex;flex-direction:column;gap:6px;"><!-- Genereras av renderSparkChart() --></div>
-  <div style="margin-top:10px;font-size:11px;color:#475569;font-style:italic;">Källa: 30-dagarsdata via Supabase.</div>
+  <div style="margin-top:10px;font-size:11px;color:#475569;font-style:italic;">KÃ¤lla: 30-dagarsdata via Supabase.</div>
 </div>
     </div>
   </div>
@@ -966,7 +1006,7 @@ CC Workforce Planning
 </div>
 <div id="tab-workforce" class="tc">
 <div class="wf" id="wf-summary"></div>
-<div class="st">Månadsöversikt - senaste 12 månader</div>
+<div class="st">MÃ¥nadsÃ¶versikt - senaste 12 mÃ¥nader</div>
 <div class="mg" id="monthly-grid"></div>
 <div class="st">Daglig kapacitet</div>
 <div class="fp" id="pool-filter"></div>
@@ -976,40 +1016,40 @@ CC Workforce Planning
 <div class="enrich-bar">
 <div class="enrich-info" id="enrich-status">Laddar...</div>
 <div class="pb"><div class="pf" id="enrich-prog" style="width:0%"></div></div>
-<button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">Hämta Freshdesk-data</button>
+<button class="enrich-btn" id="enrich-btn" onclick="runEnrich()">HÃ¤mta Freshdesk-data</button>
 </div>
 <div class="wf" id="aht-summary"></div>
 <div class="view-toggle">
 <button class="vt-btn active" id="vt-all" onclick="setView('all',this)">Alla tickets</button>
 <button class="vt-btn" id="vt-cc" onclick="setView('cc',this)">CC-scope</button>
 </div>
-<div class="st">AHT-justerad FTE per pool - 12 månader</div>
+<div class="st">AHT-justerad FTE per pool - 12 mÃ¥nader</div>
 <div class="pool-toggle" id="aht-pool-filter"></div>
 <div class="ag" id="aht-grid"></div>
 </div>
 <div id="tab-prognos" class="tc">
 <div class="prognos-inputs">
-<h3>Scenarioantaganden - 12-månadsprognos</h3>
+<h3>Scenarioantaganden - 12-mÃ¥nadsprognos</h3>
 <div class="input-grid">
-<div class="input-group"><label>Volymförändring (%/mån)</label><input type="number" id="pg-vol-chg" value="0" step="0.5"></div>
-<div class="input-group"><label>AHT-förändring (%/mån)</label><input type="number" id="pg-aht-chg" value="0" step="0.5"></div>
-<div class="input-group"><label>Supply-förändring (FTE/mån)</label><input type="number" id="pg-sup-chg" value="0" step="0.1"></div>
-<div class="input-group"><label>Startmånad</label><input type="month" id="pg-start-month"></div>
+<div class="input-group"><label>VolymfÃ¶rÃ¤ndring (%/mÃ¥n)</label><input type="number" id="pg-vol-chg" value="0" step="0.5"></div>
+<div class="input-group"><label>AHT-fÃ¶rÃ¤ndring (%/mÃ¥n)</label><input type="number" id="pg-aht-chg" value="0" step="0.5"></div>
+<div class="input-group"><label>Supply-fÃ¶rÃ¤ndring (FTE/mÃ¥n)</label><input type="number" id="pg-sup-chg" value="0" step="0.1"></div>
+<div class="input-group"><label>StartmÃ¥nad</label><input type="month" id="pg-start-month"></div>
 </div>
-<button class="run-btn" onclick="runPrognos()">Generera 12-månadsprognos</button>
+<button class="run-btn" onclick="runPrognos()">Generera 12-mÃ¥nadsprognos</button>
 </div>
 <div class="wf" id="prognos-summary"></div>
-<div class="st">Månadsvis FTE-prognos</div>
+<div class="st">MÃ¥nadsvis FTE-prognos</div>
 <div class="forecast-grid" id="forecast-grid"></div>
 <div style="margin-top:24px">
 <div class="st">Prognostabell</div>
-<div class="tw"><table><thead><tr><th>Månad</th><th class="r">Volym</th><th class="r">AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE-krav</th><th class="r">FTE-tillgång</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
+<div class="tw"><table><thead><tr><th>MÃ¥nad</th><th class="r">Volym</th><th class="r">AHT (min)</th><th class="r">Arbdagar (SE)</th><th class="r">FTE-krav</th><th class="r">FTE-tillgÃ¥ng</th><th class="r">Gap</th><th>Status</th></tr></thead><tbody id="forecast-table"></tbody></table></div>
 </div>
 </div>
 <div id="tab-setup" class="tc">
 <div class="st">Arkitektur &amp; Konfiguration</div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P1 · Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb varje timme.</div></div><span class="status-chip done">✅ Exekverat (pg_cron aktiv)</span></div>
+<div class="setup-row"><div><h3>P1 Â· Automatisk ticket-berikning (pg_cron)</h3><div class="desc">Supabase pg_cron-jobb varje timme.</div></div><span class="status-chip done">â Exekverat (pg_cron aktiv)</span></div>
 <div class="code-block">SELECT cron.schedule('cc-ticket-enricher-hourly','0 * * * *',$$
 SELECT net.http_post(url:='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-ticket-enricher?limit=200',
 headers:=jsonb_build_object('Content-Type','application/json','Authorization','Bearer '||(SELECT decrypted_secret FROM vault.decrypted_secrets WHERE name='cc_rollup_service_key')),
@@ -1017,7 +1057,7 @@ body:='{}'::jsonb);$$);
 SELECT * FROM cron.job WHERE jobname='cc-ticket-enricher-hourly';</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P4 · Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history — löser det statiska supply-problemet i analytiklagret.</div></div><span class="status-chip done">✅ Exekverat (95 rader)</span></div>
+<div class="setup-row"><div><h3>P4 Â· Historisk FTE-supply per pool</h3><div class="desc">cc_pool_supply_history â lÃ¶ser det statiska supply-problemet i analytiklagret.</div></div><span class="status-chip done">â Exekverat (95 rader)</span></div>
 <div class="code-block">CREATE TABLE IF NOT EXISTS cc_pool_supply_history (
 id BIGSERIAL PRIMARY KEY, pool_slug TEXT NOT NULL,
 year_month TEXT NOT NULL, fte_supply NUMERIC(6,2) NOT NULL,
@@ -1029,12 +1069,12 @@ WHERE fte_supply IS NOT NULL
 ON CONFLICT DO NOTHING;</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P3b · Historisk cc_ticket_meta-backfill</h3><div class="desc">Stubbar för befintliga tickets i cc_ticket_events utan cc_ticket_meta-post.</div></div><span class="status-chip done">✅ Exekverat (9 077 stubbar)</span></div>
-<div class="code-block">-- Utförd 2026-06-11: 9 077 cc_ticket_meta-stubbar skapades
--- Från 8 933 tickets med pool_slug (minus 600 redan befintliga = 9 077 nettoinförda)
--- Täckning: 6.7% → 101.6% (9 677/8 933 tickets berikade)
--- Obs: reply_count/call_duration defaults till 0 — ingen Freshdesk-API-data
--- cc-ticket-enricher uppdaterar dessa när nya tickets anländer via webhook
+<div class="setup-row"><div><h3>P3b Â· Historisk cc_ticket_meta-backfill</h3><div class="desc">Stubbar fÃ¶r befintliga tickets i cc_ticket_events utan cc_ticket_meta-post.</div></div><span class="status-chip done">â Exekverat (9 077 stubbar)</span></div>
+<div class="code-block">-- UtfÃ¶rd 2026-06-11: 9 077 cc_ticket_meta-stubbar skapades
+-- FrÃ¥n 8 933 tickets med pool_slug (minus 600 redan befintliga = 9 077 nettoinfÃ¶rda)
+-- TÃ¤ckning: 6.7% â 101.6% (9 677/8 933 tickets berikade)
+-- Obs: reply_count/call_duration defaults till 0 â ingen Freshdesk-API-data
+-- cc-ticket-enricher uppdaterar dessa nÃ¤r nya tickets anlÃ¤nder via webhook
 
 INSERT INTO cc_ticket_meta (ticket_id, group_id, in_cc_scope, enriched_at, reply_count, agent_reply_count, is_answered)
 SELECT DISTINCT
@@ -1045,19 +1085,19 @@ WHERE e.pool_slug IS NOT NULL
 ON CONFLICT (ticket_id) DO NOTHING;</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P7 · Freshcaller API-nyckel</h3><div class="desc">Uppdatera Vault-hemligheten.</div></div><span class="status-chip pending">⏳ Kräver API-nyckel</span></div>
-<div class="code-block">-- Skapa ny vault-hemlighet för Freshcaller API-nyckel
+<div class="setup-row"><div><h3>P7 Â· Freshcaller API-nyckel</h3><div class="desc">Uppdatera Vault-hemligheten.</div></div><span class="status-chip pending">â³ KrÃ¤ver API-nyckel</span></div>
+<div class="code-block">-- Skapa ny vault-hemlighet fÃ¶r Freshcaller API-nyckel
 SELECT vault.create_secret('din-freshcaller-api-nyckel','FRESHCALLER_API_KEY','Freshcaller API key for phone analytics');
 -- Verifiera:
 SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>Enrichment-status (realtid)</h3><div class="desc">Datatäckning per pool.</div></div><button class="enrich-btn" onclick="loadSetupStatus()">Uppdatera status</button></div>
+<div class="setup-row"><div><h3>Enrichment-status (realtid)</h3><div class="desc">DatatÃ¤ckning per pool.</div></div><button class="enrich-btn" onclick="loadSetupStatus()">Uppdatera status</button></div>
 <div id="setup-enrich-detail" style="margin-top:12px;font-size:13px;color:#64748b">Klicka uppdatera...</div>
 </div>
 <div class="setup-section">
-<div class="setup-row"><div><h3>P5 · Svenska arbetsdagar per månad</h3></div><span class="status-chip info">ℹ Aktiv</span></div>
-<div class="tw" style="margin-top:12px"><table><thead><tr><th>Månad</th><th class="r">Arbetsdagar</th><th class="r">Tillg. min (7h)</th><th class="r">Diff vs 9450</th></tr></thead><tbody id="workday-table"></tbody></table></div>
+<div class="setup-row"><div><h3>P5 Â· Svenska arbetsdagar per mÃ¥nad</h3></div><span class="status-chip info">â¹ Aktiv</span></div>
+<div class="tw" style="margin-top:12px"><table><thead><tr><th>MÃ¥nad</th><th class="r">Arbetsdagar</th><th class="r">Tillg. min (7h)</th><th class="r">Diff vs 9450</th></tr></thead><tbody id="workday-table"></tbody></table></div>
 </div>
 </div>
 
@@ -1183,7 +1223,37 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
     <span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:#1e1b4b;color:#818cf8;border:1px solid #4338ca;">Roadmap</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #22c55e;border-radius:8px;padding:14px;">
+    
+<!-- ===== NAMED AGENTS DROP-IN ===== -->
+<div id="named-agents" style="margin-bottom:24px;">
+<h3>Namngivna agenter</h3>
+<p class="na-sub">Hanterade tickets per agent från Freshdesk (tilldelad responder). Termination räknas logiskt till switchboard. Ej officiellt prestationsmått — driftanalys.</p>
+<div class="na-controls">
+<label>Period
+<select id="na-month"></select>
+</label>
+<label>Pool
+<select id="na-pool">
+<option value="">Alla pooler</option>
+<option value="classic">Classic</option>
+<option value="switchboard">Switchboard</option>
+<option value="s1">S1</option>
+<option value="frankly">Frankly</option>
+<option value="talent">Talent</option>
+</select>
+</label>
+<span class="na-meta" id="na-meta">—</span>
+</div>
+<div id="na-body"><div class="na-empty">Laddar…</div></div>
+<p class="na-note">
+Källa: cc-dashboard-api <code>/agent-breakdown</code>. Endast berikade tickets
+med tilldelad agent (≈98 % täckning). AHT = uppmätt handläggningstid när den finns,
+annars produktviktad AHT per pool. Tickets utan tilldelad agent (obesvarat /
+Talkdesk-kö) ingår ej i raderna.
+</p>
+</div>
+<!-- ===== END NAMED AGENTS DROP-IN ===== -->
+<div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #22c55e;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#4ade80;margin-bottom:5px;">Namngivna agenter</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Koppla agent_id/namn fran Freshdesk-API:et sa varje rad visar en verklig person. Kraver agent-falt i cc_ticket_meta och nytt endpoint /agent-breakdown.</div>
     </div>
@@ -1200,7 +1270,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Visuell manadsvy per pool med markerade franvarodagar. Klicka datum for att se vilken pool som saknades och paverkan pa FTE-kalkylen.</div>
     </div>
     <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #f97316;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:5px;">Kapacitetsmål per agent</div>
+      <div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:5px;">KapacitetsmÃ¥l per agent</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Satt ett tickets/dag-mal per pool (konfigurerbart i Setup). Visa %-avvikelse mot mal per period med trafikljusstatus.</div>
     </div>
     <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #e879f9;border-radius:8px;padding:14px;">
@@ -1212,14 +1282,14 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 
 </main><script>
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 // TICKET CLASSIFICATION MODEL
 // Three separate dimensions: product | type | queueGroup
 // resolveQueueGroup does NOT destroy product identity
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 var ticketClassificationModel = (function() {
 
-// Step 1: Freshdesk product name → logical product (pool family)
+// Step 1: Freshdesk product name â logical product (pool family)
 // This maps cf_category_1 values to canonical pool identifiers
 var PRODUCT_TO_POOL = {
   // Classic family
@@ -1229,9 +1299,9 @@ var PRODUCT_TO_POOL = {
 
   // S1 / Simployer One family
   'Simployer One':               's1',
-  'Capitech':                    's1',        // Capitech → migrated to S1 platform
+  'Capitech':                    's1',        // Capitech â migrated to S1 platform
 
-  // Expert → Classic pool (Expert agents are Classic team)
+  // Expert â Classic pool (Expert agents are Classic team)
   'Expert':                      'classic',
   'Expert NO':                   'classic',
   'Expert SE':                   'classic',
@@ -1252,13 +1322,13 @@ var PRODUCT_TO_POOL = {
   'Learn':                       's1',         // Default: Simployer One learning module
 };
 
-// Step 2: resolveQueueGroup — EXPLICIT routing logic
+// Step 2: resolveQueueGroup â EXPLICIT routing logic
 // Takes product AND inferred type from product name
-// Does NOT overwrite product dimension — both are preserved
+// Does NOT overwrite product dimension â both are preserved
 function resolveQueueGroup(fresheskProduct) {
   if (!fresheskProduct) return 'unknown';
 
-  // Direct billing/invoice types → Switchboard routing regardless of product
+  // Direct billing/invoice types â Switchboard routing regardless of product
   var switchboardProducts = ['Invoices & Agreements', 'Invoice & billing'];
   if (switchboardProducts.indexOf(fresheskProduct) !== -1) return 'switchboard';
 
@@ -1304,33 +1374,33 @@ var POOL_CONFIG = [
   {
     pool: 'switchboard',
     label: 'Switchboard',
-    description: 'Faktura- och avtalsärenden oavsett produkttillhörighet',
+    description: 'Faktura- och avtalsÃ¤renden oavsett produkttillhÃ¶righet',
     products: ['Invoices & Agreements', 'Invoice & billing'],
-    routingRule: 'type IN [Invoice & billing, Termination] → Switchboard',
-    note: 'Switchboard-ärenden BEHÅLLER produktidentitet (Classic/S1/etc). Routing förändrar ej produkt-dimensionen.'
+    routingRule: 'type IN [Invoice & billing, Termination] â Switchboard',
+    note: 'Switchboard-Ã¤renden BEHÃLLER produktidentitet (Classic/S1/etc). Routing fÃ¶rÃ¤ndrar ej produkt-dimensionen.'
   },
   {
     pool: 'classic',
     label: 'Classic',
     description: 'Simployer Classic-plattformen inkl. Expert-specialister',
     products: ['Simployer Classic', 'Simployer Classic - Handbook', 'Expert', 'Expert NO', 'Expert SE', 'All Products'],
-    routingRule: 'product IN [Simployer Classic, Expert*] → Classic',
-    note: 'Expert NO/SE är specialister inom Classic-teamet, ej ett separat pool.'
+    routingRule: 'product IN [Simployer Classic, Expert*] â Classic',
+    note: 'Expert NO/SE Ã¤r specialister inom Classic-teamet, ej ett separat pool.'
   },
   {
     pool: 's1',
     label: 'S1',
     description: 'Simployer One (ny plattform) + Capitech-migrerade kunder',
     products: ['Simployer One', 'Capitech', 'Learn'],
-    routingRule: 'product IN [Simployer One, Capitech] → S1',
-    note: 'Capitech-kunder migreras löpande till S1-plattformen.'
+    routingRule: 'product IN [Simployer One, Capitech] â S1',
+    note: 'Capitech-kunder migreras lÃ¶pande till S1-plattformen.'
   },
   {
     pool: 'frankly',
     label: 'Frankly',
-    description: 'Employee Survey (&frankly) – medarbetarundersökningar',
+    description: 'Employee Survey (&frankly) â medarbetarundersÃ¶kningar',
     products: ['Employee Survey (&frankly)'],
-    routingRule: 'product == "Employee Survey (&frankly)" → Frankly',
+    routingRule: 'product == "Employee Survey (&frankly)" â Frankly',
     note: 'Separat produktlinje med egen bemanningspool.'
   },
   {
@@ -1338,8 +1408,8 @@ var POOL_CONFIG = [
     label: 'Talent',
     description: 'Talent Management + Equal Pay',
     products: ['Talent', 'Simployer Talent', 'Equal Pay'],
-    routingRule: 'product IN [Talent, Equal Pay] → Talent',
-    note: 'Inkluderar Equal Pay som hör till Talent-produktfamiljen.'
+    routingRule: 'product IN [Talent, Equal Pay] â Talent',
+    note: 'Inkluderar Equal Pay som hÃ¶r till Talent-produktfamiljen.'
   }
 ];
 
@@ -1352,9 +1422,9 @@ return {
 };
 })();
 
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 // LAYER 1: planningModelAdapter (Excel source of truth)
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 var planningModelAdapter = (function() {
 var WP = {
   actualFte: 11,
@@ -1412,9 +1482,9 @@ return WP;
 })();
 var WP = planningModelAdapter;
 
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 // LAYER 2: dailyAnalyticsAdapter
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 var dailyAnalyticsAdapter = (function() {
 var _monthlyRollups = [];
 var _loaded = false;
@@ -1484,9 +1554,9 @@ var dashboardViewModel = {
   getClassificationModel:function(){return ticketClassificationModel;}
 };
 
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 // CONFIG + UTILITIES
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 var A='https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api';
 var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ';
 var COV_THRESHOLD=80;
@@ -1521,9 +1591,9 @@ if(id==='agent'&&!window._agentL)loadAgentTab();
   if (_tabEl) { const _y = _tabEl.getBoundingClientRect().top + window.scrollY - 60; window.scrollTo({top: _y < 10 ? 0 : _y, behavior: 'smooth'}); }
 }
 
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 // SWEDISH WORKING DAYS
-// ═══════════════════════════════════════════════════
+// âââââââââââââââââââââââââââââââââââââââââââââââââââ
 function easterDate(yr){var a=yr%19,b=Math.floor(yr/100),c=yr%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),hh=Math.floor(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-hh-k)%7,m=Math.floor((a+11*hh+22*l)/451),mo=Math.floor((hh+l-7*m+114)/31),dy=((hh+l-7*m+114)%31)+1;return new Date(yr,mo-1,dy);}
 function swedishHolidays(yr){var s=new Set();function add(m,d){s.add(yr+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'));}add(1,1);add(1,6);add(5,1);add(6,6);add(12,25);add(12,26);var e=easterDate(yr);function eo(n){var d=new Date(e);d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}s.add(eo(-2));s.add(eo(0));s.add(eo(1));s.add(eo(39));s.add(eo(49));var mid=new Date(yr,5,19);while(mid.getDay()!==5)mid.setDate(mid.getDate()+1);s.add(mid.getFullYear()+'-'+String(mid.getMonth()+1).padStart(2,'0')+'-'+String(mid.getDate()).padStart(2,'0'));var ah=new Date(yr,9,31);while(ah.getDay()!==6)ah.setDate(ah.getDate()+1);s.add(ah.getFullYear()+'-'+String(ah.getMonth()+1).padStart(2,'0')+'-'+String(ah.getDate()).padStart(2,'0'));return s;}
 function swedishWorkingDays(yr,mo){var h=swedishHolidays(yr),cnt=0,d=new Date(yr,mo-1,1);while(d.getMonth()===mo-1){var dw=d.getDay(),ds=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if(dw!==0&&dw!==6&&!h.has(ds))cnt++;d.setDate(d.getDate()+1);}return cnt;}
@@ -1570,7 +1640,7 @@ if(cc)cc.style.color=classifPct>=80?'#4ade80':classifPct>=40?'#fcd34d':'#fca5a5'
 // CFO per-pool chips
 var poolConfMap={'classic':'cfo-conf-classic','switchboard':'cfo-conf-switchboard','s1':'cfo-conf-s1','frankly':'cfo-conf-frankly','talent':'cfo-conf-talent'};
 var recentM=months[months.length-1];
-if(recentM){recentM.pools.forEach(function(p){var el=document.getElementById(poolConfMap[p.pool]);if(el){var ok=p.coverage_pct>=80&&p.raw_tickets>0;el.innerHTML='<span style="padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;background:'+(ok?'#14532d':'#7f1d1d')+';color:'+(ok?'#4ade80':'#fca5a5')+'">'+(ok?'✅':'⚠')+' '+(p.coverage_pct||0)+'% cov · '+p.raw_tickets+' t</span>';}});}
+if(recentM){recentM.pools.forEach(function(p){var el=document.getElementById(poolConfMap[p.pool]);if(el){var ok=p.coverage_pct>=80&&p.raw_tickets>0;el.innerHTML='<span style="padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;background:'+(ok?'#14532d':'#7f1d1d')+';color:'+(ok?'#4ade80':'#fca5a5')+'">'+(ok?'â':'â ')+' '+(p.coverage_pct||0)+'% cov Â· '+p.raw_tickets+' t</span>';}});}
 }catch(e){console.warn('CFO conf err',e);}
 }
 
@@ -1618,7 +1688,7 @@ function loadAnalyticsTrend(){
     var isStatic=monthly[0]&&monthly[0].supplyIsStatic;
     document.getElementById('trendChart').style.display='';
     document.getElementById('trend-note').style.display='';
-    if(isStatic){document.getElementById('trend-note').innerHTML='⚠ <strong>Supply är statisk</strong> — dailyRosteredFte identisk i alla månader. P4 (cc_pool_supply_history) ej exekverats. Se Klassificering-fliken.';}
+    if(isStatic){document.getElementById('trend-note').innerHTML='â  <strong>Supply Ã¤r statisk</strong> â dailyRosteredFte identisk i alla mÃ¥nader. P4 (cc_pool_supply_history) ej exekverats. Se Klassificering-fliken.';}
     document.getElementById('trend-monthly-cards').style.display='';
     renderTrendChart(monthly);
     renderTrendMonthlyCards(monthly);
@@ -1638,7 +1708,7 @@ function renderTrendChart(monthly){
       {label:'Tickets (k)',data:data.map(m=>parseFloat((m.totalTickets/1000).toFixed(2))),borderColor:'#60a5fa',backgroundColor:'rgba(96,165,250,0.05)',borderWidth:1.5,pointRadius:3,borderDash:[2,4],fill:false,yAxisID:'y2'}
     ]},
     options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys — ej officiellt planeringsmatt]'}}},
+      plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}},tooltip:{backgroundColor:'#1a1d27',borderColor:'#2d3148',borderWidth:1,titleColor:'#e2e8f0',bodyColor:'#94a3b8',callbacks:{afterTitle:()=>'[Analys â ej officiellt planeringsmatt]'}}},
       scales:{x:{grid:{color:'#1e2133'},ticks:{color:'#64748b',font:{size:10}}},y:{grid:{color:'#1e2133'},ticks:{color:'#64748b'},title:{display:true,text:'FTE (analys)',color:'#475569'},suggestedMin:0},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#60a5fa'},title:{display:true,text:'Tickets (k)',color:'#60a5fa'}}}}
   });
 }
@@ -1650,15 +1720,15 @@ var gap=m.analyticsGapFte;
 var gapColor=gap>=0?'#4ade80':'#fca5a5';
 var covOk=m.analyticsCovPct>=COV_THRESHOLD;
 var noData=m.totalTickets===0;
-var sw=m.supplyIsStatic?'<div style="font-size:10px;color:#fcd34d;margin-top:4px">⚠ Supply statisk</div>':'';
+var sw=m.supplyIsStatic?'<div style="font-size:10px;color:#fcd34d;margin-top:4px">â  Supply statisk</div>':'';
 var prev=data[i-1];
 var driverHtml='';
 if(!noData&&prev&&prev.totalTickets>0){
 var dVol=m.totalTickets-prev.totalTickets;
 var dFte=m.analyticsFteRequired-prev.analyticsFteRequired;
 driverHtml='<div style="margin-top:6px;padding-top:6px;border-top:1px solid #2d3148;font-size:10px;color:#475569">'
-+'MoM: <span style="color:'+(dVol>=0?'#fca5a5':'#4ade80')+'">'+(dVol>=0?'▲':'▼')+' volym '+(dVol>=0?'+':'')+dVol+'</span> · '
-+'<span style="color:'+(dFte<0?'#4ade80':'#fca5a5')+'">'+(dFte>=0?'▲':'▼')+' FTE '+(dFte>=0?'+':'')+dFte.toFixed(2)+'</span>'
++'MoM: <span style="color:'+(dVol>=0?'#fca5a5':'#4ade80')+'">'+(dVol>=0?'â²':'â¼')+' volym '+(dVol>=0?'+':'')+dVol+'</span> Â· '
++'<span style="color:'+(dFte<0?'#4ade80':'#fca5a5')+'">'+(dFte>=0?'â²':'â¼')+' FTE '+(dFte>=0?'+':'')+dFte.toFixed(2)+'</span>'
 +'</div>';
 }
 if(noData){
@@ -1666,7 +1736,7 @@ return '<div class="analytics-month-card" style="opacity:0.45;border-color:#2d31
 +'<div class="amc-month">'+m.year_month+' <span class="layer-badge analytics" style="font-size:8px">Analys</span></div>'
 +'<div style="font-size:11px;color:#475569;margin-top:8px;font-style:italic">Ingen demand-data</div>'
 +'<div class="amc-row" style="margin-top:6px"><span class="amc-label">Supply</span><span class="amc-val" style="color:#f59e0b">'+m.dailyRosteredFte.toFixed(2)+' FTE</span></div>'
-+'<div style="font-size:10px;color:#475569;margin-top:4px">⊘ Gap ej beräkningsbart</div>'
++'<div style="font-size:10px;color:#475569;margin-top:4px">â Gap ej berÃ¤kningsbart</div>'
 +'</div>';
 }
 return '<div class="analytics-month-card">'
@@ -1723,7 +1793,7 @@ function renderScenarioChart(){
   });
 }
 
-// ── CLASSIFICATION TAB ──
+// ââ CLASSIFICATION TAB ââ
 function initClassifyTab(){
   window._clL=true;
   renderRoutingRulesGrid();
@@ -1801,7 +1871,7 @@ async function refreshClassificationData(){
       '<div class="wc"><div class="wl">Berikade tickets</div><div class="wv '+(enrichPct>=80?'ok':enrichPct>20?'warn':'crit')+'" style="font-size:22px">'+enriched.toLocaleString('sv-SE')+'</div><div class="wl">'+enrichPct.toFixed(1)+'% tackning</div></div>',
       '<div class="wc"><div class="wl">Ej berikade</div><div class="wv crit" style="font-size:22px">'+(totalTickets-enriched).toLocaleString('sv-SE')+'</div><div class="wl">Utan produktklassif.</div></div>',
       '<div class="wc"><div class="wl">Manader med ticketdata</div><div class="wv ok" style="font-size:22px">'+ticketMonths.length+'</div><div class="wl">av 12 senaste</div></div>',
-      '<div class="wc"><div class="wl">Supply-status</div><div class="wv ok" style="font-size:16px">P4 ✅</div><div class="wl">95 rader seedade</div></div>'
+      '<div class="wc"><div class="wl">Supply-status</div><div class="wv ok" style="font-size:16px">P4 â</div><div class="wl">95 rader seedade</div></div>'
     ].join('');
     document.getElementById('classif-summary-grid').style.display='';
     var pools=['classic','s1','frankly','talent','switchboard','unknown'];
@@ -1834,14 +1904,14 @@ async function refreshClassificationData(){
         var gapColor=p.gap<0?'#fca5a5':p.gap<=0.5?'#fcd34d':'#4ade80';
         var noData=p.raw_tickets===0&&p.fte_supply>0;
 var gapDisplay=noData?'<span style="color:#f59e0b;font-size:10px;font-weight:700">Ingen demand-data</span>':('<span style="color:'+gapColor+'">'+p.gap.toFixed(2)+'</span>');
-var covDisplay=noData?'<span style="color:#475569;font-size:10px">Ej beräkningsbar</span>':(p.coverage_pct+'%');
+var covDisplay=noData?'<span style="color:#475569;font-size:10px">Ej berÃ¤kningsbar</span>':(p.coverage_pct+'%');
 tableRows+='<tr style="'+(noData?'opacity:0.55':'')+'"><td style="font-variant-numeric:tabular-nums">'+m.year_month+'</td>'
 +'<td style="color:'+(colors[p.pool]||'#94a3b8')+';font-weight:600">'+p.pool_name+'</td>'
-+'<td class="n">'+(p.raw_tickets>0?p.raw_tickets:'—')+'</td>'
-+'<td class="n">'+(p.filtered_tickets>0?p.filtered_tickets:'—')+'</td>'
-+'<td class="n">'+(p.raw_tickets>0?p.effective_aht:'—')+'</td>'
-+'<td class="n">'+(p.filtered_fte>0?p.filtered_fte.toFixed(2):'—')+'</td>'
-+'<td class="n" style="color:'+(noData?'#f59e0b':'#94a3b8')+'">'+p.fte_supply.toFixed(2)+(noData?' ⚠':'')+'</td>'
++'<td class="n">'+(p.raw_tickets>0?p.raw_tickets:'â')+'</td>'
++'<td class="n">'+(p.filtered_tickets>0?p.filtered_tickets:'â')+'</td>'
++'<td class="n">'+(p.raw_tickets>0?p.effective_aht:'â')+'</td>'
++'<td class="n">'+(p.filtered_fte>0?p.filtered_fte.toFixed(2):'â')+'</td>'
++'<td class="n" style="color:'+(noData?'#f59e0b':'#94a3b8')+'">'+p.fte_supply.toFixed(2)+(noData?' â ':'')+'</td>'
 +'<td class="n">'+gapDisplay+'</td>'
 +'<td class="n">'+covDisplay+'</td></tr>';
       });
@@ -1929,7 +1999,7 @@ function renderSensitivityChart(){
   });
 }
 
-// ── LEGACY TABS ──
+// ââ LEGACY TABS ââ
 async function loadOverview() {
   try {
     const d = await api('/overview');
@@ -1942,9 +2012,9 @@ async function loadOverview() {
       const v = cards[i].querySelector('.ov-kpi-value');
       if (v) v.textContent = val;
     };
-    setCard(0, d.today_total ?? '—');
-    setCard(1, d.active_today ?? '—');
-    setCard(2, d.avg_7d != null ? d.avg_7d.toFixed(1) : '—');
+    setCard(0, d.today_total ?? 'â');
+    setCard(1, d.active_today ?? 'â');
+    setCard(2, d.avg_7d != null ? d.avg_7d.toFixed(1) : 'â');
     setCard(3, (d.last_30d_total ?? 0).toLocaleString('sv-SE'));
 
     // Product table
@@ -1953,7 +2023,7 @@ async function loadOverview() {
     const total30 = ps.reduce((s, p) => s + (p.last_30_days || 0), 0) || 1;
     const makeRow = p => {
       const share = Math.round(p.last_30_days / total30 * 100);
-      return '<tr><td>' + (p.product || '—') + '</td><td>' + (p.today ?? 0) + '</td><td>' + (p.yesterday ?? 0) + '</td><td>' + (p.last_7_days ?? '—') + '</td><td>' + share + '%</td></tr>';
+      return '<tr><td>' + (p.product || 'â') + '</td><td>' + (p.today ?? 0) + '</td><td>' + (p.yesterday ?? 0) + '</td><td>' + (p.last_7_days ?? 'â') + '</td><td>' + share + '%</td></tr>';
     };
     if (ptb)  ptb.innerHTML  = ps.map(makeRow).join('');
     if (ptb2) ptb2.innerHTML = ps.map(makeRow).join('');
@@ -2200,7 +2270,7 @@ function renderSparkChart() {
   const el = document.getElementById('ov-spark-chart');
   if (!el) return;
   const ptb = document.getElementById('ptb');
-  if (!ptb || !ptb.children.length) { el.innerHTML = '<span style="color:#475569;font-style:italic">Väntar på data...</span>'; return; }
+  if (!ptb || !ptb.children.length) { el.innerHTML = '<span style="color:#475569;font-style:italic">VÃ¤ntar pÃ¥ data...</span>'; return; }
   const rows = Array.from(ptb.querySelectorAll('tr')).filter(r => r.cells.length >= 3);
   const data = rows.map(r => ({
     name: r.cells[0] ? r.cells[0].textContent.trim() : '',
@@ -2338,7 +2408,7 @@ function renderAgentProductBreakdown() {
           +'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:#12141e;color:'+occColor+';">'+totalOcc+'% belaggning</span>'
         +'</div>'
       +'</div>'
-      +'<div style="font-size:10px;color:#64748b;margin-bottom:10px;">'+numAgents+' agent'+( numAgents>1?'er':'')+' · '+totalProdTickets+' tickets/30d</div>'
+      +'<div style="font-size:10px;color:#64748b;margin-bottom:10px;">'+numAgents+' agent'+( numAgents>1?'er':'')+' Â· '+totalProdTickets+' tickets/30d</div>'
       +(pd.products.length>0?rows:'<div style="font-size:11px;color:#64748b;padding:8px 0;">Inga produktmatchningar funna.</div>')
     +'</div>';
   });
@@ -2346,4 +2416,91 @@ function renderAgentProductBreakdown() {
 }
 
 
+</script>
+<script>
+// ===== NAMED AGENTS DROP-IN SCRIPT =====
+(function(){
+function naFmt(n){ return (Math.round(n*100)/100).toLocaleString("sv-SE"); }
+function naEsc(s){ return String(s ?? "").replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+function naBuildMonths(sel){
+var now = new Date(); var opts = [];
+for(var i=0;i<6;i++){
+var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+var ym = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+var label = d.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
+opts.push('<option value="'+ym+'">'+label.charAt(0).toUpperCase()+label.slice(1)+'</option>');
+}
+sel.innerHTML = opts.join("");
+}
+
+async function renderNamedAgents(month, pool){
+var body = document.getElementById("na-body");
+var meta = document.getElementById("na-meta");
+if(!body) return;
+body.innerHTML = '<div class="na-empty">Laddar…</div>';
+try{
+var url = new URL("https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api/agent-breakdown");
+url.searchParams.set("month", month);
+if(pool) url.searchParams.set("pool", pool);
+var res = await fetch(url);
+if(!res.ok) throw new Error("HTTP " + res.status);
+var data = await res.json();
+var agents = data.agents || [];
+if(meta) meta.textContent = (data.agent_count||agents.length) + " agenter · " + naFmt(data.total_handled||0) + " tickets";
+if(!agents.length){
+body.innerHTML = '<div class="na-empty">Ingen agentdata för perioden.</div>';
+return;
+}
+var max = Math.max.apply(null, agents.map(function(a){return a.handled_tickets;}));
+if(max < 1) max = 1;
+var rows = agents.map(function(a){
+var w = Math.max(3, Math.round((a.handled_tickets / max) * 90));
+var pools = (a.pools||[]).map(function(p){return p.pool;}).join(", ");
+var ahtTxt = a.measured ? naFmt(a.avg_handle_minutes) : naFmt(a.avg_handle_minutes)+"*";
+return "<tr>"
++"<td><div class='na-name'>"+naEsc(a.agent_name)+"</div><div class='na-pools'>"+naEsc(pools)+"</div></td>"
++"<td class='num'><div class='na-bar-wrap'><span>"+naFmt(a.handled_tickets)+"</span>"
++"<span class='na-bar-track'><span class='na-bar' style='width:"+w+"px;display:block'></span></span></div></td>"
++"<td class='num'>"+naFmt(a.cc_scope_tickets)+"</td>"
++"<td class='num'>"+ahtTxt+"</td>"
++"</tr>";
+}).join("");
+body.innerHTML = "<table>"
++"<thead><tr><th>Agent</th><th class='num'>Hanterade</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th></tr></thead>"
++"<tbody>"+rows+"</tbody>"
++"<tfoot><tr><td>Totalt ("+agents.length+" agenter)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td></tr></tfoot>"
++"</table>";
+}catch(e){
+if(body) body.innerHTML = '<div class="na-error">Kunde inte ladda agentdata: ' + naEsc(e.message) + '</div>';
+}
+}
+
+window.renderNamedAgents = renderNamedAgents;
+
+function naInit(){
+var monthSel = document.getElementById("na-month");
+var poolSel = document.getElementById("na-pool");
+if(!monthSel || !poolSel) return;
+naBuildMonths(monthSel);
+// Wire to existing ag-filter-period if present
+var agPeriod = document.getElementById("ag-filter-period");
+if(agPeriod){
+var syncMonth = function(){ monthSel.value = agPeriod.value.substring(0,7); renderNamedAgents(monthSel.value, poolSel.value); };
+agPeriod.addEventListener("change", syncMonth);
+monthSel.value = agPeriod.value ? agPeriod.value.substring(0,7) : monthSel.value;
+} else {
+monthSel.addEventListener("change", function(){ renderNamedAgents(monthSel.value, poolSel.value); });
+}
+poolSel.addEventListener("change", function(){ renderNamedAgents(monthSel.value, poolSel.value); });
+renderNamedAgents(monthSel.value, poolSel.value);
+}
+
+if(document.readyState === 'loading'){
+document.addEventListener('DOMContentLoaded', naInit);
+} else {
+setTimeout(naInit, 500);
+}
+})();
+// ===== END NAMED AGENTS SCRIPT =====
 </script></body></html>
