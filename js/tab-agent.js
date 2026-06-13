@@ -447,4 +447,4 @@ window.loadAgentTab = loadAgentTab;
 window.renderAgentTable = renderAgentTable;
 window.setAgentIndividualPeriod = setAgentIndividualPeriod;
 
-export { loadAgentTab, aeInit };
+export { loadAgentTab };
