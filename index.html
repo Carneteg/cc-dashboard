@@ -358,6 +358,80 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 #named-agents .na-bar{ height:6px; border-radius:3px; background:#2563eb; }
 #named-agents .na-bar-track{ width:90px; height:6px; border-radius:3px; background:#1e3a5f; overflow:hidden; }
 #named-agents tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid #2d3148; color:#94a3b8; }
+
+<style>-blocket (eller slå ihop med din CSS).
+  3. Klistra in <script>-blocket. Återanvänd din globala CC_API_BASE om du har en.
+  4. Wira din befintliga period-väljare: anropa renderAgentEff(month) i dess
+     change-handler (month = 'YYYY-MM'). Inbyggd väljare fungerar fristående.
+
+  Komplett & körbar som den är — öppna i webbläsare för att verifiera mot live-data.
+-->
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Effektivitet & belastningsgrad</title>
+
+<!-- ===== STYLE ===== -->
+<style>
+  :root{
+    --ink:#1a1d21; --muted:#6b7280; --line:#e5e7eb; --bg:#ffffff;
+    --plan:#2563eb; --plan-soft:#eff4ff;
+    --pos:#15803d; --pos-soft:#ecfdf3;
+    --warn:#b45309; --warn-soft:#fff7ed;
+    --neg:#b91c1c;
+    /* pool-segment: tints av plan + neutral grå, ingen gradient */
+    --seg1:#2563eb; --seg2:#60a5fa; --seg3:#93c5fd; --seg4:#c7d7f5; --seg5:#9ca3af; --seg6:#d1d5db;
+  }
+  #agent-eff{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:var(--bg);
+    border:1px solid var(--line); border-radius:10px; padding:20px 22px; max-width:1180px;
+  }
+  #agent-eff h3{ margin:0 0 2px; font-size:16px; font-weight:600; letter-spacing:-.01em; }
+  #agent-eff .ae-sub{ color:var(--muted); font-size:12.5px; margin:0 0 16px; }
+  #agent-eff .ae-controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+  #agent-eff select{ font:inherit; padding:6px 10px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); cursor:pointer; }
+  #agent-eff label{ font-size:12.5px; color:var(--muted); display:flex; gap:6px; align-items:center; }
+  #agent-eff .ae-meta{ margin-left:auto; color:var(--muted); font-size:12.5px; font-variant-numeric:tabular-nums; }
+  #agent-eff table{ width:100%; border-collapse:collapse; font-size:13px; }
+  #agent-eff thead th{ text-align:left; font-weight:600; color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; border-bottom:1px solid var(--line); }
+  #agent-eff thead th.num{ text-align:right; }
+  #agent-eff thead th.mid{ text-align:center; }
+  #agent-eff tbody td{ padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  #agent-eff tbody tr:last-child td{ border-bottom:none; }
+  #agent-eff td.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  #agent-eff .ae-name{ font-weight:600; }
+  #agent-eff .ae-lvl{ color:var(--muted); font-size:11px; font-weight:500; }
+  #agent-eff .ae-lvl.j{ color:var(--plan); }
+
+  /* Belastningsgrad: stapel mot 75 %-mål-markör (husstilens divergerande motiv) */
+  #agent-eff .ae-gauge{ display:flex; align-items:center; gap:8px; justify-content:flex-end; }
+  #agent-eff .ae-gauge .v{ font-variant-numeric:tabular-nums; min-width:42px; text-align:right; }
+  #agent-eff .ae-track{ position:relative; width:120px; height:8px; border-radius:4px; background:var(--plan-soft); overflow:hidden; }
+  #agent-eff .ae-track.warn{ background:var(--warn-soft); }
+  #agent-eff .ae-fill{ position:absolute; left:0; top:0; bottom:0; border-radius:4px; background:var(--plan); }
+  #agent-eff .ae-fill.over{ background:var(--warn); }
+  #agent-eff .ae-mark{ position:absolute; top:-2px; bottom:-2px; width:2px; background:var(--ink); opacity:.45; }
+
+  /* Effektivitet: stapel mot 100 %-referens */
+  #agent-eff .ae-fill.eff{ background:var(--pos); }
+  #agent-eff .ae-track.eff{ background:var(--pos-soft); }
+  #agent-eff .ae-fill.eff.low{ background:#9ca3af; }
+  #agent-eff .ae-track.eff.low{ background:#f3f4f6; }
+
+  /* Tidsfördelning per pool */
+  #agent-eff .ae-mix{ display:flex; height:8px; border-radius:4px; overflow:hidden; width:170px; background:#f3f4f6; }
+  #agent-eff .ae-mix span{ height:100%; }
+  #agent-eff .ae-mixtxt{ color:var(--muted); font-size:11px; margin-top:3px; line-height:1.3; }
+  #agent-eff tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid var(--line); }
+  #agent-eff .ae-note{ color:var(--muted); font-size:11.5px; margin-top:12px; line-height:1.45; }
+  #agent-eff .ae-empty,#agent-eff .ae-error{ color:var(--muted); font-size:13px; padding:18px 4px; }
+  #agent-eff .ae-error{ color:var(--neg); }
+  #agent-eff .ae-legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:11px; color:var(--muted); }
+  #agent-eff .ae-legend i{ display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px; }
+</style>
 </style></head><body>
 <header>
 <div class="logo">
@@ -1239,6 +1313,36 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
   </div>
 </div>
 </div>
+
+<div id="agent-eff">
+  <h3>Effektivitet &amp; belastningsgrad</h3>
+  <p class="ae-sub">Per agent, baserat på FTE-modellen (CC_FTE_Calculator.xlsx) och ärendefördelningen per pool. Modellerad tid = hanterade ärenden × pool-AHT.</p>
+
+  <div class="ae-controls">
+    <label>Period <select id="ae-month"></select></label>
+    <label>Beläggningsmål <select id="ae-occ">
+      <option value="0.70">70 %</option>
+      <option value="0.75" selected>75 %</option>
+      <option value="0.80">80 %</option>
+    </select></label>
+    <span class="ae-meta" id="ae-meta">—</span>
+  </div>
+
+  <div id="ae-body"><div class="ae-empty">Laddar…</div></div>
+
+  <div class="ae-legend" id="ae-legend"></div>
+
+  <p class="ae-note">
+    Källa: cc-dashboard-api <code>/agent-efficiency</code>. <b>Belastningsgrad</b> = modellerad
+    hanteringstid / produktiv kapacitet (markör = beläggningsmål). <b>Effektivitet</b> = realiserat
+    FTE-bidrag / planerat FTE-bidrag, där planerat väger in Sen Factor (Senior 1,0 · Junior/Temp 0,7) —
+    referens 100 %. Uppmätt per-ärende-tid saknas i Freshdesk-webhooken, så båda måtten bygger på
+    modellerad tid (volym × AHT). Kapacitet/FTE = 7,5h × arbetsdagar (Mån–Fre minus helgdagar) ×
+    (1−25 % shrinkage); innevarande månad pro-rata. Ej officiellt prestationsmått — bemanningsanalys.
+  </p>
+</div>
+
+<!-- ===== SCRIPT ===== -->
 
 </main><script>
 // âââââââââââââââââââââââââââââââââââââââââââââââââââ
@@ -2377,6 +2481,120 @@ function renderAgentProductBreakdown() {
 
 </script>
 <script>
+
+  const CC_API_BASE = "https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api";
+  const AE_SEG = ["--seg1","--seg2","--seg3","--seg4","--seg5","--seg6"];
+  const AE_POOL_LABEL = { switchboard:"Switchboard", classic:"Classic", s1:"S1", frankly:"Frankly", talent:"Talent" };
+
+  function aeFmt(n,d=0){ return (Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toLocaleString("sv-SE",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function aePct(x){ return aeFmt(x*100,0)+" %"; }
+  function aeEsc(s){ return String(s ?? "").replace(/[&<>"]/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;" }[c])); }
+  function aePoolName(p){ return AE_POOL_LABEL[p] || p; }
+
+  function aeBuildMonths(sel){
+    const now=new Date(), opts=[];
+    for(let i=0;i<6;i++){
+      const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+      const ym=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+      const l=d.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
+      opts.push(`<option value="${ym}">${l.charAt(0).toUpperCase()+l.slice(1)}</option>`);
+    }
+    sel.innerHTML=opts.join("");
+  }
+
+  // Belastningsgrad-gauge: skala 0..max(120%, värde), markör vid mål
+  function aeLoadGauge(bel, target){
+    const scale = Math.max(1.2, bel) ;
+    const w = Math.max(2, Math.round((bel/scale)*120));
+    const mark = Math.round((target/scale)*120);
+    const over = bel > target + 1e-9;
+    return `<div class="ae-gauge">
+      <span class="v">${aePct(bel)}</span>
+      <span class="ae-track ${over?"warn":""}">
+        <span class="ae-fill ${over?"over":""}" style="width:${w}px"></span>
+        <span class="ae-mark" style="left:${mark}px"></span>
+      </span></div>`;
+  }
+  // Effektivitet-gauge: skala 0..max(150%, värde), referens 100 %
+  function aeEffGauge(eff){
+    const scale = Math.max(1.5, eff);
+    const w = Math.max(2, Math.round((eff/scale)*120));
+    const mark = Math.round((1.0/scale)*120);
+    const low = eff < 1 - 1e-9;
+    return `<div class="ae-gauge">
+      <span class="v">${aePct(eff)}</span>
+      <span class="ae-track eff ${low?"low":""}">
+        <span class="ae-fill eff ${low?"low":""}" style="width:${w}px"></span>
+        <span class="ae-mark" style="left:${mark}px"></span>
+      </span></div>`;
+  }
+  function aeMix(mix){
+    if(!mix||!mix.length) return "";
+    const segs = mix.map((p,i)=>`<span title="${aeEsc(aePoolName(p.pool))}: ${aePct(p.share)}" style="width:${(p.share*100).toFixed(2)}%;background:var(${AE_SEG[i%AE_SEG.length]})"></span>`).join("");
+    const txt = mix.slice(0,3).map(p=>`${aePoolName(p.pool)} ${aePct(p.share)}`).join(" · ") + (mix.length>3?" · …":"");
+    return `<div class="ae-mix">${segs}</div><div class="ae-mixtxt">${aeEsc(txt)}</div>`;
+  }
+
+  async function renderAgentEff(month, occTarget){
+    const body=document.getElementById("ae-body"), meta=document.getElementById("ae-meta");
+    body.innerHTML='<div class="ae-empty">Laddar…</div>';
+    try{
+      const url=new URL(CC_API_BASE+"/agent-efficiency");
+      url.searchParams.set("month",month);
+      if(occTarget) url.searchParams.set("occupancy_target",occTarget);
+      const res=await fetch(url);
+      if(!res.ok) throw new Error("HTTP "+res.status);
+      const data=await res.json();
+      const agents=data.agents||[];
+      const target=data.params?.occupancy_target ?? 0.75;
+      meta.textContent=`${data.agent_count} agenter · ${aeFmt(data.total_handled)} tickets · ${aeFmt((data.total_modeled_minutes||0)/60,0)} modellerade tim`;
+
+      if(!agents.length){ body.innerHTML='<div class="ae-empty">Ingen agentdata för perioden.</div>'; return; }
+
+      const rows=agents.map(a=>`<tr>
+        <td><div class="ae-name">${aeEsc(a.agent_name)}</div><div class="ae-lvl ${a.sen_factor<1?"j":""}">${aeEsc(a.level)}${a.sen_factor<1?` · faktor ${aeFmt(a.sen_factor,1)}`:""}</div></td>
+        <td class="num">${aeFmt(a.handled_tickets)}</td>
+        <td class="num">${aeFmt(a.modeled_minutes/60,1)}</td>
+        <td>${aeLoadGauge(a.belastningsgrad,target)}</td>
+        <td>${aeEffGauge(a.effektivitet)}</td>
+        <td>${aeMix(a.pool_mix)}</td>
+      </tr>`).join("");
+
+      const totHandled=data.total_handled||0, totHrs=(data.total_modeled_minutes||0)/60;
+      body.innerHTML=`<table>
+        <thead><tr>
+          <th>Agent</th>
+          <th class="num">Hanterade</th>
+          <th class="num">Modellerad tid (tim)</th>
+          <th class="mid">Belastningsgrad <span style="font-weight:400;text-transform:none">(mål ${aePct(target)})</span></th>
+          <th class="mid">Effektivitet <span style="font-weight:400;text-transform:none">(ref 100 %)</span></th>
+          <th>Tidsfördelning per pool</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot><tr>
+          <td>Totalt (${agents.length} agenter)</td>
+          <td class="num">${aeFmt(totHandled)}</td>
+          <td class="num">${aeFmt(totHrs,1)}</td>
+          <td></td><td></td><td></td>
+        </tr></tfoot>
+      </table>`;
+
+      document.getElementById("ae-legend").innerHTML =
+        Object.keys(AE_POOL_LABEL).map((p,i)=>`<span><i style="background:var(${AE_SEG[i%AE_SEG.length]})"></i>${AE_POOL_LABEL[p]}</span>`).join("");
+    }catch(e){
+      body.innerHTML='<div class="ae-error">Kunde inte ladda data: '+aeEsc(e.message)+'</div>';
+    }
+  }
+
+  (function aeInit(){
+    const m=document.getElementById("ae-month"), o=document.getElementById("ae-occ");
+    aeBuildMonths(m);
+    const go=()=>renderAgentEff(m.value,o.value);
+    m.addEventListener("change",go); o.addEventListener("change",go);
+    go();
+  })();
+
+
 // ===== NAMED AGENTS DROP-IN SCRIPT =====
 (function(){
 function naFmt(n){ return (Math.round(n*100)/100).toLocaleString("sv-SE"); }
