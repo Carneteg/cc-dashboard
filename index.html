@@ -267,12 +267,12 @@ CC Workforce
 <div class="tw" style="margin-bottom:12px">
 <table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>Action</th></tr></thead>
 <tbody>
-<tr style="border-left:3px solid #ef4444"><td style="font-weight:700;color:#fca5a5">Classic</td><td class="n">2.20</td><td class="n">3.40</td><td class="n" style="color:#fca5a5;font-weight:800">−1.20</td><td><span class="tag crit">Critical</span></td><td style="font-size:11px;color:#fca5a5">Hire immediately. Accelerate S1 migration.</td></tr>
-<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Switchboard</td><td class="n">2.69</td><td class="n">2.65</td><td class="n" style="color:#fcd34d;font-weight:800">+0.04</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Minimal buffer. Monitor volume growth.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Surplus</span></td><td style="font-size:11px;color:#94a3b8">Capacity for migration growth.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Surplus</span></td><td style="font-size:11px;color:#94a3b8">Stable. Monitor volume.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Surplus</span></td><td style="font-size:11px;color:#94a3b8">Stable.</td></tr>
-<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Total</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic hidden</span></td><td style="font-size:11px;color:#fca5a5">Total positive — men Classic→underskott −1.20 FTE is critical.</td></tr>
+<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Classic</td><td class="n">3.10</td><td class="n">3.40</td><td class="n" style="color:#fcd34d;font-weight:800">−0.30</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Monitor closely. Accelerate S1 migration.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">Switchboard</td><td class="n">2.80</td><td class="n">2.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.15</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Adequate buffer. Monitor volume growth.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">2.55</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+0.10</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Sufficient for migration growth.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">1.65</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">0.00</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Balanced. Monitor volume.</td></tr>
+<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.00</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.05</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Stable.</td></tr>
+<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Total</strong></td><td class="n">11.10</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic hidden</span></td><td style="font-size:11px;color:#fca5a5">Total positive — men Classic→underskott −1.20 FTE is critical.</td></tr>
 </tbody></table>
 </div>
 <div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planning:</strong> Official KPIs from the Excel model. Analytics estimates (purple, below) may deviate — they are operational analysis, not an official source. See the <em>Classification</em> tab for supply deviations and routing diagnostics.</div>
@@ -1143,7 +1143,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=14"></script>
+</main><script type="module" src="js/main.js?v=15"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
