@@ -1,9 +1,8 @@
-// js/tab-agent-eff.js  --  Named Agents efficiency & occupancy module
+// js/tab-agent-eff.js -- Named Agents efficiency & occupancy module
 // Migrated from index.html "NAMED AGENTS DROP-IN SCRIPT"
 // naInit() is called by main.js on DOMContentLoaded
 
-
-function naFmt(n){ return (Math.round(n*100)/100).toLocaleString("sv-SE"); }
+function naFmt(n){ return (Math.round(n*100)/100).toLocaleString("en-US"); }
 function naEsc(s){ return String(s ?? "").replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
 
 function naBuildMonths(sel){
@@ -11,8 +10,8 @@ var now = new Date(); var opts = [];
 for(var i=0;i<6;i++){
 var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
 var ym = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
-var label = d.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
-opts.push('<option value="'+ym+'">'+label.charAt(0).toUpperCase()+label.slice(1)+'</option>');
+var label = d.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+opts.push('<option value="'+ym+'">'+label+'</option>');
 }
 sel.innerHTML = opts.join("");
 }
@@ -21,7 +20,7 @@ async function renderNamedAgents(month, pool){
 var body = document.getElementById("na-body");
 var meta = document.getElementById("na-meta");
 if(!body) return;
-body.innerHTML = '<div class="na-empty">Laddar…</div>';
+body.innerHTML = '<div class="na-empty">Loading…</div>';
 try{
 var url = new URL("https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api/agent-breakdown");
 url.searchParams.set("month", month);
@@ -30,11 +29,15 @@ var res = await fetch(url);
 if(!res.ok) throw new Error("HTTP " + res.status);
 var data = await res.json();
 var agents = data.agents || [];
-var EXCLUDED_AGENTS = ["Espen Øren","Carl Fredrik Vorum","Martin André Johansen","Anna Schönfelder","Øivind Anders Elvestad","Ida Ljungberg","Lotta Sprangers","Tor Arne Uran","Inga Helen Mork","Fredrik Ågren","Eirik Juul-Jørgensen","Arzu Kazimova Sel","Ellbjørg Halås","Kjetil Enger Olsen","Ståle Karstein Wik","Ole Martin Wiig","Atle Torp","Camilla Schie-Veslum","Karoline Amundsen Dystebakken","Emil Golmen","Fride Paulsen Fiskerstrand","Hans Gjermund Gauslaa"];
-agents = agents.filter(function(a){ var norm=function(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}; return EXCLUDED_AGENTS.every(function(ex){return norm(ex)!==norm(a.agent_name);}); });
-if(meta) meta.textContent = (data.agent_count||agents.length) + " agenter · " + naFmt(data.total_handled||0) + " tickets";
+// Filter: only show agents in the active team roster
+var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebaråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille","Jim Zsuppan","Katja Svennerholm","Anett Nilsen","Stefan Sahlin","Lukas Andersson"];
+agents = agents.filter(function(a){
+var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();};
+return ACTIVE_ROSTER.some(function(r){return norm(r)===norm(a.agent_name);});
+});
+if(meta) meta.textContent = (agents.length) + " agents · " + naFmt(data.total_handled||0) + " tickets";
 if(!agents.length){
-body.innerHTML = '<div class="na-empty">Ingen agentdata för perioden.</div>';
+body.innerHTML = '<div class="na-empty">No agent data for this period.</div>';
 return;
 }
 var max = Math.max.apply(null, agents.map(function(a){return a.handled_tickets;}));
@@ -52,12 +55,12 @@ return "<tr>"
 +"</tr>";
 }).join("");
 body.innerHTML = "<table>"
-+"<thead><tr><th>Agent</th><th class='num'>Hanterade</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th></tr></thead>"
++"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th></tr></thead>"
 +"<tbody>"+rows+"</tbody>"
-+"<tfoot><tr><td>Totalt ("+agents.length+" agenter)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td></tr></tfoot>"
++"<tfoot><tr><td>Total ("+agents.length+" agents)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td></tr></tfoot>"
 +"</table>";
 }catch(e){
-if(body) body.innerHTML = '<div class="na-error">Kunde inte ladda agentdata: ' + naEsc(e.message) + '</div>';
+if(body) body.innerHTML = '<div class="na-error">Could not load agent data: ' + naEsc(e.message) + '</div>';
 }
 }
 
