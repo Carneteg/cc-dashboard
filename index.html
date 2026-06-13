@@ -2,16 +2,16 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
-header{background:#1a1d27;border-bottom:1px solid #2d3148;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+body{font-family:'Inter',system-ui,sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh}
+header{background:#ffffff;border-bottom:1px solid #dde3ee;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .logo{display:flex;align-items:center;gap:12px;font-size:17px;font-weight:700}
 .logo svg{width:28px;height:28px}
 .ts{font-size:12px;color:#64748b}
-nav{background:#1a1d27;border-bottom:1px solid #2d3148;padding:0 24px;display:flex;gap:2px;flex-wrap:wrap;overflow-x:auto}
+nav{background:#ffffff;border-bottom:1px solid #dde3ee;padding:0 24px;display:flex;gap:2px;flex-wrap:wrap;overflow-x:auto}
 nav button{background:none;border:none;color:#64748b;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-nav button:hover{color:#e2e8f0}
+nav button:hover{color:#1e293b}
 nav button.active{color:#6366f1;border-bottom-color:#6366f1}
-nav .nav-sep{width:1px;background:#2d3148;margin:8px 4px;flex-shrink:0}
+nav .nav-sep{width:1px;background:#dde3ee;margin:8px 4px;flex-shrink:0}
 main{padding:24px;max-width:1440px;margin:0 auto}
 .tc{display:none}.tc.active{display:block}
 
@@ -19,10 +19,10 @@ main{padding:24px;max-width:1440px;margin:0 auto}
 .section-header{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px}
 .section-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em}
 .section-note{font-size:11px;color:#475569;font-style:italic}
-.card{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px}
+.card{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px}
 .card.hl{border-color:#6366f1}.card.warn{border-color:#f59e0b}.card.crit{border-color:h#ef4444}.card.ok{border-color:#22c55e}
 .cl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
-.cv{font-size:36px;font-weight:700;color:#e2e8f0;line-height:1;margin-bottom:4px}
+.cv{font-size:36px;font-weight:700;color:#1e293b;line-height:1;margin-bottom:4px}
 .cv.ok{color:#4ade80}.cv.warn{color:#fcd34d}.cv.crit{color:#fca5a5}.cv.info{color:#818cf8}
 .cs{font-size:11px;color:#64748b}
 .tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
@@ -32,13 +32,13 @@ main{padding:24px;max-width:1440px;margin:0 auto}
 .tag.forecast{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
 .tag.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
 .tag.analytics{background:#1a2744;color:#818cf8;border:1px solid #6366f1}
-.tw{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;overflow:hidden}
+.tw{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;overflow:hidden}
 table{width:100%;border-collapse:collapse}
-thead th{background:#12141e;padding:11px 16px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:1px solid #2d3148}
+thead th{background:#f0f4f8;padding:11px 16px;text-align:left;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;border-bottom:1px solid #dde3ee}
 thead th.r{text-align:right}
-tbody tr{border-bottom:1px solid #1e2133;transition:background .1s}
+tbody tr{border-bottom:1px solid #f1f5f9;transition:background .1s}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:#1e2235}
+tbody tr:hover{background:#f0f4f8}
 td{padding:12px 16px;font-size:13px}
 td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 
@@ -47,14 +47,14 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .layer-badge.planning{background:#1e3a5f;color:#60a5fa;border:1px solid #2563eb}
 .layer-badge.analytics{background:#1e1b4b;color:#818cf8;border:1px solid #4338ca}
 .layer-divider{display:flex;align-items:center;gap:10px;margin:28px 0 16px}
-.layer-divider-line{flex:1;height:1px;background:#2d3148}
+.layer-divider-line{flex:1;height:1px;background:#dde3ee}
 .layer-divider-label{font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.1em;white-space:nowrap}
 
 /* ââ WP KPI CARDS ââ */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.kpi-grid{grid-template-columns:1fr}}
-.kpi-card{background:#1a1d27;border:1px solid #2d3148;border-radius:14px;padding:22px;position:relative;overflow:hidden}
+.kpi-card{background:#ffffff;border:1px solid #dde3ee;border-radius:14px;padding:22px;position:relative;overflow:hidden}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .kpi-card.actual::before{background:linear-gradient(90deg,#6366f1,#818cf8)}
 .kpi-card.supply::before{background:linear-gradient(90deg,#22c55e,#4ade80)}
@@ -76,19 +76,19 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
 .alert-body .alert-title{font-size:14px;font-weight:700;margin-bottom:3px}
 .alert-body .alert-desc{font-size:12px;color:#94a3b8;line-height:1.5}
-.alert-body .alert-desc span{color:#e2e8f0;font-weight:600}
+.alert-body .alert-desc span{color:#1e293b;font-weight:600}
 
 /* Chart containers */
-.chart-wrap{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px;margin-bottom:8px}
+.chart-wrap{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px;margin-bottom:8px}
 .chart-wrap h4{font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .chart-controls{display:flex;gap:6px}
-.chart-btn{background:#2d3148;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:500}
+.chart-btn{background:#dde3ee;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-weight:500}
 .chart-btn.active{background:#6366f1;color:#fff}
-.chart-note{font-size:11px;color:#475569;padding:6px 12px;background:#0f1117;border-radius:6px;margin-top:6px}
+.chart-note{font-size:11px;color:#475569;padding:6px 12px;background:#f8fafc;border-radius:6px;margin-top:6px}
 
 /* Pool gaps */
 .pool-grid{display:flex;flex-direction:column;gap:10px}
-.pool-row{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
+.pool-row{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px}
 .pool-row.crit{border-left:4px solid #ef4444}.pool-row.warn{border-left:4px solid #f59e0b}.pool-row.ok{border-left:4px solid #22c55e}
 .pool-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .pool-name{font-size:14px;font-weight:700}
@@ -97,8 +97,8 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .pool-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
 @media(max-width:700px){.pool-stats{grid-template-columns:repeat(2,1fr)}}
 .pool-stat{font-size:11px;color:#64748b}
-.pool-stat strong{display:block;font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:1px}
-.pool-bar-wrap{background:#0f1117;border-radius:4px;height:10px;overflow:hidden;position:relative}
+.pool-stat strong{display:block;font-size:14px;font-weight:700;color:#1e293b;margin-bottom:1px}
+.pool-bar-wrap{background:#f8fafc;border-radius:4px;height:10px;overflow:hidden;position:relative}
 .pool-bar-supply{height:100%;border-radius:4px;background:#4ade80;position:absolute;left:0;top:0}
 .pool-bar-demand{height:100%;border-radius:2px;background:#6366f1;position:absolute;left:0;top:0;opacity:.8}
 .pool-bar-label{display:flex;justify-content:space-between;font-size:10px;color:#475569;margin-top:3px}
@@ -107,7 +107,7 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
 @media(max-width:1000px){.scenario-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.scenario-grid{grid-template-columns:1fr}}
-.scenario-card{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.scenario-card{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
 .scenario-card.active-scenario{border-color:#6366f1;box-shadow:0 0 0 1px #6366f1}
 .sc-name{font-size:12px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
 .sc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1e293b;font-size:12px}
@@ -131,30 +131,30 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 
 /* Definitions */
 .def-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.def-item{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:14px}
+.def-item{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:14px}
 .def-term{font-size:12px;font-weight:700;color:#818cf8;margin-bottom:5px}
 .def-body{font-size:12px;color:#94a3b8;line-height:1.5}
 .def-example{font-size:11px;color:#475569;margin-top:4px;font-style:italic}
 
 /* Analytics trend section */
-.trend-container{background:#1a1d27;border:1px solid #4338ca;border-radius:12px;padding:20px;margin-bottom:8px;position:relative}
+.trend-container{background:#ffffff;border:1px solid #4338ca;border-radius:12px;padding:20px;margin-bottom:8px;position:relative}
 .trend-container::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:12px 12px 0 0}
 .trend-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px}
 .trend-title{font-size:12px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em}
 .trend-loading{font-size:12px;color:#64748b;text-align:center;padding:40px}
 .trend-error{font-size:12px;color:#f87171;padding:12px;background:#450a0a;border-radius:6px;margin-top:8px}
 .analytics-month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:12px}
-.analytics-month-card{background:#12141e;border:1px solid #2d3148;border-radius:8px;padding:12px}
+.analytics-month-card{background:#f0f4f8;border:1px solid #dde3ee;border-radius:8px;padding:12px}
 .amc-month{font-size:11px;color:#64748b;margin-bottom:6px}
 .amc-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px}
 .amc-label{color:#64748b}.amc-val{font-weight:600;font-variant-numeric:tabular-nums}
-.amc-gap{font-size:13px;font-weight:700;margin-top:6px;padding-top:6px;border-top:1px solid #2d3148}
+.amc-gap{font-size:13px;font-weight:700;margin-top:6px;padding-top:6px;border-top:1px solid #dde3ee}
 .amc-cov{font-size:10px;margin-top:4px;padding:2px 6px;border-radius:3px;display:inline-block}
 .amc-cov.ok{background:#14532d;color:#4ade80}.amc-cov.warn{background:#7f1d1d;color:#fca5a5}
 
 /* ââ CLASSIFICATION MODEL STYLES ââ */
 .classif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:20px}
-.classif-card{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
+.classif-card{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px}
 .classif-card.switchboard{border-left:4px solid #60a5fa}
 .classif-card.classic{border-left:4px solid #818cf8}
 .classif-card.s1{border-left:4px solid #4ade80}
@@ -163,9 +163,9 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .classif-card.unknown{border-left:4px solid #475569}
 .classif-title{font-size:13px;font-weight:700;margin-bottom:10px}
 .classif-products{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
-.product-chip{padding:2px 8px;border-radius:4px;font-size:11px;background:#0f1117;border:1px solid #2d3148;color:#94a3b8}
+.product-chip{padding:2px 8px;border-radius:4px;font-size:11px;background:#f8fafc;border:1px solid #dde3ee;color:#94a3b8}
 .classif-note{font-size:11px;color:#475569;font-style:italic;margin-top:6px}
-.routing-rule{font-size:11px;color:#60a5fa;margin-top:4px;font-family:monospace;background:#0f1117;padding:4px 8px;border-radius:4px}
+.routing-rule{font-size:11px;color:#60a5fa;margin-top:4px;font-family:monospace;background:#f8fafc;padding:4px 8px;border-radius:4px}
 
 /* Cross-tab validation */
 .xtab{overflow-x:auto}
@@ -175,13 +175,13 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .xtab td.val-cell.zero{color:#475569}
 .xtab td.val-cell.low{color:#fcd34d}
 .xtab td.val-cell.high{color:#4ade80}
-.xtab td.total-row{font-weight:700;background:#12141e}
+.xtab td.total-row{font-weight:700;background:#f0f4f8}
 
 /* Supply discrepancy warning */
 .supply-warning{background:#431407;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;font-size:12px;line-height:1.6;margin-bottom:12px}
 .supply-warning .sw-title{font-weight:700;color:#fcd34d;margin-bottom:6px}
 .supply-sources{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px}
-.supply-source-card{background:#0f1117;border-radius:6px;padding:10px;border:1px solid #2d3148}
+.supply-source-card{background:#f8fafc;border-radius:6px;padding:10px;border:1px solid #dde3ee}
 .supply-source-title{font-size:10px;text-transform:uppercase;font-weight:700;color:#64748b;margin-bottom:6px}
 .supply-source-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px}
 .supply-source-key{color:#64748b}
@@ -190,24 +190,24 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 /* ââ LEGACY TAB STYLES ââ */
 .sr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
 .st{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin:24px 0 12px}
-.cv-lg{font-size:32px;font-weight:700;color:#e2e8f0;margin-bottom:4px}
+.cv-lg{font-size:32px;font-weight:700;color:#1e293b;margin-bottom:4px}
 .bc{padding:14px 16px;min-width:140px}
-.bb{background:#2d3148;border-radius:4px;height:8px;overflow:hidden}
+.bb{background:#dde3ee;border-radius:4px;height:8px;overflow:hidden}
 .bf{height:100%;border-radius:4px;transition:width .6s ease}
 .tl{display:flex;flex-direction:column;gap:8px}
-.tr2{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:16px}
+.tr2{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:80px 1fr auto auto;align-items:center;gap:16px}
 .ti{font-size:13px;color:#64748b;font-family:monospace}
 .tt{font-size:12px;color:#64748b;white-space:nowrap}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase}
 .b-email{background:#1e3a5f;color:#60a5fa}.b-phone{background:#14532d;color:#4ade80}
-.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}.b-other{background:#1e293b;color:#94a3b8}
+.b-portal{background:#4c1d95;color:#c4b5fd}.b-chat{background:#713f12;color:#fcd34d}.b-other{background:#f1f5f9;color:#94a3b8}
 .mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.mc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.mc{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
 .mc.crit-b{border-color:#ef4444}.mc.under-b{border-color:#f59e0b}.mc.ok-b{border-color:#22c55e}
 .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .mn2{font-size:16px;font-weight:700}
 .mp{margin-bottom:8px}.ml{font-size:12px;color:#94a3b8;margin-bottom:2px}
-.mb{background:#0f1117;border-radius:3px;height:6px;overflow:hidden}
+.mb{background:#f8fafc;border-radius:3px;height:6px;overflow:hidden}
 .mf{height:100%;border-radius:3px}.mf.req{background:#6366f1}.mf.sup{background:#22c55e}
 .mv{font-size:11px;color:#64748b;margin-top:2px}
 .ga{font-size:13px;font-weight:600;padding:3px 8px;border-radius:4px}
@@ -215,48 +215,48 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .cov-warn{margin-top:6px;padding:4px 8px;background:#7f1d1d;color:#fca5a5;font-size:10px;font-weight:600;border-radius:4px}
 .cov-ok{margin-top:6px;padding:4px 8px;background:#14532d;color:#4ade80;font-size:10px;font-weight:600;border-radius:4px}
 .wf{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
-.wc{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px}
+.wc{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px}
 .wv{font-size:28px;font-weight:700}.wl{font-size:12px;color:#64748b;margin-top:4px}
 .wv.ok{color:#4ade80}.wv.warn{color:#fcd34d}.wv.crit{color:#fca5a5}
 .fp{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.fp button{background:#2d3148;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px}
+.fp button{background:#dde3ee;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:13px}
 .fp button.active,.fp button:hover{background:#6366f1;color:#fff}
-.enrich-bar{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.enrich-bar{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .enrich-info{flex:1;font-size:13px;color:#94a3b8;min-width:200px}
 .enrich-btn{background:#6366f1;border:none;color:#fff;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
-.enrich-btn:hover{background:#4f46e5}.enrich-btn:disabled{background:#2d3148;color:#64748b;cursor:default}
-.pb{background:#0f1117;border-radius:4px;height:8px;overflow:hidden;flex:1;max-width:200px}
+.enrich-btn:hover{background:#4f46e5}.enrich-btn:disabled{background:#dde3ee;color:#64748b;cursor:default}
+.pb{background:#f8fafc;border-radius:4px;height:8px;overflow:hidden;flex:1;max-width:200px}
 .pf{height:100%;background:#6366f1;border-radius:4px;transition:width .5s}
 .ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
-.ac{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.ac{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
 .ac.crit{border-color:#ef4444}.ac.under{border-color:#f59e0b}.ac.ok{border-color:#22c55e}
 .ah{font-size:15px;font-weight:700;margin-bottom:12px}
 .ar{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;color:#94a3b8}
-.av{font-weight:600;color:#e2e8f0}
+.av{font-weight:600;color:#1e293b}
 .pool-toggle{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .view-toggle{display:flex;gap:5px;margin-bottom:12px}
-.vt-btn{background:#2d3148;border:none;color:#94a3b8;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:12px}
+.vt-btn{background:#dde3ee;border:none;color:#94a3b8;padding:5px 12px;border-radius:5px;cursor:pointer;font-size:12px}
 .vt-btn.active{background:#6366f1;color:#fff}
 .scope-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;background:#1e3a5f;color:#60a5fa;margin-left:6px}
-.pool-btn{background:#2d3148;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
+.pool-btn{background:#dde3ee;border:none;color:#94a3b8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:12px}
 .pool-btn.active,.pool-btn:hover{background:#6366f1;color:#fff}
-.prognos-inputs{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px;margin-bottom:24px}
+.prognos-inputs{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px;margin-bottom:24px}
 .prognos-inputs h3{font-size:14px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px}
 .input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
 .input-group{display:flex;flex-direction:column;gap:6px}
 .input-group label{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.05em}
-.input-group input,.input-group select{background:#0f1117;border:1px solid #2d3148;color:#e2e8f0;padding:8px 12px;border-radius:6px;font-size:14px;width:100%}
+.input-group input,.input-group select{background:#f8fafc;border:1px solid #dde3ee;color:#1e293b;padding:8px 12px;border-radius:6px;font-size:14px;width:100%}
 .input-group input:focus{outline:none;border-color:#6366f1}
 .run-btn{background:#6366f1;border:none;color:#fff;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;margin-top:16px}
 .run-btn:hover{background:#4f46e5}
 .forecast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.fc{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:16px}
+.fc{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:16px}
 .fc.surplus{border-color:#22c55e}.fc.deficit{border-color:#ef4444}.fc.marginal{border-color:#f59e0b}
 .fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.fm{font-size:16px;font-weight:700}
-.setup-section{background:#1a1d27;border:1px solid #2d3148;border-radius:12px;padding:20px;margin-bottom:20px}
+.setup-section{background:#ffffff;border:1px solid #dde3ee;border-radius:12px;padding:20px;margin-bottom:20px}
 .setup-section h3{font-size:15px;font-weight:700;margin-bottom:4px}
 .setup-section .desc{font-size:13px;color:#64748b;margin-bottom:16px}
-.code-block{background:#0f1117;border:1px solid #2d3148;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;color:#a5b4fc;white-space:pre-wrap;overflow-x:auto;line-height:1.6}
+.code-block{background:#f8fafc;border:1px solid #dde3ee;border-radius:8px;padding:16px;font-family:monospace;font-size:12px;color:#a5b4fc;white-space:pre-wrap;overflow-x:auto;line-height:1.6}
 .status-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
 .status-chip.done{background:#14532d;color:#4ade80}.status-chip.pending{background:#713f12;color:#fcd34d}.status-chip.info{background:#1e3a5f;color:#60a5fa}
 .setup-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
@@ -297,47 +297,47 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .ctx-body.open { display:block; }
 .ov-table-note { font-size:11px; color:#7a8799; margin-top:6px; display:flex; align-items:flex-start; gap:4px; line-height:1.5; }
 .tfoot-total td { background:#f4f6f9; font-weight:700; font-size:12px; border-top:2px solid #dce1e8; }
-.ag-filter-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#1a1d27;border:1px solid #2d3148;border-radius:6px;padding:10px 14px;margin-bottom:16px;}
+.ag-filter-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#ffffff;border:1px solid #dde3ee;border-radius:6px;padding:10px 14px;margin-bottom:16px;}
 .ag-filter-bar label{font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
-.ag-filter-bar select{font-size:12px;font-family:inherit;color:#e2e8f0;background:#0f1117;border:1px solid #2d3148;border-radius:5px;padding:4px 8px;cursor:pointer;}
-.ag-filter-bar .fdiv{width:1px;height:20px;background:#2d3148;margin:0 4px;}
-.ag-reset{font-size:12px;color:#60a5fa;padding:4px 8px;border:1px solid #2d3148;border-radius:5px;background:#12141e;margin-left:auto;cursor:pointer;}
+.ag-filter-bar select{font-size:12px;font-family:inherit;color:#1e293b;background:#f8fafc;border:1px solid #dde3ee;border-radius:5px;padding:4px 8px;cursor:pointer;}
+.ag-filter-bar .fdiv{width:1px;height:20px;background:#dde3ee;margin:0 4px;}
+.ag-reset{font-size:12px;color:#60a5fa;padding:4px 8px;border:1px solid #dde3ee;border-radius:5px;background:#f0f4f8;margin-left:auto;cursor:pointer;}
 .ag-kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;}
-.ag-kpi-card{background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:12px 14px;}
+.ag-kpi-card{background:#ffffff;border:1px solid #dde3ee;border-radius:10px;padding:12px 14px;}
 .ag-kpi-card--warn{border-color:#f59e0b;}
 .ag-kpi-label{font-size:10px;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
-.ag-kpi-value{font-size:20px;font-weight:700;color:#e2e8f0;line-height:1;}
+.ag-kpi-value{font-size:20px;font-weight:700;color:#1e293b;line-height:1;}
 .ag-kpi-sub{font-size:10px;color:#475569;margin-top:4px;}
-.ag-row.is-selected{background:#1e2235!important;}
-.ag-row:hover{background:#1e2235;cursor:pointer;}
+.ag-row.is-selected{background:#f0f4f8!important;}
+.ag-row:hover{background:#f0f4f8;cursor:pointer;}
 .ag-detail{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .ag-detail-stat__label{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
-.ag-detail-stat__value{font-size:17px;font-weight:700;color:#e2e8f0;}
+.ag-detail-stat__value{font-size:17px;font-weight:700;color:#1e293b;}
 .ag-detail-stat__sub{font-size:11px;color:#475569;}
-.ag-interp{grid-column:1/-1;background:#12141e;border:1px solid #2d3148;border-radius:5px;padding:10px 14px;font-size:12px;color:#94a3b8;line-height:1.6;}
-.ag-type-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #2d3148;}
+.ag-interp{grid-column:1/-1;background:#f0f4f8;border:1px solid #dde3ee;border-radius:5px;padding:10px 14px;font-size:12px;color:#94a3b8;line-height:1.6;}
+.ag-type-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #dde3ee;}
 .ag-type-row:last-child{border-bottom:none;}
-.ag-type-label{font-size:12px;color:#e2e8f0;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.ag-type-track{flex:1;height:9px;background:#12141e;border-radius:5px;overflow:hidden;}
+.ag-type-label{font-size:12px;color:#1e293b;width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ag-type-track{flex:1;height:9px;background:#f0f4f8;border-radius:5px;overflow:hidden;}
 .ag-type-fill{height:100%;background:#6366f1;border-radius:5px;}
 .ag-type-meta{font-size:11px;color:#64748b;width:155px;text-align:right;white-space:nowrap;}
 .ag-day-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;}
-.ag-day-card{background:#12141e;border:1px solid #2d3148;border-radius:5px;padding:9px;text-align:center;}
+.ag-day-card{background:#f0f4f8;border:1px solid #dde3ee;border-radius:5px;padding:9px;text-align:center;}
 .ag-day-card.peak{background:#431407;border-color:#f59e0b;}
 .ag-day-card.low{background:#052e16;border-color:#22c55e;}
 .ag-day-name{font-size:10px;color:#64748b;font-weight:600;margin-bottom:3px;}
-.ag-day-val{font-size:15px;font-weight:700;color:#e2e8f0;}
+.ag-day-val{font-size:15px;font-weight:700;color:#1e293b;}
 .ag-day-sub{font-size:10px;color:#475569;margin-top:2px;}
-.ag-chart-ph{background:#12141e;border:1px dashed #2d3148;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;min-height:150px;color:#475569;font-size:12px;}
+.ag-chart-ph{background:#f0f4f8;border:1px dashed #dde3ee;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;min-height:150px;color:#475569;font-size:12px;}
 .ag-charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .ag-kpi-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
-.ag-strip-item{flex:1;min-width:110px;background:#12141e;border:1px solid #2d3148;border-radius:5px;padding:7px 10px;}
+.ag-strip-item{flex:1;min-width:110px;background:#f0f4f8;border:1px solid #dde3ee;border-radius:5px;padding:7px 10px;}
 .ag-strip-label{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
-.ag-strip-val{font-size:14px;font-weight:700;color:#e2e8f0;}
-.ag-data-note{background:#12141e;border:1px solid #2d3148;border-left:4px solid #6366f1;border-radius:5px;padding:12px 14px;}
+.ag-strip-val{font-size:14px;font-weight:700;color:#1e293b;}
+.ag-data-note{background:#f0f4f8;border:1px solid #dde3ee;border-left:4px solid #6366f1;border-radius:5px;padding:12px 14px;}
 .ag-data-note__title{font-size:12px;font-weight:700;color:#818cf8;margin-bottom:4px;}
 .ag-data-note__body{font-size:12px;color:#64748b;line-height:1.7;}
-.ag-sparkbar{width:60px;height:8px;background:#1e2133;border-radius:4px;overflow:hidden;display:inline-block;vertical-align:middle;}
+.ag-sparkbar{width:60px;height:8px;background:#f1f5f9;border-radius:4px;overflow:hidden;display:inline-block;vertical-align:middle;}
 .ag-sparkbar__fill{height:100%;background:#6366f1;border-radius:4px;}
 .ag-sparkbar__fill--warn{background:#f59e0b;}
 .ag-sparkbar__fill--ok{background:#22c55e;}
@@ -346,18 +346,18 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 
 /* ===== NAMED AGENTS TABLE STYLES (dark) ===== */
 #named-agents table{ width:100%; border-collapse:collapse; font-size:13px; }
-#named-agents thead th{ text-align:left; font-weight:600; color:#64748b; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; border-bottom:1px solid #2d3148; }
+#named-agents thead th{ text-align:left; font-weight:600; color:#64748b; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding:0 10px 8px; border-bottom:1px solid #dde3ee; }
 #named-agents thead th.num{ text-align:right; }
-#named-agents tbody td{ padding:9px 10px; border-bottom:1px solid #1e2133; vertical-align:middle; }
+#named-agents tbody td{ padding:9px 10px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
 #named-agents tbody tr:last-child td{ border-bottom:none; }
-#named-agents tbody tr:hover{ background:#1e2235; }
+#named-agents tbody tr:hover{ background:#f0f4f8; }
 #named-agents td.num{ text-align:right; font-variant-numeric:tabular-nums; }
-#named-agents .na-name{ font-weight:600; color:#e2e8f0; }
+#named-agents .na-name{ font-weight:600; color:#1e293b; }
 #named-agents .na-pools{ color:#475569; font-size:11.5px; }
 #named-agents .na-bar-wrap{ display:flex; align-items:center; gap:8px; justify-content:flex-end; }
 #named-agents .na-bar{ height:6px; border-radius:3px; background:#2563eb; }
 #named-agents .na-bar-track{ width:90px; height:6px; border-radius:3px; background:#1e3a5f; overflow:hidden; }
-#named-agents tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid #2d3148; color:#94a3b8; }
+#named-agents tfoot td{ padding:10px; font-weight:600; font-variant-numeric:tabular-nums; border-top:2px solid #dde3ee; color:#94a3b8; }
 
 <style>-blocket (eller slå ihop med din CSS).
   3. Klistra in <script>-blocket. Återanvänd din globala CC_API_BASE om du har en.
@@ -431,6 +431,22 @@ td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
   #agent-eff .ae-error{ color:var(--neg); }
   #agent-eff .ae-legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:11px; color:var(--muted); }
   #agent-eff .ae-legend i{ display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px; }
+
+/* ===== GROUPED NAV ===== */
+nav#main-nav{background:#ffffff;border-bottom:2px solid #dde3ee;padding:0 24px;display:flex;align-items:stretch;}
+.nav-group{display:flex;align-items:stretch;gap:2px;flex-wrap:wrap;}
+.nav-tab{background:none;border:none;color:#64748b;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;position:relative;top:2px;}
+.nav-tab:hover{color:#1e293b;background:#f1f5f9;}
+.nav-tab.active{color:#4f46e5;border-bottom-color:#4f46e5;font-weight:600;}
+.nav-dropdown-group{position:relative;display:flex;align-items:stretch;}
+.nav-dropdown-trigger{background:none;border:none;color:#64748b;padding:12px 16px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;position:relative;top:2px;display:flex;align-items:center;gap:4px;}
+.nav-dropdown-trigger:hover,.nav-dropdown-trigger.open{color:#1e293b;background:#f1f5f9;}
+.nav-dropdown-trigger.has-active{color:#4f46e5;border-bottom-color:#4f46e5;font-weight:600;}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 2px);left:0;background:#ffffff;border:1px solid #dde3ee;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.10);min-width:180px;z-index:200;padding:6px;}
+.nav-dropdown.open{display:block;}
+.nav-dropdown button{display:block;width:100%;text-align:left;background:none;border:none;color:#374151;padding:9px 14px;font-size:13px;cursor:pointer;border-radius:5px;white-space:nowrap;transition:background .1s;}
+.nav-dropdown button:hover{background:#f1f5f9;color:#1e293b;}
+.nav-dropdown button.active{color:#4f46e5;background:#ede9fe;font-weight:600;}
 </style>
 </style></head><body>
 <header>
@@ -440,29 +456,44 @@ CC Workforce Planning
 </div>
 <div class="ts" id="upd">Uppdaterat --:--</div>
 </header>
-<nav>
-<button class="active" onclick="showTab('wp',this)">â¬¡ Workforce Planning</button>
-<div class="nav-sep"></div>
-<button onclick="showTab('overview',this)">Daglig Ã¶versikt</button>
-<button onclick="showTab('products',this)">Per produkt</button>
-<button onclick="showTab('recent',this)">Senaste tickets</button>
-<button onclick="showTab('trend',this)">Trend</button>
-<button onclick="showTab('workforce',this)">Workforce Gap</button>
-<button onclick="showTab('aht',this)">AHT FTE</button>
-<button onclick="showTab('classify',this)">ð Klassificering</button>
-<button onclick="showTab('prognos',this)">Prognos</button>
-<button onclick="showTab('setup',this)">Setup</button>
-
-<button onclick="showTab('agent',this)" style="background:none;border:none;cursor:pointer;padding:12px 14px;font-size:13px;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;font-family:inherit;color:#64748b;">Agent</button>
+<nav id="main-nav">
+<div class="nav-group">
+  <button class="nav-tab active" onclick="showTab('wp',this)" data-tab="wp">Workforce Planning</button>
+  <div class="nav-dropdown-group">
+    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Planering &#9662;</button>
+    <div class="nav-dropdown">
+      <button onclick="showTab('workforce',this)" data-tab="workforce">Workforce Gap</button>
+      <button onclick="showTab('aht',this)" data-tab="aht">AHT &amp; FTE</button>
+      <button onclick="showTab('prognos',this)" data-tab="prognos">Prognos</button>
+    </div>
+  </div>
+  <div class="nav-dropdown-group">
+    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Analys &#9662;</button>
+    <div class="nav-dropdown">
+      <button onclick="showTab('overview',this)" data-tab="overview">Daglig översikt</button>
+      <button onclick="showTab('products',this)" data-tab="products">Per produkt</button>
+      <button onclick="showTab('trend',this)" data-tab="trend">Trend</button>
+      <button onclick="showTab('recent',this)" data-tab="recent">Senaste tickets</button>
+    </div>
+  </div>
+  <button class="nav-tab" onclick="showTab('agent',this)" data-tab="agent">Agent</button>
+  <div class="nav-dropdown-group">
+    <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Verktyg &#9662;</button>
+    <div class="nav-dropdown">
+      <button onclick="showTab('classify',this)" data-tab="classify">Klassificering</button>
+      <button onclick="showTab('setup',this)" data-tab="setup">Setup</button>
+    </div>
+  </div>
+</div>
 </nav>
 <main>
 
 <div id="tab-wp" class="tc active">
 <!-- CFO DECISION LAYER -->
-<div style="background:#12141e;border:2px solid #4338ca;border-radius:14px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden">
+<div style="background:#f0f4f8;border:2px solid #4338ca;border-radius:14px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden">
 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366f1,#818cf8,#60a5fa)"></div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-<div><div style="font-size:13px;font-weight:800;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Officiell planeringsmodell Â· Ãndras aldrig av API-data</div></div>
+<div><div style="font-size:13px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Beslutslager</div><div style="font-size:11px;color:#475569;margin-top:2px">KÃ¤lla: CC_FTE_Calculator.xlsx Â· Officiell planeringsmodell Â· Ãndras aldrig av API-data</div></div>
 <span class="layer-badge planning">Officiell beslutskÃ¤lla</span>
 </div>
 <div class="tw" style="margin-bottom:12px">
@@ -473,10 +504,10 @@ CC Workforce Planning
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">4.34</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+1.89</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Kapacitet fÃ¶r migrationstillvÃ¤xt.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">2.35</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.70</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil. Bevaka volym.</td></tr>
 <tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.49</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.54</td><td><span class="tag ok">Ãverskott</span></td><td style="font-size:11px;color:#94a3b8">Stabil.</td></tr>
-<tr style="background:#12141e;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">â  Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt â men Classicâunderskott â1.20 FTE Ã¤r kritiskt.</td></tr>
+<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Totalt</strong></td><td class="n">11.05</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">â  Classic dold</span></td><td style="font-size:11px;color:#fca5a5">Totalt positivt â men Classicâunderskott â1.20 FTE Ã¤r kritiskt.</td></tr>
 </tbody></table>
 </div>
-<div style="font-size:11px;color:#475569;padding:8px 12px;background:#0f1117;border-radius:6px">â  <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er frÃ¥n Excel-modellen. Analytics-estimat (lila, nedan) kan avvika â de Ã¤r driftanalys, ej beslutskÃ¤lla. Se <em>Klassificering</em>-fliken fÃ¶r supply-avvikelser och routing-diagnostik.</div>
+<div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">â  <strong style="color:#fcd34d">Analytics vs Planering:</strong> Officiella KPI:er frÃ¥n Excel-modellen. Analytics-estimat (lila, nedan) kan avvika â de Ã¤r driftanalys, ej beslutskÃ¤lla. Se <em>Klassificering</em>-fliken fÃ¶r supply-avvikelser och routing-diagnostik.</div>
 </div>
 <!-- /CFO DECISION LAYER -->
 <div id="tab-wp" class="tc active">
@@ -526,17 +557,17 @@ CC Workforce Planning
 <span class="layer-badge planning" style="font-size:9px">Planering = officiell kÃ¤lla</span>
 </div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
-<div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
+<div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
 <div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Enrichment</div>
 <div id="conf-enrichment" style="font-size:18px;font-weight:800;color:#4ade80">â</div>
 <div style="font-size:10px;color:#475569;margin-top:2px">cc_ticket_meta / tickets</div>
 </div>
-<div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
+<div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
 <div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Classification</div>
 <div id="conf-classification" style="font-size:18px;font-weight:800;color:#4ade80">â</div>
 <div style="font-size:10px;color:#475569;margin-top:2px">Tickets m. pool_slug / total</div>
 </div>
-<div style="background:#12141e;border-radius:6px;padding:10px;border:1px solid #2d3148">
+<div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
 <div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Workforce calculability</div>
 <div id="conf-calculability" style="font-size:18px;font-weight:800;color:#fcd34d">â</div>
 <div style="font-size:10px;color:#475569;margin-top:2px">MÃ¥nader med demand-data / 12</div>
@@ -709,13 +740,13 @@ CC Workforce Planning
 <div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Andel betald tid ej tillgÃ¤nglig fÃ¶r ticketarbete. Ãkar Required FTE.</div></div>
 <div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Andel tillgÃ¤nglig tid agenter spenderar pÃ¥ tickets. LÃ¤gre â hÃ¶gre Required FTE.</div></div>
 </div>
-<div style="margin-top:24px;padding:16px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
+<div style="margin-top:24px;padding:16px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
 <strong style="color:#64748b">Modellnoter:</strong> Planeringslagrets vÃ¤rden hÃ¤mtas frÃ¥n CC_FTE_Calculator.xlsx. Avvikelse indikerar att Excel-modellen Ã¤r korrekt. Analyslagrets trenddata berÃ¤knas frÃ¥n dagliga ticketdata via API â operativa estimat, inte officiella planerings-KPI:er.
 </div>
 </div><!-- /tab-wp -->
 <!-- CLASSIFICATION MODEL TAB -->
 <div id="tab-classify" class="tc">
-<div style="background:#1a1d27;border:1px solid #4338ca;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+<div style="background:#ffffff;border:1px solid #4338ca;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
 <span style="font-size:16px">ð</span>
 <div style="font-size:12px;color:#94a3b8"><strong style="color:#818cf8">Diagnostikvy â ej styrningssida.</strong> Klassificeringsmodell, routing-logik, supply-kÃ¤llor och datakvalitet. FÃ¶r officiella workforce-beslut, se Workforce Planning â CFO Beslutslager.</div>
 </div>
@@ -1156,10 +1187,10 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <!-- ============================================================ -->
 <div id="tab-agent" class="tc">
 <div style="margin-bottom:16px;">
-<h2 style="font-size:20px;font-weight:700;color:#e2e8f0;margin:0;">Agent</h2>
+<h2 style="font-size:20px;font-weight:700;color:#1e293b;margin:0;">Agent</h2>
 <div style="font-size:13px;color:#94a3b8;margin-top:2px;">Operativ analys av hanterade tickets, tidssatgang och franvaro per team/pool</div>
 <div style="font-size:11px;color:#64748b;margin-top:4px;" id="ag-updated-ts">Uppdaterat --:--</div>
-<div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#1e2133;border:1px solid #2d3148;border-radius:20px;font-size:11px;color:#64748b;">i Ej officiellt prestationsmattt</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#f1f5f9;border:1px solid #2d3148;border-radius:20px;font-size:11px;color:#64748b;">i Ej officiellt prestationsmattt</div>
 </div>
 <div class="ag-filter-bar">
 <label>Period</label>
@@ -1186,20 +1217,20 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 <div id="ag-absence-banner" style="display:none;margin-bottom:16px;"></div>
 <div style="margin-bottom:20px;">
-<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2e8f0;margin-bottom:10px;">Teamoversikt -- tickets och kapacitet per pool</div>
+<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:10px;">Teamoversikt -- tickets och kapacitet per pool</div>
 <div style="overflow-x:auto;border-radius:10px;border:1px solid #2d3148;">
 <table style="width:100%;border-collapse:collapse;font-size:13px;">
 <thead><tr>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tickets</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE-krav</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE-tillgang</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Gap</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">AHT</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Arb.dagar</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Franvaro-dagar</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Just. FTE</th>
-<th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tackning</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tickets</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE-krav</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE-tillgang</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Gap</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">AHT</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Arb.dagar</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Franvaro-dagar</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Just. FTE</th>
+<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tackning</th>
 </tr></thead>
 <tbody id="ag-team-table-body">
 <tr><td colspan="10" style="text-align:center;padding:24px;color:#64748b;">Laddar data...</td></tr>
@@ -1208,33 +1239,33 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 </div>
 <div style="margin-bottom:20px;">
-<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2e8f0;margin-bottom:10px;">Daglig aktivitet per pool -- franvarodetektering</div>
-<div id="ag-absence-detail" style="color:#64748b;font-size:12px;padding:16px;background:#12141e;border-radius:8px;">Laddar daglig data...</div>
+<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:10px;">Daglig aktivitet per pool -- franvarodetektering</div>
+<div id="ag-absence-detail" style="color:#64748b;font-size:12px;padding:16px;background:#f0f4f8;border-radius:8px;">Laddar daglig data...</div>
 </div>
 
 <!-- INDIVIDUAL AGENT LEVEL SECTION (v30-daily) -->
 <div id="ag-individual-section" style="margin-top:28px;margin-bottom:20px;">
-  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2e8f0;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
     Daglig produktion per agent
-    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#1e2133;color:#1f6f8b;border:1px solid #2d3148;">Estimat baserat pa pooldata</span>
+    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#1f6f8b;border:1px solid #2d3148;">Estimat baserat pa pooldata</span>
   </div>
   <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Daglig genomsnittsproduktion per agent baserat pa faktiska tickets och AHT i vald manad. Visar hur mycket tid av en agents dag som gar till tickets vs. ledig kapacitet.</div>
   <div style="display:flex;gap:6px;margin-bottom:14px;">
     <button class="ag-ind-period-btn" data-period="day" onclick="setAgentIndividualPeriod('day',this)" style="background:#1f6f8b;color:#fff;border:none;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Dag</button>
-    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualPeriod('week',this)" style="background:#1e2133;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Vecka</button>
-    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualPeriod('month',this)" style="background:#1e2133;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Manad</button>
+    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualPeriod('week',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Vecka</button>
+    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualPeriod('month',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Manad</button>
   </div>
   <div style="overflow-x:auto;border-radius:10px;border:1px solid #2d3148;">
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead>
         <tr>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;">Agenter</th>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Genomsnittliga tickets per agent under vald period">Tickets/agent</th>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Average Handle Time i minuter">AHT (min)</th>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Tid per agent per dag som gar till tickets = (tickets/agent/dag) x AHT">Handl.min/dag</th>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Andel av 7h arbdag som gar till tickethantering (420 min = 100%)">Belaggning</th>
-          <th style="background:#12141e;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Ledig tid per agent per dag = 420 min minus handlaggning">Gap min/dag</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;">Agenter</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Genomsnittliga tickets per agent under vald period">Tickets/agent</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Average Handle Time i minuter">AHT (min)</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Tid per agent per dag som gar till tickets = (tickets/agent/dag) x AHT">Handl.min/dag</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Andel av 7h arbdag som gar till tickethantering (420 min = 100%)">Belaggning</th>
+          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Ledig tid per agent per dag = 420 min minus handlaggning">Gap min/dag</th>
         </tr>
       </thead>
       <tbody id="ag-individual-tbody">
@@ -1249,9 +1280,9 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 
 <!-- PRODUCT BREAKDOWN PER POOL SECTION (v30) -->
 <div id="ag-product-section" style="margin-top:24px;margin-bottom:20px;">
-  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#e2e8f0;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
     Produktmix per pool
-    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#1e2133;color:#9333ea;border:1px solid #2d3148;">30 dagars data</span>
+    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#9333ea;border:1px solid #2d3148;">30 dagars data</span>
   </div>
   <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Tickets per produkt/omrade kopplat till respektive pool. Inte alla agenter kan alla produkter - fordelningen nedan visar varje pools faktiska produktmix och uppskattad daglig last per agent.</div>
   <div id="ag-product-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;">
@@ -1265,48 +1296,48 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 
 <!-- ===== NAMED AGENTS DROP-IN ===== -->
-<div id="named-agents" style="margin-bottom:24px;background:#1a1d27;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e2e8f0;">
-<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#e2e8f0;">Namngivna agenter</h3>
+<div id="named-agents" style="margin-bottom:24px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;">
+<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">Namngivna agenter</h3>
 <p style="color:#64748b;font-size:12.5px;margin:0 0 16px;">Hanterade tickets per agent fr&#xe5;n Freshdesk (tilldelad responder). Termination r&#xe4;knas logiskt till switchboard. Ej officiellt prestationsm&#xe5;tt &#x2014; driftanalys.</p>
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
-<label style="color:#94a3b8;font-size:12px;">Period<select id="na-month" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#12141e;color:#e2e8f0;cursor:pointer;"></select></label>
-<label style="color:#94a3b8;font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#12141e;color:#e2e8f0;cursor:pointer;"><option value="">Alla pooler</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
+<label style="color:#94a3b8;font-size:12px;">Period<select id="na-month" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"></select></label>
+<label style="color:#94a3b8;font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"><option value="">Alla pooler</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
 <span style="margin-left:auto;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums;" id="na-meta">&#x2014;</span>
 </div>
 <div id="na-body"><div style="color:#64748b;font-size:13px;padding:18px 4px;">Laddar&#x2026;</div></div>
-<p style="color:#475569;font-size:11.5px;margin-top:12px;line-height:1.4;">K&#xe4;lla: cc-dashboard-api <code style="background:#0f1117;padding:1px 4px;border-radius:3px;color:#818cf8;">/agent-breakdown</code>.</p>
+<p style="color:#475569;font-size:11.5px;margin-top:12px;line-height:1.4;">K&#xe4;lla: cc-dashboard-api <code style="background:#f8fafc;padding:1px 4px;border-radius:3px;color:#818cf8;">/agent-breakdown</code>.</p>
 </div>
 <!-- ===== END NAMED AGENTS DROP-IN ===== -->
 
 <!-- DEVELOPMENT SUGGESTIONS -->
-<div style="margin-top:20px;background:#12141e;border:1px solid #4338ca;border-radius:12px;padding:20px;position:relative;overflow:hidden;">
+<div style="margin-top:20px;background:#f0f4f8;border:1px solid #4338ca;border-radius:12px;padding:20px;position:relative;overflow:hidden;">
   <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:12px 12px 0 0;"></div>
   <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
     <span style="font-size:14px;">&#x1F4A1;</span> Utvecklingsforslag
     <span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:#1e1b4b;color:#818cf8;border:1px solid #4338ca;">Roadmap</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #22c55e;border-radius:8px;padding:14px;">
+    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #22c55e;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#4ade80;margin-bottom:5px;">Namngivna agenter</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Koppla agent_id/namn fran Freshdesk-API:et sa varje rad visar en verklig person. Kraver agent-falt i cc_ticket_meta och nytt endpoint /agent-breakdown.</div>
     </div>
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #6366f1;border-radius:8px;padding:14px;">
+    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #6366f1;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#818cf8;margin-bottom:5px;">Trendlinje per agent</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Visa 4-8 veckors sparklinje for tickets/dag per agent. Identifiera prestandadipp och sasongsmonster utan att bladda i ra data.</div>
     </div>
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #f59e0b;border-radius:8px;padding:14px;">
+    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #f59e0b;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#fcd34d;margin-bottom:5px;">Verklig AHT fran Freshcaller</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Ersatt estimerad AHT med faktisk samtalstid per agent via Freshcaller API (P7). Ger exakt belaggning och avvikelsedetektion per individ.</div>
     </div>
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #60a5fa;border-radius:8px;padding:14px;">
+    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #60a5fa;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#60a5fa;margin-bottom:5px;">Franvarokalender</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Visuell manadsvy per pool med markerade franvarodagar. Klicka datum for att se vilken pool som saknades och paverkan pa FTE-kalkylen.</div>
     </div>
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #f97316;border-radius:8px;padding:14px;">
+    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #f97316;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:5px;">KapacitetsmÃ¥l per agent</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Satt ett tickets/dag-mal per pool (konfigurerbart i Setup). Visa %-avvikelse mot mal per period med trafikljusstatus.</div>
     </div>
-    <div style="background:#1a1d27;border:1px solid #2d3148;border-left:3px solid #e879f9;border-radius:8px;padding:14px;">
+    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #e879f9;border-radius:8px;padding:14px;">
       <div style="font-size:12px;font-weight:700;color:#e879f9;margin-bottom:5px;">CSV-export</div>
       <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Exportknapp som genererar CSV med pool, period, tickets, AHT och belaggning. Mojliggor extern analys och WFM-import.</div>
     </div>
@@ -1345,4 +1376,43 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <!-- ===== SCRIPT ===== -->
 
 </main><script type="module" src="js/main.js?v=3"></script>
-</body></html>
+<script>
+function toggleNavGroup(btn){
+  var parent=btn.closest('.nav-dropdown-group');
+  var dropdown=parent.querySelector('.nav-dropdown');
+  var isOpen=dropdown.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(t=>t.classList.remove('open'));
+  // Toggle clicked
+  if(!isOpen){dropdown.classList.add('open');btn.classList.add('open');}
+}
+// Close dropdowns when clicking outside
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.nav-dropdown-group')){
+    document.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));
+    document.querySelectorAll('.nav-dropdown-trigger').forEach(t=>t.classList.remove('open'));
+  }
+});
+// Patch showTab to handle dropdown active states
+var _origShowTab = window.showTab;
+window.showTab = function(id, btn){
+  if(_origShowTab) _origShowTab(id, btn);
+  // Update nav-tab active
+  document.querySelectorAll('.nav-tab').forEach(b=>{
+    b.classList.toggle('active', b.dataset && b.dataset.tab===id);
+  });
+  // Update dropdown buttons active + trigger has-active
+  document.querySelectorAll('.nav-dropdown button').forEach(b=>{
+    b.classList.toggle('active', b.dataset && b.dataset.tab===id);
+  });
+  document.querySelectorAll('.nav-dropdown-group').forEach(g=>{
+    var hasActive = g.querySelector('.nav-dropdown button.active');
+    g.querySelector('.nav-dropdown-trigger').classList.toggle('has-active', !!hasActive);
+  });
+  // Close dropdowns after selection
+  document.querySelectorAll('.nav-dropdown').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.nav-dropdown-trigger').forEach(t=>t.classList.remove('open'));
+};
+</script>
+</body>
