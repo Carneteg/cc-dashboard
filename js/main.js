@@ -1,5 +1,7 @@
 // js/main.js  --  Tab router, global init, event wiring
-import { initWP, showTab as _showTab, loadOverview } from './tab-wp.js';
+import { initWP, showTab as _showTabWP, loadOverview } from './tab-wp.js';
+import { loadAgentTab, aeInit }                         from './tab-agent.js';
+import { naInit }                                       from './tab-agent-eff.js';
 
 const _initialised = new Set();
 
@@ -12,13 +14,13 @@ export function showTab(tabId, btn) {
 
   if (!_initialised.has(tabId)) {
     _initialised.add(tabId);
-    if (tabId === 'wp')       initWP();
-    if (tabId === 'overview') typeof loadOverview === 'function' && loadOverview();
-    if (tabId === 'agent')    typeof loadAgentTab === 'function' && loadAgentTab();
+    if (tabId === 'wp')      initWP();
+    if (tabId === 'overview') loadOverview();
+    if (tabId === 'agent')   loadAgentTab();
   }
 }
 
-// Re-export showTab to window so HTML onclick handlers work
+// Re-export to window so HTML onclick handlers work
 window.showTab = showTab;
 
 // Global error boundary
@@ -29,11 +31,16 @@ window.onerror = (msg, src, line, col, err) => {
   console.error('[cc-dashboard] Global error:', msg, src + ':' + line + ':' + col, err);
 };
 
-// Bootstrap
+// Bootstrap on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
   const upd = document.getElementById('upd');
   if (upd) upd.textContent = 'Uppdaterat ' + new Date().toLocaleTimeString('sv-SE', {hour:'2-digit', minute:'2-digit'});
 
+  // Init agent efficiency panel (always-on)
+  aeInit();
+  naInit();
+
+  // Show default tab (first active nav button, or 'wp')
   const activeBtn = document.querySelector('nav button.active');
   if (activeBtn) {
     const id = activeBtn.getAttribute('onclick')?.match(/showTab\('(\w+)'/)?.[1];
