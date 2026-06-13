@@ -5,10 +5,10 @@
 // naInit is exported from tab-agent-eff.js - called on DOMContentLoaded
 // v15 - all modules updated with correct FTE from masterdata
 
-import './tab-wp.js?v=15';
-import './tab-agent.js?v=15';
-import { naInit } from './tab-agent-eff.js?v=15';
-import './tab-exec.js?v=15';
+import './tab-wp.js?v=16';
+import './tab-agent.js?v=16';
+import { naInit } from './tab-agent-eff.js?v=16';
+import './tab-exec.js?v=16';
 
 // Global error boundary
 window.addEventListener('unhandledrejection', ev => {
