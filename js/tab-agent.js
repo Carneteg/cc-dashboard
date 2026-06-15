@@ -430,7 +430,7 @@ var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCas
 return APPROVED.some(function(r){return norm(r)===norm(a.agent_name);});
 });
       const target=data.params?.occupancy_target ?? 0.75;
-      meta.textContent=`${data.agent_count} agents · ${aeFmt(data.total_handled)} tickets · ${aeFmt((data.total_modeled_minutes||0)/60,0)} modeled hrs`;
+      meta.textContent=`${agents.length} agents · ${aeFmt(agents.reduce((s,a)=>s+(a.handled_tickets||0),0))} tickets · ${aeFmt(agents.reduce((s,a)=>s+((a.modeled_minutes||0)/60),0),0)} modeled hrs`;
 
       if(!agents.length){ body.innerHTML='<div class="ae-empty">No agent data for this period.</div>'; return; }
 
@@ -443,7 +443,7 @@ return APPROVED.some(function(r){return norm(r)===norm(a.agent_name);});
         <td>${aeMix(a.pool_mix)}</td>
       </tr>`).join("");
 
-      const totHandled=data.total_handled||0, totHrs=(data.total_modeled_minutes||0)/60;
+      const totHandled=agents.reduce((s,a)=>s+(a.handled_tickets||0),0), totHrs=agents.reduce((s,a)=>s+((a.modeled_minutes||0)/60),0);
       body.innerHTML=`<table>
         <thead><tr>
           <th>Agent</th>
