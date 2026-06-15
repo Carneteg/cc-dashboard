@@ -175,7 +175,7 @@ async function renderCsatSection() {
 
     // Current month totals for KPI bar
     var curGroup = groupRows.filter(r => !selectedMonth || r.year_month === selectedMonth);
-    var latestGroup = groupRows[groupRows.length - 1] || {};
+    var latestGroup = selectedMonth ? (groupRows.find(function(r){return r.year_month===selectedMonth;}) || groupRows[groupRows.length-1] || {}) : (groupRows[groupRows.length-1] || {});
 
     // ── KPI bar ──
     var kpiHtml = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">';
@@ -188,7 +188,7 @@ async function renderCsatSection() {
     kpiHtml += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
       + '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">CSAT Score (CC)</div>'
       + '<div style="font-size:28px;font-weight:800;color:' + sColor + ';line-height:1">' + (score ? score.toFixed(2) : '—') + '</div>'
-      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">avg 1–5 · latest month ' + csatTrend(groupRows) + '</div>'
+      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">avg 1–5 · ' + (selectedMonth||'latest') + ' ' + csatTrend(groupRows) + '</div>'
       + '</div>';
     kpiHtml += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
       + '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Satisfied (≥4/5)</div>'
