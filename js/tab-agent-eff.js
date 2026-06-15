@@ -90,7 +90,7 @@ renderNamedAgents(monthSel.value, poolSel.value);
 // Reads from cc_csat_history via Supabase REST (anon, public)
 // ============================================================
 var _CSAT_API = "https://psyelfxaehmtnfdaobyi.supabase.co/rest/v1/cc_csat_history";
-var _CSAT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ";
+var _CSAT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTM2NzksImV4cCI6MjA5NjU4OTY3OX0.Nenlc-8pab7hfLtkRDovXy5dVU-oDSNE01STdV-WbJ8";
 var _csatCache = {};
 
 async function csatFetch(params) {
