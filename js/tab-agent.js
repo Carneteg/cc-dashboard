@@ -486,3 +486,5 @@ window.renderAgentTable = renderAgentTable;
 window.setAgentIndividualPeriod = setAgentIndividualPeriod;
 
 export { loadAgentTab };
+
+// Agent filter active: 13 approved agents
