@@ -205,6 +205,154 @@ nav .nav-sep{display:none;}
 .ag-ind-period-btn{border-radius:7px;padding:5px 14px;cursor:pointer;font-size:12px;font-weight:600;transition:all .1s;}
 .decision-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 </style></head><body>
+<!-- ======== LOGIN OVERLAY ======== -->
+<div id="cc-login-overlay" style="
+  display:flex;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:linear-gradient(135deg,#f5f5f7 0%,#e8e8ed 100%);
+  align-items:center;
+  justify-content:center;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;
+">
+  <div style="
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 8px 40px rgba(0,0,0,.13),0 2px 8px rgba(0,0,0,.07);
+    padding:48px 44px 40px;
+    width:100%;
+    max-width:380px;
+    text-align:center;
+  ">
+    <!-- Logo / brand -->
+    <div style="margin-bottom:28px;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:#0071e3;border-radius:14px;margin-bottom:16px;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <h1 style="margin:0 0 4px;font-size:22px;font-weight:700;color:#1d1d1f;letter-spacing:-.3px;">CC Workforce</h1>
+      <p style="margin:0;font-size:14px;color:#86868b;">Sign in to continue</p>
+    </div>
+
+    <!-- Form -->
+    <form id="cc-login-form" autocomplete="on" onsubmit="return false;">
+      <div style="margin-bottom:14px;text-align:left;">
+        <label style="display:block;font-size:12px;font-weight:600;color:#6e6e73;margin-bottom:6px;letter-spacing:.02em;text-transform:uppercase;">Username</label>
+        <input
+          id="cc-login-user"
+          type="text"
+          autocomplete="username"
+          placeholder="Username"
+          style="
+            width:100%;box-sizing:border-box;
+            padding:11px 14px;
+            border:1.5px solid #d2d2d7;
+            border-radius:10px;
+            font-size:15px;
+            color:#1d1d1f;
+            background:#fafafa;
+            outline:none;
+            transition:border-color .15s;
+          "
+          onfocus="this.style.borderColor='#0071e3';this.style.background='#fff'"
+          onblur="this.style.borderColor='#d2d2d7';this.style.background='#fafafa'"
+        />
+      </div>
+
+      <div style="margin-bottom:22px;text-align:left;">
+        <label style="display:block;font-size:12px;font-weight:600;color:#6e6e73;margin-bottom:6px;letter-spacing:.02em;text-transform:uppercase;">Password</label>
+        <input
+          id="cc-login-pass"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+          style="
+            width:100%;box-sizing:border-box;
+            padding:11px 14px;
+            border:1.5px solid #d2d2d7;
+            border-radius:10px;
+            font-size:15px;
+            color:#1d1d1f;
+            background:#fafafa;
+            outline:none;
+            transition:border-color .15s;
+          "
+          onfocus="this.style.borderColor='#0071e3';this.style.background='#fff'"
+          onblur="this.style.borderColor='#d2d2d7';this.style.background='#fafafa'"
+        />
+      </div>
+
+      <div id="cc-login-err" style="
+        display:none;
+        background:#fff1f2;
+        border:1px solid #fecaca;
+        border-radius:8px;
+        padding:10px 14px;
+        font-size:13px;
+        color:#dc2626;
+        margin-bottom:16px;
+        text-align:left;
+      ">Incorrect username or password.</div>
+
+      <button
+        type="submit"
+        onclick="ccLogin()"
+        style="
+          width:100%;
+          padding:13px;
+          background:#0071e3;
+          color:#fff;
+          border:none;
+          border-radius:10px;
+          font-size:16px;
+          font-weight:600;
+          cursor:pointer;
+          letter-spacing:-.1px;
+          transition:background .15s;
+        "
+        onmouseover="this.style.background='#0077ed'"
+        onmouseout="this.style.background='#0071e3'"
+      >Sign In</button>
+    </form>
+
+    <p style="margin:20px 0 0;font-size:12px;color:#aeaeb2;">CC Workforce Planning · Internal use only</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var SESSION_KEY = 'cc_auth_v1';
+  // Check if already authenticated (session-level)
+  if(sessionStorage.getItem(SESSION_KEY)==='ok'){
+    document.getElementById('cc-login-overlay').style.display='none';
+  }
+  // Also allow Enter key on password field
+  var passEl = document.getElementById('cc-login-pass');
+  if(passEl) passEl.addEventListener('keydown', function(e){ if(e.key==='Enter') ccLogin(); });
+  var userEl = document.getElementById('cc-login-user');
+  if(userEl) userEl.addEventListener('keydown', function(e){ if(e.key==='Enter') ccLogin(); });
+})();
+
+function ccLogin(){
+  var u = (document.getElementById('cc-login-user').value||'').trim();
+  var p = (document.getElementById('cc-login-pass').value||'').trim();
+  var err = document.getElementById('cc-login-err');
+  if(u==='Simployer' && p==='FinaAI1234!'){
+    sessionStorage.setItem('cc_auth_v1','ok');
+    document.getElementById('cc-login-overlay').style.display='none';
+    err.style.display='none';
+  } else {
+    err.style.display='block';
+    document.getElementById('cc-login-pass').value='';
+    document.getElementById('cc-login-pass').focus();
+  }
+}
+</script>
+<!-- ======== /LOGIN OVERLAY ======== -->
+
 <header>
 <div class="logo">
 <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="var(--accent)"/><path d="M7 20l5-8 4 6 3-4 4 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
