@@ -10,7 +10,7 @@ var now = new Date(); var opts = [];
 for(var i=0;i<6;i++){
 var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
 var ym = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
-var label = d.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+var label = d.toLocaleDateString("sv-SE",{month:"long",year:"numeric"});
 opts.push('<option value="'+ym+'">'+label+'</option>');
 }
 sel.innerHTML = opts.join("");
@@ -100,11 +100,11 @@ var totalFcr = agents.reduce(function(s,a){ var f=fcrMap[norm(a.agent_name)]; re
 var totalTicketsMeta = agents.reduce(function(s,a){ var f=fcrMap[norm(a.agent_name)]; return s+(f?Number(f.tickets):0); },0);
 var teamFcrPct = totalTicketsMeta>0 ? Math.round(100*totalFcr/totalTicketsMeta*10)/10 : null;
 body.innerHTML = "<table>"
-+"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th><th class='num'>Total Time</th><th class='num' title='Tickets resolved in single touch (reply_count = 1)'>FCR %</th><th class='num' title='Average replies per ticket — lower is better'>Avg Replies</th></tr></thead>"
++"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th><th class='num'>Total Time</th><th class='num' title='Singelkontaktlösning: ärenden avslutade med exakt ett svar (reply_count=1). Lägre = fler interaktioner krävs.'>Singelkontakt %</th><th class='num' title='Genomsnittligt antal svar per ärende – lägre är bättre'>Svar/ärende</th></tr></thead>"
 +"<tbody>"+rows+"</tbody>"
 +"<tfoot><tr><td>Total ("+agents.length+" agents)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td><td class='num'>"+fmtTime(totalTimeMins)+"</td><td class='num' style='"+(teamFcrPct!==null?fcrColor(teamFcrPct):'')+"'>"+(teamFcrPct!==null?teamFcrPct+'%':'–')+"</td><td class='num'></td></tr></tfoot>"
 +"</table>"
-+"<p style='font-size:11px;color:#94a3b8;margin:6px 0 0'>* AHT = pool-weighted estimate (Freshdesk time tracking not enabled). FCR = single-touch resolution rate.</p>";
++"<p style='font-size:11px;color:#94a3b8;margin:6px 0 0'>* AHT = viktat poolestim. (Freshdesk tidregistrering ej aktiverad). Singelkontakt = ärenden avslutade med ett svar.</p>";
 }catch(e){
 if(body) body.innerHTML = '<div class="na-error">Could not load agent data: ' + naEsc(e.message) + '</div>';
 }
@@ -156,18 +156,24 @@ async function loadAgentTrend(containerEl){
       containerEl.innerHTML='<div style="color:#94a3b8;font-size:13px;padding:16px">No trend data available.</div>';
       return;
     }
-    var html = '<div style="margin-top:28px">'
-      +'<div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:8px">AHT Trend (6 months)</div>'
+    // Filter months to only show those with at least one agent having data
+var activeMths = months.filter(function(m, i){
+  return Object.values(results[i].agents).some(function(a){ return (a.avg_handle_minutes||0) > 0; });
+});
+if (!activeMths.length) activeMths = months; // fallback
+
+var html = '<div style="margin-top:28px">'
+      +'<div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:8px">AHT Trend (' + activeMths.length + ' månader)</div>'
       +'<div style="font-size:11px;color:#94a3b8;margin-bottom:12px">Pool-estimated AHT per agent per month. Green/red cell = below/above team average for that month.</div>'
       +'<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:600px">'
       +'<thead><tr style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #f1f5f9">'
       +'<th style="text-align:left;padding:7px 10px">Agent</th>'
-      +months.map(function(m){ return '<th style="text-align:center;padding:7px 8px">'+m.slice(5)+'</th>'; }).join('')
+      +activeMths.map(function(m){ return '<th style="text-align:center;padding:7px 8px;min-width:52px">'+m.slice(5)+'</th>'; }).join('')
       +'<th style="text-align:right;padding:7px 10px">6m Trend</th>'
       +'</tr></thead><tbody>';
     agentNames.forEach(function(agKey){
-      var ahtValues = months.map(function(m,i){
-        var a = results[i].agents[agKey];
+      var ahtValues = activeMths.map(function(m,i){
+        var rIdx = months.indexOf(m); var a = rIdx >= 0 ? results[rIdx].agents[agKey] : null;
         return a ? Number(a.avg_handle_minutes||0) : null;
       });
       var defined = ahtValues.filter(function(v){return v!==null && v>0;});
@@ -179,8 +185,8 @@ async function loadAgentTrend(containerEl){
       var trendTxt = (trendDiff > 0 ? '+' : '') + trendDiff.toFixed(1) + ' min';
       var realName = '';
       results.forEach(function(r){if(r.agents[agKey])realName=r.agents[agKey].agent_name;});
-      var teamAvgs = months.map(function(m,i){
-        var vals = Object.values(results[i].agents).map(function(a){return Number(a.avg_handle_minutes||0);}).filter(function(v){return v>0;});
+      var teamAvgs = activeMths.map(function(m,i){
+        var tIdx = months.indexOf(m); var vals = tIdx >= 0 ? Object.values(results[tIdx].agents).map(function(a){return Number(a.avg_handle_minutes||0);}).filter(function(v){return v>0;}) : [];
         return vals.length ? vals.reduce(function(s,v){return s+v;},0)/vals.length : 0;
       });
       html += '<tr style="border-top:1px solid #f1f5f9">'
@@ -424,7 +430,7 @@ function csatBuildMonths(sel) {
   for (var i = 0; i < 12; i++) {
     var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     var ym = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-    var label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    var label = d.toLocaleDateString('sv-SE', { month: 'long', year: 'numeric' });
     opts.push('<option value="' + ym + '">' + label + '</option>');
   }
   sel.innerHTML = opts.join('');
