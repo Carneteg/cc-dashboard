@@ -3,11 +3,11 @@
 // tab-agent.js assigns window.loadAgentTab, window.renderAgentTable, etc.
 // aeInit is a self-executing named IIFE in tab-agent.js - no import needed
 // naInit is exported from tab-agent-eff.js - called on DOMContentLoaded
-// v18- all modules updated with correct FTE from masterdata
+// v19- tab-agent v17 (timeout+retry), tab-agent-eff v24 (Singelkontakt, AHT trend) with correct FTE from masterdata
 
 import './tab-wp.js?v=18';
-import './tab-agent.js?v=16';
-import { naInit, csatInit } from './tab-agent-eff.js?v=23';
+import './tab-agent.js?v=17';
+import { naInit, csatInit } from './tab-agent-eff.js?v=24';
 import './tab-exec.js?v=21';
 
 // Global error boundary
