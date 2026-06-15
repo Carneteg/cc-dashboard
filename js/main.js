@@ -7,7 +7,7 @@
 
 import './tab-wp.js?v=16';
 import './tab-agent.js?v=16';
-import { naInit, csatInit } from './tab-agent-eff.js?v=18';
+import { naInit, csatInit } from './tab-agent-eff.js?v=19';
 import './tab-exec.js?v=20';
 
 // Global error boundary
