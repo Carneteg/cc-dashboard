@@ -1,4 +1,5 @@
-// js/tab-wp.js  --  Workforce Planning + Classify tab module
+// js/tab-wp.js
+// v19: banner auto-manage for today=0, Swedish UI improvements  --  Workforce Planning + Classify tab module
 // Migrated from index.html inline scripts
 // Functions assigned to window for HTML onclick compatibility
 
@@ -732,6 +733,24 @@ async function loadOverview() {
     setCard(1, d.active_today ?? '→');
     setCard(2, d.avg_7d != null ? d.avg_7d.toFixed(1) : '→');
     setCard(3, (d.last_30d_total ?? 0).toLocaleString('en-US'));
+  // Auto-manage the "today = 0" warning banner based on actual data
+  (function() {
+    var todayVal = d.today_total || 0;
+    var avg7 = d.avg_7d || 0;
+    var banner = document.getElementById('dq-zero-banner');
+    if (!banner) return;
+    if (todayVal === 0 && avg7 > 5) {
+      // Show banner with improved message
+      banner.style.display = '';
+      var titleEl = banner.querySelector('.dq-banner__title');
+      var textEl = banner.querySelector('.dq-banner__text');
+      if (titleEl) titleEl.textContent = 'Dagens tickets visas som 0 \u2013 data ej verifierad';
+      if (textEl) textEl.textContent = 'API:et returnerar 0 tickets f\u00f6r idag. Sannolikt en UTC+2-offset mot Freshdesk. Snitt senaste 7 dagarna: ~' + Math.round(avg7) + ' tickets/dag. Verifiera i Freshdesk innan du fattar beslut baserat p\u00e5 dagens siffror.';
+    } else if (todayVal > 0) {
+      // Data looks good, hide the warning
+      banner.style.display = 'none';
+    }
+  })();
 
     // Product table
     const ptb  = document.getElementById('ptb');
