@@ -1,34 +1,14 @@
 <!DOCTYPE html><!-- v-exec-tab --><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CC Workforce Planning</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-/* ── Reset & Base ── */
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#f5f5f7;
-  --surface:#ffffff;
-  --border:#d2d2d7;
-  --accent:#4f46e5;
-  --accent-light:#ede9fe;
-  --text:#1d1d1f;
-  --text2:#6e6e73;
-  --text3:#aeaeb2;
-  --green:#16a34a;
-  --red:#dc2626;
-  --amber:#d97706;
-  --radius:12px;
-  --shadow:0 2px 8px rgba(0,0,0,.07);
-  --shadow-md:0 4px 20px rgba(0,0,0,.10);
-}
-body{font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;}
-
-/* ── Header ── */
-header{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
-.logo{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.015em;}
-.logo svg{width:24px;height:24px;}
-.ts{font-size:12px;color:var(--text3);font-weight:400;}
-
-/* ── Nav ── */
-nav#main-nav{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:stretch;overflow:visible!important;position:sticky;top:52px;z-index:99;}
+:root{--bg:#f5f5f7;--surface:#ffffff;--border:#e0e0e5;--accent:#0071e3;--accent-light:#e8f0fd;--text:#1d1d1f;--text2:#6e6e73;--text3:#aeaeb2;--green:#34c759;--red:#ff3b30;--amber:#ff9500;--radius:12px;--shadow:0 1px 4px rgba(0,0,0,.08);--shadow-md:0 4px 16px rgba(0,0,0,.10);}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;}
+header{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.02em;}
+.logo svg{width:22px;height:22px;}
+.ts{font-size:12px;color:var(--text3);}
+nav#main-nav{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:stretch;overflow:visible!important;position:sticky;top:52px;z-index:99;}
 .nav-group{display:flex;align-items:stretch;gap:0;}
 .nav-tab{background:none;border:none;color:var(--text2);padding:0 16px;height:44px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;position:relative;}
 .nav-tab:hover{color:var(--text);}
@@ -39,184 +19,195 @@ nav#main-nav{background:rgba(255,255,255,.85);backdrop-filter:blur(20px);-webkit
 .nav-dropdown-trigger.has-active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
 .nav-dropdown-trigger svg{width:10px;height:10px;transition:transform .15s;}
 .nav-dropdown-trigger.open svg{transform:rotate(180deg);}
-.nav-dropdown{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);min-width:190px;z-index:200;padding:5px;overflow:visible;}
+.nav-dropdown{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);min-width:180px;z-index:200;padding:4px;overflow:visible;}
 .nav-dropdown.open{display:block;}
 .nav-dropdown button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--text);padding:9px 12px;font-size:13px;cursor:pointer;border-radius:7px;white-space:nowrap;transition:background .1s;}
-.nav-dropdown button:hover{background:var(--bg);color:var(--text);}
+.nav-dropdown button:hover{background:var(--bg);}
 .nav-dropdown button.active{color:var(--accent);background:var(--accent-light);font-weight:600;}
-
-/* ── Layout ── */
-main{padding:24px 32px;max-width:1440px;margin:0 auto;}
+main{padding:24px 32px;max-width:1280px;margin:0 auto;}
 .tc{display:none;}.tc.active{display:block;}
-
-/* ── Section headers ── */
-.section-header{display:flex;justify-content:space-between;align-items:center;margin:32px 0 16px;}
-.section-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;}
-.section-note{font-size:12px;color:var(--text3);}
-
-/* ── Cards ── */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin:28px 0 14px;}
+.section-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.09em;}
+.section-note{font-size:11px;color:var(--text3);}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
-.card.hl{border-color:var(--accent);}
-.card.warn{border-color:var(--amber);}
-.card.crit{border-color:var(--red);}
-.card.ok{border-color:#bbf7d0;}
-.cl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.card.hl{border-color:var(--accent);}.card.warn{border-color:var(--amber);}.card.crit{border-color:var(--red);}.card.ok{border-color:#a8f0c2;}
+.cl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;font-weight:600;}
 .cv{font-size:32px;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px;letter-spacing:-.02em;}
-.cv.ok{color:var(--green);}
-.cv.warn{color:var(--amber);}
-.cv.crit{color:var(--red);}
-.cv.info{color:#818cf8;}
+.cv.ok{color:var(--green);}.cv.warn{color:var(--amber);}.cv.crit{color:var(--red);}.cv.info{color:var(--accent);}
 .cs{font-size:11px;color:var(--text3);}
-
-/* ── Tags / Badges ── */
-.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
-.tag.master{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;}
-.tag.ok{background:#dcfce7;color:#16a34a;}
-.tag.warn{background:#fef3c7;color:#d97706;}
-.tag.crit{background:#fee2e2;color:#dc2626;}
-.tag.info{background:#ede9fe;color:#4f46e5;}
-.tag.forecast{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
-.tag.planning{background:#faf5ff;color:#7c3aed;border:1px solid #e9d5ff;}
-.tag.analytics{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+.tag.master{background:#dbeafe;color:#1d4ed8;}.tag.ok{background:#d1fae5;color:#065f46;}.tag.warn{background:#fef3c7;color:#92400e;}.tag.crit{background:#fee2e2;color:#991b1b;}.tag.info{background:var(--accent-light);color:var(--accent);}.tag.forecast{background:#dbeafe;color:#1d4ed8;}.tag.planning{background:#f3f4f6;color:#6b7280;}.tag.analytics{background:#f0fdf4;color:#166534;}
 .tw{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-
-/* ── Tables ── */
 table{width:100%;border-collapse:collapse;}
-thead th{background:var(--bg);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);}
+thead th{background:var(--bg);padding:10px 16px;text-align:left;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);}
 thead th.r{text-align:right;}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s;}
 tbody tr:last-child{border-bottom:none;}
-tbody tr:hover{background:var(--bg);}
-td{padding:12px 14px;font-size:13px;}
+tbody tr:hover{background:#fafafa;}
+td{padding:11px 16px;font-size:13px;}
 td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;}
-
-/* ── Layer badges (simplified) ── */
-.layer-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle;margin-left:4px;}
-.layer-badge.planning{background:#ede9fe;color:#5b21b6;}
-.layer-badge.analytics{background:#dcfce7;color:#166534;}
+.layer-badge{display:inline-block;padding:1px 5px;border-radius:4px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;vertical-align:middle;margin-left:3px;opacity:.6;}
+.layer-badge.planning{background:var(--bg);color:var(--text2);}.layer-badge.analytics{background:#f0fdf4;color:#16a34a;}
 .layer-divider{display:flex;align-items:center;gap:10px;margin:20px 0 12px;}
 .layer-divider-line{flex:1;height:1px;background:var(--border);}
 .layer-divider-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap;}
-
-/* ── Alert banner ── */
-.alert-banner{border-radius:var(--radius);padding:14px 18px;display:flex;align-items:flex-start;gap:12px;margin:16px 0;}
-.alert-banner.crit{background:#fff1f2;border:1px solid #fecaca;}
-.alert-banner.warn{background:#fffbeb;border:1px solid #fde68a;}
-.alert-banner.info{background:#eff6ff;border:1px solid #bfdbfe;}
-
-/* ── KPI grid ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:16px 0;}
+.alert-banner{border-radius:var(--radius);padding:14px 18px;display:flex;align-items:flex-start;gap:12px;margin:14px 0;}
+.alert-banner.crit{background:#fff5f5;border:1px solid #fecaca;}.alert-banner.warn{background:#fffbeb;border:1px solid #fde68a;}.alert-banner.info{background:#eff6ff;border:1px solid #bfdbfe;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:14px 0;}
 .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
 .kpi-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
 .kpi-value{font-size:28px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1;}
 .kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;}
-
-/* ── Chart wrapper ── */
 .chart-wrap{position:relative;height:300px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
-.chart-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:16px;}
-
-/* ── Pool chips ── */
+.chart-wrap h4,.chart-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:16px;}
 .pool-chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg);color:var(--text);}
-
-/* ── Decision layer styles ── */
-.decision-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-
-/* ── Agent KPI ── */
 .ag-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
 .ag-kpi-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
 .ag-kpi-value{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1;}
 .ag-kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;}
 .ag-kpi-card--warn{border-color:var(--amber);}
-
-/* ── Agent efficiency ── */
 .ae-gauge{display:flex;align-items:center;gap:8px;}
 .ae-gauge .v{font-size:12px;font-weight:700;color:var(--text);min-width:38px;}
-.ae-track{display:inline-block;width:120px;height:6px;background:var(--bg);border-radius:3px;position:relative;overflow:visible;}
-.ae-track.warn .ae-fill{background:#fbbf24;}
-.ae-track.eff .ae-fill{background:#34d399;}
-.ae-track.eff.low .ae-fill{background:#f87171;}
+.ae-track{display:inline-block;width:100px;height:5px;background:var(--bg);border-radius:3px;position:relative;overflow:visible;}
+.ae-track.warn .ae-fill{background:#fbbf24;}.ae-track.eff .ae-fill{background:#34d399;}.ae-track.eff.low .ae-fill{background:#f87171;}
 .ae-fill{display:inline-block;height:100%;border-radius:3px;background:var(--accent);position:absolute;left:0;top:0;}
 .ae-fill.over{background:var(--red);}
-.ae-mark{position:absolute;top:-3px;width:2px;height:12px;background:var(--text2);border-radius:1px;}
-.ae-mix{height:6px;border-radius:3px;overflow:hidden;display:flex;width:120px;background:var(--bg);}
+.ae-mark{position:absolute;top:-3px;width:2px;height:11px;background:var(--text2);border-radius:1px;}
+.ae-mix{height:5px;border-radius:3px;overflow:hidden;display:flex;width:100px;background:var(--bg);}
 .ae-mixtxt{font-size:10px;color:var(--text3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;}
 .ae-empty{padding:40px;text-align:center;color:var(--text3);font-size:13px;}
-.ae-error{padding:20px;background:#fff1f2;border:1px solid #fecaca;border-radius:8px;color:#dc2626;font-size:12px;}
+.ae-error{padding:20px;background:#fff5f5;border:1px solid #fecaca;border-radius:8px;color:#991b1b;font-size:12px;}
 .ae-name{font-size:13px;font-weight:600;color:var(--text);}
 .ae-lvl{font-size:11px;color:var(--text3);margin-top:2px;}
 .ae-lvl.j{color:var(--amber);}
---seg1:#4f46e5;--seg2:#0ea5e9;--seg3:#16a34a;--seg4:#d97706;--seg5:#9333ea;--seg6:#dc2626;
 .ae-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
 .ae-legend span{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text2);}
 .ae-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;}
-table .ae-gauge .ae-track{width:100px;}
-table .ae-mix{width:100px;}
+table .ae-gauge .ae-track{width:90px;}
+table .ae-mix{width:90px;}
 table .num{text-align:right;font-variant-numeric:tabular-nums;font-size:12px;}
 table .mid{text-align:center;}
-
-/* ── Scenario sliders ── */
 .scenario-input{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:13px;width:70px;text-align:center;color:var(--text);}
-.scenario-input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent;}
-
-/* ── Supply sources ── */
 .supply-source-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
 .supply-source-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;}
-
-/* ── Setup form ── */
 .setup-field{margin-bottom:16px;}
 .setup-label{font-size:12px;font-weight:600;color:var(--text2);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;}
 .setup-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);}
-.setup-input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent;}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:opacity .15s;}
-.btn.primary{background:var(--accent);color:#fff;}
-.btn.primary:hover{opacity:.9;}
+.btn.primary{background:var(--accent);color:#fff;}.btn.primary:hover{opacity:.85;}
 .btn.secondary{background:var(--bg);color:var(--text);border:1px solid var(--border);}
-.btn.secondary:hover{background:var(--border);}
-
-/* ── Classify ── */
 .classify-filter{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--text);}
-
-/* ── Def list ── */
-.def-list{display:flex;flex-direction:column;gap:0;}
 .def-item{display:grid;grid-template-columns:200px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--border);}
 .def-item:last-child{border-bottom:none;}
 .def-term{font-size:13px;font-weight:600;color:var(--text);}
 .def-body{font-size:13px;color:var(--text2);line-height:1.5;}
-
-/* ── CSS vars for ae colors ── */
-.ae-seg1{background:#4f46e5;}
-.ae-seg2{background:#0ea5e9;}
-.ae-seg3{background:#16a34a;}
-.ae-seg4{background:#d97706;}
-.ae-seg5{background:#9333ea;}
-.ae-seg6{background:#dc2626;}
-
-/* ── Named Agents ── */
+.ae-seg1{background:#0071e3;}.ae-seg2{background:#0ea5e9;}.ae-seg3{background:#34c759;}.ae-seg4{background:#ff9500;}.ae-seg5{background:#af52de;}.ae-seg6{background:#ff3b30;}
 .na-table table{width:100%;}
-.na-bar-bg{background:var(--bg);border-radius:3px;height:6px;width:100px;overflow:hidden;display:inline-block;vertical-align:middle;}
+.na-bar-bg{background:var(--bg);border-radius:3px;height:5px;width:100px;overflow:hidden;display:inline-block;vertical-align:middle;}
 .na-bar-fill{height:100%;border-radius:3px;background:var(--accent);}
 .na-aht-note{font-size:10px;color:var(--text3);}
-
-/* ── Period selector ── */
 .period-select{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:500;color:var(--text);cursor:pointer;}
-.period-select:focus{outline:2px solid var(--accent);outline-offset:-1px;}
-
-/* ── Scrollbars ── */
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-
-/* ── GROUPED NAV (override legacy rules) ── */
-nav{background:rgba(255,255,255,.85)!important;border-bottom:1px solid var(--border)!important;overflow:visible!important;}
+::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+nav{background:rgba(255,255,255,.92)!important;border-bottom:1px solid var(--border)!important;overflow:visible!important;}
 nav button{background:none!important;border-width:0 0 2px 0!important;}
 nav button:hover{background:none!important;color:var(--text)!important;}
 nav button.active{color:var(--accent)!important;border-bottom-color:var(--accent)!important;}
 nav .nav-sep{display:none;}
-</style>
+.dq-banner{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:14px 18px;display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;}
+.dq-banner__icon{font-size:16px;flex-shrink:0;}
+.dq-banner__title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.dq-banner__text{font-size:12px;color:var(--text2);line-height:1.5;}
+.dq-banner__dismiss{margin-top:8px;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2);}
+.dq-pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;}
+.dq-pill--warn{background:#fef3c7;color:#92400e;}.dq-pill--ok{background:#d1fae5;color:#065f46;}
+.ov-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;}
+.ov-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);}
+.ov-kpi-card--warn{border-color:var(--amber);}
+.ov-kpi-card__status{margin-bottom:8px;}
+.ov-kpi-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.ov-kpi-value{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1;}
+.ov-kpi-value--zero{color:var(--text3);}
+.ov-kpi-compare{font-size:11px;color:var(--text3);margin-top:4px;}
+.kpi-def{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.4;}
+.ov-table-note{font-size:11px;color:var(--text3);margin-top:8px;display:flex;gap:6px;}
+.ctx-toggle{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;cursor:pointer;color:var(--text2);}
+.ctx-arrow{display:inline-block;transition:transform .15s;}
+.ctx-body{display:none;padding:12px 0;}.ctx-body.open{display:block;}
+.ag-filter-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
+.ag-filter-bar label{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px;}
+.ag-filter-bar select{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;color:var(--text);cursor:pointer;}
+.fdiv{width:1px;height:20px;background:var(--border);}
+.ag-reset{background:none;border:1px solid var(--border);border-radius:7px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text2);}
+.ag-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
+.ag-data-note{background:var(--bg);border-radius:var(--radius);padding:14px 18px;margin-top:20px;}
+.ag-data-note__title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:4px;}
+.ag-data-note__body{font-size:11px;color:var(--text3);line-height:1.5;}
+.ae-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);}
+.ae-controls label{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px;}
+.ae-controls select{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;color:var(--text);cursor:pointer;}
+.ae-meta{font-size:11px;color:var(--text3);margin-left:auto;}
+.ae-sub{font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5;}
+.ae-note{font-size:11px;color:var(--text3);margin-top:14px;line-height:1.6;padding:12px 16px;background:var(--bg);border-radius:8px;}
+.scenario-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px;}
+.scenario-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);}
+.active-scenario{border-color:var(--accent);}
+.sc-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.sc-gap{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;}
+.sc-deficit{font-size:11px;color:var(--amber);margin-bottom:10px;}
+.sc-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px;}
+.sc-key{color:var(--text2);}.sc-val{font-weight:600;color:var(--text);}
+.migration-phases{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.phase-chip{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg);color:var(--text2);border:1px solid var(--border);}
+.pool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:12px;}
+.enrich-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.enrich-info{font-size:12px;color:var(--text2);}
+.pb{flex:1;height:4px;background:var(--bg);border-radius:2px;min-width:100px;}
+.pf{height:100%;border-radius:2px;background:var(--accent);transition:width .3s;}
+.enrich-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;}
+.view-toggle,.pool-toggle{display:flex;gap:6px;margin-bottom:14px;}
+.vt-btn,.chart-btn{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text2);transition:background .1s,color .1s;}
+.vt-btn.active,.chart-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.setup-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;}
+.setup-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:16px;}
+.setup-row h3{font-size:14px;font-weight:600;color:var(--text);}
+.setup-row .desc{font-size:12px;color:var(--text2);margin-top:3px;}
+.status-chip{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+.status-chip.done{background:#d1fae5;color:#065f46;}.status-chip.pending{background:#fef3c7;color:#92400e;}.status-chip.info{background:var(--accent-light);color:var(--accent);}
+.code-block{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px;font-family:ui-monospace,'SF Mono',monospace;font-size:11px;color:var(--text2);overflow-x:auto;white-space:pre;line-height:1.6;}
+.ag-sparkbar{width:80px;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;}
+.ag-sparkbar__fill{height:100%;border-radius:2px;background:var(--accent);}
+.prognos-inputs{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:20px;}
+.prognos-inputs h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:16px;}
+.input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;}
+.input-group{display:flex;flex-direction:column;gap:6px;}
+.input-group label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;}
+.input-group input{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--text);}
+.run-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;}
+.forecast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.trend-container{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;}
+.trend-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+.trend-title{font-size:13px;font-weight:600;color:var(--text);}
+.trend-loading,.trend-error{font-size:12px;color:var(--text3);padding:20px 0;}
+.chart-note{font-size:11px;color:var(--text3);margin-top:10px;line-height:1.5;}
+.chart-controls{display:flex;gap:6px;}
+.supply-warning{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:20px;}
+.sw-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px;}
+.supply-sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px;}
+.supply-source-row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;}
+.supply-source-key{color:var(--text2);}.supply-source-val{font-weight:600;}
+.classif-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:20px;}
+.analytics-month-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.mg,.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;}
+.fp{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.wf{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px;}
+.st{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 10px;}
+.tl{display:flex;flex-direction:column;gap:8px;}
+.ag-ind-period-btn{border-radius:7px;padding:5px 14px;cursor:pointer;font-size:12px;font-weight:600;transition:all .1s;}
+.decision-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 </style></head><body>
 <header>
 <div class="logo">
-<svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="#4f46e5"/><path d="M7 20l5-8 4 6 3-4 4 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="6" fill="var(--accent)"/><path d="M7 20l5-8 4 6 3-4 4 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 CC Workforce
 </div>
 <div class="ts" id="upd">--:--</div>
@@ -254,30 +245,26 @@ CC Workforce
 <main>
 
 <div id="tab-exec" class="tc">
-<div style="padding:40px 20px;text-align:center;color:#64748b;font-size:14px">Loading Executive Summary...</div>
+<div style="padding:40px 20px;text-align:center;color:var(--text2);font-size:14px">Loading Executive Summary...</div>
 </div>
 <div id="tab-wp" class="tc active">
-<!-- CFO DECISION LAYER -->
-<div style="background:#f0f4f8;border:2px solid #4338ca;border-radius:14px;padding:20px 24px;margin-bottom:24px;position:relative;overflow:hidden">
-<div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#6366f1,#818cf8,#60a5fa)"></div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-<div><div style="font-size:13px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.1em">CFO / WFM Decision Layer</div><div style="font-size:11px;color:#475569;margin-top:2px">Source: CC_FTE_Calculator.xlsx · Official planning model · Never modified by API data</div></div>
-<span class="layer-badge planning">Official source</span>
+<!-- Pool Status -->
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px;">
+<div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+<div><div style="font-size:13px;font-weight:600;color:var(--text);">Pool Capacity</div><div style="font-size:11px;color:var(--text3);margin-top:2px;">Source: CC_FTE_Calculator.xlsx</div></div>
+<span class="tag warn">⚠ Classic tight</span>
 </div>
-<div class="tw" style="margin-bottom:12px">
-<table><thead><tr><th>Pool</th><th class="r">Supply (Excel)</th><th class="r">Required FTE</th><th class="r">Gap FTE</th><th>Status</th><th>Action</th></tr></thead>
+<table><thead><tr><th>Pool</th><th class="r">Supply</th><th class="r">Required</th><th class="r">Gap</th><th>Status</th><th>Note</th></tr></thead>
 <tbody>
-<tr style="border-left:3px solid #f59e0b"><td style="font-weight:700;color:#fcd34d">Classic</td><td class="n">3.10</td><td class="n">3.40</td><td class="n" style="color:#fcd34d;font-weight:800">−0.30</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:#fcd34d">Monitor closely. Accelerate S1 migration.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">Switchboard</td><td class="n">2.80</td><td class="n">2.65</td><td class="n" style="color:#4ade80;font-weight:800">+0.15</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Adequate buffer. Monitor volume growth.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#4ade80">S1</td><td class="n">2.55</td><td class="n">2.45</td><td class="n" style="color:#4ade80;font-weight:800">+0.10</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Sufficient for migration growth.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#fcd34d">Frankly</td><td class="n">1.65</td><td class="n">1.65</td><td class="n" style="color:#4ade80;font-weight:800">0.00</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Balanced. Monitor volume.</td></tr>
-<tr style="border-left:3px solid #4ade80"><td style="font-weight:700;color:#f97316">Talent</td><td class="n">1.00</td><td class="n">0.95</td><td class="n" style="color:#4ade80;font-weight:800">+0.05</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:#94a3b8">Stable.</td></tr>
-<tr style="background:#f0f4f8;font-weight:700;border-top:2px solid #2d3148"><td><strong>Total</strong></td><td class="n">11.10</td><td class="n">10.10</td><td class="n" style="color:#4ade80;font-weight:800">+1.00</td><td><span class="tag warn">⚠ Classic hidden</span></td><td style="font-size:11px;color:#fca5a5">Total positive — Classic −0.30 FTE tight. One absence tips into deficit.</td></tr>
+<tr><td style="font-weight:600;">Classic</td><td class="n">3.10</td><td class="n">3.40</td><td class="n" style="color:var(--amber);">−0.30</td><td><span class="tag warn">Tight</span></td><td style="font-size:11px;color:var(--text2);">Monitor closely. Accelerate S1 migration.</td></tr>
+<tr><td style="font-weight:600;">Switchboard</td><td class="n">2.80</td><td class="n">2.65</td><td class="n" style="color:var(--green);">+0.15</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:var(--text2);">Adequate buffer.</td></tr>
+<tr><td style="font-weight:600;">S1</td><td class="n">2.55</td><td class="n">2.45</td><td class="n" style="color:var(--green);">+0.10</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:var(--text2);">Sufficient for migration growth.</td></tr>
+<tr><td style="font-weight:600;">Frankly</td><td class="n">1.65</td><td class="n">1.65</td><td class="n" style="color:var(--green);">0.00</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:var(--text2);">Balanced.</td></tr>
+<tr><td style="font-weight:600;">Talent</td><td class="n">1.00</td><td class="n">0.95</td><td class="n" style="color:var(--green);">+0.05</td><td><span class="tag ok">OK</span></td><td style="font-size:11px;color:var(--text2);">Stable.</td></tr>
+<tr style="background:var(--bg);font-weight:700;border-top:2px solid var(--border);"><td><strong>Total</strong></td><td class="n">11.10</td><td class="n">10.10</td><td class="n" style="color:var(--green);">+1.00</td><td><span class="tag warn">⚠ Classic</span></td><td style="font-size:11px;color:var(--text2);">Classic −0.30 tight. One absence tips into deficit.</td></tr>
 </tbody></table>
 </div>
-<div style="font-size:11px;color:#475569;padding:8px 12px;background:#f8fafc;border-radius:6px">⚠ <strong style="color:#fcd34d">Analytics vs Planning:</strong> Official KPIs from the Excel model. Analytics estimates (purple, below) may deviate — they are operational analysis, not an official source. See the <em>Classification</em> tab for supply deviations and routing diagnostics.</div>
-</div>
-<!-- /CFO DECISION LAYER -->
+<!-- /Pool Status -->
 <div id="tab-wp" class="tc active">
 <div class="section-header" style="margin-top:0">
 <span class="section-title">§ 1 · Executive Summary — Current State</span>
@@ -291,25 +278,25 @@ CC Workforce
 <div class="kpi-label"><span>Actual FTE</span><span class="tag master">Masterdata</span></div>
 <div class="kpi-value actual">11</div>
 <div class="kpi-sub">Actual headcount · Business baseline</div>
-<div class="kpi-tooltip">Actual headcount. Master value = 11. Not the same as Effective Supply — unaffected by model calculations.</div>
+
 </div>
 <div class="kpi-card supply">
 <div class="kpi-label">Effective Supply FTE</div>
 <div class="kpi-value supply">11.10</div>
 <div class="kpi-sub">Productive capacity after seniority &amp; allocation</div>
-<div class="kpi-tooltip">Model calculated available capacity. May differ from →  Actual FTE due to seniority weighting. Source: FTE Calc tab.</div>
+
 </div>
 <div class="kpi-card required">
 <div class="kpi-label">Required FTE</div>
 <div class="kpi-value required">10.10</div>
 <div class="kpi-sub">Ticket FTE 9.10 + Overhead FTE 1.00</div>
-<div class="kpi-tooltip">Total FTE requirement incl. overhead. Calculated from volume, AHT, occupancy, shrinkage and peak buffer per pool.</div>
+
 </div>
 <div class="kpi-card gap">
 <div class="kpi-label">Net Gap FTE</div>
 <div class="kpi-value gap-pos">+1.00</div>
 <div class="kpi-sub">Effective Supply − Required FTE</div>
-<div class="kpi-tooltip">⚠ Positive total gap hides a tight gap in Classic (−0.30 FTE). See Pool Capacity Gaps below.</div>
+
 </div>
 </div>
 <div class="alert-banner crit">
@@ -319,29 +306,14 @@ CC Workforce
 <div class="alert-desc">Total net surplus of <span>+1.00 FTE</span> masks a critical deficit in the Classic pool. Supply: <span>3.10 FTE</span> · Required Peak: <span>3.40 FTE</span> · Gap: <span>−0.30 FTE</span>.</div>
 </div>
 </div>
-<div style="background:#0f172a;border:1px solid #2563eb;border-radius:10px;padding:16px 20px;margin-bottom:32px">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-<span style="font-size:12px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.08em">Analytics Confidence</span>
-<span class="layer-badge planning" style="font-size:9px">Planning = Official Source</span>
+<div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;">
+<div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">Data Quality</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+<div style="background:var(--surface);border-radius:8px;padding:12px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Enrichment</div><div id="conf-enrichment" style="font-size:20px;font-weight:700;color:var(--text);">—</div><div style="font-size:10px;color:var(--text3);margin-top:2px;">cc_ticket_meta / tickets</div></div>
+<div style="background:var(--surface);border-radius:8px;padding:12px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Classification</div><div id="conf-classification" style="font-size:20px;font-weight:700;color:var(--text);">—</div><div style="font-size:10px;color:var(--text3);margin-top:2px;">Tickets with pool / total</div></div>
+<div style="background:var(--surface);border-radius:8px;padding:12px;border:1px solid var(--border);"><div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Calculability</div><div id="conf-calculability" style="font-size:20px;font-weight:700;color:var(--text);">—</div><div style="font-size:10px;color:var(--text3);margin-top:2px;">Months with demand / 12</div></div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px">
-<div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
-<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Enrichment</div>
-<div id="conf-enrichment" style="font-size:18px;font-weight:800;color:#4ade80">—</div>
-<div style="font-size:10px;color:#475569;margin-top:2px">cc_ticket_meta / tickets</div>
-</div>
-<div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
-<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Classification</div>
-<div id="conf-classification" style="font-size:18px;font-weight:800;color:#4ade80">—</div>
-<div style="font-size:10px;color:#475569;margin-top:2px">Tickets m. pool_slug / total</div>
-</div>
-<div style="background:#f0f4f8;border-radius:6px;padding:10px;border:1px solid #2d3148">
-<div style="font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Workforce calculability</div>
-<div id="conf-calculability" style="font-size:18px;font-weight:800;color:#fcd34d">—</div>
-<div style="font-size:10px;color:#475569;margin-top:2px">Months with demand data / 12</div>
-</div>
-</div>
-<div style="font-size:11px;color:#475569;line-height:1.6"><span style="color:#60a5fa;font-weight:600">Planning</span> (blue) = Excel, official. &nbsp;·&nbsp; <span style="color:#818cf8;font-weight:600">Analytics</span> (purple) = API trend, not an official source. &nbsp;·&nbsp; Months without demand data are grayed out with "No demand data" — do NOT contain actual gap calculations.</div>
+<div style="font-size:11px;color:var(--text3);">Planning = Excel model (official) · Analytics = API trend (operational estimate)</div>
 </div></div>
 <div class="section-header">
 <span class="section-title">§ 2 · Staffing Over Time</span>
@@ -360,9 +332,9 @@ CC Workforce
 <canvas id="staffingChart" height="90"></canvas>
 </div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:12px">
-<div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:#fca5a5">7.0 FTE</div><div class="cs">Worst case · aug 2025</div></div>
-<div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:#fcd34d">~9.3 FTE</div><div class="cs">Required FTE with AI deflection</div></div>
-<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE at Q10</div><div style="font-size:22px;font-weight:700;color:#4ade80">4.05 FTE</div><div class="cs">With AI deflection · peak migration</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">Post-aug supply</div><div style="font-size:22px;font-weight:700;color:var(--red)">7.0 FTE</div><div class="cs">Worst case · aug 2025</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">AI Deflection 30%</div><div style="font-size:22px;font-weight:700;color:var(--amber)">~9.3 FTE</div><div class="cs">Required FTE with AI deflection</div></div>
+<div class="card" style="padding:12px 16px"><div class="cl">S1 FTE at Q10</div><div style="font-size:22px;font-weight:700;color:var(--green)">4.05 FTE</div><div class="cs">With AI deflection · peak migration</div></div>
 </div>
 <div class="layer-divider"><div class="layer-divider-line"></div><span class="layer-divider-label">Analytics · Actual workload &amp; coverage (API data)</span><div class="layer-divider-line"></div></div>
 <div class="trend-container">
@@ -408,41 +380,41 @@ CC Workforce
 <div class="scenario-grid">
 <div class="scenario-card active-scenario">
 <div class="sc-name">Now <span class="tag info">Current</span></div>
-<div class="sc-gap" style="color:#4ade80">+1.00</div>
+<div class="sc-gap" style="color:var(--green)">+1.00</div>
 <div class="sc-deficit">⚠ Classic −0.30 FTE tight</div>
-<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">10.10</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:var(--amber)">10.10</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:var(--green)">11.10</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">9.10</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
 <div class="sc-row"><span class="sc-key">Monthly cost</span><span class="sc-val">~110k SEK</span></div>
 </div>
 <div class="scenario-card">
 <div class="sc-name">Post-aug Best <span class="tag ok">Optimistic</span></div>
-<div class="sc-gap" style="color:#4ade80">+1.80</div>
-<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.80</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.60</span></div>
+<div class="sc-gap" style="color:var(--green)">+1.80</div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:var(--amber)">9.80</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:var(--green)">11.60</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.80</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-<div class="sc-row"><span class="sc-key">Largest pool deficit</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
+<div class="sc-row"><span class="sc-key">Largest pool deficit</span><span class="sc-val" style="color:var(--red)">Classic</span></div>
 </div>
-<div class="scenario-card" style="border-color:#ef4444">
+<div class="scenario-card" style="border-color:var(--red)">
 <div class="sc-name">Post-aug Worst <span class="tag crit">Critical</span></div>
-<div class="sc-gap" style="color:#fca5a5">-2.50</div>
+<div class="sc-gap" style="color:var(--red)">-2.50</div>
 <div class="sc-deficit">Severe deficit at total level</div>
-<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.50</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#fca5a5">7.00</span></div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:var(--amber)">9.50</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:var(--red)">7.00</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.50</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-<div class="sc-row"><span class="sc-key">Largest pool deficit</span><span class="sc-val" style="color:#fca5a5">Classic</span></div>
+<div class="sc-row"><span class="sc-key">Largest pool deficit</span><span class="sc-val" style="color:var(--red)">Classic</span></div>
 </div>
 <div class="scenario-card">
 <div class="sc-name">AI Deflection 30% <span class="tag forecast">Strategy</span></div>
-<div class="sc-gap" style="color:#4ade80">+1.80</div>
-<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:#fcd34d">9.30</span></div>
-<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:#4ade80">11.10</span></div>
+<div class="sc-gap" style="color:var(--green)">+1.80</div>
+<div class="sc-row" style="margin-top:10px"><span class="sc-key">Required FTE</span><span class="sc-val" style="color:var(--amber)">9.30</span></div>
+<div class="sc-row"><span class="sc-key">Effective Supply</span><span class="sc-val" style="color:var(--green)">11.10</span></div>
 <div class="sc-row"><span class="sc-key">Ticket FTE peak</span><span class="sc-val">8.30</span></div>
 <div class="sc-row"><span class="sc-key">Overhead FTE</span><span class="sc-val">1.00</span></div>
-<div class="sc-row"><span class="sc-key">AI deflection</span><span class="sc-val" style="color:#4ade80">30%</span></div>
+<div class="sc-row"><span class="sc-key">AI deflection</span><span class="sc-val" style="color:var(--green)">30%</span></div>
 </div>
 </div>
 <div class="chart-wrap">
@@ -508,15 +480,15 @@ CC Workforce
 <div class="def-item"><div class="def-term">Shrinkage</div><div class="def-body">Share of paid time not available for ticket work. Increases Required FTE.</div></div>
 <div class="def-item"><div class="def-term">Occupancy</div><div class="def-body">Share of available time agents spend on tickets. Lower → higher Required FTE.</div></div>
 </div>
-<div style="margin-top:24px;padding:16px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;font-size:12px;color:#475569;line-height:1.7">
-<strong style="color:#64748b">Model notes:</strong> Planning layer values are sourced from CC_FTE_Calculator.xlsx. Deviations indicate the Excel model is correct. Analytics layer trend data is calculated from daily ticket data via API — operational estimates, not official planning KPIs.
+<div style="margin-top:24px;padding:16px;background:#ffffff;border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--text2);line-height:1.7">
+<strong style="color:var(--text2)">Model notes:</strong> Planning layer values are sourced from CC_FTE_Calculator.xlsx. Deviations indicate the Excel model is correct. Analytics layer trend data is calculated from daily ticket data via API — operational estimates, not official planning KPIs.
 </div>
 </div><!-- /tab-wp -->
 <!-- CLASSIFICATION MODEL TAB -->
 <div id="tab-classify" class="tc">
-<div style="background:#ffffff;border:1px solid #4338ca;border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
+<div style="background:#ffffff;border:1px solid var(--accent);border-radius:8px;padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px">
 <span style="font-size:16px">ð</span>
-<div style="font-size:12px;color:#94a3b8"><strong style="color:#818cf8">Diagnostic view — not a governance page.</strong> Classification model, routing logic, supply sources and data quality. For official workforce decisions, see Workforce Planning → CFO Decision Layer.</div>
+<div style="font-size:12px;color:var(--text3)"><strong style="color:var(--accent)">Diagnostic view — not a governance page.</strong> Classification model, routing logic, supply sources and data quality. For official workforce decisions, see Workforce Planning → CFO Decision Layer.</div>
 </div>
 
 
@@ -547,28 +519,28 @@ CC Workforce
 <div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val">4.34 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val">2.35 FTE</span></div>
 <div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val">1.49 FTE</span></div>
-<div style="font-size:10px;color:#475569;margin-top:6px">Source: CC_FTE_Calculator.xlsx · Effective Supply per pool</div>
+<div style="font-size:10px;color:var(--text2);margin-top:6px">Source: CC_FTE_Calculator.xlsx · Effective Supply per pool</div>
 </div>
 <div class="supply-source-card">
 <div class="supply-source-title">2. API per-month (cc_capacity_daily)</div>
-<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:#fcd34d">3.40 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:#fcd34d">2.65 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:#fcd34d">2.45 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:#fcd34d">1.65 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:#fcd34d">0.95 FTE</span></div>
-<div style="font-size:10px;color:#475569;margin-top:6px">Static — <strong>P4 (cc_pool_supply_history) not executed</strong>. All 12 months show same value.</div>
+<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:var(--amber)">3.40 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:var(--amber)">2.65 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:var(--amber)">2.45 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:var(--amber)">1.65 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:var(--amber)">0.95 FTE</span></div>
+<div style="font-size:10px;color:var(--text2);margin-top:6px">Static — <strong>P4 (cc_pool_supply_history) not executed</strong>. All 12 months show same value.</div>
 </div>
 <div class="supply-source-card">
 <div class="supply-source-title">3. cc_pools config (API top-level)</div>
-<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:#fca5a5">3.55 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:#fca5a5">3.55 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:#fca5a5">0.30 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:#fca5a5">0.50 FTE</span></div>
-<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:#fca5a5">0.20 FTE</span></div>
-<div style="font-size:10px;color:#475569;margin-top:6px">From cc_pools.fte_supply — should be updated to match the planning model.</div>
+<div class="supply-source-row"><span class="supply-source-key">Classic</span><span class="supply-source-val" style="color:var(--red)">3.55 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Switchboard</span><span class="supply-source-val" style="color:var(--red)">3.55 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">S1</span><span class="supply-source-val" style="color:var(--red)">0.30 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Frankly</span><span class="supply-source-val" style="color:var(--red)">0.50 FTE</span></div>
+<div class="supply-source-row"><span class="supply-source-key">Talent</span><span class="supply-source-val" style="color:var(--red)">0.20 FTE</span></div>
+<div style="font-size:10px;color:var(--text2);margin-top:6px">From cc_pools.fte_supply — should be updated to match the planning model.</div>
 </div>
 </div>
-<div style="margin-top:10px;font-size:11px;color:#94a3b8">
+<div style="margin-top:10px;font-size:11px;color:var(--text3)">
 <strong>→ P4 exekverat:</strong> cc_pool_supply_history innehåller 95 rader (5 pooler × 19 månader). <strong>Nästa steg:</strong> Uppdatera Edge Function (/aht-stats) för att JOIN:a med cc_pool_supply_history per year_month istället för att läsa cc_pools.fte_supply direkt.
 </div>
 </div>
@@ -600,7 +572,7 @@ CC Workforce
 <button class="chart-btn" onclick="refreshClassificationData()" style="margin-left:8px">→» Uppdatera</button>
 </div>
 </div>
-<div id="classification-loading" style="font-size:12px;color:#64748b;padding:20px">Loading classification data...</div>
+<div id="classification-loading" style="font-size:12px;color:var(--text2);padding:20px">Loading classification data...</div>
 <div id="classification-error" style="display:none" class="trend-error"></div>
 
 <!-- Summary stats -->
@@ -833,10 +805,10 @@ CC Workforce
     </button>
     <div class="ctx-body">
       <div style="font-size:12px;color:#7a8799;margin-bottom:10px;">30-day data is complete and verified. Used for capacity and resource planning — not daily operational management.</div>
-      <div style="border:1px dashed #334155;border-radius:8px;padding:16px 20px;margin-top:8px;color:#64748b;font-size:12px;">
-  <div style="font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:12px;">ð Ticketutveckling — senaste 30 dagar per produkt</div>
+      <div style="border:1px dashed var(--text2);border-radius:8px;padding:16px 20px;margin-top:8px;color:var(--text2);font-size:12px;">
+  <div style="font-size:13px;font-weight:600;color:var(--text3);margin-bottom:12px;">ð Ticketutveckling — senaste 30 dagar per produkt</div>
   <div id="ov-spark-chart" style="display:flex;flex-direction:column;gap:6px;"><!-- Genereras av renderSparkChart() --></div>
-  <div style="margin-top:10px;font-size:11px;color:#475569;font-style:italic;">Source: 30-day data via Supabase.</div>
+  <div style="margin-top:10px;font-size:11px;color:var(--text2);font-style:italic;">Source: 30-day data via Supabase.</div>
 </div>
     </div>
   </div>
@@ -941,7 +913,7 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 <div class="setup-section">
 <div class="setup-row"><div><h3>Enrichment status (real-time)</h3><div class="desc">Data coverage per pool.</div></div><button class="enrich-btn" onclick="loadSetupStatus()">Refresh status</button></div>
-<div id="setup-enrich-detail" style="margin-top:12px;font-size:13px;color:#64748b">Click to refresh...</div>
+<div id="setup-enrich-detail" style="margin-top:12px;font-size:13px;color:var(--text2)">Click to refresh...</div>
 </div>
 <div class="setup-section">
 <div class="setup-row"><div><h3>P5 · Swedish working days per month</h3></div><span class="status-chip info">→¹ Aktiv</span></div>
@@ -955,10 +927,10 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <!-- ============================================================ -->
 <div id="tab-agent" class="tc">
 <div style="margin-bottom:16px;">
-<h2 style="font-size:20px;font-weight:700;color:#1e293b;margin:0;">Agent</h2>
-<div style="font-size:13px;color:#94a3b8;margin-top:2px;">Operational analysis of handled tickets, time utilization and absence per team/pool</div>
-<div style="font-size:11px;color:#64748b;margin-top:4px;" id="ag-updated-ts">Updated --:--</div>
-<div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:#f1f5f9;border:1px solid #2d3148;border-radius:20px;font-size:11px;color:#64748b;">i Not an official performance metric</div>
+<h2 style="font-size:20px;font-weight:700;color:var(--text);margin:0;">Agent</h2>
+<div style="font-size:13px;color:var(--text3);margin-top:2px;">Operational analysis of handled tickets, time utilization and absence per team/pool</div>
+<div style="font-size:11px;color:var(--text2);margin-top:4px;" id="ag-updated-ts">Updated --:--</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:3px 9px;background:var(--bg);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--text2);">i Not an official performance metric</div>
 </div>
 <div class="ag-filter-bar">
 <label>Period</label>
@@ -981,139 +953,107 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <button class="ag-reset" onclick="document.getElementById('ag-filter-team').value='';renderAgentTable()">Reset</button>
 </div>
 <div class="ag-kpi-grid" id="ag-kpi-grid">
-<div class="ag-kpi-card"><div class="ag-kpi-label">Loading...</div><div class="ag-kpi-value" style="color:#64748b">--</div></div>
+<div class="ag-kpi-card"><div class="ag-kpi-label">Loading...</div><div class="ag-kpi-value" style="color:var(--text2)">--</div></div>
 </div>
 <div id="ag-absence-banner" style="display:none;margin-bottom:16px;"></div>
 <div style="margin-bottom:20px;">
-<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:10px;">Team overview -- tickets and capacity per pool</div>
-<div style="overflow-x:auto;border-radius:10px;border:1px solid #2d3148;">
+<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:10px;">Team overview -- tickets and capacity per pool</div>
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);">
 <table style="width:100%;border-collapse:collapse;font-size:13px;">
 <thead><tr>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Tickets</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE Required</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">FTE Supply</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Gap</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">AHT</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Workdays</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Absence days</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Just. FTE</th>
-<th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Coverage</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Pool</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Tickets</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">FTE Required</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">FTE Supply</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Gap</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">AHT</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Workdays</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Absence days</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Just. FTE</th>
+<th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Coverage</th>
 </tr></thead>
 <tbody id="ag-team-table-body">
-<tr><td colspan="10" style="text-align:center;padding:24px;color:#64748b;">Loading data...</td></tr>
+<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--text2);">Loading data...</td></tr>
 </tbody>
 </table>
 </div>
 </div>
 <div style="margin-bottom:20px;">
-<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:10px;">Daily activity by pool -- absence detection</div>
-<div id="ag-absence-detail" style="color:#64748b;font-size:12px;padding:16px;background:#f0f4f8;border-radius:8px;">Loading daglig data...</div>
+<div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:10px;">Daily activity by pool -- absence detection</div>
+<div id="ag-absence-detail" style="color:var(--text2);font-size:12px;padding:16px;background:var(--bg);border-radius:8px;">Loading daglig data...</div>
 </div>
 
 <!-- INDIVIDUAL AGENT LEVEL SECTION (v30-daily) -->
 <div id="ag-individualual-section" style="margin-top:28px;margin-bottom:20px;">
-  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;">
     Daily output per agent
-    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#1f6f8b;border:1px solid #2d3148;">Estimate based on pool data</span>
+    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:var(--bg);color:#1f6f8b;border:1px solid var(--border);">Estimate based on pool data</span>
   </div>
-  <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Daily average output per agent based on actual tickets and AHT in selected month. Shows how much of an agent's day goes to tickets vs. available capacity.</div>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5;">Daily average output per agent based on actual tickets and AHT in selected month. Shows how much of an agent's day goes to tickets vs. available capacity.</div>
   <div style="display:flex;gap:6px;margin-bottom:14px;">
     <button class="ag-ind-period-btn" data-period="day" onclick="setAgentIndividualualPeriod('day',this)" style="background:#1f6f8b;color:#fff;border:none;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Day</button>
-    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualualPeriod('week',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Week</button>
-    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualualPeriod('month',this)" style="background:#f1f5f9;color:#94a3b8;border:1px solid #2d3148;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Month</button>
+    <button class="ag-ind-period-btn" data-period="week" onclick="setAgentIndividualualPeriod('week',this)" style="background:var(--bg);color:var(--text3);border:1px solid var(--border);padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Week</button>
+    <button class="ag-ind-period-btn" data-period="month" onclick="setAgentIndividualualPeriod('month',this)" style="background:var(--bg);color:var(--text3);border:1px solid var(--border);padding:5px 14px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:600;">Month</button>
   </div>
-  <div style="overflow-x:auto;border-radius:10px;border:1px solid #2d3148;">
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);">
     <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead>
         <tr>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:left;">Pool</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;">Agents</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Average tickets per agent during selected period">Tickets/agent</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Average Handle Time in minutes">AHT (min)</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Time per agent per day going to tickets = (tickets/agent/day) x AHT">Handle min/day</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Share of 7h working day going to ticket handling (420 min = 100%)">Utilization</th>
-          <th style="background:#f0f4f8;font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;padding:10px 12px;border-bottom:1px solid #2d3148;text-align:right;" title="Available time per agent per day = 420 min minus handling">Gap min/day</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;">Pool</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:right;">Agents</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:right;" title="Average tickets per agent during selected period">Tickets/agent</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:right;" title="Average Handle Time in minutes">AHT (min)</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:right;" title="Time per agent per day going to tickets = (tickets/agent/day) x AHT">Handle min/day</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:right;" title="Share of 7h working day going to ticket handling (420 min = 100%)">Utilization</th>
+          <th style="background:var(--bg);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text2);padding:10px 12px;border-bottom:1px solid var(--border);text-align:right;" title="Available time per agent per day = 420 min minus handling">Gap min/day</th>
         </tr>
       </thead>
       <tbody id="ag-individualual-tbody">
-        <tr><td colspan="7" style="text-align:center;padding:24px;color:#64748b;">Loading individualuell data...</td></tr>
+        <tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text2);">Loading individualuell data...</td></tr>
       </tbody>
     </table>
   </div>
-  <div style="margin-top:8px;font-size:11px;color:#64748b;line-height:1.5;">
-    <strong>i</strong> Tickets/agent = poolens dagliga genomsnitt / antal agents. Handle min/day = tickets/agent/dag x AHT. Utilization = handl.min / 420 (7h). Gap = ledig tid per dag (negativt = overtidssignal).
+  <div style="margin-top:8px;font-size:11px;color:var(--text2);line-height:1.5;">
+    Tickets/agent = pool daily avg / agent count. Handle min/day = tickets/agent × AHT. Utilization = handle min / 420 (7h). Gap = free time per day (negative = overtime signal).
   </div>
 </div>
 
 <!-- PRODUCT BREAKDOWN PER POOL SECTION (v30) -->
 <div id="ag-product-section" style="margin-top:24px;margin-bottom:20px;">
-  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1e293b;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:10px;">
     Product mix by pool
-    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:#f1f5f9;color:#9333ea;border:1px solid #2d3148;">30-day data</span>
+    <span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600;background:var(--bg);color:#9333ea;border:1px solid var(--border);">30-day data</span>
   </div>
-  <div style="font-size:11px;color:#64748b;margin-bottom:12px;line-height:1.5;">Tickets per product/area linked to the respective pool. Not all agents handle all products - the distribution below shows each pool's actual product mix and estimated daily load per agent.</div>
+  <div style="font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5;">Tickets per product/area linked to the respective pool. Not all agents handle all products - the distribution below shows each pool's actual product mix and estimated daily load per agent.</div>
   <div id="ag-product-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;">
-    <div style="color:#64748b;font-size:12px;padding:16px;">Loading product data...</div>
+    <div style="color:var(--text2);font-size:12px;padding:16px;">Loading product data...</div>
   </div>
 </div>
 
 <div class="ag-data-note">
-<div class="ag-data-note__title">i Operational analysis -- pool-/teamniva, ej individualual agent</div>
+<div class="ag-data-note__title">Operational analysis — pool and team level</div>
 <div class="ag-data-note__body">Datan visar tickets och FTE Required per pool/team baserat pa riktig data fran Supabase. Franvaro detekteras automatiskt: om en pool haft 0 tickets en arbetsdag markeras det som trolig franvaro och den justerade FTE Supplyen minskas proportionellt. Detta pavaerkar den tillgaengliga FTE-kalkylatorn.</div>
 </div>
 
 <!-- ===== NAMED AGENTS DROP-IN ===== -->
-<div id="named-agents" style="margin-bottom:24px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;">
-<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">Named Agents</h3>
-<p style="color:#64748b;font-size:12.5px;margin:0 0 16px;">Handled tickets per agent from Freshdesk (assigned responder). Termination is logically counted under switchboard. Not an official performance metric — operational analysis.</p>
+<div id="named-agents" style="margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;">
+<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:var(--text);">Named Agents</h3>
+<p style="color:var(--text2);font-size:12px;margin:0 0 16px;">Handled tickets per agent from Freshdesk. Operational analysis only.</p>
 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
-<label style="color:#94a3b8;font-size:12px;">Period<select id="na-month" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"></select></label>
-<label style="color:#94a3b8;font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"><option value="">All pools</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
-<span style="margin-left:auto;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums;" id="na-meta">&#x2014;</span>
+<label style="color:var(--text3);font-size:12px;">Period<select id="na-month" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);cursor:pointer;"></select></label>
+<label style="color:var(--text3);font-size:12px;">Pool<select id="na-pool" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);cursor:pointer;"><option value="">All pools</option><option value="classic">Classic</option><option value="switchboard">Switchboard</option><option value="s1">S1</option><option value="frankly">Frankly</option><option value="talent">Talent</option></select></label>
+<span style="margin-left:auto;color:var(--text2);font-size:12.5px;font-variant-numeric:tabular-nums;" id="na-meta">&#x2014;</span>
 </div>
-<div id="na-body"><div style="color:#64748b;font-size:13px;padding:18px 4px;">Loading&#x2026;</div></div>
-<p style="color:#475569;font-size:11.5px;margin-top:12px;line-height:1.4;">Source: cc-dashboard-api <code style="background:#f8fafc;padding:1px 4px;border-radius:3px;color:#818cf8;">/agent-breakdown</code>.</p>
+<div id="na-body"><div style="color:var(--text2);font-size:13px;padding:18px 4px;">Loading&#x2026;</div></div>
+<p style="color:var(--text2);font-size:11.5px;margin-top:12px;line-height:1.4;">Source: cc-dashboard-api <code style="background:#f8fafc;padding:1px 4px;border-radius:3px;color:var(--accent);">/agent-breakdown</code>.</p>
 </div>
 <!-- ===== END NAMED AGENTS DROP-IN ===== -->
 
 <!-- DEVELOPMENT SUGGESTIONS -->
-<div style="margin-top:20px;background:#f0f4f8;border:1px solid #4338ca;border-radius:12px;padding:20px;position:relative;overflow:hidden;">
-  <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:12px 12px 0 0;"></div>
-  <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-    <span style="font-size:14px;">&#x1F4A1;</span> Development Suggestions
-    <span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;background:#1e1b4b;color:#818cf8;border:1px solid #4338ca;">Roadmap</span>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
-    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #22c55e;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#4ade80;margin-bottom:5px;">Named Agents</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Koppla agent_id/namn fran Freshdesk-API:et sa varje rad visar en verklig person. Kraver agent-falt i cc_ticket_meta och nytt endpoint /agent-breakdown.</div>
-    </div>
-    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #6366f1;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#818cf8;margin-bottom:5px;">Trend line per agent</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Show 4-8 week sparkline for tickets/day per agent. Identify performance dips and seasonal patterns without browsing raw data.</div>
-    </div>
-    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #f59e0b;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#fcd34d;margin-bottom:5px;">Real AHT from Freshcaller</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Replace estimated AHT with actual call time per agent via Freshcaller API (P7). Provides exact utilization and deviation detection per individual.</div>
-    </div>
-    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #60a5fa;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#60a5fa;margin-bottom:5px;">Absence calendar</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Visual monthly view per pool with marked absence days. Click date to see which pool was missing and impact on FTE calculation.</div>
-    </div>
-    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #f97316;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:5px;">Capacity target per agent</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Set a tickets/day target per pool (configurable in Setup). Show % deviation against target per period with traffic light status.</div>
-    </div>
-    <div style="background:#ffffff;border:1px solid #2d3148;border-left:3px solid #e879f9;border-radius:8px;padding:14px;">
-      <div style="font-size:12px;font-weight:700;color:#e879f9;margin-bottom:5px;">CSV Export</div>
-      <div style="font-size:11px;color:#94a3b8;line-height:1.6;">Export button that generates CSV with pool, period, tickets, AHT and utilization. Enables external analysis and WFM import.</div>
-    </div>
-  </div>
-</div>
-</div>
 
-<div id="agent-eff">
+
+
+id="agent-eff">
   <h3>Efficiency &amp; Load Factor</h3>
   <p class="ae-sub">Per agent, based on the FTE model (CC_FTE_Calculator.xlsx) and ticket distribution per pool. Modeled time = handled tickets × pool-AHT.</p>
 
@@ -1142,20 +1082,21 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 </div>
 
 
+
 <!-- ===== CSAT SECTION ===== -->
-<div id="csat-wrapper" style="margin-top:28px;margin-bottom:20px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;">
+<div id="csat-wrapper" style="margin-top:28px;margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
 <div>
-<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">CSAT — Customer Satisfaction</h3>
-<p style="color:#64748b;font-size:12.5px;margin:0;">Historical CSAT scores per month — CC group total and per pool. Source: <code>cc_csat_history</code>.</p>
+<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:var(--text);">CSAT — Customer Satisfaction</h3>
+<p style="color:var(--text2);font-size:12px;margin:0;">Historical CSAT scores per month — CC group and per pool.</p>
 </div>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-<label style="color:#94a3b8;font-size:12px;">Month
-<select id="csat-month-filter" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"></select>
+<label style="color:var(--text3);font-size:12px;">Month
+<select id="csat-month-filter" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);cursor:pointer;"></select>
 </label>
 </div>
 </div>
-<div id="csat-section"><div style="color:#64748b;font-size:12px;padding:18px 4px;">Loading CSAT data…</div></div>
+<div id="csat-section"><div style="color:var(--text2);font-size:12px;padding:18px 4px;">Loading CSAT data…</div></div>
 </div>
 <!-- ===== END CSAT SECTION ===== -->
 
