@@ -76,6 +76,26 @@ async function loadAgentTab() {
   console.error('loadAgentTab error:', e);
 }
 }
+async function loadAgentDailyDataFunc(ym) {
+try {
+var wfData = await api('/workforce?months=3');
+if (wfData && wfData.daily && wfData.daily.length > 0) {
+var ym7 = ym.substring(0,7);
+_agentDailyData = (wfData.daily||[]).filter(function(d){return d.stat_date&&d.stat_date.substring(0,7)===ym7;});
+return;
+}
+var trendData = await api('/trend');
+if (trendData && trendData.trend && trendData.trend.length > 0) {
+var ym7b = ym.substring(0,7);
+_agentDailyData = (trendData.trend||[])
+.filter(function(d){return d.day&&d.day.substring(0,7)===ym7b;})
+.map(function(d){return {stat_date:d.day,ticket_count:d.tickets,pool_slug:null};});
+return;
+}
+_agentDailyData = null;
+} catch(e) { _agentDailyData = null; console.warn('[tab-agent] loadAgentDailyDataFunc failed:', e.message); }
+}
+
 function detectAbsenceDaysForPool(poolSlug) {
   if (!_agentDailyData) return {absenceDays:0,activeDays:0,totalWorkdays:0};
   var poolData = _agentDailyData.filter(function(d){return d.pool_slug===poolSlug;});
