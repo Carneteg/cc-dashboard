@@ -7,7 +7,7 @@
 
 import './tab-wp.js?v=16';
 import './tab-agent.js?v=16';
-import { naInit } from './tab-agent-eff.js?v=16';
+import { naInit, csatInit } from './tab-agent-eff.js?v=17';
 import './tab-exec.js?v=16';
 
 // Global error boundary
@@ -23,4 +23,5 @@ document.addEventListener('DOMContentLoaded', () => {
 const upd = document.getElementById('upd');
 if (upd) upd.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
 naInit();
+  csatInit();
 });
