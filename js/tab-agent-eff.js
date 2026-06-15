@@ -25,15 +25,24 @@ try{
 var url = new URL("https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api/agent-breakdown");
 url.searchParams.set("month", month);
 if(pool) url.searchParams.set("pool", pool);
-var res = await fetch(url);
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTM2NzksImV4cCI6MjA5NjU4OTY3OX0.Nenlc-8pab7hfLtkRDovXyr_QL5cnBwZlRY9jmGaOAs";
+var fcrUrl = "https://psyelfxaehmtnfdaobyi.supabase.co/rest/v1/rpc/get_agent_fcr";
+var [res, fcrRes] = await Promise.all([
+  fetch(url),
+  fetch(fcrUrl, {method:'POST', headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'}, body:JSON.stringify({p_year_month:month})})
+]);
 if(!res.ok) throw new Error("HTTP " + res.status);
 var data = await res.json();
+var fcrData = fcrRes.ok ? await fcrRes.json() : [];
 var agents = data.agents || [];
-var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
+var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebåten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
 agents = agents.filter(function(a){
 var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();};
 return ACTIVE_ROSTER.some(function(r){return norm(r)===norm(a.agent_name);});
 });
+var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();};
+var fcrMap={};
+(Array.isArray(fcrData)?fcrData:[]).forEach(function(f){ fcrMap[norm(f.agent_name)]=f; });
 if(meta) meta.textContent = (agents.length) + " agents · " + naFmt(data.total_handled||0) + " tickets";
 if(!agents.length){
 body.innerHTML = '<div class="na-empty">No agent data for this period.</div>';
@@ -45,12 +54,23 @@ function fmtTime(mins){
 var h = Math.floor(mins/60), m = Math.round(mins%60);
 return h > 0 ? h+"h "+m+"m" : m+"m";
 }
+function fcrColor(pct){
+if(pct>=20) return 'color:#22c55e';
+if(pct>=10) return 'color:#f59e0b';
+return 'color:#ef4444';
+}
 var rows = agents.map(function(a, i){
 var w = Math.max(3, Math.round((a.handled_tickets / max) * 90));
 var ahtMins = a.avg_handle_minutes || 0;
 var totalMins = ahtMins * a.cc_scope_tickets;
 var ahtTxt = a.measured ? naFmt(ahtMins) : naFmt(ahtMins)+"*";
 var drillId = "na-drill-"+i;
+var fcrRow = fcrMap[norm(a.agent_name)];
+var fcrPct = fcrRow ? Number(fcrRow.fcr_pct) : null;
+var avgRep = fcrRow ? Number(fcrRow.avg_replies) : null;
+var fcrTxt = fcrPct !== null ? naFmt(fcrPct)+"%" : "–";
+var repTxt = avgRep !== null ? naFmt(avgRep) : "–";
+var fcrStyle = fcrPct !== null ? fcrColor(fcrPct) : '';
 var poolRows = (a.pools||[]).filter(function(p){return p.handled_tickets>0;}).map(function(p){
 var pMins = (p.eff_aht_weighted||0) * (p.cc_scope_tickets||p.handled_tickets);
 return "<tr class='na-drill-pool'>"
@@ -59,6 +79,8 @@ return "<tr class='na-drill-pool'>"
 +"<td class='num' style='color:#64748b;font-size:12px'>"+naFmt(p.cc_scope_tickets||0)+"</td>"
 +"<td class='num' style='color:#64748b;font-size:12px'>"+(p.eff_aht_weighted||0)+"</td>"
 +"<td class='num' style='color:#64748b;font-size:12px'>"+fmtTime(pMins)+"</td>"
++"<td class='num' style='color:#64748b;font-size:12px'>–</td>"
++"<td class='num' style='color:#64748b;font-size:12px'>–</td>"
 +"</tr>";
 }).join("");
 return "<tr class='na-row' style='cursor:pointer' data-drill='"+drillId+"'>"
@@ -68,15 +90,21 @@ return "<tr class='na-row' style='cursor:pointer' data-drill='"+drillId+"'>"
 +"<td class='num'>"+naFmt(a.cc_scope_tickets)+"</td>"
 +"<td class='num'>"+ahtTxt+"</td>"
 +"<td class='num'>"+fmtTime(totalMins)+"</td>"
++"<td class='num' style='"+fcrStyle+"'>"+fcrTxt+"</td>"
++"<td class='num'>"+repTxt+"</td>"
 +"</tr>"
 +"<tbody id='"+drillId+"' style='display:none'>"+poolRows+"</tbody>";
 }).join("");
 var totalTimeMins = agents.reduce(function(s,a){return s+(a.avg_handle_minutes||0)*a.cc_scope_tickets;},0);
+var totalFcr = agents.reduce(function(s,a){ var f=fcrMap[norm(a.agent_name)]; return s+(f?Number(f.fcr):0); },0);
+var totalTicketsMeta = agents.reduce(function(s,a){ var f=fcrMap[norm(a.agent_name)]; return s+(f?Number(f.tickets):0); },0);
+var teamFcrPct = totalTicketsMeta>0 ? Math.round(100*totalFcr/totalTicketsMeta*10)/10 : null;
 body.innerHTML = "<table>"
-+"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th><th class='num'>Total Time</th></tr></thead>"
++"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th><th class='num'>Total Time</th><th class='num' title='Tickets resolved in single touch (reply_count = 1)'>FCR %</th><th class='num' title='Average replies per ticket — lower is better'>Avg Replies</th></tr></thead>"
 +"<tbody>"+rows+"</tbody>"
-+"<tfoot><tr><td>Total ("+agents.length+" agents)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td><td class='num'>"+fmtTime(totalTimeMins)+"</td></tr></tfoot>"
-+"</table>";
++"<tfoot><tr><td>Total ("+agents.length+" agents)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td><td class='num'>"+fmtTime(totalTimeMins)+"</td><td class='num' style='"+(teamFcrPct!==null?fcrColor(teamFcrPct):'')+"'>"+(teamFcrPct!==null?teamFcrPct+'%':'–')+"</td><td class='num'></td></tr></tfoot>"
++"</table>"
++"<p style='font-size:11px;color:#94a3b8;margin:6px 0 0'>* AHT = pool-weighted estimate (Freshdesk time tracking not enabled). FCR = single-touch resolution rate.</p>";
 }catch(e){
 if(body) body.innerHTML = '<div class="na-error">Could not load agent data: ' + naEsc(e.message) + '</div>';
 }
