@@ -843,26 +843,51 @@ async function loadProductsTab(){
   window._prL=true;
   var tbody=document.getElementById('productstb');
   if(!tbody){
-    // Find any table in tab-products
     var tab=document.getElementById('tab-products');
     if(tab){var tb2=tab.querySelector('tbody');if(tb2)tbody=tb2;}
   }
   if(!tbody)return;
   tbody.innerHTML='<tr><td colspan="4" style="color:#64748b;padding:16px">Loading...</td></tr>';
+  var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTM2NzksImV4cCI6MjA5NjU4OTY3OX0.Nenlc-8pab7hfLtkRDovXyr_QL5cnBwZlRY9jmGaOAs';
   try{
-    var d=await api('/products');
-    var ps=d.products||[];
-    if(!ps.length){tbody.innerHTML='<tr><td colspan="4" style="color:#94a3b8;text-align:center;padding:16px">No data</td></tr>';return;}
+    var [prodResp, catResp] = await Promise.all([
+      api('/products'),
+      fetch('https://psyelfxaehmtnfdaobyi.supabase.co/rest/v1/rpc/get_ticket_category_stats',{method:'POST',headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_year_month:null})})
+    ]);
+    var ps=(prodResp.products||[]);
+    var cats=catResp.ok?await catResp.json():[];
     var total=ps.reduce(function(s,p){return s+(p.last_30_days||0);},0)||1;
-    tbody.innerHTML=ps.map(function(p){
+    if(!ps.length){tbody.innerHTML='<tr><td colspan="4" style="color:#94a3b8;text-align:center;padding:16px">No data</td></tr>';}
+    else tbody.innerHTML=ps.map(function(p){
       var share=Math.round((p.last_30_days||0)/total*100);
-      var barW=share;
-      return '<tr><td style="font-size:13px">'+h(p.product||'Unknown')+'</td><td class="n">'+(p.today||0)+'</td><td class="n">'+(p.last_30_days||0)+'</td><td style="min-width:80px"><div style="background:#e2e8f0;border-radius:2px;height:6px"><div style="width:'+barW+'%;background:#6366f1;border-radius:2px;height:6px"></div></div><span style="font-size:10px;color:#64748b">'+share+'%</span></td></tr>';
+      return '<tr><td style="font-size:13px">'+h(p.product||'Unknown')+'</td><td class="n">'+(p.today||0)+'</td><td class="n">'+(p.last_30_days||0)+'</td><td style="min-width:80px"><div style="background:#e2e8f0;border-radius:2px;height:6px"><div style="width:'+share+'%;background:#6366f1;border-radius:2px;height:6px"></div></div><span style="font-size:10px;color:#64748b">'+share+'%</span></td></tr>';
     }).join('');
-  }catch(e){tbody.innerHTML='<tr><td colspan="4" style="color:#fca5a5;padding:16px">Error: '+h(String(e.message||e))+'</td></tr>';}
+    var tab=document.getElementById('tab-products');
+    if(tab && Array.isArray(cats) && cats.length){
+      var catDiv=tab.querySelector('.cat-type-section')||document.createElement('div');
+      catDiv.className='cat-type-section';
+      var typeMap={};
+      cats.forEach(function(r){
+        var t=r.ticket_type||'unknown';
+        if(!typeMap[t])typeMap[t]={ticket_type:t,count:0,fcr:0};
+        typeMap[t].count+=Number(r.ticket_count||0);
+        typeMap[t].fcr+=Number(r.fcr_count||0);
+      });
+      var types=Object.values(typeMap).sort(function(a,b){return b.count-a.count}).slice(0,12);
+      var maxC=types[0]?types[0].count:1;
+      catDiv.innerHTML='<div style="margin-top:28px"><div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px">By Ticket Type <span style="font-size:11px;font-weight:400;color:#94a3b8">(all-time, CC-scope)</span></div>'
+        +'<table style="width:100%;border-collapse:collapse"><thead><tr style="font-size:11px;color:#64748b;text-transform:uppercase"><th style="text-align:left;padding:6px 8px">Type</th><th style="text-align:right;padding:6px 8px">Tickets</th><th style="text-align:right;padding:6px 8px">FCR %</th><th style="text-align:left;padding:6px 8px">Volume</th></tr></thead><tbody>'
+        +types.map(function(r){
+          var fcrPct=r.count>0?Math.round(100*r.fcr/r.count*10)/10:0;
+          var fcrCol=fcrPct>=20?'#22c55e':fcrPct>=10?'#f59e0b':'#94a3b8';
+          var barW=Math.round(r.count/maxC*120);
+          return '<tr style="border-top:1px solid #f1f5f9"><td style="padding:7px 8px;font-size:12px">'+h(r.ticket_type)+'</td><td style="text-align:right;padding:7px 8px;font-size:12px">'+r.count+'</td><td style="text-align:right;padding:7px 8px;font-size:12px;font-weight:600;color:'+fcrCol+'">'+fcrPct+'%</td><td style="padding:7px 8px"><div style="background:#e2e8f0;border-radius:2px;height:6px;width:'+barW+'px"><div style="width:100%;background:#8b5cf6;border-radius:2px;height:6px"></div></div></td></tr>';
+        }).join('')
+        +'</tbody></table></div>';
+      if(!tab.contains(catDiv)) tab.appendChild(catDiv);
+    }
+  }catch(e){if(tbody)tbody.innerHTML='<tr><td colspan="4" style="color:#fca5a5;padding:16px">Error: '+h(String(e.message||e))+'</td></tr>';}
 }
-
-// ── Recent Tickets tab ──────────────────────────────────
 async function loadRecentTab(){
   window._rcL=true;
   var tab=document.getElementById('tab-recent');
