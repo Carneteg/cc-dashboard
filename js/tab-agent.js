@@ -6,9 +6,15 @@
 var _agApiBase = "https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api";
 var _agAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ";
 var _agApiCache = {};
-function api(p){
-  if(_agApiCache[p] && Date.now()-_agApiCache[p].t < 30000) return Promise.resolve(_agApiCache[p].d);
-  return fetch(_agApiBase+p,{headers:{'apikey':_agAnonKey,'Authorization':'Bearer '+_agAnonKey}}).then(r=>r.json()).then(function(d){_agApiCache[p]={d:d,t:Date.now()};return d;});
+function api(p, timeoutMs){
+if(_agApiCache[p] && Date.now()-_agApiCache[p].t < 30000) return Promise.resolve(_agApiCache[p].d);
+timeoutMs = timeoutMs || 12000;
+var ctrl = new AbortController();
+var timer = setTimeout(function(){ ctrl.abort(); }, timeoutMs);
+return fetch(_agApiBase+p,{headers:{'apikey':_agAnonKey,'Authorization':'Bearer '+_agAnonKey}, signal:ctrl.signal})
+  .then(function(r){ clearTimeout(timer); return r.json(); })
+  .then(function(d){ _agApiCache[p]={d:d,t:Date.now()}; return d; })
+  .catch(function(e){ clearTimeout(timer); throw e; });
 }
 function swedishHolidays(yr){
 var s=new Set();
@@ -49,7 +55,9 @@ async function loadAgentTab() {
   var tsEl = document.getElementById('ag-updated-ts');
   if (tsEl) tsEl.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) + ' - Showing: ' + ym;
   var tbody = document.getElementById('ag-team-table-body');
-  if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;color:#7a8799;">Loading data...</td></tr>';
+  if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:32px;color:#64748b"><div style="display:inline-flex;align-items:center;gap:10px"><span style="display:inline-block;width:16px;height:16px;border:2px solid #e2e8f0;border-top-color:#1f6f8b;border-radius:50%;animation:spin .8s linear infinite"></span>Laddar agentdata…</div></td></tr>';
+  var kpiGrid = document.getElementById('ag-kpi-grid');
+  if (kpiGrid) kpiGrid.innerHTML = Array(6).fill('<div class="ag-kpi-card" style="opacity:.4"><div class="ag-kpi-label">—</div><div class="ag-kpi-value" style="color:#e2e8f0">···</div></div>').join('');
   try {
     var ahtData = await api('/aht-stats?months=4');
     var months = ahtData.months || [];
@@ -62,30 +70,11 @@ async function loadAgentTab() {
     renderAgentTable();
     renderAgentAbsenceDetail(ym);
   } catch(e) {
-    var tbody2 = document.getElementById('ag-team-table-body');
-    if (tbody2) tbody2.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:24px;color:#ef4444;">Fel vid laddning: '+(e.message||e)+'</td></tr>';
-    console.error('loadAgentTab error:', e);
-  }
+  var errMsg = e.name === 'AbortError' ? 'Timeout – API svarade inte inom 12 s' : (e.message || String(e));
+  var tbody2 = document.getElementById('ag-team-table-body');
+  if (tbody2) tbody2.innerHTML = '<tr><td colspan="10" style="padding:20px"><div style="background:#fff5f5;border:1px solid #fecaca;border-radius:8px;padding:14px 18px;display:flex;align-items:center;gap:14px"><div style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:#fca5a5;display:flex;align-items:center;justify-content:center;color:#dc2626;font-weight:700;font-size:13px">!</div><div style="flex:1"><div style="font-size:13px;font-weight:700;color:#dc2626;margin-bottom:3px">Kunde inte ladda agentdata</div><div style="font-size:12px;color:#64748b">'+errMsg+'</div></div><button onclick="loadAgentTab()" style="padding:7px 14px;background:#1f6f8b;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">↺ Försök igen</button></div></td></tr>';
+  console.error('loadAgentTab error:', e);
 }
-
-async function loadAgentDailyDataFunc(ym) {
-  try {
-    var wfData = await api('/workforce?months=3');
-    if (wfData && wfData.daily && wfData.daily.length > 0) {
-      var ym7 = ym.substring(0,7);
-      _agentDailyData = (wfData.daily||[]).filter(function(d){return d.stat_date&&d.stat_date.substring(0,7)===ym7;});
-      return;
-    }
-    var trendData = await api('/trend');
-    if (trendData && trendData.trend && trendData.trend.length > 0) {
-      var ym7b = ym.substring(0,7);
-      _agentDailyData = (trendData.trend||[])
-        .filter(function(d){return d.day&&d.day.substring(0,7)===ym7b;})
-        .map(function(d){return {stat_date:d.day,ticket_count:d.tickets,pool_slug:null};});
-      return;
-    }
-    _agentDailyData = null;
-  } catch(e) { _agentDailyData = null; }
 }
 function detectAbsenceDaysForPool(poolSlug) {
   if (!_agentDailyData) return {absenceDays:0,activeDays:0,totalWorkdays:0};
@@ -158,7 +147,7 @@ function renderAgentTable() {
       +'</tr>';
   });
   var tbody = document.getElementById('ag-team-table-body');
-  if (tbody) tbody.innerHTML = rows.length>0?rows.join(''):'<tr><td colspan="10" style="text-align:center;padding:24px;color:#64748b;">Ingen data.</td></tr>';
+  if (tbody) tbody.innerHTML = rows.length>0?rows.join(''):'<tr><td colspan="10" style="text-align:center;padding:24px;color:#64748b;">Ingen data för vald period.</td></tr>';
   var bannerEl = document.getElementById('ag-absence-banner');
   if (bannerEl) {
     if (hasMissingDays) {
@@ -173,7 +162,7 @@ function renderAgentAbsenceDetail(ym) {
   var el = document.getElementById('ag-absence-detail');
   if (!el) return;
   if (!_agentDailyData||_agentDailyData.length===0) {
-    el.innerHTML='<div style="color:#64748b;font-size:12px;">Ingen daglig data tillganglig. Daglig data hamtas fran cc_daily_stats via /workforce endpoint.</div>';
+    el.innerHTML='<div style="color:#94a3b8;font-size:12px;padding:8px 0;">Ingen daglig data tillgänglig – daglig data hämtas från cc_daily_stats via /workforce-endpoint. Kontrollera att pipeline körs.</div>';
     return;
   }
   var byPool={};
@@ -285,7 +274,7 @@ function renderAgentIndividual() {
       + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:'+gapColor+';">'+Math.round(gapMinsPerDay)+' min</td>'
       + '</tr>';
   });
-  tbody.innerHTML = rows.length > 0 ? rows.join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#64748b;">Ingen data.</td></tr>';
+  tbody.innerHTML = rows.length > 0 ? rows.join('') : '<tr><td colspan="7" style="text-align:center;padding:24px;color:#64748b;">Ingen data för vald period.</td></tr>';
   renderAgentProductBreakdown();
 }
 
@@ -308,7 +297,7 @@ function renderAgentProductBreakdown() {
     api('/products').then(function(d) {
       window._agProductData = (d.products||[]).filter(function(p){return p.product!=='All Products'&&p.last_30_days>0;});
       renderAgentProductBreakdown();
-    }).catch(function(){ grid.innerHTML='<div style="color:#64748b;font-size:12px;padding:16px;">Produktdata ej tillganglig.</div>'; });
+    }).catch(function(){ grid.innerHTML='<div style="color:#94a3b8;font-size:12px;padding:16px;">Produktdata ej tillgänglig.</div>'; });
     return;
   }
   var ym = (document.getElementById('ag-filter-period')||{value:'2026-05'}).value;
