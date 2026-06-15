@@ -340,7 +340,7 @@ function ccLogin(){
   var u = (document.getElementById('cc-login-user').value||'').trim();
   var p = (document.getElementById('cc-login-pass').value||'').trim();
   var err = document.getElementById('cc-login-err');
-  if(u==='Simployer' && p==='FinaAI1234!'){
+  if(u==='Simployer' && p==='FinAI1234!'){
     sessionStorage.setItem('cc_auth_v1','ok');
     document.getElementById('cc-login-overlay').style.display='none';
     err.style.display='none';
