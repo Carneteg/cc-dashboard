@@ -30,7 +30,7 @@ if(!res.ok) throw new Error("HTTP " + res.status);
 var data = await res.json();
 var agents = data.agents || [];
 // Filter: only show agents in the active team roster
-var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebaråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille","Jim Zsuppan","Katja Svennerholm","Anett Nilsen","Stefan Sahlin","Lukas Andersson"];
+var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebaråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
 agents = agents.filter(function(a){
 var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();};
 return ACTIVE_ROSTER.some(function(r){return norm(r)===norm(a.agent_name);});
