@@ -294,7 +294,6 @@ function showTab(id,btn){
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
   if(id==='wp'&&!window._wpL)initWP();
-  if(id==='workforce'&&!window._wfL)loadWorkforce();
   if(id==='aht'&&!window._ahtL)loadAHT();
   if(id==='classify'&&!window._clL)initClassifyTab();
   if(id==='prognos'&&!window._pgL)initPrognos();
@@ -813,3 +812,80 @@ window.runPrognos = runPrognos;
 window.setView = setView;
 
 export { initWP, showTab, setTimeGran, setTrendWindow, loadOverview };
+
+// ── Trend tab ──────────────────────────────────────────
+async function loadTrendTab(){
+  window._trL=true;
+  var tbody=document.getElementById('trendt');
+  if(!tbody)return;
+  tbody.innerHTML='<tr><td colspan="2" style="color:#64748b;padding:16px">Loading...</td></tr>';
+  try{
+    var d=await api('/overview');
+    // Use daily stats from overview or aht-stats
+    var d2=await api('/aht-stats?months=2');
+    var months=d2.months||[];
+    if(!months.length){tbody.innerHTML='<tr><td colspan="2" style="color:#94a3b8;padding:16px;text-align:center">No data available</td></tr>';return;}
+    // Build rows: one row per pool per month
+    var rows=[];
+    months.forEach(function(m){
+      (m.pools||[]).forEach(function(p){
+        if(p.raw_tickets>0){
+          rows.push('<tr><td>'+h(m.year_month)+' · '+h(p.pool_name)+'</td><td class="n">'+p.raw_tickets+'</td></tr>');
+        }
+      });
+    });
+    tbody.innerHTML=rows.join('')||'<tr><td colspan="2" style="color:#94a3b8;padding:16px;text-align:center">No ticket data</td></tr>';
+  }catch(e){tbody.innerHTML='<tr><td colspan="2" style="color:#fca5a5;padding:16px">Error: '+h(String(e.message||e))+'</td></tr>';}
+}
+
+// ── Products tab ────────────────────────────────────────
+async function loadProductsTab(){
+  window._prL=true;
+  var tbody=document.getElementById('productstb');
+  if(!tbody){
+    // Find any table in tab-products
+    var tab=document.getElementById('tab-products');
+    if(tab){var tb2=tab.querySelector('tbody');if(tb2)tbody=tb2;}
+  }
+  if(!tbody)return;
+  tbody.innerHTML='<tr><td colspan="4" style="color:#64748b;padding:16px">Loading...</td></tr>';
+  try{
+    var d=await api('/products');
+    var ps=d.products||[];
+    if(!ps.length){tbody.innerHTML='<tr><td colspan="4" style="color:#94a3b8;text-align:center;padding:16px">No data</td></tr>';return;}
+    var total=ps.reduce(function(s,p){return s+(p.last_30_days||0);},0)||1;
+    tbody.innerHTML=ps.map(function(p){
+      var share=Math.round((p.last_30_days||0)/total*100);
+      var barW=share;
+      return '<tr><td style="font-size:13px">'+h(p.product||'Unknown')+'</td><td class="n">'+(p.today||0)+'</td><td class="n">'+(p.last_30_days||0)+'</td><td style="min-width:80px"><div style="background:#e2e8f0;border-radius:2px;height:6px"><div style="width:'+barW+'%;background:#6366f1;border-radius:2px;height:6px"></div></div><span style="font-size:10px;color:#64748b">'+share+'%</span></td></tr>';
+    }).join('');
+  }catch(e){tbody.innerHTML='<tr><td colspan="4" style="color:#fca5a5;padding:16px">Error: '+h(String(e.message||e))+'</td></tr>';}
+}
+
+// ── Recent Tickets tab ──────────────────────────────────
+async function loadRecentTab(){
+  window._rcL=true;
+  var tab=document.getElementById('tab-recent');
+  if(!tab)return;
+  var tbody=tab.querySelector('tbody')||tab.querySelector('table');
+  var container=tab.querySelector('.tw')||tab;
+  container.innerHTML='<div style="color:#64748b;padding:24px;text-align:center">Loading recent tickets...</div>';
+  try{
+    var d=await api('/overview');
+    var ps=d.products||[];
+    var total30=ps.reduce(function(s,p){return s+(p.last_30_days||0);},0);
+    var html2='<div class="st" style="margin-bottom:12px">Recent activity — last 30 days</div>';
+    html2+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px">';
+    html2+='<div class="wc"><div class="wl">Total (30d)</div><div class="wv" style="font-size:20px">'+total30.toLocaleString()+'</div></div>';
+    html2+='<div class="wc"><div class="wl">Yesterday</div><div class="wv" style="font-size:20px">'+(d.yesterday_total||0)+'</div></div>';
+    html2+='<div class="wc"><div class="wl">Avg/day (7d)</div><div class="wv" style="font-size:20px">'+(d.avg_7d!=null?d.avg_7d.toFixed(1):'–')+'</div></div>';
+    html2+='</div>';
+    html2+='<table><thead><tr><th>Product</th><th class="r">Yesterday</th><th class="r">7 days</th><th class="r">30 days</th><th class="r">Share</th></tr></thead><tbody>';
+    ps.forEach(function(p){
+      var share=total30>0?Math.round((p.last_30_days||0)/total30*100):0;
+      html2+='<tr><td>'+h(p.product||'Unknown')+'</td><td class="n">'+(p.yesterday||0)+'</td><td class="n">'+(p.last_7_days||0)+'</td><td class="n">'+(p.last_30_days||0)+'</td><td class="n">'+share+'%</td></tr>';
+    });
+    html2+='</tbody></table>';
+    container.innerHTML=html2;
+  }catch(e){container.innerHTML='<div style="color:#fca5a5;padding:24px">Error: '+h(String(e.message||e))+'</div>';}
+}
