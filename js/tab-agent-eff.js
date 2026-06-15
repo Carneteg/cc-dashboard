@@ -61,7 +61,7 @@ return "<tr class='na-drill-pool'>"
 +"<td class='num' style='color:#64748b;font-size:12px'>"+fmtTime(pMins)+"</td>"
 +"</tr>";
 }).join("");
-return "<tr class='na-row' style='cursor:pointer' onclick="var d=document.getElementById('"+drillId+"');if(d){d.style.display=d.style.display==='none'?'contents':'none';this.querySelector('.na-expand').textContent=d.style.display==='none'?'▶':'▼';}">"
+return "<tr class='na-row' style='cursor:pointer' data-drill='"+drillId+"'>"
 +"<td><div class='na-name'>"+naEsc(a.agent_name)+" <span class='na-expand' style='font-size:10px;color:#94a3b8'>▶</span></div></td>"
 +"<td class='num'><div class='na-bar-wrap'><span>"+naFmt(a.handled_tickets)+"</span>"
 +"<span class='na-bar-track'><span class='na-bar' style='width:"+w+"px;display:block'></span></span></div></td>"
@@ -81,6 +81,17 @@ body.innerHTML = "<table>"
 if(body) body.innerHTML = '<div class="na-error">Could not load agent data: ' + naEsc(e.message) + '</div>';
 }
 }
+// Drill-down click delegation
+document.addEventListener("click", function(e){
+  var row = e.target.closest("[data-drill]");
+  if(!row) return;
+  var id = row.getAttribute("data-drill");
+  var d = document.getElementById(id);
+  var exp = row.querySelector(".na-expand");
+  if(d){ d.style.display = d.style.display==='none' ? 'contents' : 'none'; }
+  if(exp){ exp.textContent = (d && d.style.display!=='none') ? '▼' : '▶'; }
+});
+
 window.renderNamedAgents = renderNamedAgents;
 
 function naInit(){
