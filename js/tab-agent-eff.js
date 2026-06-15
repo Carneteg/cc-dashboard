@@ -29,8 +29,7 @@ var res = await fetch(url);
 if(!res.ok) throw new Error("HTTP " + res.status);
 var data = await res.json();
 var agents = data.agents || [];
-// Filter: only show agents in the active team roster
-var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebaråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
+var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
 agents = agents.filter(function(a){
 var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();};
 return ACTIVE_ROSTER.some(function(r){return norm(r)===norm(a.agent_name);});
@@ -42,28 +41,46 @@ return;
 }
 var max = Math.max.apply(null, agents.map(function(a){return a.handled_tickets;}));
 if(max < 1) max = 1;
-var rows = agents.map(function(a){
+function fmtTime(mins){
+var h = Math.floor(mins/60), m = Math.round(mins%60);
+return h > 0 ? h+"h "+m+"m" : m+"m";
+}
+var rows = agents.map(function(a, i){
 var w = Math.max(3, Math.round((a.handled_tickets / max) * 90));
-var pools = (a.pools||[]).map(function(p){return p.pool;}).join(", ");
-var ahtTxt = a.measured ? naFmt(a.avg_handle_minutes) : naFmt(a.avg_handle_minutes)+"*";
-return "<tr>"
-+"<td><div class='na-name'>"+naEsc(a.agent_name)+"</div><div class='na-pools'>"+naEsc(pools)+"</div></td>"
+var ahtMins = a.avg_handle_minutes || 0;
+var totalMins = ahtMins * a.cc_scope_tickets;
+var ahtTxt = a.measured ? naFmt(ahtMins) : naFmt(ahtMins)+"*";
+var drillId = "na-drill-"+i;
+var poolRows = (a.pools||[]).filter(function(p){return p.handled_tickets>0;}).map(function(p){
+var pMins = (p.eff_aht_weighted||0) * (p.cc_scope_tickets||p.handled_tickets);
+return "<tr class='na-drill-pool'>"
++"<td style='padding-left:32px;color:#64748b;font-size:12px'>└ "+naEsc(p.pool)+"</td>"
++"<td class='num' style='color:#64748b;font-size:12px'>"+naFmt(p.handled_tickets)+"</td>"
++"<td class='num' style='color:#64748b;font-size:12px'>"+naFmt(p.cc_scope_tickets||0)+"</td>"
++"<td class='num' style='color:#64748b;font-size:12px'>"+(p.eff_aht_weighted||0)+"</td>"
++"<td class='num' style='color:#64748b;font-size:12px'>"+fmtTime(pMins)+"</td>"
++"</tr>";
+}).join("");
+return "<tr class='na-row' style='cursor:pointer' onclick="var d=document.getElementById('"+drillId+"');if(d){d.style.display=d.style.display==='none'?'contents':'none';this.querySelector('.na-expand').textContent=d.style.display==='none'?'▶':'▼';}">"
++"<td><div class='na-name'>"+naEsc(a.agent_name)+" <span class='na-expand' style='font-size:10px;color:#94a3b8'>▶</span></div></td>"
 +"<td class='num'><div class='na-bar-wrap'><span>"+naFmt(a.handled_tickets)+"</span>"
 +"<span class='na-bar-track'><span class='na-bar' style='width:"+w+"px;display:block'></span></span></div></td>"
 +"<td class='num'>"+naFmt(a.cc_scope_tickets)+"</td>"
 +"<td class='num'>"+ahtTxt+"</td>"
-+"</tr>";
++"<td class='num'>"+fmtTime(totalMins)+"</td>"
++"</tr>"
++"<tbody id='"+drillId+"' style='display:none'>"+poolRows+"</tbody>";
 }).join("");
+var totalTimeMins = agents.reduce(function(s,a){return s+(a.avg_handle_minutes||0)*a.cc_scope_tickets;},0);
 body.innerHTML = "<table>"
-+"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th></tr></thead>"
++"<thead><tr><th>Agent</th><th class='num'>Handled</th><th class='num'>CC-scope</th><th class='num'>AHT (min)</th><th class='num'>Total Time</th></tr></thead>"
 +"<tbody>"+rows+"</tbody>"
-+"<tfoot><tr><td>Total ("+agents.length+" agents)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td></tr></tfoot>"
++"<tfoot><tr><td>Total ("+agents.length+" agents)</td><td class='num'>"+naFmt(data.total_handled||0)+"</td><td class='num'>"+naFmt(agents.reduce(function(s,a){return s+a.cc_scope_tickets;},0))+"</td><td class='num'></td><td class='num'>"+fmtTime(totalTimeMins)+"</td></tr></tfoot>"
 +"</table>";
 }catch(e){
 if(body) body.innerHTML = '<div class="na-error">Could not load agent data: ' + naEsc(e.message) + '</div>';
 }
 }
-
 window.renderNamedAgents = renderNamedAgents;
 
 function naInit(){
