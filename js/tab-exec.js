@@ -43,7 +43,9 @@ const ROSTER = [
   { name:'Honya Mohammed',           level:'Junior', status:'Probation',note:'Ends 7 Jul',             active:true,  risk:'crit', riskNote:'Probation ends 7 Jul' },
   { name:'Hege Anita Aarnesen',      level:'Senior', status:'Temp',     note:'Ends Aug',               active:true,  risk:'warn', riskNote:'Temp ends Aug 2026' },
   { name:'Johanna Martinsson',       level:'Temp',   status:'Temp',     note:'Ends Aug',               active:true,  risk:'warn', riskNote:'Temp ends Aug 2026' },
-  { name:'Jimmy Skille',             level:'Senior', status:'Active',   note:'Parental leave Aug',     active:true,  risk:'warn', riskNote:'On parental leave from Aug' },  { name:'Anett Nilsen',             level:'Senior', status:'Moved',    note:'Other dept',             active:false },
+  { name:'Jimmy Skille',             level:'Senior', status:'Active',   note:'Parental leave Aug',     active:true,  risk:'warn', riskNote:'On parental leave from Aug' },  { name:'Jim Zsuppan',             level:'Senior', status:'Leave',    note:'Parental leave Jan 2027', active:false, risk:'info', riskNote:'Parental leave until Jan 2027' },
+  { name:'Katja Svennerholm',        level:'Senior', status:'Leave',    note:'Parental leave Jan 2027', active:false, risk:'info', riskNote:'Parental leave until Jan 2027' },
+  { name:'Anett Nilsen',             level:'Senior', status:'Moved',    note:'Other dept',             active:false },
   { name:'Stefan Sahlin',            level:'Senior', status:'Moved',    note:'Other dept',             active:false },
   { name:'Lukas Andersson',          level:'Senior', status:'Moved',    note:'Other dept',             active:false }
 ];
