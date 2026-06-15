@@ -848,7 +848,7 @@ async function loadProductsTab(){
   }
   if(!tbody)return;
   tbody.innerHTML='<tr><td colspan="4" style="color:#64748b;padding:16px">Loading...</td></tr>';
-  var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTM2NzksImV4cCI6MjA5NjU4OTY3OX0.Nenlc-8pab7hfLtkRDovXyr_QL5cnBwZlRY9jmGaOAs';
+  var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTM2NzksImV4cCI6MjA5NjU4OTY3OX0.Nenlc-8pab7hfLtkRDovXy5dVU-oDSNE01STdV-WbJ8';
   try{
     var [prodResp, catResp] = await Promise.all([
       api('/products'),
