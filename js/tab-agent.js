@@ -424,7 +424,11 @@ function renderAgentProductBreakdown() {
       const res=await fetch(url);
       if(!res.ok) throw new Error("HTTP "+res.status);
       const data=await res.json();
-      const agents=data.agents||[];
+      const agents=(data.agents||[]).filter(function(a){
+var APPROVED=["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engebaråten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
+var norm=function(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();};
+return APPROVED.some(function(r){return norm(r)===norm(a.agent_name);});
+});
       const target=data.params?.occupancy_target ?? 0.75;
       meta.textContent=`${data.agent_count} agents · ${aeFmt(data.total_handled)} tickets · ${aeFmt((data.total_modeled_minutes||0)/60,0)} modeled hrs`;
 
