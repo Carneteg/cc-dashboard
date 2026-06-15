@@ -5,7 +5,7 @@
 // naInit is exported from tab-agent-eff.js - called on DOMContentLoaded
 // v19- tab-agent v17 (timeout+retry), tab-agent-eff v24 (Singelkontakt, AHT trend) with correct FTE from masterdata
 
-import './tab-wp.js?v=18';
+import './tab-wp.js?v=19';
 import './tab-agent.js?v=17';
 import { naInit, csatInit } from './tab-agent-eff.js?v=24';
 import './tab-exec.js?v=21';
