@@ -118,14 +118,6 @@ function renderExec(){
     <div style="font-size:22px;font-weight:800;color:#1e293b;letter-spacing:-.03em">Executive Summary</div>
     <div style="font-size:13px;color:#64748b;margin-top:3px">CC Workforce — ${new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'})} · Source: CC_FTE_Calculator.xlsx</div>
   </div>
-  <div style="display:flex;align-items:center;gap:14px">
-    <div style="text-align:center;background:#fff;border:2px solid ${sColor};border-radius:12px;padding:12px 20px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
-      <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Health Index</div>
-      <div style="font-size:36px;font-weight:900;color:${sColor};line-height:1;letter-spacing:-.04em">${score}</div>
-      <div style="font-size:11px;font-weight:700;color:${sColor};margin-top:3px">${sLabel}</div>
-    </div>
-  </div>
-</div>
 
 <!-- ─── ROW 1: 4 KPI cards ─── -->
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
