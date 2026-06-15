@@ -151,6 +151,23 @@ el.innerHTML = `
 
   </div>
 
+    <!-- LEAVE IMPACT STRIP -->
+  ${(()=>{
+    const onLeaveNow = ROSTER.filter(r=>!r.active && r.risk==='info');
+    const goingOnLeave = ROSTER.filter(r=>r.active && r.risk==='warn' && r.riskNote && (r.riskNote.toLowerCase().includes('leave') || r.riskNote.toLowerCase().includes('temp') || r.riskNote.toLowerCase().includes('ends')));
+    const probation = ROSTER.filter(r=>r.active && r.risk && (r.risk==='crit'||r.risk==='warn') && r.riskNote && r.riskNote.toLowerCase().includes('probation'));
+    const leaveNames = onLeaveNow.map(r=>r.name.split(' ')[0]).join(', ');
+    const riskNames = goingOnLeave.map(r=>r.name.split(' ')[0]).join(', ');
+    const probNames = probation.map(r=>r.name.split(' ')[0]).join(', ');
+    const postAugSupplyLoss = goingOnLeave.length * 0.5;
+    const postAugSupply = (PLAN.effectiveSupply - postAugSupplyLoss).toFixed(1);
+    const postAugGap = (postAugSupply - PLAN.requiredFte).toFixed(2);
+    const stripBg = Number(postAugGap) < 0 ? '#fef2f2' : '#f0fdf4';
+    const stripBorder = Number(postAugGap) < 0 ? '#fecaca' : '#bbf7d0';
+    const gapColor = Number(postAugGap) < 0 ? '#dc2626' : '#16a34a';
+    return `<div style="background:${stripBg};border:1px solid ${stripBorder};border-radius:12px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:20px;flex-wrap:wrap"><div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.08em;flex-shrink:0">Leave \u0026 Availability</div><div style="display:flex;gap:16px;flex-wrap:wrap;flex:1">${onLeaveNow.length ? `<div style="font-size:12px;color:#2563eb"><strong style="color:#1e40af">${onLeaveNow.length} on leave now:</strong> ${leaveNames}</div>` : ''}${goingOnLeave.length ? `<div style="font-size:12px;color:#b45309"><strong style="color:#92400e">${goingOnLeave.length} leaving/ending Aug:</strong> ${riskNames}</div>` : ''}${probation.length ? `<div style="font-size:12px;color:#dc2626"><strong style="color:#991b1b">${probation.length} on probation:</strong> ${probNames}</div>` : ''}</div><div style="flex-shrink:0;text-align:right"><div style="font-size:11px;color:#94a3b8;margin-bottom:2px">Post-Aug Eff. Supply</div><div style="font-size:20px;font-weight:700;color:${gapColor}">${postAugSupply} FTE <span style="font-size:13px">(${Number(postAugGap)>=0?'+':''} ${postAugGap})</span></div></div></div>`;
+  })()}
+
   <!-- ROW 2: POOLS + HR RISK -->
   <div style="display:grid;grid-template-columns:1fr 1.3fr;gap:12px;margin-bottom:20px;align-items:start">
 
