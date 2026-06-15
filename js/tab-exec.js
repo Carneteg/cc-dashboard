@@ -156,7 +156,7 @@ function renderExec(){
       const g = p.supply - p.required;
       const pct = Math.min(100, Math.abs(g) / p.required * 100);
       const barColor = g >= 0 ? '#22c55e' : '#ef4444';
-      const statusTag = g < -0.5 ? '<span class="tag crit">Critical</span>' : g < 0 ? '<span class="tag warn">Tight</span>' : g < 0.1 ? '<span class="tag warn">Tight</span>' : '<span class="tag ok">OK</span>';
+      const statusTag = g < -0.5 ? '<span class="tag crit">Critical</span>' : g < 0 ? '<span class="tag warn">Tight</span>' : '<span class="tag ok">OK</span>';
       return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
         <div style="width:110px;font-size:13px;font-weight:600;color:#1e293b">${p.name}</div>
         <div style="flex:1;background:#f1f5f9;border-radius:4px;height:8px;overflow:hidden">
@@ -294,7 +294,7 @@ function renderExec(){
 <!-- ─── Footer note ─── -->
 <div style="padding:12px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:11px;color:#64748b;line-height:1.6">
   <strong>Source:</strong> CC_FTE_Calculator.xlsx (official planning model). All values are static and represent the current planning baseline — not real-time API data. For real-time operational data see the Planning and Analytics tabs.
-  <br>Health Index formula: baseline 70 − 20 (Classic critical deficit) − 10 (post-aug risk) − probation/temp risk penalties + 5 (AI strategy headroom).
+  
 </div>
 
 </div>
