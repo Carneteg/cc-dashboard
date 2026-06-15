@@ -8,7 +8,7 @@
 import './tab-wp.js?v=16';
 import './tab-agent.js?v=16';
 import { naInit, csatInit } from './tab-agent-eff.js?v=17';
-import './tab-exec.js?v=18';
+import './tab-exec.js?v=19';
 
 // Global error boundary
 window.addEventListener('unhandledrejection', ev => {
