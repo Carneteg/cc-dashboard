@@ -1141,9 +1141,27 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
   </p>
 </div>
 
+
+<!-- ===== CSAT SECTION ===== -->
+<div id="csat-wrapper" style="margin-top:28px;margin-bottom:20px;background:#ffffff;border:1px solid #2d3148;border-radius:10px;padding:20px 22px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+<div>
+<h3 style="margin:0 0 2px;font-size:16px;font-weight:600;color:#1e293b;">CSAT — Customer Satisfaction</h3>
+<p style="color:#64748b;font-size:12.5px;margin:0;">Historical CSAT scores per month — CC group total and per pool. Source: <code>cc_csat_history</code>.</p>
+</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<label style="color:#94a3b8;font-size:12px;">Month
+<select id="csat-month-filter" style="margin-left:6px;font:inherit;padding:6px 10px;border:1px solid #2d3148;border-radius:7px;background:#f0f4f8;color:#1e293b;cursor:pointer;"></select>
+</label>
+</div>
+</div>
+<div id="csat-section"><div style="color:#64748b;font-size:12px;padding:18px 4px;">Loading CSAT data…</div></div>
+</div>
+<!-- ===== END CSAT SECTION ===== -->
+
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=16"></script>
+</main><script type="module" src="js/main.js?v=17"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');
