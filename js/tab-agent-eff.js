@@ -122,6 +122,88 @@ document.addEventListener("click", function(e){
 
 window.renderNamedAgents = renderNamedAgents;
 
+// ============================================================
+// AGENT TREND MODULE
+// ============================================================
+async function loadAgentTrend(containerEl){
+  if(!containerEl) return;
+  containerEl.innerHTML = '<div style="color:#64748b;font-size:13px;padding:16px">Loading trend data…</div>';
+  try{
+    var now = new Date();
+    var months = [];
+    for(var i=5; i>=0; i--){
+      var d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+      months.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));
+    }
+    var ACTIVE_ROSTER = ["Tobias Carneteg","Therese Nordtvedt","Ketil Olsen","Kari Engeb\u00e5ten","Martin Apiwat Eriksson","Arkadiusz Zawodnik","Mats Larsen","Ilse Larsson","Ian Masite","Honya Mohammed","Hege Anita Aarnesen","Johanna Martinsson","Jimmy Skille"];
+    var norm=function(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();};
+    var results = await Promise.all(months.map(function(m){
+      var url = new URL("https://psyelfxaehmtnfdaobyi.supabase.co/functions/v1/cc-dashboard-api/agent-breakdown");
+      url.searchParams.set("month", m);
+      return fetch(url).then(r=>r.ok?r.json():{agents:[]})
+        .then(function(d){
+          var agMap = {};
+          (d.agents||[]).filter(function(a){
+            return ACTIVE_ROSTER.some(function(r){return norm(r)===norm(a.agent_name);});
+          }).forEach(function(a){ agMap[norm(a.agent_name)] = a; });
+          return {month:m, agents:agMap};
+        });
+    }));
+    var agentNames = Object.keys(results.reduce(function(acc, r){
+      Object.keys(r.agents).forEach(function(k){acc[k]=1;}); return acc;
+    }, {}));
+    if(!agentNames.length){
+      containerEl.innerHTML='<div style="color:#94a3b8;font-size:13px;padding:16px">No trend data available.</div>';
+      return;
+    }
+    var html = '<div style="margin-top:28px">'
+      +'<div style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:8px">AHT Trend (6 months)</div>'
+      +'<div style="font-size:11px;color:#94a3b8;margin-bottom:12px">Pool-estimated AHT per agent per month. Green/red cell = below/above team average for that month.</div>'
+      +'<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:600px">'
+      +'<thead><tr style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #f1f5f9">'
+      +'<th style="text-align:left;padding:7px 10px">Agent</th>'
+      +months.map(function(m){ return '<th style="text-align:center;padding:7px 8px">'+m.slice(5)+'</th>'; }).join('')
+      +'<th style="text-align:right;padding:7px 10px">6m Trend</th>'
+      +'</tr></thead><tbody>';
+    agentNames.forEach(function(agKey){
+      var ahtValues = months.map(function(m,i){
+        var a = results[i].agents[agKey];
+        return a ? Number(a.avg_handle_minutes||0) : null;
+      });
+      var defined = ahtValues.filter(function(v){return v!==null && v>0;});
+      if(!defined.length) return;
+      var latest = defined[defined.length-1];
+      var first = defined[0];
+      var trendDiff = latest - first;
+      var trendColor = trendDiff <= -1 ? '#22c55e' : trendDiff >= 1 ? '#ef4444' : '#94a3b8';
+      var trendTxt = (trendDiff > 0 ? '+' : '') + trendDiff.toFixed(1) + ' min';
+      var realName = '';
+      results.forEach(function(r){if(r.agents[agKey])realName=r.agents[agKey].agent_name;});
+      var teamAvgs = months.map(function(m,i){
+        var vals = Object.values(results[i].agents).map(function(a){return Number(a.avg_handle_minutes||0);}).filter(function(v){return v>0;});
+        return vals.length ? vals.reduce(function(s,v){return s+v;},0)/vals.length : 0;
+      });
+      html += '<tr style="border-top:1px solid #f1f5f9">'
+        +'<td style="padding:8px 10px;font-size:12px;color:#334155;white-space:nowrap">'+naEsc(realName.split(' ').slice(0,2).join(' '))+'</td>'
+        +ahtValues.map(function(v, i){
+          var avg = teamAvgs[i];
+          var bg = v === null ? '#f8fafc' : v > avg*1.15 ? '#fff5f5' : v < avg*0.85 ? '#f0fdf4' : '#fff';
+          var txt = v !== null && v > 0 ? naFmt(v) : '\u2013';
+          return '<td style="text-align:center;padding:8px;font-size:12px;color:#475569;background:'+bg+'">'+txt+'</td>';
+        }).join('')
+        +'<td style="text-align:right;padding:8px 10px;font-size:12px;font-weight:600;color:'+trendColor+'">'+trendTxt+'</td>'
+        +'</tr>';
+    });
+    html += '</tbody></table></div></div>';
+    containerEl.innerHTML = html;
+  }catch(e){
+    containerEl.innerHTML='<div style="color:#fca5a5;font-size:13px;padding:16px">Error loading trend: '+naEsc(e.message)+'</div>';
+  }
+}
+
+window.loadAgentTrend = loadAgentTrend;
+
+
 function naInit(){
 var monthSel = document.getElementById("na-month");
 var poolSel = document.getElementById("na-pool");
@@ -138,6 +220,10 @@ monthSel.addEventListener("change", function(){ renderNamedAgents(monthSel.value
 }
 poolSel.addEventListener("change", function(){ renderNamedAgents(monthSel.value, poolSel.value); });
 renderNamedAgents(monthSel.value, poolSel.value);
+
+// Load 6-month AHT trend
+var trendEl = document.getElementById("na-trend");
+if(trendEl) loadAgentTrend(trendEl);
 }
 
 
