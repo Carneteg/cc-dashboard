@@ -84,4 +84,223 @@ poolSel.addEventListener("change", function(){ renderNamedAgents(monthSel.value,
 renderNamedAgents(monthSel.value, poolSel.value);
 }
 
-export { naInit, renderNamedAgents };
+
+// ============================================================
+// CSAT MODULE — Historical CSAT per agent & CC-group
+// Reads from cc_csat_history via Supabase REST (anon, public)
+// ============================================================
+var _CSAT_API = "https://psyelfxaehmtnfdaobyi.supabase.co/rest/v1/cc_csat_history";
+var _CSAT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBzeWVsZnhhZWhtdG5mZGFvYnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4NTI5MDQsImV4cCI6MjA2NDQyODkwNH0.I1oHCVFQLCkBKhtBi4dHpiyf2DUWcRSnF7fNQqpEFdQ";
+var _csatCache = {};
+
+async function csatFetch(params) {
+  var key = JSON.stringify(params);
+  if (_csatCache[key] && Date.now() - _csatCache[key].t < 60000) return _csatCache[key].d;
+  var url = new URL(_CSAT_API);
+  url.searchParams.set('select', '*');
+  url.searchParams.set('order', 'year_month.asc');
+  if (params.pool_slug) url.searchParams.set('pool_slug', 'eq.' + params.pool_slug);
+  if (params.agent_id)  url.searchParams.set('agent_id',  'eq.' + params.agent_id);
+  if (params.from_month) url.searchParams.set('year_month', 'gte.' + params.from_month);
+  var res = await fetch(url.toString(), {
+    headers: { 'apikey': _CSAT_KEY, 'Authorization': 'Bearer ' + _CSAT_KEY }
+  });
+  if (!res.ok) throw new Error('CSAT API ' + res.status);
+  var data = await res.json();
+  _csatCache[key] = { d: data, t: Date.now() };
+  return data;
+}
+
+function csatScoreColor(score) {
+  if (!score) return '#94a3b8';
+  if (score >= 4.5) return '#16a34a';
+  if (score >= 4.0) return '#4f46e5';
+  if (score >= 3.5) return '#d97706';
+  return '#ef4444';
+}
+function csatPctColor(pct) {
+  if (!pct) return '#94a3b8';
+  if (pct >= 90) return '#16a34a';
+  if (pct >= 80) return '#4f46e5';
+  if (pct >= 70) return '#d97706';
+  return '#ef4444';
+}
+function csatTrend(rows) {
+  if (rows.length < 2) return '';
+  var last  = parseFloat(rows[rows.length-1].csat_score) || 0;
+  var prev  = parseFloat(rows[rows.length-2].csat_score) || 0;
+  var delta = last - prev;
+  if (Math.abs(delta) < 0.02) return '<span style="color:#94a3b8">→</span>';
+  return delta > 0
+    ? '<span style="color:#16a34a">▲ +' + delta.toFixed(2) + '</span>'
+    : '<span style="color:#ef4444">▼ ' + delta.toFixed(2) + '</span>';
+}
+
+// Build sparkline of CSAT trend
+function csatSparkline(rows, width) {
+  width = width || 120;
+  if (!rows.length) return '';
+  var scores = rows.map(r => parseFloat(r.csat_score) || 0);
+  var min = Math.min(...scores) - 0.1;
+  var max = Math.max(...scores) + 0.1;
+  var range = max - min || 1;
+  var pts = scores.map((s, i) => {
+    var x = Math.round((i / Math.max(scores.length - 1, 1)) * (width - 4)) + 2;
+    var y = Math.round(20 - ((s - min) / range) * 16);
+    return x + ',' + y;
+  }).join(' ');
+  var lastColor = csatScoreColor(scores[scores.length - 1]);
+  return '<svg width="' + width + '" height="22" style="vertical-align:middle">'
+    + '<polyline points="' + pts + '" fill="none" stroke="' + lastColor + '" stroke-width="1.5" stroke-linejoin="round"/>'
+    + '</svg>';
+}
+
+async function renderCsatSection() {
+  var el = document.getElementById('csat-section');
+  if (!el) return;
+
+  var monthSel = document.getElementById('csat-month-filter');
+  var viewSel  = document.getElementById('csat-view-filter');
+  var selectedMonth = monthSel ? monthSel.value : '';
+  var view = viewSel ? viewSel.value : 'group';
+
+  el.innerHTML = '<div style="color:#64748b;font-size:12px;padding:20px;">Loading CSAT data…</div>';
+
+  try {
+    // Always load CC-total group history
+    var groupRows = await csatFetch({ pool_slug: 'cc_total' });
+    // Pool-level rows for current month
+    var poolRows = selectedMonth ? await csatFetch({ from_month: selectedMonth }) : [];
+    poolRows = poolRows.filter(r => r.pool_slug !== 'cc_total');
+
+    // Current month totals for KPI bar
+    var curGroup = groupRows.filter(r => !selectedMonth || r.year_month === selectedMonth);
+    var latestGroup = groupRows[groupRows.length - 1] || {};
+
+    // ── KPI bar ──
+    var kpiHtml = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">';
+    var score = parseFloat(latestGroup.csat_score) || 0;
+    var pct   = parseFloat(latestGroup.positive_pct) || 0;
+    var resp  = latestGroup.responses || 0;
+    var ratedPct = latestGroup.total_tickets > 0 ? Math.round(latestGroup.rated_tickets / latestGroup.total_tickets * 100) : 0;
+    var sColor = csatScoreColor(score);
+    var pColor = csatPctColor(pct);
+    kpiHtml += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
+      + '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">CSAT Score (CC)</div>'
+      + '<div style="font-size:28px;font-weight:800;color:' + sColor + ';line-height:1">' + (score ? score.toFixed(2) : '—') + '</div>'
+      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">avg 1–5 · latest month ' + csatTrend(groupRows) + '</div>'
+      + '</div>';
+    kpiHtml += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
+      + '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Satisfied (≥4/5)</div>'
+      + '<div style="font-size:28px;font-weight:800;color:' + pColor + ';line-height:1">' + (pct ? pct.toFixed(0) + '%' : '—') + '</div>'
+      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">share of responses</div>'
+      + '</div>';
+    kpiHtml += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
+      + '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Responses</div>'
+      + '<div style="font-size:28px;font-weight:800;color:#1e293b;line-height:1">' + resp + '</div>'
+      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">rated tickets</div>'
+      + '</div>';
+    kpiHtml += '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
+      + '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Response rate</div>'
+      + '<div style="font-size:28px;font-weight:800;color:#1e293b;line-height:1">' + (ratedPct ? ratedPct + '%' : '—') + '</div>'
+      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">of total tickets</div>'
+      + '</div>';
+    kpiHtml += '</div>';
+
+    // ── Historical trend table (CC-total) ──
+    var trendHtml = '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
+      + '<div style="font-size:13px;font-weight:700;color:#1e293b;margin-bottom:14px;display:flex;align-items:center;gap:8px">'
+      + 'CC Total — Monthly CSAT history'
+      + '<span style="font-size:10px;font-weight:600;background:#ede9fe;color:#4f46e5;padding:2px 7px;border-radius:10px">' + groupRows.length + ' months</span>'
+      + csatSparkline(groupRows, 160)
+      + '</div>'
+      + '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">'
+      + '<thead><tr>'
+      + '<th style="background:#f8fafc;padding:8px 10px;text-align:left;font-size:11px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0">Month</th>'
+      + '<th style="background:#f8fafc;padding:8px 10px;text-align:right;font-size:11px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0">Score</th>'
+      + '<th style="background:#f8fafc;padding:8px 10px;text-align:right;font-size:11px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0">Satisfied</th>'
+      + '<th style="background:#f8fafc;padding:8px 10px;text-align:right;font-size:11px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0">Responses</th>'
+      + '<th style="background:#f8fafc;padding:8px 10px;text-align:right;font-size:11px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0">Total tickets</th>'
+      + '<th style="background:#f8fafc;padding:8px 10px;text-align:right;font-size:11px;font-weight:600;color:#64748b;border-bottom:1px solid #e2e8f0">Resp. rate</th>'
+      + '</tr></thead><tbody>';
+
+    var revRows = [...groupRows].reverse();
+    revRows.forEach(function(r) {
+      var sc = parseFloat(r.csat_score) || 0;
+      var pp = parseFloat(r.positive_pct) || 0;
+      var respRate = r.total_tickets > 0 ? Math.round((r.rated_tickets || r.responses) / r.total_tickets * 100) : 0;
+      var isSelected = r.year_month === selectedMonth;
+      trendHtml += '<tr style="border-bottom:1px solid #f1f5f9;' + (isSelected ? 'background:#ede9fe;' : '') + '">'
+        + '<td style="padding:8px 10px;font-weight:' + (isSelected ? '700' : '500') + '">' + r.year_month + '</td>'
+        + '<td style="padding:8px 10px;text-align:right;font-weight:700;color:' + csatScoreColor(sc) + '">' + (sc ? sc.toFixed(2) : '—') + '</td>'
+        + '<td style="padding:8px 10px;text-align:right;color:' + csatPctColor(pp) + '">' + (pp ? pp.toFixed(0) + '%' : '—') + '</td>'
+        + '<td style="padding:8px 10px;text-align:right">' + (r.responses || 0) + '</td>'
+        + '<td style="padding:8px 10px;text-align:right">' + (r.total_tickets || 0) + '</td>'
+        + '<td style="padding:8px 10px;text-align:right;color:#64748b">' + (respRate ? respRate + '%' : '—') + '</td>'
+        + '</tr>';
+    });
+    trendHtml += '</tbody></table></div></div>';
+
+    // ── Pool breakdown for selected month ──
+    var poolHtml = '';
+    if (poolRows.length > 0) {
+      var POOL_COLORS = { switchboard:'#1f6f8b', classic:'#4338ca', s1:'#16a34a', frankly:'#b45309', talent:'#9333ea' };
+      var POOL_NAMES  = { switchboard:'Switchboard', classic:'Classic', s1:'S1', frankly:'Frankly', talent:'Talent' };
+      poolHtml = '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,.05)">'
+        + '<div style="font-size:13px;font-weight:700;color:#1e293b;margin-bottom:14px">By pool — ' + (selectedMonth || 'latest') + '</div>'
+        + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">';
+      poolRows.filter(r => r.year_month === (selectedMonth || poolRows[poolRows.length-1].year_month)).forEach(function(r) {
+        var sc = parseFloat(r.csat_score) || 0;
+        var pp = parseFloat(r.positive_pct) || 0;
+        var color = POOL_COLORS[r.pool_slug] || '#64748b';
+        var name  = POOL_NAMES[r.pool_slug] || r.pool_slug;
+        poolHtml += '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:3px solid ' + color + ';border-radius:8px;padding:12px 14px">'
+          + '<div style="font-size:11px;font-weight:700;color:' + color + ';margin-bottom:8px">' + name + '</div>'
+          + '<div style="font-size:22px;font-weight:800;color:' + csatScoreColor(sc) + ';line-height:1;margin-bottom:4px">' + (sc ? sc.toFixed(2) : '—') + '</div>'
+          + '<div style="font-size:11px;color:' + csatPctColor(pp) + ';margin-bottom:4px">' + (pp ? pp.toFixed(0) + '% satisfied' : '') + '</div>'
+          + '<div style="font-size:10px;color:#94a3b8">' + (r.responses || 0) + ' responses / ' + (r.total_tickets || 0) + ' tickets</div>'
+          + '</div>';
+      });
+      poolHtml += '</div></div>';
+    }
+
+    // ── Note about agent-level ──
+    var agentNote = '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px 16px;font-size:11px;color:#64748b;line-height:1.6">'
+      + '<strong>i Agent-level CSAT:</strong> When Freshdesk CSAT ratings include responder data, individual agent scores will appear here automatically. '
+      + 'Currently showing group and pool-level data. Source: <code>cc_csat_history</code> · updated manually or via Freshdesk webhook.'
+      + '</div>';
+
+    el.innerHTML = kpiHtml + trendHtml + poolHtml + agentNote;
+
+  } catch(e) {
+    el.innerHTML = '<div style="background:#fff1f2;border:1px solid #fecaca;border-radius:8px;padding:16px;color:#dc2626;font-size:12px">CSAT data could not be loaded: ' + e.message + '</div>';
+  }
+}
+
+function csatBuildMonths(sel) {
+  var now = new Date(); var opts = ['<option value="">All months</option>'];
+  for (var i = 0; i < 12; i++) {
+    var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    var ym = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    var label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    opts.push('<option value="' + ym + '">' + label + '</option>');
+  }
+  sel.innerHTML = opts.join('');
+}
+
+function csatInit() {
+  var monthSel = document.getElementById('csat-month-filter');
+  if (!monthSel) return;
+  csatBuildMonths(monthSel);
+  // Default to current month
+  var now = new Date();
+  var curYM = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  monthSel.value = curYM;
+  monthSel.addEventListener('change', renderCsatSection);
+  renderCsatSection();
+}
+
+window.csatInit = csatInit;
+window.renderCsatSection = renderCsatSection;
+
+export { naInit, renderNamedAgents, csatInit };
