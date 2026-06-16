@@ -1,5 +1,5 @@
-// tab-cc-kpi.js v5 - CC KPI section for Executive Summary
-// Fix: Better seeding, zero template literals, Wang-hash PRNG
+// tab-cc-kpi.js v5.1 - CC KPI section for Executive Summary
+// Fix v5.1: Fixed CSV export syntax error (quote replace)
 
 (function () {
   'use strict';
@@ -27,15 +27,12 @@
     return n / 4294967296;
   }
 
-  // Hash two integers into a float 0-1
   function h2(a, b) { return wh((a * 1000003 + b * 999983) >>> 0); }
 
-  // Approximately-normal noise: sum of 4 uniforms - 2, range -2..2
   function randn(a, b) {
     return h2(a, b) + h2(a + 7777, b + 3333) + h2(a + 5555, b + 1111) + h2(a + 2222, b + 8888) - 2;
   }
 
-  // KPI profiles
   var KP = {
     fr_sla:  { base: 88.5, sd: 4.2, trend: 0.12 },
     res_sla: { base: 83.0, sd: 3.5, trend: 0.09 },
@@ -46,7 +43,6 @@
 
   var KPI_IDX = { fr_sla: 0, res_sla: 1, fcr: 2, csat: 3, tpad: 4 };
 
-  // Generate KPI value: pIdx=period index 0..total-1
   function kpiVal(kId, pIdx, total) {
     var p = KP[kId];
     var ki = KPI_IDX[kId];
@@ -58,7 +54,6 @@
     return Math.min(99.9, Math.max(30, +val.toFixed(1)));
   }
 
-  // KPI value for a sub-entity (product/agent): adds a stable per-entity offset
   function kpiValFor(kId, pIdx, total, entityIdx) {
     var p = KP[kId];
     var ki = KPI_IDX[kId];
@@ -72,8 +67,7 @@
   }
 
   function fmtVal(kId, val) {
-    if (kId === 'csat') return val.toFixed(2);
-    return val.toFixed(1);
+    return (kId === 'csat') ? val.toFixed(2) : val.toFixed(1);
   }
 
   function statusOf(kId, val) {
@@ -86,7 +80,6 @@
 
   var C = { green: '#28a745', yellow: '#ffc107', red: '#dc3545' };
 
-  // ---- Date helpers ----
   function weekStart(d) {
     var day = d.getDay();
     var diff = (day === 0) ? -6 : (1 - day);
@@ -108,11 +101,9 @@
   var DAYS_SV   = ['S\u00f6n', 'M\u00e5n', 'Tis', 'Ons', 'Tor', 'Fre', 'L\u00f6r'];
   var MONTHS_SV = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
 
-  // ---- State ----
   var VIEW = 'week';
   var BD   = null;
 
-  // ---- Render ----
   function render() {
     var el = document.getElementById('cc-kpi-section');
     if (!el) return;
@@ -120,7 +111,6 @@
     var ts = now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     var liveIdx = 11;
 
-    // Summary cards
     var cards = '';
     KPI_DEFS.forEach(function (k) {
       var v    = kpiVal(k.id, liveIdx, 12);
@@ -290,7 +280,6 @@
       '<table style="width:100%;border-collapse:collapse;"><tbody>' + entityRows + '</tbody></table></div>';
   }
 
-  // ---- Public API ----
   window.setCCView = function (v) { VIEW = v; render(); };
   window.toggleCCBd = function (kId) {
     if (kId === 'close' || (BD && BD.kId === kId)) { BD = null; } else { BD = { kId: kId, mode: 'product' }; }
@@ -300,9 +289,10 @@
   window.exportCCCSV = function () {
     var t = document.getElementById('cc-kpi-table');
     if (!t) return;
+    var dq = String.fromCharCode(34);
     var csv = Array.from(t.querySelectorAll('tr')).map(function (r) {
       return Array.from(r.querySelectorAll('th,td')).map(function (c) {
-        return '"' + c.textContent.trim().replace(/"/g, '\\'') + '"';
+        return dq + c.textContent.trim().replace(/"/g, '') + dq;
       }).join(',');
     }).join('\n');
     var a = document.createElement('a');
