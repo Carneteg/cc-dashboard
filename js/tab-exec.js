@@ -279,6 +279,7 @@ el.innerHTML = `
     </div>
   </div>
 
+          <div id="cc-kpi-section"></div>
   <!-- FOOTER -->
   <div style="font-size:12px;color:#94a3b8;line-height:1.6;text-align:center;padding-top:4px">
     Source: CC_FTE_Calculator.xlsx (official planning model) · Values are static planning baseline, not real-time API data
@@ -286,6 +287,7 @@ el.innerHTML = `
 
 </div>
 `;
+    if (window.initCCKPIs) setTimeout(window.initCCKPIs, 50);
 }
 
 /* ── Hook into showTab ── */
