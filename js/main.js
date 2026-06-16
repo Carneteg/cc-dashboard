@@ -9,6 +9,7 @@ import './tab-wp.js?v=19';
 import './tab-agent.js?v=18';
 import { naInit, csatInit } from './tab-agent-eff.js?v=24';
 import './tab-exec.js?v=21';
+import './tab-cc-kpi.js';
 
 // Global error boundary
 window.addEventListener('unhandledrejection', ev => {
@@ -24,4 +25,5 @@ const upd = document.getElementById('upd');
 if (upd) upd.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
 naInit();
   csatInit();
+    if (window.initCCKPIs) window.initCCKPIs();
 });
