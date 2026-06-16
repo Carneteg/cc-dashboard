@@ -1,348 +1,320 @@
-// js/tab-cc-kpi.js v4 — CC KPI section (no template literals)
-// Fix: Wang-hash PRNG, realistic variance, correct td layout
+// tab-cc-kpi.js v5 - CC KPI section for Executive Summary
+// Fix: Better seeding, zero template literals, Wang-hash PRNG
 
 (function () {
   'use strict';
 
   var KPI_DEFS = [
-    { id: 'fr_sla',  label: 'First Response SLA',   unit: '%',  target: 90,  lo: 70,  hi: 98  },
-    { id: 'res_sla', label: 'Resolution SLA',        unit: '%',  target: 85,  lo: 65,  hi: 96  },
-    { id: 'fcr',     label: 'FCR',                   unit: '%',  target: 75,  lo: 55,  hi: 89  },
-    { id: 'csat',    label: 'CSAT',                  unit: '/5', target: 4.2, lo: 3.4, hi: 4.8 },
-    { id: 'tpd',     label: 'Tickets / Agent / Day', unit: '',   target: 20,  lo: 11,  hi: 34  }
+    { id: 'fr_sla',  label: 'First Response SLA', units: '%',  target: 90, lcl: 70, ucl: 99 },
+    { id: 'res_sla', label: 'Resolution SLA',     units: '%',  target: 85, lcl: 65, ucl: 97 },
+    { id: 'fcr',     label: 'FCR',                units: '%',  target: 75, lcl: 55, ucl: 90 },
+    { id: 'csat',    label: 'CSAT',               units: '/5', target: 4.2, lcl: 3.0, ucl: 5.0 },
+    { id: 'tpad',    label: 'Tickets / Agent / Day', units: '', target: 20, lcl: 10, ucl: 35 }
   ];
 
-  var PRODUCTS = ['Simployer Classic','Simployer One','Expert NO','Frankly','Talent'];
-  var AGENTS   = ['Therese N.','Emil G.','Kari K.','Martin A.','Arkadiusz Z.',
-                  'Mats L.','Ilse L.','Ian M.','Honya M.','Anett N.'];
+  var PRODUCTS = ['Simployer Classic', 'Simployer One', 'Expert NO', 'Frankly', 'Talent'];
+  var AGENTS = ['Theresa M.', 'Emil O.', 'Kari K.', 'Martin G.', 'Ariadna Z.',
+                'Mats L.', 'Elsa L.', 'Ian M.', 'Sonya M.', 'Matt O.'];
 
-  // Wang hash — full avalanche for any two sequential seeds
+  // Wang hash PRNG - full avalanche, deterministic
   function wh(n) {
     n = n >>> 0;
-    n = ((n ^ 61) ^ (n >>> 16)) >>> 0;
+    n = (n ^ 61) ^ (n >>> 16);
     n = (n + (n << 3)) >>> 0;
     n = (n ^ (n >>> 4)) >>> 0;
     n = Math.imul(n, 0x27d4eb2d) >>> 0;
     n = (n ^ (n >>> 15)) >>> 0;
-    return n / 4294967295;
+    return n / 4294967296;
   }
-  function hSeed(n) { return (wh((n >>> 0) * 2654435761 >>> 0) * 1e9) | 0; }
-  function rng1(seed, pidx, kidx) { return wh((seed ^ (pidx * 2654435761) ^ (kidx * 40503)) >>> 0); }
-  function rng2(seed, pidx, kidx) { return wh(((seed * 6271) ^ (pidx * 1013904223) ^ kidx) >>> 0); }
 
-  // Realistic per-KPI baselines with trend and noise
+  // Hash two integers into a float 0-1
+  function h2(a, b) { return wh((a * 1000003 + b * 999983) >>> 0); }
+
+  // Approximately-normal noise: sum of 4 uniforms - 2, range -2..2
+  function randn(a, b) {
+    return h2(a, b) + h2(a + 7777, b + 3333) + h2(a + 5555, b + 1111) + h2(a + 2222, b + 8888) - 2;
+  }
+
+  // KPI profiles
   var KP = {
-    fr_sla:  { base: 88.0, sd: 4.5,  t: 0.15 },
-    res_sla: { base: 82.5, sd: 5.0,  t: 0.10 },
-    fcr:     { base: 71.5, sd: 5.5,  t: 0.18 },
-    csat:    { base: 4.02, sd: 0.22, t: 0.005 },
-    tpd:     { base: 18.8, sd: 3.2,  t: 0.08 }
+    fr_sla:  { base: 88.5, sd: 4.2, trend: 0.12 },
+    res_sla: { base: 83.0, sd: 3.5, trend: 0.09 },
+    fcr:     { base: 73.5, sd: 4.0, trend: 0.07 },
+    csat:    { base: 4.15, sd: 0.22, trend: 0.003 },
+    tpad:    { base: 20.5, sd: 2.8, trend: 0.04 }
   };
 
-  function kpiVal(kId, pidx, seed) {
-    var p = KP[kId], kdef;
-    for (var i = 0; i < KPI_DEFS.length; i++) { if (KPI_DEFS[i].id === kId) { kdef = KPI_DEFS[i]; break; } }
-    var u1 = Math.max(1e-9, rng1(seed, pidx, 1));
-    var u2 = rng2(seed, pidx, 2);
-    var z  = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-    var raw = p.base + p.t * pidx + z * p.sd + (pidx % 4 === 0 ? -p.sd * 0.5 : 0);
-    var val = Math.max(kdef.lo, Math.min(kdef.hi, raw));
-    return kId === 'csat' ? +val.toFixed(2) : +val.toFixed(1);
+  var KPI_IDX = { fr_sla: 0, res_sla: 1, fcr: 2, csat: 3, tpad: 4 };
+
+  // Generate KPI value: pIdx=period index 0..total-1
+  function kpiVal(kId, pIdx, total) {
+    var p = KP[kId];
+    var ki = KPI_IDX[kId];
+    var noise = randn(pIdx * 17 + ki * 1009, pIdx * 503 + ki * 131);
+    var trend = p.trend * (pIdx - (total - 1) / 2);
+    var val = p.base + noise * p.sd + trend;
+    if (kId === 'csat') return Math.min(5.0, Math.max(1.0, +val.toFixed(2)));
+    if (kId === 'tpad') return Math.max(5, +val.toFixed(1));
+    return Math.min(99.9, Math.max(30, +val.toFixed(1)));
   }
 
-  function wn(d) {
-    var dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    dt.setUTCDate(dt.getUTCDate() + 4 - (dt.getUTCDay() || 7));
-    var ys = new Date(Date.UTC(dt.getUTCFullYear(), 0, 1));
-    return Math.ceil((((dt - ys) / 86400000) + 1) / 7);
+  // KPI value for a sub-entity (product/agent): adds a stable per-entity offset
+  function kpiValFor(kId, pIdx, total, entityIdx) {
+    var p = KP[kId];
+    var ki = KPI_IDX[kId];
+    var noise = randn(pIdx * 17 + ki * 1009 + entityIdx * 79, pIdx * 503 + ki * 131 + entityIdx * 997);
+    var entityOffset = (wh(entityIdx * 4999 + ki * 2333) - 0.5) * p.sd * 1.2;
+    var trend = p.trend * (pIdx - (total - 1) / 2);
+    var val = p.base + noise * p.sd * 0.7 + entityOffset + trend;
+    if (kId === 'csat') return Math.min(5.0, Math.max(1.0, +val.toFixed(2)));
+    if (kId === 'tpad') return Math.max(5, +val.toFixed(1));
+    return Math.min(99.9, Math.max(20, +val.toFixed(1)));
   }
 
-  function getDayRows() {
-    var now = new Date(), mon = new Date(now), rows = [];
-    mon.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-    for (var d = 0; d < 7; d++) {
-      var dt = new Date(mon); dt.setDate(mon.getDate() + d);
-      rows.push({ label: dt.toLocaleDateString('sv-SE', { weekday: 'short', month: 'numeric', day: 'numeric' }),
-                  seed: hSeed(dt.getFullYear()*10000+(dt.getMonth()+1)*100+dt.getDate()),
-                  isFuture: dt > now, pidx: d });
-    }
-    return rows;
+  function fmtVal(kId, val) {
+    if (kId === 'csat') return val.toFixed(2);
+    return val.toFixed(1);
   }
 
-  function getWeekRows() {
-    var now = new Date(), rows = [];
-    for (var i = 0; i < 12; i++) {
-      var start = new Date(now);
-      start.setDate(now.getDate() - ((now.getDay()+6)%7) - (11-i)*7);
-      var end = new Date(start); end.setDate(start.getDate()+6);
-      var w = wn(start);
-      rows.push({ label: 'v'+w+' ('+start.toLocaleDateString('sv-SE',{month:'numeric',day:'numeric'})+'-'+end.toLocaleDateString('sv-SE',{month:'numeric',day:'numeric'})+')',
-                  seed: hSeed(start.getFullYear()*1000+w), pidx: i });
-    }
-    return rows;
+  function statusOf(kId, val) {
+    var t = KPI_DEFS[KPI_IDX[kId]];
+    var warn = kId === 'csat' ? 4.0 : (kId === 'tpad' ? t.target * 0.85 : t.target * 0.96);
+    if (val >= t.target) return 'green';
+    if (val >= warn) return 'yellow';
+    return 'red';
   }
 
-  function getMonthRows() {
-    var now = new Date(), rows = [];
-    for (var i = 0; i < 12; i++) {
-      var dt = new Date(now.getFullYear(), now.getMonth()-(11-i), 1);
-      rows.push({ label: dt.toLocaleDateString('sv-SE',{year:'numeric',month:'short'}),
-                  seed: hSeed(dt.getFullYear()*100+dt.getMonth()), pidx: i });
-    }
-    return rows;
+  var C = { green: '#28a745', yellow: '#ffc107', red: '#dc3545' };
+
+  // ---- Date helpers ----
+  function weekStart(d) {
+    var day = d.getDay();
+    var diff = (day === 0) ? -6 : (1 - day);
+    var m = new Date(d);
+    m.setDate(d.getDate() + diff);
+    m.setHours(0, 0, 0, 0);
+    return m;
   }
 
-  function sCls(kpi, val) {
-    var r = val / kpi.target;
-    return r >= 1 ? 'cc-ok' : r >= 0.93 ? 'cc-warn' : 'cc-crit';
-  }
-  function dotHtml(kpi, val) {
-    var c = sCls(kpi,val), col = c==='cc-ok'?'#28a745':c==='cc-warn'?'#ffc107':'#dc3545';
-    return '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+col+';margin-right:4px;vertical-align:middle"></span>';
-  }
-  function arrowHtml(a, b) {
-    if (b === null || b === undefined) return '<span style="color:#999">&ndash;</span>';
-    var d = a - b;
-    if (Math.abs(d) < 0.05) return '<span style="color:#999">&rarr;</span>';
-    return d > 0 ? '<span style="color:#28a745">&#9650;</span>' : '<span style="color:#dc3545">&#9660;</span>';
-  }
-  function sparkHtml(vals, target, color) {
-    if (!vals || vals.length < 2) return '';
-    var W=80,H=24,all=vals.concat([target]),mn=Math.min.apply(null,all)*0.97,mx=Math.max.apply(null,all)*1.03,rng=mx-mn||1;
-    var pts = vals.map(function(v,i){
-      return ((i/(vals.length-1))*W).toFixed(1)+','+(H-(v-mn)/rng*H).toFixed(1);
-    }).join(' ');
-    var ty = (H-(target-mn)/rng*H).toFixed(1);
-    var lx = W.toFixed(1), ly = (H-(vals[vals.length-1]-mn)/rng*H).toFixed(1);
-    return '<svg width="'+W+'" height="'+H+'" style="vertical-align:middle">'+
-           '<line x1="0" y1="'+ty+'" x2="'+W+'" y2="'+ty+'" stroke="#ccc" stroke-dasharray="2,2" stroke-width="1"/>'+
-           '<polyline points="'+pts+'" fill="none" stroke="'+color+'" stroke-width="1.5"/>'+
-           '<circle cx="'+lx+'" cy="'+ly+'" r="2.5" fill="'+color+'"/></svg>';
-  }
-  function csvExport(id) {
-    var t=document.getElementById(id); if(!t) return;
-    var rows=[].slice.call(t.querySelectorAll('tr')).map(function(r){
-      return [].slice.call(r.querySelectorAll('th,td')).map(function(c){return '"'+c.innerText.replace(/"/g,'""')+'"';}).join(',');
-    });
-    var a=document.createElement('a');
-    a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));
-    a.download=id+'.csv'; a.click();
+  function isoWeek(d) {
+    var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+    var y = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+    return Math.ceil(((t - y) / 86400000 + 1) / 7);
   }
 
-  function injectCSS() {
-    if (document.getElementById('cc-kpi-styles')) return;
-    var css = [
-      '.cc-kpi-section{margin-top:24px}',
-      '.cc-live-bar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}',
-      '.cc-dot{width:10px;height:10px;border-radius:50%;background:#28a745;animation:ccPulse 1.5s infinite;flex-shrink:0}',
-      '@keyframes ccPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}',
-      '.cc-view-btns{display:flex;gap:4px;margin-left:auto}',
-      '.cc-vbtn{padding:3px 10px;font-size:11px;border:1px solid var(--border);border-radius:4px;background:none;color:var(--text3);cursor:pointer}',
-      '.cc-vbtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}',
-      '.cc-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:16px}',
-      '.cc-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative;cursor:pointer}',
-      '.cc-card:hover{box-shadow:0 3px 8px rgba(0,0,0,.12)}',
-      '.cc-card.cc-ok{border-left:3px solid #28a745}',
-      '.cc-card.cc-warn{border-left:3px solid #ffc107}',
-      '.cc-card.cc-crit{border-left:3px solid #dc3545}',
-      '.cc-cl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}',
-      '.cc-cv{font-size:26px;font-weight:700;line-height:1}',
-      '.cc-ok{color:#28a745}.cc-warn{color:#ffc107}.cc-crit{color:#dc3545}',
-      '.cc-xbtn{position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;color:#999;font-size:14px;padding:2px 4px;border-radius:3px}',
-      '.cc-bd{display:none;border:1px solid var(--border);border-radius:8px;background:#fff;padding:14px;margin-top:8px;margin-bottom:16px}',
-      '.cc-bd.open{display:block}',
-      '.cc-bdtabs{display:flex;gap:4px;margin-bottom:10px}',
-      '.cc-bdtab{padding:4px 12px;font-size:11px;border:1px solid var(--border);border-radius:4px;background:none;cursor:pointer}',
-      '.cc-bdtab.active{background:#e8f5e9;border-color:#28a745;color:#28a745;font-weight:600}',
-      '.cc-bdp{display:none}.cc-bdp.active{display:block}',
-      '.cct{width:100%;border-collapse:collapse;font-size:12px}',
-      '.cct th{background:#f8f9fa;padding:6px 10px;text-align:left;font-weight:600;color:var(--text3);border-bottom:2px solid var(--border);cursor:pointer;white-space:nowrap;user-select:none}',
-      '.cct th:hover{background:#eee}',
-      '.cct td{padding:5px 10px;border-bottom:1px solid #f0f0f0;white-space:nowrap}',
-      '.cct tr:nth-child(even) td{background:#fafafa}',
-      '.cct tr:hover td{background:#f0f7ff}',
-      '.cct tr.fut td{color:#bbb;font-style:italic}',
-      '.cc-bar{height:6px;border-radius:3px;display:inline-block;vertical-align:middle;margin-left:5px}',
-      '.cc-csvbtn{font-size:10px;padding:2px 7px;border:1px solid #ccc;border-radius:3px;background:#fff;cursor:pointer;color:#666;margin-bottom:6px}',
-      '.tag.analytics{background:#fff3e0;color:#e65100}'
-    ].join('');
-    var s = document.createElement('style');
-    s.id = 'cc-kpi-styles';
-    s.textContent = css;
-    document.head.appendChild(s);
-  }
+  function ddmm(d) { return d.getDate() + '/' + (d.getMonth() + 1); }
 
-  var _view = 'day', _timer = null;
+  var DAYS_SV   = ['S\u00f6n', 'M\u00e5n', 'Tis', 'Ons', 'Tor', 'Fre', 'L\u00f6r'];
+  var MONTHS_SV = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
 
+  // ---- State ----
+  var VIEW = 'week';
+  var BD   = null;
+
+  // ---- Render ----
   function render() {
-    var cont = document.getElementById('cc-kpi-section');
-    if (!cont) return;
-    injectCSS();
-    var rows = _view === 'day' ? getDayRows() : _view === 'week' ? getWeekRows() : getMonthRows();
-    var N = rows.length;
-
-    // Latest non-future row
-    var li = rows.length - 1;
-    for (var x = rows.length-1; x >= 0; x--) { if (!rows[x].isFuture) { li = x; break; } }
-    var LR = rows[li], PR = li > 0 ? rows[li-1] : null;
+    var el = document.getElementById('cc-kpi-section');
+    if (!el) return;
+    var now = new Date();
+    var ts = now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    var liveIdx = 11;
 
     // Summary cards
     var cards = '';
-    for (var ki = 0; ki < KPI_DEFS.length; ki++) {
-      var kpi = KPI_DEFS[ki];
-      var lv  = kpiVal(kpi.id, LR.pidx, LR.seed);
-      var pv  = PR ? kpiVal(kpi.id, PR.pidx, PR.seed) : null;
-      var sc  = sCls(kpi, lv);
-      var d   = pv !== null ? (lv - pv).toFixed(kpi.id === 'csat' ? 2 : 1) : null;
-      var sgn = d !== null && +d >= 0 ? '+' : '';
-      var sVals = [];
-      for (var si = 0; si < rows.length; si++) {
-        if (!rows[si].isFuture) sVals.push(kpiVal(kpi.id, rows[si].pidx, rows[si].seed));
+    KPI_DEFS.forEach(function (k) {
+      var v    = kpiVal(k.id, liveIdx, 12);
+      var prev = kpiVal(k.id, liveIdx - 1, 12);
+      var diff = v - prev;
+      var pos  = diff >= 0;
+      var arrow = pos ? '&#9650;' : '&#9660;';
+      var dc    = pos ? '#28a745' : '#dc3545';
+      var spark = buildSparkline(k);
+      var maxV  = k.id === 'csat' ? 5 : (k.id === 'tpad' ? 40 : 100);
+      var pct   = Math.min(100, Math.max(0, (v / maxV) * 100)).toFixed(1);
+      cards += '<div class="cc-kpi-card" onclick="toggleCCBd(\''  + k.id + '\')" style="cursor:pointer;background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:16px;flex:1;min-width:160px;position:relative;">' +
+        '<div style="font-size:11px;font-weight:600;color:#6c757d;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;">' + k.label + '</div>' +
+        '<div style="font-size:36px;font-weight:700;color:#1a1a1a;line-height:1;">' + fmtVal(k.id, v) +
+        '<span style="font-size:16px;font-weight:400;color:#6c757d;">' + k.units + '</span></div>' +
+        '<div style="font-size:12px;margin-top:6px;color:' + dc + ';font-weight:600;">' +
+        arrow + ' ' + Math.abs(diff).toFixed(k.id === 'csat' ? 2 : 1) + ' vs f\u00f6reg\u00e5ende</div>' +
+        '<div style="height:3px;background:#e9ecef;border-radius:2px;margin:10px 0 4px;">' +
+        '<div style="height:100%;width:' + pct + '%;background:#28a745;border-radius:2px;"></div></div>' +
+        '<div style="font-size:11px;color:#9e9e9e;">M\u00e5l: ' + k.target + (k.units || '') + '</div>' +
+        spark + '</div>';
+    });
+
+    var tableHtml = buildTable(now);
+    var bdHtml    = BD ? buildBreakdown(BD) : '';
+
+    el.innerHTML =
+      '<div style="margin:24px 0;">' +
+      '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">' +
+      '<span style="font-size:13px;font-weight:700;color:#1a1a1a;letter-spacing:.5px;text-transform:uppercase;">&#167; CC \u2013 CUSTOMER CARE PERFORMANCE</span>' +
+      '<span style="font-size:10px;font-weight:700;background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:4px;letter-spacing:.5px;">ANALYTICS</span>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:12px;color:#6c757d;">' +
+      '<span style="width:8px;height:8px;border-radius:50%;background:#28a745;display:inline-block;animation:ccPulse 1.4s ease-in-out infinite;"></span>' +
+      'Live \u00b7 Uppdateras var 60s \u00b7 Senast: ' + ts +
+      '<span style="margin-left:auto;display:flex;">' +
+      '<button onclick="setCCView(\'day\')" style="padding:4px 12px;border:1px solid #dee2e6;border-radius:4px 0 0 4px;background:' + (VIEW === 'day' ? '#0d6efd' : '#fff') + ';color:' + (VIEW === 'day' ? '#fff' : '#495057') + ';cursor:pointer;font-size:12px;">Dag</button>' +
+      '<button onclick="setCCView(\'week\')" style="padding:4px 12px;border:1px solid #dee2e6;border-left:none;background:' + (VIEW === 'week' ? '#0d6efd' : '#fff') + ';color:' + (VIEW === 'week' ? '#fff' : '#495057') + ';cursor:pointer;font-size:12px;">Vecka</button>' +
+      '<button onclick="setCCView(\'month\')" style="padding:4px 12px;border:1px solid #dee2e6;border-left:none;border-radius:0 4px 4px 0;background:' + (VIEW === 'month' ? '#0d6efd' : '#fff') + ';color:' + (VIEW === 'month' ? '#fff' : '#495057') + ';cursor:pointer;font-size:12px;">M\u00e5nad</button>' +
+      '</span></div>' +
+      '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">' + cards + '</div>' +
+      bdHtml + tableHtml +
+      '<div style="font-size:11px;color:#aaa;margin-top:8px;text-align:center;">CC Analytics \u00b7 Simulerad data (mock) \u00b7 Koppla Freshdesk API for realtidsdata</div>' +
+      '</div>' +
+      '<style>@keyframes ccPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}</style>';
+  }
+
+  function buildSparkline(k) {
+    var pts = [];
+    for (var i = 4; i < 12; i++) pts.push(kpiVal(k.id, i, 12));
+    var mn = k.lcl, mx = k.ucl, w = 80, h = 24;
+    var polyline = pts.map(function (v, i) {
+      var x = Math.round(i * (w / (pts.length - 1)));
+      var y = Math.round(h - ((v - mn) / (mx - mn)) * h);
+      return x + ',' + y;
+    }).join(' ');
+    return '<svg width="' + w + '" height="' + h + '" style="margin-top:8px;display:block;">' +
+      '<polyline points="' + polyline + '" fill="none" stroke="#28a745" stroke-width="1.5"/></svg>';
+  }
+
+  function buildTable(now) {
+    var periods = [];
+
+    if (VIEW === 'day') {
+      var ws = weekStart(now);
+      for (var d = 0; d < 7; d++) {
+        var dt = new Date(ws);
+        dt.setDate(ws.getDate() + d);
+        periods.push({ label: DAYS_SV[dt.getDay()] + ' ' + ddmm(dt), idx: d, future: dt > now });
       }
-      if (sVals.length > 7) sVals = sVals.slice(-7);
-      var clr = sc === 'cc-ok' ? '#28a745' : sc === 'cc-warn' ? '#ffc107' : '#dc3545';
-      var dv  = kpi.id === 'csat' ? lv.toFixed(2) : lv.toFixed(1);
-      cards += '<div class="cc-card '+sc+'" id="cc-card-'+kpi.id+'" onclick="toggleCCBd(\'' + kpi.id + '\')">'+
-               '<button class="cc-xbtn">v</button>'+
-               '<div class="cc-cl">'+kpi.label+'</div>'+
-               '<div><span class="cc-cv '+sc+'">'+dv+'</span><span style="font-size:13px;color:var(--text3);margin-left:2px">'+kpi.unit+'</span></div>'+
-               '<div style="font-size:11px;margin-top:4px;color:#666">'+arrowHtml(lv,pv)+(d!==null?' '+sgn+d+' vs fgaende':'')+'</div>'+
-               '<div style="margin-top:5px">'+sparkHtml(sVals,kpi.target,clr)+'</div>'+
-               '<div style="font-size:10px;color:#999;margin-top:2px">Mal: '+kpi.target+kpi.unit+'</div>'+
-               '</div>';
+    } else if (VIEW === 'week') {
+      var wc = weekStart(now);
+      for (var w = 11; w >= 0; w--) {
+        var ws2 = new Date(wc);
+        ws2.setDate(wc.getDate() - w * 7);
+        var we2 = new Date(ws2);
+        we2.setDate(ws2.getDate() + 6);
+        periods.push({ label: 'v' + isoWeek(ws2) + ' (' + ddmm(ws2) + '-' + ddmm(we2) + ')', idx: 11 - w, future: false });
+      }
+    } else {
+      for (var m = 11; m >= 0; m--) {
+        var dm = new Date(now.getFullYear(), now.getMonth() - m, 1);
+        periods.push({ label: MONTHS_SV[dm.getMonth()] + ' ' + dm.getFullYear(), idx: 11 - m, future: false });
+      }
     }
 
-    // Breakdown panels
-    var bds = '';
-    for (var bi = 0; bi < KPI_DEFS.length; bi++) {
-      var bkpi = KPI_DEFS[bi];
-      var pRows = '', aRows = '';
-      var pVals = [], aVals = [];
-      for (var pi = 0; pi < PRODUCTS.length; pi++) {
-        var ps2 = hSeed((LR.seed*31+pi*17)>>>0);
-        pVals.push({ name: PRODUCTS[pi], val: kpiVal(bkpi.id, LR.pidx, ps2+pi) });
-      }
-      for (var ai = 0; ai < AGENTS.length; ai++) {
-        var as2 = hSeed((LR.seed*13+ai*41)>>>0);
-        aVals.push({ name: AGENTS[ai], val: kpiVal(bkpi.id, LR.pidx, as2+ai*3) });
-      }
-      var mxP = Math.max.apply(null, pVals.map(function(x){return x.val;}));
-      aVals.sort(function(a,b){return b.val-a.val;});
-      var mxA = Math.max.apply(null, aVals.map(function(x){return x.val;}));
-      for (var pr=0;pr<pVals.length;pr++){
-        var psc=sCls(bkpi,pVals[pr].val),pclr=psc==='cc-ok'?'#28a745':psc==='cc-warn'?'#ffc107':'#dc3545';
-        var pw=Math.round(pVals[pr].val/mxP*100);
-        var pdv=bkpi.id==='csat'?pVals[pr].val.toFixed(2):pVals[pr].val.toFixed(1);
-        pRows+='<tr><td>'+pVals[pr].name+'</td><td><span class="'+psc+'">'+pdv+bkpi.unit+'</span><span class="cc-bar" style="width:'+pw+'px;background:'+pclr+'"></span></td></tr>';
-      }
-      for (var ar=0;ar<aVals.length;ar++){
-        var asc=sCls(bkpi,aVals[ar].val),aclr=asc==='cc-ok'?'#28a745':asc==='cc-warn'?'#ffc107':'#dc3545';
-        var aw=Math.round(aVals[ar].val/mxA*100);
-        var adv=bkpi.id==='csat'?aVals[ar].val.toFixed(2):aVals[ar].val.toFixed(1);
-        var ini=aVals[ar].name.split(/[. ]/g).filter(Boolean).slice(0,2).map(function(s){return s[0];}).join('');
-        aRows+='<tr><td><span style="background:#e3f2fd;color:#1565c0;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-right:5px;vertical-align:middle">'+ini+'</span>'+aVals[ar].name+'</td>'+
-               '<td><span class="'+asc+'">'+adv+bkpi.unit+'</span><span class="cc-bar" style="width:'+aw+'px;background:'+aclr+'"></span></td></tr>';
-      }
-      var idP='ccbdp-'+bkpi.id, idA='ccbda-'+bkpi.id;
-      bds += '<div class="cc-bd" id="cc-bd-'+bkpi.id+'">'+
-             '<div style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:8px">'+bkpi.label+' – Breakdown (senaste period)</div>'+
-             '<div class="cc-bdtabs">'+
-             '<button class="cc-bdtab active" onclick="event.stopPropagation();ccBdTab(\'' + bkpi.id + '\',\'prod\',this)">Per produkt</button>'+
-             '<button class="cc-bdtab" onclick="event.stopPropagation();ccBdTab(\'' + bkpi.id + '\',\'agent\',this)">Per agent</button>'+
-             '</div>'+
-             '<div class="cc-bdp active" id="'+idP+'">'+
-             '<button class="cc-csvbtn" onclick="event.stopPropagation();ccCSV(\'' + idP + '\')">Export CSV</button>'+
-             '<table class="cct" id="'+idP+'"><thead><tr><th>Produkt</th><th>'+bkpi.label+'</th></tr></thead><tbody>'+pRows+'</tbody></table></div>'+
-             '<div class="cc-bdp" id="'+idA+'">'+
-             '<button class="cc-csvbtn" onclick="event.stopPropagation();ccCSV(\'' + idA + '\')">Export CSV</button>'+
-             '<table class="cct" id="'+idA+'"><thead><tr><th>Agent</th><th>'+bkpi.label+'</th></tr></thead><tbody>'+aRows+'</tbody></table></div>'+
-             '</div>';
-    }
-
-    // Main table
-    var tid = 'cct-'+_view;
-    var thead = '<tr><th onclick="ccSort(this)">Period</th>';
-    for (var ti=0;ti<KPI_DEFS.length;ti++) thead += '<th onclick="ccSort(this)">'+KPI_DEFS[ti].label+'</th>';
+    var thead = '<tr style="background:#f8f9fa;">' +
+      '<th style="padding:8px 12px;text-align:left;font-size:11px;color:#6c757d;font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #dee2e6;white-space:nowrap;">Period</th>';
+    KPI_DEFS.forEach(function (k) {
+      thead += '<th style="padding:8px 12px;text-align:left;font-size:11px;color:#6c757d;font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #dee2e6;white-space:nowrap;">' + k.label + '</th>';
+    });
     thead += '</tr>';
-    var tbody = '';
-    for (var ri=0;ri<rows.length;ri++) {
-      var row = rows[ri];
-      if (row.isFuture) {
-        tbody += '<tr class="fut"><td>'+row.label+'</td>';
-        for (var fi=0;fi<KPI_DEFS.length;fi++) tbody += '<td>&mdash;</td>';
-        tbody += '</tr>'; continue;
-      }
-      tbody += '<tr><td>'+row.label+'</td>';
-      for (var ci=0;ci<KPI_DEFS.length;ci++) {
-        var ck = KPI_DEFS[ci];
-        var cv = kpiVal(ck.id, row.pidx, row.seed);
-        var csc = sCls(ck, cv);
-        var cdv = ck.id==='csat'?cv.toFixed(2):cv.toFixed(1);
-        tbody += '<td>'+dotHtml(ck,cv)+'<span class="'+csc+'">'+cdv+ck.unit+'</span></td>';
-      }
-      tbody += '</tr>';
+
+    var rows = '';
+    periods.forEach(function (p, pi) {
+      var bg = (pi % 2 === 0) ? '#fff' : '#f8f9fa';
+      var row = '<tr style="background:' + bg + ';">' +
+        '<td style="padding:7px 12px;font-size:13px;color:#495057;border-bottom:1px solid #f0f0f0;white-space:nowrap;">' + p.label + '</td>';
+      KPI_DEFS.forEach(function (k) {
+        if (p.future) {
+          row += '<td style="padding:7px 12px;font-size:13px;color:#bbb;border-bottom:1px solid #f0f0f0;">&mdash;</td>';
+        } else {
+          var v   = kpiVal(k.id, p.idx, 12);
+          var st  = statusOf(k.id, v);
+          var col = C[st];
+          row += '<td style="padding:7px 12px;font-size:13px;border-bottom:1px solid #f0f0f0;white-space:nowrap;">' +
+            '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + col + ';margin-right:5px;vertical-align:middle;"></span>' +
+            '<span style="color:' + col + ';font-weight:600;">' + fmtVal(k.id, v) + k.units + '</span></td>';
+        }
+      });
+      row += '</tr>';
+      rows += row;
+    });
+
+    var vLabel = VIEW === 'day' ? 'Dagsredovisning (innevarande vecka)' :
+      (VIEW === 'week' ? 'Veckoredovisning (senaste 12 veckor)' : 'M\u00e5nadsredovisning (senaste 12 m\u00e5nader)');
+
+    return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
+      '<span style="font-size:12px;color:#6c757d;">' + vLabel + '</span>' +
+      '<button onclick="exportCCCSV()" style="padding:4px 10px;background:#fff;border:1px solid #dee2e6;border-radius:4px;font-size:11px;cursor:pointer;color:#495057;">&#8595; Exportera CSV</button>' +
+      '</div>' +
+      '<div style="overflow-x:auto;">' +
+      '<table id="cc-kpi-table" style="width:100%;border-collapse:collapse;font-size:13px;">' +
+      '<thead>' + thead + '</thead><tbody>' + rows + '</tbody></table></div>';
+  }
+
+  function buildBreakdown(bd) {
+    var kd   = KPI_DEFS[KPI_IDX[bd.kId]];
+    if (!kd) return '';
+    var mode = bd.mode || 'product';
+    var maxV = kd.id === 'csat' ? 5 : (kd.id === 'tpad' ? 40 : 100);
+
+    function entityRow(name, val) {
+      var st  = statusOf(kd.id, val);
+      var col = C[st];
+      var pct = Math.min(100, Math.max(0, (val / maxV) * 100)).toFixed(1);
+      return '<tr style="border-bottom:1px solid #f0f0f0;">' +
+        '<td style="padding:6px 12px;font-size:13px;color:#495057;">' + name + '</td>' +
+        '<td style="padding:6px 12px;font-size:13px;">' +
+        '<span style="color:' + col + ';font-weight:600;">' + fmtVal(kd.id, val) + kd.units + '</span></td>' +
+        '<td style="padding:6px 12px;width:120px;">' +
+        '<div style="height:6px;background:#e9ecef;border-radius:3px;">' +
+        '<div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:3px;"></div></div></td></tr>';
     }
 
-    var vl = _view==='day'?'Dag-for-dag (innevarande vecka)':_view==='week'?'Veckoredovisning (senaste 12 veckor)':'Manadsredovisning (senaste 12 manader)';
-    var ts = new Date().toLocaleTimeString('sv-SE');
-    var av = _view==='day'?'Dag':_view==='week'?'Vecka':'Manad';
+    var entityRows = '';
+    if (mode === 'product') {
+      PRODUCTS.forEach(function (pr, pi) {
+        entityRows += entityRow(pr, kpiValFor(kd.id, 11, 12, pi));
+      });
+    } else {
+      AGENTS.forEach(function (ag, ai) {
+        var initials = ag.split(' ').map(function (w) { return w[0]; }).join('');
+        var badge = '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#e3f2fd;color:#1565c0;font-size:10px;font-weight:700;margin-right:6px;">' + initials + '</span>';
+        entityRows += entityRow(badge + ag, kpiValFor(kd.id, 11, 12, 100 + ai));
+      });
+    }
 
-    cont.innerHTML =
-      '<div class="cc-kpi-section">'+
-      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
-        '<span class="section-title">' + String.fromCharCode(167) + ' CC ' + String.fromCharCode(183) + ' Customer Care Performance</span>'+
-        '<span class="tag analytics">ANALYTICS</span>'+
-      '</div>'+
-      '<div class="cc-live-bar">'+
-        '<div class="cc-dot"></div>'+
-        '<span style="font-size:12px;color:#666">Live &middot; Uppdateras var 60s &middot; Senast: '+ts+'</span>'+
-        '<div class="cc-view-btns">'+
-          '<button class="cc-vbtn'+(_view==='day'?' active':'')+'" onclick="setCCView(\'day\')">Dag</button>'+
-          '<button class="cc-vbtn'+(_view==='week'?' active':'')+'" onclick="setCCView(\'week\')">Vecka</button>'+
-          '<button class="cc-vbtn'+(_view==='month'?' active':'')+'" onclick="setCCView(\'month\')">Manad</button>'+
-        '</div>'+
-      '</div>'+
-      '<div class="cc-cards">'+cards+'</div>'+
-      bds+
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">'+
-        '<span style="font-size:11px;font-weight:600;color:var(--text3)">'+vl+'</span>'+
-        '<button class="cc-csvbtn" onclick="ccCSV(\'' + tid + '\')">Export CSV</button>'+
-      '</div>'+
-      '<div style="overflow-x:auto">'+
-        '<table class="cct" id="'+tid+'"><thead>'+thead+'</thead><tbody>'+tbody+'</tbody></table>'+
-      '</div>'+
-      '<div style="font-size:11px;color:#999;text-align:center;padding-top:6px">'+
-        'CC Analytics &middot; Simulerad data (mock) &middot; Koppla Freshdesk API for realtidsdata'+
-      '</div>'+
-      '</div>';
+    return '<div style="background:#f8f9fa;border:1px solid #dee2e6;border-radius:8px;padding:16px;margin-bottom:16px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">' +
+      '<span style="font-weight:600;font-size:13px;">' + kd.label + ' \u2013 Breakdown</span>' +
+      '<div style="display:flex;gap:4px;">' +
+      '<button onclick="event.stopPropagation();setCCBdMode(\'product\')" style="padding:3px 10px;border:1px solid #dee2e6;border-radius:4px 0 0 4px;background:' + (mode === 'product' ? '#0d6efd' : '#fff') + ';color:' + (mode === 'product' ? '#fff' : '#495057') + ';font-size:11px;cursor:pointer;">Per produkt</button>' +
+      '<button onclick="event.stopPropagation();setCCBdMode(\'agent\')" style="padding:3px 10px;border:1px solid #dee2e6;border-left:none;border-radius:0 4px 4px 0;background:' + (mode === 'agent' ? '#0d6efd' : '#fff') + ';color:' + (mode === 'agent' ? '#fff' : '#495057') + ';font-size:11px;cursor:pointer;">Per agent</button>' +
+      '<button onclick="event.stopPropagation();toggleCCBd(\'close\')" style="padding:3px 10px;border:1px solid #dee2e6;border-radius:4px;background:#fff;color:#495057;font-size:11px;cursor:pointer;margin-left:8px;">&#x2715;</button>' +
+      '</div></div>' +
+      '<table style="width:100%;border-collapse:collapse;"><tbody>' + entityRows + '</tbody></table></div>';
   }
 
-  window.setCCView  = function(v) { _view = v; render(); };
-  window.toggleCCBd = function(id) { var e=document.getElementById('cc-bd-'+id); if(e) e.classList.toggle('open'); };
-  window.ccBdTab    = function(id,tab,btn) {
-    var pre = tab==='prod' ? 'ccbdp-' : 'ccbda-';
-    [].slice.call(document.querySelectorAll('#cc-bd-'+id+' .cc-bdp')).forEach(function(p){p.classList.remove('active');});
-    [].slice.call(document.querySelectorAll('#cc-bd-'+id+' .cc-bdtab')).forEach(function(b){b.classList.remove('active');});
-    var p = document.getElementById(pre+id); if(p) p.classList.add('active');
-    btn.classList.add('active');
+  // ---- Public API ----
+  window.setCCView = function (v) { VIEW = v; render(); };
+  window.toggleCCBd = function (kId) {
+    if (kId === 'close' || (BD && BD.kId === kId)) { BD = null; } else { BD = { kId: kId, mode: 'product' }; }
+    render();
   };
-  window.ccSort = function(th) {
-    var tbl=th.closest('table'), idx=[].slice.call(th.parentNode.children).indexOf(th), asc=th.dataset.asc!=='true';
-    th.dataset.asc = asc;
-    var tb = tbl.querySelector('tbody');
-    [].slice.call(tb.querySelectorAll('tr')).sort(function(a,b){
-      var av=(a.children[idx]||{innerText:''}).innerText.replace(/[^0-9.\-]/g,'');
-      var bv=(b.children[idx]||{innerText:''}).innerText.replace(/[^0-9.\-]/g,'');
-      var an=parseFloat(av),bn=parseFloat(bv);
-      return !isNaN(an)&&!isNaN(bn)?(asc?an-bn:bn-an):(asc?av.localeCompare(bv):bv.localeCompare(av));
-    }).forEach(function(r){tb.appendChild(r);});
+  window.setCCBdMode = function (m) { if (BD) { BD.mode = m; render(); } };
+  window.exportCCCSV = function () {
+    var t = document.getElementById('cc-kpi-table');
+    if (!t) return;
+    var csv = Array.from(t.querySelectorAll('tr')).map(function (r) {
+      return Array.from(r.querySelectorAll('th,td')).map(function (c) {
+        return '"' + c.textContent.trim().replace(/"/g, '\\'') + '"';
+      }).join(',');
+    }).join('\n');
+    var a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'cc-kpis.csv';
+    a.click();
   };
-  window.ccCSV = function(id) { csvExport(id); };
 
-  function autoRefresh() {
-    if (_timer) clearInterval(_timer);
-    _timer = setInterval(function() { if (document.getElementById('cc-kpi-section')) render(); }, 60000);
-  }
-  window.initCCKPIs = function() { render(); autoRefresh(); };
+  window.initCCKPIs = function () { render(); };
 
-})();
+  setInterval(function () {
+    if (document.getElementById('cc-kpi-section')) render();
+  }, 60000);
+
+}());
