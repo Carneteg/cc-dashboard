@@ -205,6 +205,21 @@ nav .nav-sep{display:none;}
 .ag-ind-period-btn{border-radius:7px;padding:5px 14px;cursor:pointer;font-size:12px;font-weight:600;transition:all .1s;}
 .decision-table{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 
+/* ── CX 2026 tab (underflikar) ── */
+.cx-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:10px;position:sticky;top:96px;z-index:50;box-shadow:var(--shadow);}
+.cx-sub-btn{background:none;border:none;border-radius:7px;padding:7px 14px;font-size:12.5px;font-weight:500;color:var(--text2);cursor:pointer;transition:background .12s,color .12s;white-space:nowrap;}
+.cx-sub-btn:hover{color:var(--text);background:var(--bg);}
+.cx-sub-btn.active{background:var(--accent);color:#fff;font-weight:600;}
+.cx-panel{display:none;}.cx-panel.active{display:block;}
+.cx-gap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.cx-trend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+.cx-journey{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.cx-step{display:flex;gap:12px;align-items:flex-start;}
+.cx-step-no{width:24px;height:24px;border-radius:50%;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cx-ctx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
+.cx-ctx-item{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border-radius:8px;padding:10px 12px;cursor:pointer;}
+.cx-ctx-item input{margin-top:3px;accent-color:var(--accent);}
+
 .wc{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;}
 .wl{font-size:11px;color:#64748b;font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
 .wv{font-size:24px;font-weight:700;color:#1e293b;line-height:1.1;}
@@ -388,6 +403,7 @@ CC Workforce
     </div>
   </div>
   <button class="nav-tab" onclick="showTab('agent',this)" data-tab="agent">Agents</button>
+  <button class="nav-tab" onclick="showTab('cx',this)" data-tab="cx">CX 2026</button>
   <div class="nav-dropdown-group">
     <button class="nav-dropdown-trigger" onclick="toggleNavGroup(this)">Tools <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 1l4 4 4-4"/></svg></button>
     <div class="nav-dropdown">
@@ -1255,10 +1271,37 @@ SELECT name, created_at FROM vault.secrets WHERE name='FRESHCALLER_API_KEY';</di
 <div id="csat-section"><div style="color:var(--text2);font-size:12px;padding:18px 4px;">Loading CSAT data…</div></div>
 </div>
 <!-- ===== END CSAT SECTION ===== -->
+</div><!-- /tab-agent -->
+
+<!-- ===== CX 2026 TAB — Kundservice i AI-eran ===== -->
+<div id="tab-cx" class="tc">
+<div class="section-header" style="margin-top:0">
+<span class="section-title">Kundservice i AI-eran — CX Trends 2026 applicerat på egen data</span>
+<span class="section-note">Benchmark: Zendesk CX Trends 2026 · Egen data: cc-dashboard-api</span>
+</div>
+<div class="alert-banner info" style="margin-bottom:16px">
+<div>💡</div>
+<div style="font-size:12px;color:var(--text2);line-height:1.5"><strong style="color:var(--text)">Ramverk, inte facit.</strong> Zendesk-procenten är extern benchmark (11 297 respondenter, 22 länder). Alla "Min data"-värden hämtas live från API:et. Matris- och friktionspoäng är illustrativa modeller — validera mot egen kunddata före investeringsbeslut.</div>
+</div>
+<div class="cx-subnav">
+<button class="cx-sub-btn active" onclick="showCxSub('nulage',this)">1 · Nuläge</button>
+<button class="cx-sub-btn" onclick="showCxSub('trender',this)">2 · Fem trender</button>
+<button class="cx-sub-btn" onclick="showCxSub('matris',this)">3 · Beslutsmatris</button>
+<button class="cx-sub-btn" onclick="showCxSub('resa',this)">4 · Kundresa &amp; friktion</button>
+<button class="cx-sub-btn" onclick="showCxSub('styrmatt',this)">5 · Styrmått</button>
+<button class="cx-sub-btn" onclick="showCxSub('plan',this)">6 · Handlingsplan</button>
+</div>
+<div id="cx-panel-nulage" class="cx-panel active"><div class="ae-empty">Laddar nulägesdata från API…</div></div>
+<div id="cx-panel-trender" class="cx-panel"><div class="ae-empty">Laddar…</div></div>
+<div id="cx-panel-matris" class="cx-panel"><div class="ae-empty">Laddar…</div></div>
+<div id="cx-panel-resa" class="cx-panel"><div class="ae-empty">Laddar…</div></div>
+<div id="cx-panel-styrmatt" class="cx-panel"><div class="ae-empty">Laddar…</div></div>
+<div id="cx-panel-plan" class="cx-panel"><div class="ae-empty">Laddar…</div></div>
+</div><!-- /tab-cx -->
 
 <!-- ===== SCRIPT ===== -->
 
-</main><script type="module" src="js/main.js?v=18"></script>
+</main><script type="module" src="js/main.js?v=19"></script>
 <script>
 function toggleNavGroup(btn){
   var parent=btn.closest('.nav-dropdown-group');

@@ -10,6 +10,7 @@ import './tab-agent.js?v=18';
 import { naInit, csatInit } from './tab-agent-eff.js?v=24';
 import './tab-exec.js?v=21';
 import './tab-cc-kpi.js';
+import './tab-cx.js?v=1';
 
 // Global error boundary
 window.addEventListener('unhandledrejection', ev => {
