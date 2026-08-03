@@ -300,6 +300,7 @@ function showTab(id,btn){
   if(id==='prognos'&&!window._pgL)initPrognos();
   if(id==='setup'&&!window._setupL)loadSetupTab();
 if(id==='agent'&&!window._agentL)loadAgentTab();
+  if(id==='cx'&&!window._cxL&&window.initCxTab)window.initCxTab();
 
   // Auto-scroll to active tab content
   const _tabEl = document.getElementById('tab-' + id);
